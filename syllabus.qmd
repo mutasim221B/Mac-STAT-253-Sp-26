@@ -1,20 +1,30 @@
 ---
-title: "STAT 155: Introduction to Statistical Modeling  "
-subtitle: "Macalester College, Fall 2025"
+title: "Syllabus"
+subtitle: "Macalester College, Spring 2026"
 format: 
   html:
     embed-resources: true
     toc: true
 ---
 
--   **Section 03**: M/W/F 09:40-10:40am, THTR 002
--   **Section 04**: M/W/F 12:00-01:00pm, THTR 202
+-   **Section 03**: M/W/F 02:20-03:20pm, THTR 213
 
-**Welcome to STAT 155!** Whether in life or research, we’re often interested in relationships between 2+ variables. For example, how is one’s commute time to class related to their distance from campus and mode of transportation? Or, how is voter participation related to a person’s age and political affiliation? **Statistical modeling** is the art and science of turning data into information about such relationships of interest.
 
-Being able to **summarize**, **interpret**, and **communicate** about data are crucial for navigating today's information landscape, and these are precisely the skills that we'll build in this class. Throughout the semester, we'll study the fundamental methods that statisticians use to extract knowledge from data, emphasizing statistical literacy & intuition, real data applications, and modern computing over memorizing facts and formulas.
+**Welcome to STAT 253!** This class is an introduction to the exciting world of statistical machine learning. Broadly, statistical machine 
+learning consists of tools and algorithms to learn from data. Insights from machine learning help us take action by enabling us to make predictions and understand uncertainty. Applications of machine learning algorithms are used everywhere from finance to biology, medicine, social sciences, language, and the humanities. 
+
+In this course, you will build on the linear and logistic regression modeling techniques covered in STAT 155 to understand tools of regression (Weeks 2–6) and classification (Weeks 7–11) more broadly. You will also learn about unsupervised learning methods (Weeks 12–15) that can help you find  underlying structure in data. Along the way, you'll also improve your skills in computational thinking/programming, communication, collaboration, ethical thinking, and reflection, all of which are vital in any profession.
 
 # Learning Objectives
+
+This class is an introduction to the exciting world of statistical machine learning.
+
+The goals of this course are two-fold:
+
+- to gain a working understanding of various machine learning algorithms, and
+- to further develop general skills necessary for statistics and data science.
+
+Please see the Learning Goal tab of the course website for more details! 
 
 ## Important technical concepts
 

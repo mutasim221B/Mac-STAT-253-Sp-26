@@ -1,0 +1,206 @@
+---
+title: "Learning Goals "
+subtitle: "Macalester College, Spring 2026"
+format: 
+  html:
+    embed-resources: true
+    toc: true
+---
+
+
+
+
+Specific skills and course topics are listed below. Use this list to guide your synthesis of video and reading material for specific topics, and your learning more generally, throughout the semester. It also serves as a study guide for quizzes and other assessments.
+
+
+# General Skills
+
+## Computational Thinking
+
+
+- Decomposition: Break a task into smaller tasks to be able to explain the process to another person or computer
+- Pattern Recognition: Recognize patterns in tasks by noticing similarities and common differences
+- Abstraction: Represent an idea or process in general terms so that you can use it to solve other projects that are similar in nature
+- Algorithmic Thinking: Develop a step-by-step strategy for solving a problem
+
+## Ethical Data Thinking
+
+- Identify ethical issues associated with applications of statistical machine learning in a variety of settings
+- Assess and critique the actions of individuals and organizations as it relates to ethical use of data
+
+## Data Communication
+
+- In written and oral formats: Inform and justify data analysis and modeling process and the resulting conclusions with clear, organized, logical, and compelling details that adapt to the background, values, and motivations of the audience and context in which communication occurs.
+
+## Collaborative Learning
+
+- Understand and demonstrate characteristics of effective collaboration (team roles, interpersonal communication, self-reflection, awareness of social dynamics, advocating for yourself and others).
+- Develop a common purpose and agreement on goals.
+- Be able to contribute questions or concerns in a respectful way.
+- Share and contribute to the group’s learning in an equitable manner.
+
+## Reflection
+
+- Regularly reflect on your learning to make note of and celebrate your progress, identify opportunities for continued growth, and set goals
+
+
+# Course Topics
+
+## Unit 0
+
+**Introduction to Statistical Machine Learning**
+
+::: {.callout-note title="Topics"}
+- Formulate research questions that align with regression, classification, or unsupervised learning tasks.
+- Identify the appropriate task (regression, classification, unsupervised) for a given research question.
+:::
+
+
+## Unit 1
+
+**Evaluating Regression Models**
+
+::: {.callout-note title="Topics"}
+- Create and interpret residuals vs. fitted, residuals vs. predictor plots to identify improvements in modeling and address ethical concerns.
+- Calculate and interpret MSE, RMSE, MAE, and R-squared in a contextually meaningful way.
+:::
+
+**Overfitting and Cross-Validation**
+
+::: {.callout-note title="Topics"}
+- Explain why training/in-sample model evaluation metrics can provide a misleading view of true test/out-of-sample performance
+- Accurately describe all steps of cross-validation to estimate the test/out-of-sample version of a model evaluation metric
+- Explain what role CV has in a predictive modeling analysis and its connection to overfitting
+- Explain the pros/cons of higher vs. lower k in k-fold CV in terms of sample size and computing time
+:::
+
+
+## Unit 2
+
+**Variable Selection**
+
+::: {.callout-note title="Topics"}
+- Explain the difference between inferential models and predictive models and how the model building processes differ
+- Clearly describe the backward stepwise selection algorithm and why they are examples of greedy algorithms
+- Compare best subset and stepwise algorithms in terms of optimality of output and computational time
+:::
+
+**LASSO (shrinkage/regularization)**
+
+::: {.callout-note title="Topics"}
+- Explain how ordinary and penalized least squares are similar and different with regard to (1) the form of the objective function (i.e., the function we are trying to minimize) and (2) the goal of variable selection
+- Explain how the lambda tuning parameter affects model performance and how this is related to overfitting
+:::
+
+## Unit 3
+
+**KNN Regression and the Bias-Variance Tradeoff**
+
+::: {.callout-note title="Topics"}
+- Clearly describe / implement by hand the KNN algorithm for making a regression prediction
+- Explain how the number of neighbors relates to the bias-variance tradeoff
+- Explain the difference between parametric and nonparametric methods
+- Explain how the curse of dimensionality relates to the performance of KNN
+:::
+
+**Local Regression and Splines**
+
+::: {.callout-note title="Topics"}
+- Clearly describe the local regression algorithm for making a prediction
+- Explain how bandwidth (span) relate to the bias-variance tradeoff
+- Explain the advantages of splines over global transformations (e.g. y ~ poly(x, 2)) and other types of piecewise polynomials
+- Explain how splines are constructed by drawing connections to variable transformations and least squares
+- Explain how the number of knots relates to the bias-variance tradeoff
+:::
+
+
+## Unit 4
+
+**Classification via Logistic regression**
+
+::: {.callout-note title="Topics"}
+- Use a logistic regression model to make hard (class) and soft (probability) predictions
+- Interpret non-intercept coefficients from logistic regression models in the data context
+:::
+
+**Evaluating Classification Models**
+
+::: {.callout-note title="Topics"}
+- Calculate (by hand from confusion matrices) and contextually interpret overall accuracy, sensitivity, and specificity
+- Construct and interpret plots of predicted probabilities across classes
+- Explain how a ROC curve is constructed and the rationale behind AUC as an evaluation metric
+- Appropriately use and interpret the no-information rate to evaluate accuracy metrics
+:::
+
+
+## Unit 5
+
+**KNN Classification**
+
+::: {.callout-note title="Topics"}
+- Clearly describe / implement by hand the KNN algorithm for making a classification prediction
+- Interpret a KNN classification region plot
+- Discuss the pros and cons of KNN classification relative to other classification tools (eg logistic regression, decision trees)
+:::
+
+**Decision Trees**
+
+::: {.callout-note title="Topics"}
+- Clearly describe the recursive binary splitting algorithm for tree building for both regression and classification
+- Compute the weighted average Gini index to measure the quality of a classification tree split
+- Compute the sum of squared residuals to measure the quality of a regression tree split
+- Explain how recursive binary splitting is a greedy algorithm
+- Explain how different tree parameters relate to the bias-variance tradeoff
+:::
+
+**Bagging and Random Forests**
+
+::: {.callout-note title="Topics"}
+- Explain the rationale for bagging
+- Explain the rationale for selecting a random subset of predictors at each split (random forests)
+- Explain how the size of the random subset of predictors at each split relates to the bias-variance tradeoff
+- Explain the rationale for and implement out-of-bag error estimation for both regression and classification
+- Explain the rationale behind the random forest variable importance measure and why it is biased towards quantitative predictors (in class)
+:::
+
+## Unit 6
+
+**Hierarchical Clustering**
+
+::: {.callout-note title="Topics"}
+- Clearly describe / implement by hand the hierarchical clustering algorithm
+- Compare and contrast k-means and hierarchical clustering in their outputs and algorithms
+- Interpret cuts of the dendrogram for single and complete linkage
+- Describe the rationale for how clustering algorithms work in terms of within-cluster variation
+- Describe the tradeoff of more vs. less clusters in terms of interpretability
+- Implement strategies for interpreting / contextualizing the clusters
+:::
+
+**K-Means Clustering**
+
+::: {.callout-note title="Topics"}
+- Clearly describe / implement by hand the k-means algorithm
+- Describe the rationale for how clustering algorithms work in terms of within-cluster variation
+- Describe the tradeoff of more vs. less clusters in terms of interpretability
+- Implement strategies for interpreting / contextualizing the clusters
+:::
+
+
+## Unit 7
+
+**Principal Component Analysis**
+
+::: {.callout-note title="Topics"}
+- Explain the goal of dimension reduction and how this can be useful in a supervised learning setting
+- Interpret and use the information provided by principal component loadings and scores
+- Interpret and use a scree plot to guide dimension reduction
+:::
+
+**Principal Component Regression**
+
+::: {.callout-note title="Topics"}
+- Clearly describe / implement the principal component regression algorithm
+- Describe the tradeoff of choice of principal components (k) in terms of the bias-variance tradeoff
+- Implement strategies for choosing k
+- Discuss the pros and cons of principal component regression relative to variable selection and LASSO
+:::
