@@ -3,8 +3,8 @@ title: ""
 sidebar: false
 ---
 
-# STAT 155: Introduction to Statistical Modeling  
-Macalester College, Fall 2025  
+# STAT 253: Statistical Machine Learning 
+Macalester College, Spring 2026  
 
 Statistics is not just about theories & numbers — it’s about making sense of the world.  
 
@@ -16,22 +16,21 @@ Welcome to the world of Statistics! In this course, you’ll learn how to analyz
 
 **Instructor:** Md Mutasim Billah <br> **Class meeting times:**
 
--   **Section 03**: M/W/F 09:40-10:40am, THTR 002
--   **Section 04**: M/W/F 12:00-01:00pm, THTR 202
+-   **Section 03**: M/W/F 02:20-03:20pm, THTR 213
 
-**Instructor's drop-in (office) hours:**
 
--   **Location:** My office (OLRI 234)
--   **Times:** M/W: 01:30-02:30 pm.
--   **By Appointment:** I'm also happy to meet one-on-one! Shoot me an email and we can arrange it either in-person or over [zoom](https://macalester.zoom.us/j/99762878654?pwd=gt7VvSNT0ubKsV2icMV3z8J0GyHKMy.1), password: 123456.
--   **Email Response Time:** I do my best to reply to emails promptly during weekdays.  
-    Please note that messages sent after 4:00 pm or on weekends may take longer to receive a response.
+**Office hours:**
+
+-   **Location:** My office (OLRI 234) and over Zoom
+-   **Times:** M/W: 12:00pm - 12:30pm (in-person), T/TR: 2pm - 3pm (Over [zoom](https://macalester.zoom.us/j/99762878654?pwd=gt7VvSNT0ubKsV2icMV3z8J0GyHKMy.1), password: 123456)
+-   **By Appointment:** I'm also happy to meet one-on-one if my normal drop-in/virtual hours don't work for you. Shoot me an email and we can arrange it over [zoom](https://macalester.zoom.us/j/99762878654?pwd=gt7VvSNT0ubKsV2icMV3z8J0GyHKMy.1), password: 123456.
+-   **Email Response Time:** I do my best to reply to emails promptly during weekdays. Please note that messages sent after 3:00 pm or on weekends may take longer to receive a response.
 
 ------------------------------------------------------------------------
 
-[**STAT 155 Preceptor Office Hours:**]{.underline} There is a link to a Google Calendar containing *all* preceptor office hours available at the top of the course Moodle page!
+[**STAT 253 Preceptor Office Hours:**]{.underline} There is a link to a Google Calendar containing *all* preceptor office hours available at the top of the course Moodle page!
 
-[**R/RStudio Preceptor Office Hours:**]{.underline} Available on the [MSCS Events google calendar](https://www.macalester.edu/mscs/data-support/) (*not* to be used for questions about course content, only Data and R-related things!)
+[**Data and R Support:**]{.underline} In addition to our course preceptors, there is support on campus for working with data and R / RStudio. See [https://www.macalester.edu/mscs/data-support](https://www.macalester.edu/mscs/data-support)  for more information.
 
 
 

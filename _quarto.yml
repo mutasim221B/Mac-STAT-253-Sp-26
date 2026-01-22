@@ -29,11 +29,9 @@ website:
         text: "Schedule"
       - sidebar:activities
       - file: assignments.qmd
-        text: "Practice Problems"
-      - file: project.qmd
-        text: "Project"
-      - file: R_Resources.qmd
-        text: "R Resources"
+        text: "Homework Assignments"
+      - sidebar:appendices
+
 
   sidebar:
     - id: overview
@@ -47,6 +45,12 @@ website:
       contents:
           - "!activities/01_foundations_welcome.qmd"
 
+    - id: appendices
+      title: "Appendices"
+      contents:
+          - "R_Rstudio.qmd"
+          - "R_Resources.qmd"
+          - "stat155.qmd"
 
   
   page-footer:

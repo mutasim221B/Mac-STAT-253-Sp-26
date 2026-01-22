@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Project – STAT 253</title>
+<title>STAT 155 Resources – STAT 253</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -153,15 +182,29 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#stat-155-review" id="toc-stat-155-review" class="nav-link active" data-scroll-target="#stat-155-review">STAT 155 Review</a>
+  <ul class="collapse">
+  <li><a href="#important-topics" id="toc-important-topics" class="nav-link" data-scroll-target="#important-topics">Important Topics</a></li>
+  <li><a href="#review-resources" id="toc-review-resources" class="nav-link" data-scroll-target="#review-resources">Review Resources</a>
+  <ul class="collapse">
+  <li><a href="#quick-review" id="toc-quick-review" class="nav-link" data-scroll-target="#quick-review">Quick Review</a></li>
+  <li><a href="#comprehensive-review" id="toc-comprehensive-review" class="nav-link" data-scroll-target="#comprehensive-review">Comprehensive Review</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Project</h1>
+<h1 class="title">STAT 155 Resources</h1>
 </div>
 
 
@@ -178,13 +221,90 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="stat-155-review" class="level1 unnumbered">
+<h1 class="unnumbered">STAT 155 Review</h1>
+<section id="important-topics" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="important-topics">Important Topics</h2>
+<p>In this course, we will build on the linear and logistic regression modeling techniques covered in STAT 155. As such, <span class="text-primary"><strong>familiarity with key concepts from STAT 155 is expected</strong></span>. This includes, but is not necessarily limited to, the following topics:</p>
 <ul>
-<li><p>Please download and go through the <a href="https://docs.google.com/document/d/1ovWVJdU3n236mFC0ib2mSU4rp7nMyPY2e9_HZ1WL7Kw/edit?usp=sharing">Project Instructions</a> in details.</p></li>
-<li><p>The Rubrics for grading are <a href="https://docs.google.com/spreadsheets/d/1CdmPgh1Nq40-yZ3BTjtSsqqk8q3ESVPrhZ03Q3mteIw/edit?usp=sharing">here</a>.</p></li>
-<li><p>Participate in the <a href="https://docs.google.com/forms/d/e/1FAIpQLSfqdQs_YbazAqUQ-84sU6RSDppgiZFbXCBPPEj0XNVpPUWL0Q/viewform?usp=dialog">STAT 155 Group Project Survey</a> by Monday, October 27.</p></li>
+<li>data context: 5W’s + H (who, what, where, when, why, how)</li>
+<li>data visualization in R</li>
+<li>linear regression: least squares, model interpretation, prediction, model evaluation (eg residuals, <span class="math inline">\(R^2\)</span>)</li>
+<li>logistic regression: odds, model interpretation, prediction, model evaluation (eg accuracy, sensitivity)</li>
+<li>bootstrapping</li>
 </ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you are rusty on any of these concepts, please review the resources linked below!</p>
+</div>
+</div>
+<p><br>
+<br>
+</p>
+</section>
+<section id="review-resources" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="review-resources">Review Resources</h2>
+<section id="quick-review" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="quick-review">Quick Review</h3>
+<p>Let <span class="math inline">\(y\)</span> be a response variable with a set of <span class="math inline">\(k\)</span> explanatory variables <span class="math inline">\(x = (x_{1}, x_{2}, ..., x_{k})\)</span>. Then the <strong>population</strong> linear regression model is</p>
+<p><span class="math display">\[\begin{split}
+y &amp; = f(x) + \varepsilon  = \beta_0 + \beta_1 x_{1} + \beta_2 x_{2} + \cdots + \beta_k x_{k} + \varepsilon \\
+\end{split}\]</span></p>
+<p>NOTES:</p>
+<ul>
+<li><p><span class="math inline">\(\beta\)</span> is the Greek letter “beta”. <span class="math inline">\(\varepsilon\)</span> is the Greek letter “epsilon”.<br>
+</p></li>
+<li><p>“Linear” regression is so named because it assumes that <span class="math inline">\(y\)</span> is a <em>linear combination</em> of the <span class="math inline">\(x\)</span>’s. It does <em>not</em> mean that the relationship itself is linear!! For example, one of the predictors might be a quadratic term: <span class="math inline">\(x_2 = x_1^2\)</span>.</p></li>
+<li><p><span class="math inline">\(f(x) = \beta_0 + \beta_1 x_{1} + \beta_2 x_{2} + \cdots + \beta_k x_{k}\)</span> captures the <strong>trend</strong> of the relationship</p>
+<ul>
+<li><p><span class="math inline">\(\beta_0\)</span> = <strong>intercept coefficient</strong><br>
+the model value when <span class="math inline">\(x_1=x_2=\cdots=x_k=0\)</span></p></li>
+<li><p><span class="math inline">\(\beta_i\)</span> = <strong><span class="math inline">\(x_i\)</span> coefficient</strong><br>
+how <span class="math inline">\(x_i\)</span> is related to <span class="math inline">\(y\)</span> <em>when holding constant all other <span class="math inline">\(x_i\)</span></em></p></li>
+</ul></li>
+<li><p><span class="math inline">\(\epsilon\)</span> reflects deviation from the trend (the residual)</p></li>
+</ul>
+<p><br>
+<br>
+</p>
+<p><strong>Fitting the Model</strong></p>
+<p>Once we have a population model in mind, we can “fit the model” (i.e.&nbsp;<em>estimate</em> the <span class="math inline">\(\beta\)</span> population coefficients) using sample data:</p>
+<p><span class="math display">\[\begin{split}
+y &amp; =  \hat{f}(x) + \varepsilon \\
+&amp; = \hat{\beta}_0 + \hat{\beta}_1 x_{1} + \hat{\beta}_2 x_{2} + \cdots + \hat{\beta}_k x_{k} + \varepsilon \\
+\end{split}\]</span></p>
+<p><br>
+</p>
+<p>To this end, collect a sample of data on <span class="math inline">\(n\)</span> subjects. Use subscripts to denote the data for subject <span class="math inline">\(i\)</span>: <span class="math inline">\(y_i\)</span> and <span class="math inline">\(x_{ij}\)</span>. Then the predicted response and residual (prediction error) for subject <span class="math inline">\(i\)</span> are</p>
+<ul>
+<li><p><strong>prediction</strong> <span class="math display">\[\hat{y}_i = \hat{f}(x_i) = \hat{\beta}_0 + \hat{\beta}_1 x_{i1} + \hat{\beta}_2 x_{i2} + \cdots + \hat{\beta}_k x_{ik}\]</span></p></li>
+<li><p><strong>residual / prediction error</strong> <span class="math display">\[y_i - \hat{y}_i\]</span></p></li>
+</ul>
+<p><br>
+<br>
+</p>
+<p><strong>Least Squares Criterion</strong></p>
+<p>Estimate (<span class="math inline">\(\beta_0, \beta_1,..., \beta_k\)</span>) by (<span class="math inline">\(\hat{\beta}_0, \hat{\beta}_1,..., \hat{\beta}_k)\)</span> that <em>minimize</em> the sum of squared residuals: <span class="math display">\[\sum_{i=1}^n(y_i - \hat{y}_i)^2 = (y_1-\hat{y}_1)^2 + (y_2-\hat{y}_2)^2 + \cdots + (y_n-\hat{y}_n)^2\]</span></p>
+<p><br>
+<br>
+</p>
+</section>
+<section id="comprehensive-review" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="comprehensive-review">Comprehensive Review</h3>
+<p>A comprehensive STAT 155 review is provided by the STAT 155 Notes created by Profs. Grinde, Heggeseth, and Myint <a href="https://mac-stat.github.io/Stat155Notes/">(here)</a> and Prof.&nbsp;Johnson’s Spring 2022 STAT 155 manual <a href="https://ajohns24.github.io/155_Spring_2022/">(here)</a>.</p>
 
 
+</section>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

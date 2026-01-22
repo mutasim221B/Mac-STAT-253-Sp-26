@@ -24,41 +24,9 @@ The goals of this course are two-fold:
 - to gain a working understanding of various machine learning algorithms, and
 - to further develop general skills necessary for statistics and data science.
 
-Please see the Learning Goal tab of the course website for more details! 
+Please see the [Learning Goal](https://mutasim221b.github.io/Mac-STAT-253-Sp-26/learning.html) tab of the "Course Logistics" for more details! 
 
-## Important technical concepts
 
-Upon completion of this course, students should be able to:
-
--  Build, use, and interpret **graphical and numerical summaries** of data.
-
--  Given a research question: **identify** an appropriate model, use sample data to **fit** the model in RStudio (free!), **evaluate** the model’s quality, and **quantify** our uncertainty in the model’s coefficients and predictions.
-
--  Use a sample model to make **predictions & inferences** about a population, using **prediction/confidence intervals & hypothesis tests**.
-
--  **Interpret & communicate** an analysis in context & using appropriate notation, argumentation, & evidence.
-
--   Describe potential **advantages, limitations, and ethical considerations** of a data set and statistical analysis.
-
--  Identify **common pitfalls** in statistical analyses (e.g., spurious correlation vs. causal relationships, extrapolation, multicollinearity, multiple testing, practical vs. statistical significance).
-
--   Accurately **describe methods and results** in a way that is scientifically sound and widely accessible.
-
--   Work **productively and effectively** in a group setting.
-
-## Important statistical skills
-
-The following skills are essential both within and beyond Statistics, and demonstrably improve your own learning and the learning of those around you:
-
-- Move beyond a “homework only” study approach. Develop a deeper understanding of the material through **continued review, reflection, and practice**.
-
-- Think **creatively, and build confidence**, applying course concepts in open-ended, novel settings.
-
-- Be comfortable working through **challenges and mistakes**.
-
-- Contribute to a **welcoming and engaged learning environment**.
-
-- Work effectively in a **group setting**.
 
 <br><br><br><br>
 
@@ -78,47 +46,122 @@ width="150" style="float: right; padding-right: 20px; padding-bottom: 20px;"/>
 **Email:** [mbillah\@macalester.edu](mailto:mbillah@macalester.edu){.email}
 
 ::: {.callout-note title="Notes from \"your professor\""}
-Greetings! You can call me *Mutasim*, *Bill* or *Professor Billah* & I use he/him pronouns. Back when I was an undergrad student, I didn’t have the best experience in Intro Stat—those courses often emphasized formulas over real understanding. That experience has shaped my teaching—I concentrate on illustrating how statistical theories connect and can be applied in the real world. I’m excited to teach STAT 155 and to create a more meaningful experience—one that helps all students feel confident applying it beyond the classroom. My methodological research lies at the intersection of statistical genetics, biostatistics, and genomics. My current research interests include developing novel statistical methods and computationally efficient bioinformatics tools, leveraging modern machine- and deep-learning approaches analyze high-dimensional next-generation sequencing and multi-omics data to identify genes and regulatory mechanisms underlying complex diseases. 
+Greetings! You can call me *Bill* or *Professor Billah* & I use he/him pronouns. Back when I was an undergrad student, I didn’t have the best experience in Intro Stat—those courses often emphasized formulas over real understanding. That experience has shaped my teaching—I concentrate on illustrating how statistical theories connect and can be applied in the real world. I’m excited to teach STAT 253 and to create a more meaningful experience—one that helps all students feel confident applying it beyond the classroom. My methodological research lies at the intersection of statistical genetics, biostatistics, and genomics. My current research interests include developing novel statistical methods and computationally efficient bioinfor matics tools, leveraging modern machine- and deep-learning approaches analyze high-dimensional next-generation sequencing and multi-omics data to identify genes and regulatory mechanisms underlying complex diseases. 
 Outside of my academic work, I enjoy spending time outdoors with family and friends or cooking variety of foods. If you can’t find me anywhere, I might be busy playing soccer or exploring new worlds on my PS5 Pro!
 :::
 
-**Drop-in (office) hours:**
+**Office hours:**
 
--   **Location:** My office (OLRI 234)
--   **Times:** M/W/F: 11:10am - 11:40 am, W: 1:20pm - 2:50pm
--   **By Appointment:** I'm also happy to meet one-on-one if my normal drop-in hours don't work for you. Shoot me an email and we can arrange it either in-person or over [zoom](https://macalester.zoom.us/j/99762878654?pwd=gt7VvSNT0ubKsV2icMV3z8J0GyHKMy.1), password: 123456.
--   **Email Response Time:** I do my best to reply to emails promptly during weekdays. Please note that messages sent after 4:00 pm or on weekends may take longer to receive a response.
+-   **Location:** My office (OLRI 234) and over Zoom
+-   **Times:** M/W: 12:00pm - 12:30pm (in-person), T/TR: 2pm - 3pm (Over [zoom](https://macalester.zoom.us/j/99762878654?pwd=gt7VvSNT0ubKsV2icMV3z8J0GyHKMy.1), password: 123456)
+-   **By Appointment:** I'm also happy to meet one-on-one if my normal drop-in/virtual hours don't work for you. Shoot me an email and we can arrange it over [zoom](https://macalester.zoom.us/j/99762878654?pwd=gt7VvSNT0ubKsV2icMV3z8J0GyHKMy.1), password: 123456.
+-   **Email Response Time:** I do my best to reply to emails promptly during weekdays. Please note that messages sent after 3:00 pm or on weekends may take longer to receive a response.
 
 ## About your preceptors
 
-We have several wonderful STAT 155 preceptors this semester! Their role is to help students
-with content questions, assist in the navigation of available resources, advise on studying approaches, and assist with concepts, tools, and skills. Students are accountable for their own learning; as such, preceptors are not allowed to share answers to assignments (unless specifically directed by the instructor), they are not expected to immediately know the right approach to an exercise, and they do not provide assistance outside of office hours.
+We have four awesome preceptors who will be helping out with STAT 253 this semester. See the calendar on Moodle for up-to-date information about their office hour times and locations.
 
-In hiring preceptors, we prioritize and emphasize kindness and respect. I expect the same of students in their interactions with the preceptors. Please utilize and respect their experience and commitment to supporting you in this course. Please check out some [additional guidelines and expectations](https://docs.google.com/document/d/1USu-3R1NsGDVm0yU0HTzHuTpzCD3onBjNI5n8w9VBik/edit?tab=t.0) on how to interact with preceptors.
+The role of an MSCS preceptor is to help students with content questions, assist in the navigation of available resources, advise on studying approaches for classes, and assist with concepts, tools, and skills needed for problem sets. Students are accountable for their own learning; as such, preceptors are not allowed to share answers to assignments (unless specifically directed by the instructor), are not expected to immediately know the right approach, or provide assistance outside of office hours. Additional guidelines and expectations on how to interact with preceptors can be found [here](https://docs.google.com/document/d/1USu-3R1NsGDVm0yU0HTzHuTpzCD3onBjNI5n8w9VBik/edit?usp=sharing).
+
+[**Data and R Support:**]{.underline} In addition to our course preceptors, there is support on campus for working with data and R / RStudio. See [https://www.macalester.edu/mscs/data-support](https://www.macalester.edu/mscs/data-support) for more information.
 
 <br><br><br><br>
 
 # Topics and Tentative Schedule
 
-| UNIT                       | GOAL                                                                                                 | TOPICS                                                                                                                                                                                                                                               | ~WEEKS |
-|---------------------------|------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------|
-| Simple linear regression  | Model the relationship of a quantitative response (y) with one predictor/explanatory variable (x).  | Univariate visual & numerical summaries<br>Simple linear regression<br>&nbsp;&nbsp;&nbsp; Bivariate visualization<br>&nbsp;&nbsp;&nbsp; Model coefficients<br>&nbsp;&nbsp;&nbsp; Predictions & residuals<br> Model evaluation<br>&nbsp;&nbsp;&nbsp; Model assumptions<br>&nbsp;&nbsp;&nbsp; $R^2$<br>&nbsp;&nbsp;&nbsp; Bias / ethics / fairness<br>Transformations<br>Categorical predictors | 1–3   |
-| Multiple linear regression| Model the relationship of a quantitative response (y) with multiple predictors (x₁, x₂, …, xₚ).     | Multiple linear regression<br>&nbsp;&nbsp;&nbsp; Multivariate visualization<br>&nbsp;&nbsp;&nbsp; Model coefficients<br>&nbsp;&nbsp;&nbsp; Predictions & residuals<br>Confounding & interaction<br>Model building                                                                                             | 4–7   |
-| Logistic regression       | Model the relationship of a binary categorical response (y) with one or more predictors (x₁, x₂, …, xₚ). | Measuring uncertainty<br>&nbsp;&nbsp;&nbsp; log(odds) vs odds vs probability<br>Logistic regression<br>&nbsp;&nbsp;&nbsp; Visualization<br>&nbsp;&nbsp;&nbsp; Model coefficients<br>&nbsp;&nbsp;&nbsp; Predictions & residuals<br>Model evaluation<br>&nbsp;&nbsp;&nbsp; Accuracy, sensitivity, specificity<br>&nbsp;&nbsp;&nbsp; Confusion matrices                     | 8–9   |
-| Inference                 | Use regression models built on sample data to make inferences about the broader population.          | Normal distribution<br>Sampling distributions & the CLT<br>Confidence intervals<br>Hypothesis tests                                                                                                                                                   | 10–14 |
+<table class="table table-bordered align-middle">
+  <thead>
+    <tr>
+      <th style="width:18%; text-align:center;">Module</th>
+      <th style="width:28%; text-align:center;">Unit</th>
+      <th style="width:44%; text-align:center;">Topics</th>
+      <th style="width:10%; text-align:center;">Weeks</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <!-- Regression -->
+    <tr>
+      <td rowspan="3" style="text-align:center; font-weight:700;">Regression</td>
+      <td><strong>1. Model evaluation</strong></td>
+      <td>
+        Model assumptions<br>
+        Measuring model strength: RMSE, MAE, CV
+      </td>
+      <td rowspan="3" style="text-align:center;">1–6</td>
+    </tr>
+    <tr>
+      <td><strong>2. Model building / selection</strong></td>
+      <td>
+        Variable selection<br>
+        Shrinkage &amp; regularization: LASSO
+      </td>
+    </tr>
+    <tr>
+      <td><strong>3. Flexible models</strong></td>
+      <td>
+        Bias-variance trade-off<br>
+        KNN<br>
+        LOESS &amp; splines
+      </td>
+    </tr>
+
+    <!-- Classification -->
+    <tr>
+      <td rowspan="2" style="text-align:center; font-weight:700;">Classification</td>
+      <td><strong>4. Model building and evaluation</strong></td>
+      <td>
+        Logistic regression<br>
+        Accuracy, sensitivity &amp; specificity, ROC curves
+      </td>
+      <td rowspan="2" style="text-align:center;">7–10</td>
+    </tr>
+    <tr>
+      <td><strong>5. Flexible models</strong></td>
+      <td>
+        KNN<br>
+        Tree-based methods (decision trees, bagging, forests)
+      </td>
+    </tr>
+
+    <!-- Unsupervised Learning -->
+    <tr>
+      <td rowspan="2" style="text-align:center; font-weight:700;">Unsupervised<br>Learning</td>
+      <td><strong>6. Clustering</strong></td>
+      <td>
+        Hierarchical clustering<br>
+        K-means clustering
+      </td>
+      <td rowspan="2" style="text-align:center;">11–15</td>
+    </tr>
+    <tr>
+      <td><strong>7. Dimension reduction</strong></td>
+      <td>
+        Principal component analysis (PCA)
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 
 <br><br><br><br>
+
 
 # Course resources
 
 ## Textbook & Online Course Manual
 
-There is no required textbook for this course. Throughout the course, readings may be assigned from these [notes](https://mac-stat.github.io/Stat155Notes/), or other sources. 
+- Our textbook, ISLR, is available free online: [An Introduction to Statistical Learning with Applications in R (2nd edition). James et al, 2021.](https://www.statlearning.com/). The ISLR readings are highly encouraged and serve as a nice complement to the videos and in-class activities.
 
-The [online course manual](https://mutasim221b.github.io/Mac-STAT-155-Fall-25/) includes all in-class activities (with solutions) and a daily [Schedule](schedule.qmd). All links and materials needed will be provided on the schedule tab of this website.
+- Throughout the course, readings will be assigned from these [notes](https://mac-stat.github.io/STAT253/), or other sources. 
+
+- The [online course websitel](https://mutasim221b.github.io/Mac-STAT-253-Sp-26/) includes all in-class activities (with solutions).
+
+- See the rough [schedule](https://docs.google.com/spreadsheets/d/106LzAa_RC8MoG_Ah2B_JWV76Nb1_0YsnsHjqL1VSWC4/edit?usp=sharing) of the course, which is subject to change as needed.
 
 ## Moodle
-[Moodle](https://moodle.macalester.edu/) includes general resources, a broad course calendar, submission links, feedback, and a forum for student questions.
+[Moodle](https://moodle.macalester.edu/) includes important announcements, general resources, a broad course calendar, submission links, feedback, and a forum for student questions.
+
 
 
 ## Statistical software
@@ -140,6 +183,220 @@ More detailed instructions on downloading, installing, and getting started with 
 
 <br><br><br><br>
 
+# Course Structure
+
+## Before Class
+In order to dedicate our class time to hands-on learning, you will prepare for class by watching short videos, reading from our textbook, and completing short quizzes (checkpoints) to assess your initial understanding of concepts. You can reattempt each checkpoint question multiple times, with a small penalty for incorrect responses. 
+
+## During Class
+During class time, you will engage with each other in exercises and discussions that build upon the pre-class work. Please bring your laptop to class every day. Consistent attendance and active participation in these activities is expected of all students and, most importantly, will be crucial for your learning!
+
+## After Class
+After class, you will  be expected to finish any remaining exercises from the class activity and review/organize your notes. For each unit, you will also complete homework assignments  designed to help you practice and synthesize material and provide an opportunity to receive feedback to further guide your learning. 
+
+
+<br><br><br><br>
+
+# Major Learning Activities & Assessments
+
+## Group Assignments
+hese assignments will give you an opportunity to practice collaboration, communication, and application of core statistical machine learning concepts in a more open-ended setting. They will also provide an opportunity to review and synthesize key concepts prior to each quiz. We will reserve class time at the end of each module—Regression (Units 1–3), Classification (Units 4–5), and Unsupervised Learning (Units 6–7)—to work on these assignments. Deadlines are posted in the Stat 253 Google Calendar on Moodle.
+
+## Quizzes
+The primary assessment of your understanding of core statistical machine learning concepts and R code will come in the form of three in-class quizzes:
+
+- **Quiz 1:** TBD
+- **Quiz 2:** TBD
+- **Quiz 3:** Thurs. 5/7, 1:30pm-3:30pm in class
+
+::: {.callout-warning title="📜 Quiz Policies"}
+- **All quizzes will have the following format:**
+  - Taken individually, using pen/pencil & paper
+  - Closed notes, but you may use a 3x5 index card with writing on both sides. These can be handwritten or typed, but you may not include screenshots or share note cards. Making your own card is important to the review process- as you are required to submit the index card along with the answer paper.
+
+
+- **Quiz corrections:**  
+After Quizzes 1 and 2, you will have the opportunity modify your quiz grade by reviewing feedback, completing a short reflection, and revising your answers.
+   **Note**: Quiz 3 corrections are not allowed due to time constraints at the end of the semester (I'll take this into consideration when grading!)
+   
+:::
+
+## Learning Reflections
+Throughout the semester, I want you to practice reflecting on your progress and learning. I will provide a structured set of reflection questions for you to complete roughly once a month. More details (prompts, deadlines, grading, etc.) will be provided in class!
+
+
+<br><br><br><br>
+
+
+# Course Policies
+
+## Flexibility
+
+I provide transparent accommodations to all students. It helps reduce stress and the “hidden curriculum” (not everybody feels comfortable asking for flexibility).
+
+- **Missed Class**: You are warmly invited, encouraged, and expected to attend and participate in all class meetings. Participation means coming to class prepared, actively discussing material, engaging in the activities, and asking questions. This will be important not only for your own learning, but also for our ability to build a community and maintain a sense of connection and commitment to one another during the semester. That being said, it’s okay to miss class in the case of an emergency. 
+
+::: {.callout-tip title="What to Do If You Miss Class"}
+1. 📧 **Send me a quick email.** You do not need to share a reason for your absence, especially if it’s personal. It’s just a simple courtesy & keeps communication lines open.
+
+2. 📅 **Check the Course Schedule** in the online manual for what is happening in class that day.
+
+3. 📝 **Complete the in-class activity on your own** & check the solutions posted in the online manual.
+
+4. 💬 **Ask any follow-up questions** on the Moodle forum or in office hours (OH).
+:::
+
+- **Homework**: There will be a one hour grace period implemented for each assignment. If you need more time than that, email me to request an extension. Each student will automatically (no reason necessary!) be granted the use of three 3-day homework extensions. Except in rare circumstances, I will not grant more than three (or longer than 3-day) extensions.
+- **Checkpoints**: Except in exceptional circumstances, I will NOT grant extensions or accept late submissions for checkpoints. These are important preparation for class.
+
+- **Major learning activities**: I cannot guarantee that I will be able to accommodate late work or extensions for group assignments, quizzes, or reflections, but I will do my best to work with you in exceptional circumstances. Send extension requests for any of these major assignments at least one week in advance for full consideration. 
+
+::: {.callout-tip title="🤝 **PLEASE REACH OUT WHEN YOU NEED HELP.**"}
+:::
+
+
+
+## Artificial Intelligence (AI)
+
+Using AI tools is an emerging skill. You may use AI (ChatGPT, Gemini, Grok, etc), with some caveats & limitations:
+
+- AI is often wrong, thus is not a good resource on topics for which you don’t yet have expertise. Relatedly, though AI can be helpful with parts of a statistical analysis (eg: getting unstuck on code, checking grammar), you have to guide that process (eg: what questions are we trying to answer? what’s a reasonable approach?).
+
+- Work on an exercise for at least 30 minutes before even thinking about AI. You will learn very little if you overly rely on AI, hence be unprepared for other interactions with the material (eg: in-class discussions, quizzes, future courses that build upon 253, etc). Learning comes from you doing the puzzling, not from you producing a correct answer.
+
+- Whether or not you use AI, you must be able to defend/explain any code/discussion you hand in. You cannot simply use AI to bypass your own learning.
+
+- You may not use AI to generate entire arguments or discussions. Putting code and discussions into your own words is critical for your own deeper learning, independent thinking, and creativity. (For example, imagine how little you’d learn in a language course if you simply used AI to translate all text for you!!)
+
+- Any use of AI must be cited, just like any other resource.
+
+
+## Community & Academic Integrity
+
+MSCS strives to provide a learning environment that is equitable, inclusive, welcoming, mutually respectful, and free of discrimination. You’re expected to follow the [MSCS Community Guidelines](https://docs.google.com/document/u/3/d/e/2PACX-1vSlLLWmyOf8WKGDKJ_qypgA_kQI1dNFGEKH0mtFoqfAUARZN7ypVCgivnmPjccks9jJzW1rgEzt7QMI/pub). You’re also required to be familiar with & follow the college’s [academic integrity](https://www.macalester.edu/academicprograms/academicpolicies/academicintegrity/) & other [academic policies](https://www.macalester.edu/academic-programs/academicpolicies/). In addition to the examples listed there, academic violations in this course include but are not limited to the following:
+
+- Using **any** materials from **any** past STAT 253 course, at Mac or elsewhere. Relatedly, you should not provide any materials to any future 253 students. 
+- Gaining access to, using, or distributing solution sets.
+- Passing off others’ work as your own. You must be able to defend / explain all work you hand in.
+- Using AI without citation, to generate entire discussions / code blocks, or without being able to defend the results. Policy violations will result in a score of 0 on the work & be reported to the Asst. Dean of Academic Programs & Advising.
+
+<br><br><br><br>
+
+
+# Calculating Final Grades
+
+## Grading system
+
+This course uses a grading system designed to combat some of the (many!) problems with "traditional" grades [link](https://www.jessestommel.com/ungrading-an-introduction/). My hope is that this alternative grading system will provide space to make and learn from mistakes, engage in feedback loops [link](https://www.wired.com/2011/06/ff-feedbackloop/), and encourage self-reflection. 
+You will receive qualitative feedback and marks (e.g., PASS, ATTEMPT), rather than points, on most assignments. I will then translate that feedback into an overall letter grade according to the table to the right.
+Adjusting to this system may take time. I'll provide feedback and resources to help you track your progress throughout the semester. If you are ever concerned about your learning (or grade), please set up an appointment with me to discuss!
+
+
+<style>
+/* Grade-spec table styling (scoped) */
+.grade-spec {
+  width: 100%;
+  max-width: 900px;
+  border-collapse: collapse;
+  margin: 1rem 0 0.5rem 0;
+  font-size: 0.98rem;
+}
+
+.grade-spec th,
+.grade-spec td {
+  border: 2px solid #7f8c8d;
+  padding: 12px 10px;
+  vertical-align: middle;
+}
+
+.grade-spec thead th {
+  background: #cfe0f2; /* light blue header */
+  text-align: center;
+  font-weight: 700;
+}
+
+.grade-spec .rowhdr {
+  background: #cfe0f2; /* same light blue for left labels */
+  font-weight: 700;
+  text-align: left;
+  width: 26%;
+}
+
+.grade-spec td {
+  text-align: center;
+  background: #eaf2fb; /* very light blue body */
+}
+
+.grade-spec .subnote {
+  margin-top: 0.5rem;
+  max-width: 900px;
+  color: #555;
+  font-size: 0.95rem;
+}
+</style>
+
+<table class="grade-spec" aria-label="Grade specifications table">
+  <thead>
+    <tr>
+      <th style="width:26%"></th>
+      <th style="width:24%">Passing<br>(C)</th>
+      <th style="width:26%">Progressing<br>(B)</th>
+      <th style="width:24%">Exemplary<br>(A)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th class="rowhdr">Checkpoints</th>
+      <td>ATTEMPT &ge; 10</td>
+      <td></td>
+      <td>PASS &ge; 12</td>
+    </tr>
+
+    <tr>
+      <th class="rowhdr">Homework</th>
+      <td>ATTEMPT &ge; 5</td>
+      <td></td>
+      <td>PASS &ge; 7</td>
+    </tr>
+
+<tr>
+  <th class="rowhdr">Group<br>Assignments</th>
+  <td>ATTEMPT &ge; 2</td>
+  <td>
+    ATTEMPT &ge; 3<br>
+    <strong>and</strong> PASS &ge; 2
+  </td>
+  <td>PASS &ge; 3</td>
+</tr>
+
+<tr>
+  <th class="rowhdr">Reflections</th>
+  <td>ATTEMPT &ge; 2</td>
+  <td>
+    ATTEMPT &ge; 3<br>
+    <strong>and</strong> PASS &ge; 2
+  </td>
+  <td>PASS &ge; 3</td>
+</tr>
+
+    <tr>
+      <th class="rowhdr">Quizzes<br><span style="font-weight:400">(after revision)</span></th>
+      <td>&ge; 70%</td>
+      <td>&ge; 80%</td>
+      <td>&ge; 90%</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="subnote">
+  If you meet <em>all</em> criteria in a particular column, you will earn that grade.
+  Intermediate grades (e.g., B+, A-) will be given if most requirements in a given column are achieved
+  but some requirements for lower (-) and/or higher (+) grades are met.
+</div>
+
+
+<br><br><br><br>
+
 # Communication & Thriving
 
 ## Asking questions/communicating
@@ -153,14 +410,14 @@ Please visit us!!
 - OH are oriented around group discussion. They are not first come, first served appointments.
 - Since it’s not an effective way to deepen your learning, OH are not a place to sit and do assignments with me or preceptors. It’s an opportunity to discuss concepts & specific questions.
 
-### Moodle Forum: STAT 155 Discussion Board
+### Moodle Forum: STAT 253 Discussion Board
 
 This forum is where we’ll communicate outside class. Students can post and answer comments / questions there. This is an informal way to converse, ask questions, share info, & connect. Do not 
 rely on receiving responses outside weekdays between 9am & 5pm.
 
 ## What to do when you have a question for me?
 
-- If it’s non-private (e.g. about policies, homework (Practice Problems), class activities, etc), you must post it on STAT 155 Discussion Board in Moodle. Remember- collaboration is the KEY!
+- If it’s non-private (e.g. about policies, homework (Practice Problems), class activities, etc), you must post it on STAT 253 Discussion Board in Moodle. Remember- collaboration is the KEY!
 - If it’s personal (e.g. about an absence), email me.
 - It’s good, professional practice to check whether your question is already answered in the provided resources. For example:
   - **Info** (what to do if you miss class): syllabus
@@ -169,7 +426,7 @@ rely on receiving responses outside weekdays between 9am & 5pm.
   - **Homework policies & grading**: [homework policies & grading](https://docs.google.com/document/d/1gffiL-OKMrHSqgNijI2pnjliyzNWg8vIIfoP2MY_DSA/edit?tab=t.0#heading=h.y44zqzjp7zgk) doc
   - **Finals week**: syllabus + course calendar at the top of Moodle + course schedule in the online manual
 
-## Thriving in STAT 155
+## Thriving in STAT 253
 
 ::: {.callout-note title="🗓️ Plan Ahead"}
 You should plan to spend ~10-12 hours on any 4-credit course, including class time.[^1] Stay 
@@ -192,254 +449,48 @@ Actively participate in the class & take ownership of your learning. PLEASE: Don
 
 <br><br><br><br>
 
-# Course Policies
+# Advice for Success in STAT 253
 
-## Flexibility
+## Attend class.
 
-I provide transparent accommodations to all students. It helps reduce stress and the “hidden curriculum” (not everybody feels comfortable asking for flexibility).
+We'll use class time to ask and answer questions, review material, and practice concepts in a collaborative environment. To ensure the best learning experience for you and your classmates, come prepared, engage in class, and make full use of the entire class period. 
 
-- **Missed Class**: It’s okay to miss class in the case of an emergency. Please see the 'Absences' tab below for details.
-- **Practice Problems (PP)**: Limited extensions and limited mistakes without penalty. Please *carefully* go through all the sections from [STAT 155 PP Policies & Grading](https://docs.google.com/document/d/1gffiL-OKMrHSqgNijI2pnjliyzNWg8vIIfoP2MY_DSA/edit?tab=t.0#heading=h.b4wcvjckjps) doc.
-- **Checkpoints**: Some class periods will have course videos and readings assigned ahead of time. For each class period where this is the case, a checkpoint quiz (on Moodle) must be completed by 09:00 am. Checkpoints may be attempted as many times as you’d like, but to earn completion credit for a given checkpoint you must score 100% by your final attempt. These short quizzes are designed to ensure that you stay on top of course material, since much of the content in this course builds on itself.
-- **Quizzes**: Limited revisions. Additional flexibility will be provided in rare extenuating circumstances, upon discussion. Exceptions must be discussed with me (not assumed) early on (not after the fact). 
 
-::: {.callout-tip title="🤝 **PLEASE REACH OUT WHEN YOU NEED HELP.**"}
+::: {.callout-important title="📌 If you miss class…"}
+check the course website to see what you missed, review that material and complete the activity on your own, get notes from your classmates, and then (after doing all of the above) come to office hours with any remaining specific questions.
 :::
 
 
-## Absences
-It’s okay to miss the occasional class. Except in rare extenuating circumstances (which must be discussed in advance):
-- 3 or fewer absences will not impact your grade
-- 4-6 absences will impact your grade (see *Calculating Final Grades* section)
-- you cannot pass the course if you accrue 7+ absences (more than 25% of class sessions)
+## Ask questions. 
 
-::: {.callout-tip title="What to Do If You Miss Class"}
-1. 📧 **Send me a quick email.** You do not need to share a reason for your absence, especially if it’s personal. It’s just a simple courtesy & keeps communication lines open.
-
-2. 📅 **Check the Course Schedule** in the online manual for what is happening in class that day.
-
-3. 📝 **Complete the in-class activity on your own** & check the solutions posted in the online manual.
-
-4. 💬 **Ask any follow-up questions** on the Moodle forum or in office hours (OH).
-:::
-
-## Artificial Intelligence (AI)
-
-Using AI tools is an emerging skill. You may use AI (ChatGPT, Gemini, Grok, etc), with some caveats & limitations:
-
-- AI is often wrong, thus is not a good resource on topics for which you don’t yet have expertise. Relatedly, though AI can be helpful with parts of a statistical analysis (eg: getting unstuck on code, checking grammar), you have to guide that process (eg: what questions are we trying to answer? what’s a reasonable approach?).
-
-- Work on an exercise for at least 30 minutes before even thinking about AI. You will learn very little if you overly rely on AI, hence be unprepared for other interactions with the material (eg: in-class discussions, quizzes, future courses that build upon 155, etc). Learning comes from you doing the puzzling, not from you producing a correct answer.
-
-- Whether or not you use AI, you must be able to defend/explain any code/discussion you hand in. You cannot simply use AI to bypass your own learning.
-
-- You may not use AI to generate entire arguments or discussions. Putting code and discussions into your own words is critical for your own deeper learning, independent thinking, and creativity. (For example, imagine how little you’d learn in a language course if you simply used AI to translate all text for you!!)
-
-- Any use of AI must be cited, just like any other resource.
+When you have questions, please stop me during class, ask your neighbor, post on Moodle discussion board, and come to office hours. Saying "I don't understand" is an important part of learning and it helps others. Office hours are a great time to talk about course material and assignments, study strategies, selecting courses, declaring a major, grad school and/or career planning, or life. You don't need to have a specific question in order to attend office hours: it can also be a great space to review concepts, talk through examples, or just chat! 
 
 
-## Community & Academic Integrity
 
-MSCS strives to provide a learning environment that is equitable, inclusive, welcoming, mutually respectful, and free of discrimination. You’re expected to follow the [MSCS Community Guidelines](https://docs.google.com/document/u/3/d/e/2PACX-1vSlLLWmyOf8WKGDKJ_qypgA_kQI1dNFGEKH0mtFoqfAUARZN7ypVCgivnmPjccks9jJzW1rgEzt7QMI/pub). You’re also required to be familiar with & follow the college’s [academic integrity](https://www.macalester.edu/academicprograms/academicpolicies/academicintegrity/) & other [academic policies](https://www.macalester.edu/academic-programs/academicpolicies/). In addition to the examples listed there, academic violations in this course include but are not limited to the following:
+## Make time. 
 
-- Using **any** materials from **any** past STAT 155 course, at Mac or elsewhere. Relatedly, you should not provide any materials to any future 155 students. 
-- Gaining access to, using, or distributing solution sets.
-- Passing off others’ work as your own. You must be able to defend / explain all work you hand in.
-- Using AI without citation, to generate entire discussions / code blocks, or without being able to defend the results. Policy violations will result in a score of 0 on the work & be reported to the Asst. Dean of Academic Programs & Advising.
+Performing a thoughtful statistical analysis requires time: to plan, to implement, to interpret, and to revise. Start your assignments early. It is very hard to be creative or to debug R code when you are in a rush. You should expect to spend about 10 hours per week on this class (including the 3 hours we spend together during class). If you're spending much more (or less!) time than that, please let me know.  
 
-<br><br><br><br>
 
-# The 6 Core Components (EC3PQ!)
 
-## (1) Engagement
+## Prioritize your well-being. 
 
-Engagement is important to your own learning & to fostering a supportive learning community.
+Taking care of yourself will help you engage more fully in your academic experience. Beyond being a student, you are a human being carrying your own experiences, thoughts, emotions, and identities with you. If you are having difficulties maintaining your well-being, I encourage you to contact me and/or check out these [resources](https://docs.google.com/document/d/1IhoiGs6iUgX-htD64jf60CqbfVE1lp9JhVNlnm6iNsA/edit?tab=t.0). 
 
-::: {.callout-important title="📌 Expectations"}
-- **Do not miss more than 3 in-person class sessions.**  (4–6 absences will lower your grade. 7+ absences will result in a D/NC.)
-
-- **When attending class:**
-  - Be on time & don’t leave early  
-  - Do not use your phone (phones must be put away when you enter the course, even if class hasn’t started)  
-  - [Do not use your laptop for anything other than taking notes and in-class activities](https://www.sciencedirect.com/science/article/pii/S0360131512002254) (e.g., no videos, no email, no messaging apps, etc.)  
-  - Be actively present (e.g., don’t work alone, don’t work on other courses, etc.)  
-
-- **Outside class:**
-  - Check your email for announcements (sent via Moodle) and stay updated on the Moodle forum  
-  - When you have questions, or just want to chat, please stop by OH!
-  
+::: {.callout-important title="📌 Important..."}
+As part of prioritizing your well-being (and that of others around you), it is important that you stay home if you are feeling sick. This is particularly meaningful to me as someone with a severely immunocompromised family member. I will happily work with you to get you caught up!
 :::
 
 
-## (2) Collaboration
+## Communicate. 
 
-Collaboration improves higher-level thinking, confidence, communication, community, & more. You will work in groups in and outside class. These groups may occasionally switch & may sometimes be assigned. 
-
-::: {.callout-note title="🤝 Expectations"}
-- Follow the [MSCS Community Guidelines](https://docs.google.com/document/u/3/d/e/2PACX-1vSlLLWmyOf8WKGDKJ_qypgA_kQI1dNFGEKH0mtFoqfAUARZN7ypVCgivnmPjccks9jJzW1rgEzt7QMI/pub)
-
-- In group settings, both in and outside class, you:
-  - Use your group members’ correct names and pronouns  
-  - Actively contribute to discussions  
-  - Actively include all other group members in discussion  
-  - Create a space where others feel comfortable making mistakes & sharing their ideas  
-  - Effectively communicate with your group about meeting times, etc. 
-  
-:::
+I will do my best to clearly and promptly communicate any changes to expectations, deadlines, office hours, or class meetings. Please make sure to check your email (and Moodle announcement) so you don't miss any important announcements. I know that you may also have issues come up: if so, please get in touch with me to discuss solutions. 
 
 
-## (3) Preparation (Checkpoints) 
-
-Roughly half of our class sessions will require some prep work. Before class you will watch videos which introduce new concepts, then take a low-stakes checkpoint quiz (CP). This will help us prepare for class, build a common foundation, & maximize our time together – just how readings & reading reflections might be used in another class!
-
-::: {.callout-important title="📊 Expectations"}
-Complete at least 13 (out of 17) CPs (≈80%) without affecting your final grades!
-:::
-
-::: {.callout-note title="📜 Policies"}
-  - CPs may be attempted as many times as you’d like, but to earn completion credit for a given checkpoint you must score 100% by your final attempt.
-  - If you complete less than 13 (out of 17) CPs (≈80%) before the time they are due, your overall course grade will be lowered by 1/3 of a letter grade (i.e. B –> B-, A- –> B+, etc.).
-    - If you complete less than 8 (out of 17) CPs (≈50%) before the time they are due, your overall course grade will be lowered by 1 of a letter grade (i.e. A –> B, etc.).
-  
-
-- CPs are due **09:00am** on the assigned date. **There are no extensions for CPs**, as they are important *preparation* for the relevant class session.  
-:::
-
-## (4) Practice (Practice Problem Sets)
-
-In 8 practice problem sets (PP), you will practice and explore the course material in more depth. The following flexibility is built in to help reduce stress and to facilitate deeper learning. Detailed directions and policies are [here](https://docs.google.com/document/d/1gffiL-OKMrHSqgNijI2pnjliyzNWg8vIIfoP2MY_DSA/edit?tab=t.0#heading=h.y44zqzjp7zgk).
-
-- **Grading**: PP grades will be based on Exercises & Presentation. You can make some mistakes without it chipping away at your score (e.g. you will earn 5/5 points on an exercise if it’s at least 90% correct & complete).
-- **Dropped score**: *IF* you submit and demonstrate clear effort on all 8 PPs, your lowest PP score will be dropped from your final grade.
-- **Extensions**: Limited extensions will be provided. 
-- **STAT 155 Discussion Board:** Use the Moodle board as your first stop for Practice Problems (PP):
-    - Ask first: Post questions about PP on Moodle. Include the problem number, a brief summary of your approach, and where you’re stuck. For coding, share the entire code chunk for the related problem.
-
-    - Help each other: If you know (or suspect) the answer, reply! Explaining your reasoning helps everyone learn.
-
-    - Share alternatives: Multiple correct methods are welcome—post yours with explanation.
-
-    - Show your work: To earn full collaboration credit, provide complete, well-explained solutions/steps. Partial or unexplained answers may lose points.
-
-    - Be professional: Be respectful, cite any resources you used, and write solutions in your own words.
-
-    - Goal: work together as a class so everyone can earn the PP points while learning deeply.
-
-## (5) Project (Independence & Application)
-
-More details will be provided later in the semester. Here are some basics:
-
-- We’ll start working on projects in ~week 6, with the majority of the work happening later in the semester.
-
-- The projects are *collaborative*. You will be working in groups. Though you will work in assigned groups at various points throughout the semester, you will pick your own group for the project. This is something to think about as you meet other students in class and learn about common interests.
-
-- Project grades will be based upon a final group written report (no oral presentation), multiple group and individual checkpoints, and individual contributions to the project (thus it’s possible for different group members to earn different grades).
-
-
-## (6) Quizzes (Content Expertise)
-
-Your course engagement, collaboration, preparation, practice, and application will support your deeper understanding of the course material. This will be assessed through three in-person quizzes. You must schedule all travel and other commitments around them — there will not be any alternative quiz times.
-
-- **Quiz 1:** Wednesday, 09/24 in class (tentative) 
-- **Quiz 2:** Wednesday, 10/29 in class (tentative)
-- **Quiz 3:** *Finals week*  
-  - The exam will be written to take ~1.25 hours, but you will have the full 2-hour period to complete it.  
-    - 09:40–10:40 am section 03: Monday 12/15- 08:00am-10:00am
-    - 12:00–01:00 pm section 04: Saturday 12.13- 08:00am-10:00am
-
-
-::: {.callout-warning title="📜 Quiz Policies"}
-- **All quizzes will have the following format:**
-  - Taken individually, using pen/pencil & paper  
-  - You will not need to write code or use a calculator, but you will need to read & interpret R output  
-  - Closed notes, but you may use a 3x5 index card with writing on both sides. These can be handwritten or typed, but you may not include screenshots or share note cards. Making your own card is important to the review process- as you are required to submit the index card along with the answer paper.
-
-- **Quizzes 2 & 3 will be cumulative.** This is unavoidable as the material builds upon itself.  
-
-- **Quiz corrections:**  
-  You can earn up to 50% of missed points back on Quizzes 1 & 2 if you:  
-   1. Write a reflection of how you prepared for the quiz and where you felt strongest or more uncertain in your understanding before taking the quiz; and  
-   2. Submit your quiz corrections along with your reflection to the instructor, no later than one week after quizzes have been handed back.  
-   **Note**: Quiz 3 corrections are not allowed due to time constraints at the end of the semester.
-   
-:::
-
-<br><br><br><br>
-
-# Calculating Final Grades
-
-## Grading system
-
-The grading system in this course is designed to help you achieve the learning objectives while allowing space to make and learn from mistakes along the way. Your final course grade will consist of three, evenly-weighted components (Quizzes, Practice Problems, and the Project), modified by your progress toward the Engagement, Collaboration, and Preparation (Checkpoint) goals:
-
-
-::: {.columns}
-::: {.column width="30%"}
-### Course Percentage
-
-$\tfrac{1}{3}$ Practice Problems +  
-$\tfrac{1}{3}$ Quiz total +  
-$\tfrac{1}{3}$ Project
-
-| Grade | Course percentage |
-|------:|:-------------------|
-| A     | > 93%             |
-| A-    | 87–93%            |
-| B+    | 84–87%            |
-| B     | 81–84%            |
-| B-    | 78–81%            |
-| C+    | 75–78%            |
-| C     | 72–75%            |
-| C-    | 69–72%            |
-| D/NC  | < 69% **or 7+ absences** |
-:::
-
-::: {.column width="4%"}
-&nbsp;   <!-- spacer -->
-:::
-
-::: {.column width="66%"}
-### Grade Modifiers
-
-Engagement (including attendance) +  
-Preparation (checkpoints)
-
-| Modifier                          | Scenario                                                                 |
-|:----------------------------------|:-------------------------------------------------------------------------|
-| none <br>(e.g. A → A)            | Meets expectations in all two areas (Engagement and Preparation) |
-| ⅓ lower grade <br>(e.g. A → A-)  | Demonstrates strong progress (e.g., 4 absences OR less than 13 (out of 17) CPs (≈80%))  |
-| 1 lower grade <br>(e.g. A → B)   | Demonstrates moderate progress (e.g., 5–6 absences OR less than 8 (out of 17) CPs (≈50%)) |
-| >1 lower grade                   | Demonstrates little progress toward expectations in two areas          |
-| Drop to D/NC                     | Has 7+ absences                                                          |
-
-**NOTE:** The table presents general scenarios. Please reach out if you want to discuss progress in Engagement and/or Preparation.
-:::
-
-:::
-
-::: {.callout-important title="📊 Grading Caveats"}
-- The goal of sharing this specific information is to provide transparency around final grades, hence clear goals to work toward. That said, assigning grades is much more nuanced than any grading rubric / framework might suggest (for good reasons).  What’s shared here is a **worst case scenario** – it represents the lowest a grade might be if you meet the corresponding goals.
-
-- <span style="color:red; font-weight:bold;">Moodle does NOT correctly weight your grades</span>, thus should not be used alone to monitor your progress.  
-:::
 
 <br><br><br><br>
 
 # Other policies
-
-## What to Do If You Miss Class
-
-If you do miss class, I expect you to complete any in-class activities on your own. Check the solutions in the online manual and come to office hours with any follow-up questions.
-
-## Late work on Practice Problems (PPs)
-
-Throughout the semester, you may use up to three, three-day extensions. These three extensions can be used on **Practice Problems** only, not **quizzes**. The purpose of deadlines (and extensions) are to keep you accountable for your own learning, to keep you on track with the pace of the course (which builds upon itself throughout the semester), and to provide preceptors and myself with the ability to provide you with timely feedback on assignments. Since the Problem Sets are due roughly every two weeks, you must begin working on them early if you want to succeed.
-
-Extensions can be used automatically, without letting me know in advance. The Moodle dropboxes for assignments will close exactly 3 days after the original deadline (i.e. Mondays at 11:59pm), and I will not accept work submitted after that point unless there are extenuating circumstances that you have communicated with me about ahead of the original deadline. If you email me a completed assignment after a 3-day extension is up, I may have the preceptors provide you with feedback, but you will not receive credit for the assignment (equivalent to “Needs Improvement” on every question of the relevant assignment).
-
-I expect you to keep track of how many extensions you’ve used. I will do my best to email you a reminder if you have used all three of your extensions and have none remaining.
-
-If you have run out of extensions and/or an extenuating circumstance occurs that impacts your ability to submit assignments on time, please email me to discuss the situation. **I am happy to be flexible as long as you communicate!**
 
 ## Religious Observance
 
@@ -478,7 +529,7 @@ Performing a thoughtful statistical analysis requires time: to plan, to implemen
 
 - Start your assignments early. It is very hard to be creative or to debug R code when you are in a rush.  
 - In addition to the 3 hours we spend together during class, expect to spend about **10-12 hours per week** on this class.  
-- Don’t miss any Checkpoint quizzes—they are designed to give you a core understanding of the subject matter (**due on 09:00 am, if assigned**)!
+- Don’t miss any Checkpoint quizzes—they are designed to give you a core understanding of the subject matter (**due at 02:00 pm, if assigned**)!
 - If you’re spending much more (or less!) time than that, please let me know.
 :::
 
@@ -515,23 +566,14 @@ I also ask that you check in with me as soon as possible if:
 - Something about the class is not working for you
 :::
 
-::: {.callout-note title="💡 Tips from Past Students at MTU!"}
-Here are some comments from previous students in my **Engineering Statistics** class at Michigan Tech that may help you succeed in STAT 155 as well!
+::: {.callout-note title="💡Advice for Success in STAT 253 (Preceptor Edition)"}
 
-- Pay attention to the class lectures, and take notes. Makes the entire class 10x easier.
-- Go to the office hours. He is a really kind professor, and will help so much during the course...getting to know professor Billah is just a joy and can make the course so much more fun, not to mention he will definitely make your day.
-- Class is easy to follow along, content is easy to follow, homework helps prepare you for the exam. 
-- Homework discussion page will help you to secure maximum points, don't hesitate to ask questions there; also if you know the answer, let others know as well!
-- I liked the way the class was setup as a whole. The discussions were helpful. 
-- Discussions were helpful to see that you had a similar understanding as your classmates.
-- My advice would be to attend office hours! Dr Bill gives great feedback. The meetings are short too, so no need to worry about allocating a significant amount of time. 
-- Personally, this was my favorite class of the semester. More as how accessible the assignments and lectures were. I could re-watch lectures and with the required discussion boards, I was able to get help by others in the class if I didn't get the right answer, or faced a problem.
-- The emails to keep students on track as well as other call outs were nice throughout the semester. I think overall, work and requirements were well done and distributed.
-- Continue with the discussion posts because they made problems easier to solve and when you get the same answer as another student in the class, you feel more confident in yourself.
-- I really liked the handouts and the notes that you had us take to better understand the material. Hearing different things from other classes, it seemed like this class was the most prepared and I knew and could explain more topics better than other students in other classes. The lecture videos of the class were great too to go back and review certain things if I was confused. Overall the class was great!
-- Thank you for teaching the course! I like how organized your lecture notes were. They were easy to read and allowed me to easily copy them down for my own reference. You were also very great to talk with and were enthusiastic about the course. Please keep that incredible attitude, as students will appreciate that very much! 
-- I like how you tell us what the material is with very detailed information. Then, we jump to exercises to further understand the concept. I personally have found that you bring a lot of life into the subject matter by giving funny but relevant examples and problems to solve in class. I enjoyed the way that you taught the subject matter and you were knowledgeable enough to answer questions that students had. I recommend keeping playing music at the beginning of class especially because I personally feel more interested in the class because of it and I think others do too. 
-- I think my experience in this class was so good because of the high level of engagement with students. The class was made fun and the material was applicable. Notes were very neat and well organized, which also helped to make learning the material a lot easier. The pace of the course was perfect too in order to really learn the first time without always having to look back at the Huskycast. Again, I liked the personal interaction with the class a lot, it made me want to come to class more than out of pure obligation. Thank you for a great semester!
+- "Take notes on the assigned readings/videos! It's super helpful for exam review"
+- "The course website is very very useful to find notes and example code."
+-  "Try to pay attention to what the code is actually doing instead of just copy/pasting (although copy/pasting is useful!), especially the functions we use most frequently, because it will make understanding and adapting code much easier. Also, it can be helpful to step back and make sure you have a conceptual understanding of what you're trying to do before going straight to coding."
+- "Review the class notes!!!"
+- "Have fun!"
+
 
 :::
 

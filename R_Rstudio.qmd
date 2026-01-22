@@ -1,0 +1,139 @@
+---
+title: "R and RStudio Resources"
+sidebar: false
+---
+
+# R and RStudio Setup {.unnumbered}
+
+Follow these instructions to set up the software that we'll be using throughout the semester.
+
+:::{.callout-note}
+Even if you've already downloaded both R and RStudio for a previous class, you need to **re-download** to make sure that you have the most current versions.
+:::
+
+\
+\
+
+## File Organization  {.unnumbered}
+
+**Required:** Create a folder for this course on your local harddrive (e.g. `Desktop` or `Documents`), not necessarily on a Cloud Drive as you may encounter large datasets in this class.
+
+<br>
+
+**Highly Recommended:** Change the default file download location for your internet browser.
+
+-   Generally by default, internet browsers automatically save all files to the `Downloads` folder on your computer. This does not encourage good file organization practices. You need to change this option so that your browser asks you where to save each file before downloading it.
+-   This [page](https://www.online-tech-tips.com/computer-tips/change-default-download-folder-location-on-any-web-browser/) has information on how to do this for the most common browsers.
+
+
+\
+\
+
+
+## R & RStudio  {.unnumbered}
+
+**Required:** Install (or update) R and RStudio
+
+<!-- update this part each semester -->
+As of January 2026, the latest versions of R and RStudio are: 
+
+- R: 4.5.2 
+- RStudio: 2026.01.0+392
+<!-- end update -->
+
+If you do not have the latest versions of *both* R and RStudio installed on your computer, see below. 
+(Not sure if you do? See the THIRD step, below.)
+
+1. **FIRST:** Download R [here](https://cran.r-project.org/).
+    - You will see three links "Download R for ..."
+    - Choose the link that corresponds to your computer operating system (and pay attention to processor chip type for Mac - M1/M2 or Intel; on your computer, click `Apple` > `About this Mac` to find info about the chip).
+2. **SECOND:** Download RStudio [here](https://posit.co/download/rstudio-desktop/#download).
+    - Click the button under step 2 to install the version of RStudio recommended for your computer.
+3. **THIRD:** Check your work
+    - Open an RStudio session.
+    - Run the following in the Console, and repeat the FIRST or SECOND step if the version numbers that print out are not equal to (or more recent than) those listed above.
+    
+```{r}
+#| eval: false
+# check R version
+R.Version()
+
+# check RStudio version
+rstudioapi::versionInfo()
+```
+    
+
+<br>
+
+
+**Required:** Install the most up-to-date versions of the required **R packages** for this course.
+
+- An R **package** is an extra bit of functionality that will help us in our data analysis efforts in a variety of ways.
+- Open RStudio and click inside the Console pane (by default, the bottom left pane). Copy and paste the following command into the Console. You should see the text below appear to the right of the `> `, which is called the **R prompt**. After you paste, hit Enter.
+
+```{r}
+#| eval: false
+install.packages(c("tidyverse","tidymodels","GGally","ISLR"), dependencies = TRUE)
+```
+
+- If you get a message that says "There are binary versions available the source versions are later" type `no` and press Enter.
+- You will see a lot of text from status messages appearing in the Console as the packages are being installed. Wait until you see the `> ` again.
+- Enter the command `library(ggplot2)` and hit enter.    
+    If you see the message `Error in library(ggplot2) : there is no package called ggplot2`, then there was a problem installing this package. Jump down to the Troubleshooting section below. (Any other messages that appear are fine, and a lack of any messages is also fine.)
+- Repeat the above step for the commands:
+    - `library(tidyverse)`
+    - `library(tidymodels)`
+    - `library(GGally)`
+    - `library(ISLR)`
+- Quit RStudio. You're done setting up!
+
+<br>
+
+**Highly Recommended:** Set essential RStudio options.
+
+Go to: 
+
+- Windows: Edit \> Preferences \> General
+- Mac: Tools \> Global Options... \> General
+
+Navigate to the "Workspace" section.
+
+-   Restore `.RData` into workspace at startup: **Leave this unchecked**
+-   Save workspace to `.RData` on exit: **Select "Never"**
+-   Press "Apply" and then "OK"
+
+If you don't change these options, RStudio will save all of the objects you ever create in your Global Environment. In practice, this leads to all of the objects, datasets, etc that you have ever worked with at Macalester being loaded in when you start RStudio.
+
+-   This can make startup slow.
+-   It clutters the Global Environment. (e.g., You're working on something and referring to `diamonds` not knowing that a `diamonds` that was used in class last year is already in the Global Environment.)
+
+
+<br>
+
+**Highly Recommended:** Watch this [video](https://www.youtube.com/watch?v=LJiRSPoe8r0) made by Dr. Lisa Lendway that describes useful configuration options for RStudio.
+
+<br>
+
+**Optional:**  For a refresher on RStudio features, watch this [video](https://www.youtube.com/watch?v=HWnanydsBCs). It also shows you how to customize the layout and color scheme of RStudio.
+
+
+\
+\
+
+
+
+### Troubleshooting {-}
+
+- **Problem:** You are on a Mac and getting the following error (or something similar):    
+```
+    Error: package or namespace load failed for ‘ggplot2’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):
+     there is no package called ‘rlang’
+```    
+
+Here's how to fix it:
+
+- First install the suite of Command Line Tools for Mac using the instructions [here](http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/).
+- Next enter `install.packages("rlang")` in the Console.
+- Finally check that entering `library(ggplot2)` gives no errors.
+
+<br><br><br><br>
