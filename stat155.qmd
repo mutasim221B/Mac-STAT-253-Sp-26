@@ -97,4 +97,4 @@ Estimate ($\beta_0, \beta_1,..., \beta_k$) by ($\hat{\beta}_0, \hat{\beta}_1,...
 ### Comprehensive Review {.unnumbered} 
 
 A comprehensive STAT 155 review is provided by the STAT 155 Notes created by
-Profs. Grinde, Heggeseth, and Myint [(here)](https://mac-stat.github.io/Stat155Notes/) and Prof. Johnson's Spring 2022 STAT 155 manual [(here)](https://ajohns24.github.io/155_Spring_2022/).
+Profs. Grinde, Heggeseth, and Myint [(here)](https://mac-stat.github.io/Stat155Notes/) and Prof. Bill's Fall 25 STAT 155 website (skim the topics from the 'Activities' tab as needed!) [(here)](https://mutasim221b.github.io/Mac-STAT-155-Fall-25/).
