@@ -296,14 +296,14 @@ classification.  there's a _categorical_ output variable $y$.
 <br><br>
 
 
-4. **Machine learn about each other! Scenario A.**    
-    The following data were from past STAT 253 students (you!) and were analyzed using a machine learning algorithm. In your groups: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; _and_ (3) summarize what the output tells you about the students.
+4. **Machine learn about past students! Scenario A.**    
+    The following data were collected from past STAT 253 students and were analyzed using a machine learning algorithm. The questions were about their major (STAT/DS and Other), Activity (readng, streaming), walk time to MAC, Photo rating, class year, ). In your groups: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; _and_ (3) summarize what the output tells you about the students.
     
 ![](../images/L01-1.png){width=100%}
     
 <details>
 <summary>Solution</summary>
-1. predict someone's major based on other survey responses
+1. predict someone's major based on 'other' survey responses
 2. classification ($y$ = major is categorical)
 3. (will vary by semester -- what do you learn about the majors represented in this class and the variables that are useful for predicting it?)
 </details>
@@ -314,7 +314,7 @@ classification.  there's a _categorical_ output variable $y$.
 
 
 
-5. **Machine learn about each other! Scenario B.**    
+5. **Machine learn about past students! Scenario B.**    
     Same directions as for Scenario A:    (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; _and_ (3) summarize what the output tells you about the students.
     
 ![](../images/L01-2.png){width=100%}
@@ -329,46 +329,7 @@ classification.  there's a _categorical_ output variable $y$.
 <br><br>
 
 
-
-6. **Machine learn about each other! Scenario C.**    
-    Same directions as for Scenario A: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; _and_ (3) summarize what the output tells you about your classmates. 
-    
-```{r exercise6-clustering}
-#| echo: false
-#| eval: true
-#| fig-width: 8
-#| fig-height: 6
-
-# prep data
-survey_sub <- survey_clean %>% 
-  select(-Section, -`Unique Word`, -`Preferred Name`)
-fake_names <- survey_clean$`Unique Word`
-
-# check for duplicates and add "2" if so
-# might not need this (could comment out if so)
-if(length(unique(fake_names)) != length(fake_names)){
-  fake_names[duplicated(fake_names)] <- paste0(fake_names[duplicated(fake_names)], '2')
-}
-
-rownames(survey_sub) <- fake_names
-    
-    
-# Dendrogram of scaled data
-gower_dist <- daisy(survey_sub, metric = "gower", type = list(logratio = 3))
-class_cluster <- hclust(gower_dist)
-plot(class_cluster, cex = 0.8, main = "", axes = FALSE, xlab = "", ylab = "", sub = "")
-```
-    
-<details>
-<summary>Solution</summary>
-1. which students in the class are most similar to which other students?
-2. clustering (no outcome $y$, interested in structure/similarities across observations)
-3. (answers will vary by semester -- to whom are you most similar? how many "natural" groupings of students do you see? etc.)
-</details> 
-
-<br><br>
-
-7. Use Spotify users' previous listening behavior to identify groups of similar users.     
+6. Use Spotify users' previous listening behavior to identify groups of similar users.     
 
 <details>
 <summary>Solution</summary>
@@ -378,7 +339,7 @@ clustering
 <br><br>
 <!-- clustering -->
 
-8. Predict workers' wages by their years of experience.    
+7. Predict workers' wages by their years of experience.    
 
 <!-- regression -->
 <details>
@@ -388,7 +349,7 @@ regression ($y$ = wages)
 
 <br><br>
 
-9. Predict workers' wages by their college major.    
+8. Predict workers' wages by their college major.    
 
 
 <!-- regression -->
@@ -400,7 +361,7 @@ regression ($y$ = wages)
 
  <br><br>
 
-10. Use a customer's age to predict whether they've seen the *Barbie* movie.    
+9. Use a customer's age to predict whether they've seen the *Barbie* movie.    
 
 <!-- classification -->
 <details>
@@ -410,7 +371,7 @@ classification ($y$ = whether or not watched the film)
 
 <br><br>
 
-11. Look for similarities among genetic samples taken from a group of patients.  
+10. Look for similarities among genetic samples taken from a group of patients.  
 
 <!-- clustering -->
 
