@@ -26,8 +26,6 @@ website:
         text: "Welcome!"
       - sidebar:overview
       - sidebar:activities
-      - file: assignments.qmd
-        text: "Homework Assignments"
       - sidebar:appendices
 
 
