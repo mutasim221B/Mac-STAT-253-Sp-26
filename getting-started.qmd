@@ -1,0 +1,40 @@
+# Getting Started {.unnumbered}
+
+Broadly, statistical machine learning consists of tools and algorithms to learn from data. 
+Insights from machine learning help us take action by enabling us to make predictions and understand uncertainty. 
+Applications of machine learning algorithms are used everywhere from finance to biology, medicine, social sciences, language, and the humanities. 
+
+In this course, you will build on the linear and logistic regression modeling techniques covered in STAT 155 to understand tools of **regression** (Units 1--3) and **classification** (Units 4--5) more broadly. 
+You will also learn about **unsupervised methods** (Units 6--7) that can help you find underlying structure in data.
+
+![We'll return to this diagram frequently throughout the semester!](../images/MLdiagram.jpg){width="100%"}
+
+
+\
+
+## STAT 155 Review {.unnumbered}
+
+As we build on ideas from STAT 155, familiarity with core concepts from that course is expected. 
+
+Check out the [STAT 155 Review](stat155.qmd) in the Appendix for a list of important topics that we'll revisit this semester, as well as links to resources if you need a refresher on any of those topics. 
+
+\
+
+## R Setup and Resources {.unnumbered}
+
+We'll also be building on your introduction to R/RStudio from STAT 155 (and COMP/STAT 112, if applicable). 
+
+[**TO-DO:**]{.text-primary} During the first week of class, work through the steps on the [R and RStudio Setup](R_Rstudio.qmd) page in the Appendix to get everything set up for the semester. 
+
+Throughout the semester, if you find yourself needing a refresher or additional resources related to R, check out the [R Resources](R_Resources.qmd) page!
+
+\
+
+## Course Notes {.unnumbered}
+
+You'll access most of the materials that you need for this course via this website. 
+Each class period will have its own page on this site. 
+There, you'll find daily learning goals, lecture notes, discussion questions, and exercises designed to give you hands-on practice with newly introduced concepts. 
+
+
+

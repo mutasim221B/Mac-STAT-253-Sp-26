@@ -1,513 +1,5 @@
 [
   {
-    "objectID": "template_qmds/01-foundations-welcome-notes.html",
-    "href": "template_qmds/01-foundations-welcome-notes.html",
-    "title": "Collecting and Summarizing Data (Notes)",
-    "section": "",
-    "text": "Welcome to our first in-class activity! Today we will collect and summarize some data. Our goals are to get to know the people in this class and to start working with data.\nBy the end of this lesson, you should be able to:\n\nDefine cases and variables\nApply the 5 W’s + H (who, what, when, where, why, and how) to data collection\n\nLinks to related reading(s):\n\nWhat is Data?\nData Context\n\nThis activity is structured a bit differently than the activities for the remainder of the class. In this section, you’ll typically find a mini-lecture, review material, or guided / structural examples, followed by exercises.\nFor today, you’ll have some steps to follow for an interactive, tactile activity at your tables before working through the exercises below together.\n\n\nAt your table, write a one to two word answer to each of the following 7 question(s), each on a separate post-it note (do this individually). If there are two questions: write your answer to the first question on the left-hand side of the post-it note, and your answer to the second question on the bottom of the post-it note.\n\nHow many hours of sleep did you get last night? How many cups of coffee did you drink this morning?\nWhat is your declared or potential major? (If you are a double major, just pick whichever one you think of first.)\nWhat is your class year? (first year, sophomore, junior, senior)\nHow many stats courses have you taken in the past?\nOn a scale of 1 (get me out of here) to 10 (yay!), how excited are you about this course?\nIs it your birthday this semester? (yes/no)\nHow many unread emails do you have in your inbox right now?\nHave you used R/RStudio a lot, a little, or never?\n\n\n\n\nDesignate one person from your table to distribute your group’s answers to the questions to the corresponding “station” around the classroom. Each table should have a number on it, corresponding to the “station”/question.\n\n\n\nFill out an electronic version of these questions. We’ll come back to this in a future class. Wait until everyone in your group is done with this before moving on to the exercises."
-  },
-  {
-    "objectID": "template_qmds/01-foundations-welcome-notes.html#step-1",
-    "href": "template_qmds/01-foundations-welcome-notes.html#step-1",
-    "title": "Collecting and Summarizing Data (Notes)",
-    "section": "",
-    "text": "At your table, write a one to two word answer to each of the following 7 question(s), each on a separate post-it note (do this individually). If there are two questions: write your answer to the first question on the left-hand side of the post-it note, and your answer to the second question on the bottom of the post-it note.\n\nHow many hours of sleep did you get last night? How many cups of coffee did you drink this morning?\nWhat is your declared or potential major? (If you are a double major, just pick whichever one you think of first.)\nWhat is your class year? (first year, sophomore, junior, senior)\nHow many stats courses have you taken in the past?\nOn a scale of 1 (get me out of here) to 10 (yay!), how excited are you about this course?\nIs it your birthday this semester? (yes/no)\nHow many unread emails do you have in your inbox right now?\nHave you used R/RStudio a lot, a little, or never?"
-  },
-  {
-    "objectID": "template_qmds/01-foundations-welcome-notes.html#step-2",
-    "href": "template_qmds/01-foundations-welcome-notes.html#step-2",
-    "title": "Collecting and Summarizing Data (Notes)",
-    "section": "",
-    "text": "Designate one person from your table to distribute your group’s answers to the questions to the corresponding “station” around the classroom. Each table should have a number on it, corresponding to the “station”/question."
-  },
-  {
-    "objectID": "template_qmds/01-foundations-welcome-notes.html#step-3",
-    "href": "template_qmds/01-foundations-welcome-notes.html#step-3",
-    "title": "Collecting and Summarizing Data (Notes)",
-    "section": "",
-    "text": "Fill out an electronic version of these questions. We’ll come back to this in a future class. Wait until everyone in your group is done with this before moving on to the exercises."
-  },
-  {
-    "objectID": "template_qmds/01-foundations-welcome-notes.html#exercise-1",
-    "href": "template_qmds/01-foundations-welcome-notes.html#exercise-1",
-    "title": "Collecting and Summarizing Data (Notes)",
-    "section": "Exercise 1",
-    "text": "Exercise 1\nWith your group, in no more than two sentences per question, respond to the questions posed by the 5 W’s + H for the data at your group’s table. If you need a refresher on the 5 W’s + H, check out the related readings posted at the top of this activity!\nWho\n\n  Your answer:\n  \n\nWhat\n\n  Your answer:\n  \n\nWhen\n\n  Your answer:\n  \n\nWhere\n\n  Your answer:\n  \n\nWhy\n\n  Your answer:\n  \n\nHow\n\n  Your answer:"
-  },
-  {
-    "objectID": "template_qmds/01-foundations-welcome-notes.html#exercise-2",
-    "href": "template_qmds/01-foundations-welcome-notes.html#exercise-2",
-    "title": "Collecting and Summarizing Data (Notes)",
-    "section": "Exercise 2",
-    "text": "Exercise 2\nMove the post-it notes around to construct a visualization of the responses at your station."
-  },
-  {
-    "objectID": "template_qmds/01-foundations-welcome-notes.html#exercise-3",
-    "href": "template_qmds/01-foundations-welcome-notes.html#exercise-3",
-    "title": "Collecting and Summarizing Data (Notes)",
-    "section": "Exercise 3",
-    "text": "Exercise 3\nCalculate at least one numerical summary of the post-it note responses at your station, and record your numerical summary in the response text below. Write a complete sentence, not just the numerical summary alone! This is good practice for summarizing data in more formal writing.\n\n  Your answer:"
-  },
-  {
-    "objectID": "template_qmds/01-foundations-welcome-notes.html#exercise-4",
-    "href": "template_qmds/01-foundations-welcome-notes.html#exercise-4",
-    "title": "Collecting and Summarizing Data (Notes)",
-    "section": "Exercise 4",
-    "text": "Exercise 4\nIn no more than three sentences, describe what you learn about from the visual and numerical summaries. Try to write your description in a way that tells an interesting story about the people in this class.\n\n  Your answer:"
-  },
-  {
-    "objectID": "template_qmds/01-foundations-welcome-notes.html#exercise-5",
-    "href": "template_qmds/01-foundations-welcome-notes.html#exercise-5",
-    "title": "Collecting and Summarizing Data (Notes)",
-    "section": "Exercise 5",
-    "text": "Exercise 5\nImagine that you took all the post-it notes in this room and organized them into a spreadsheet. What would each row in the underlying data set represent? What would each column of the data set represent? Check out the first related reading, linked at the top of this activity, if you need assistance!\n\n  Your answer:"
-  },
-  {
-    "objectID": "template_qmds/01-foundations-welcome-notes.html#reflection",
-    "href": "template_qmds/01-foundations-welcome-notes.html#reflection",
-    "title": "Collecting and Summarizing Data (Notes)",
-    "section": "Reflection",
-    "text": "Reflection\nIn three to four sentences, reflect upon today’s activity. Some reflection prompts are found below:\n\nDo you think the context in which the data was collected influenced the results you found?\nWho would the numerical summaries you calculated potentially be represented of? Could you generalize the information you learned to a broader population (all students at Mac, perhaps), or would you have ethical concerns with generalizing your results?\nWhat (if anything) surprised you about the numerical summaries calculated by your group, or other groups?\nDid your data visualization help you better understand, or discover new things about the data that otherwise would have been difficult to distinguish? Why or why not?\n\n\n  Your answer:"
-  },
-  {
-    "objectID": "template_qmds/01-foundations-welcome-notes.html#done",
-    "href": "template_qmds/01-foundations-welcome-notes.html#done",
-    "title": "Collecting and Summarizing Data (Notes)",
-    "section": "Done!",
-    "text": "Done!\n\nFinalize your notes: (1) Render your notes to an HTML file; (2) Inspect this HTML in your Viewer – check that your work translated correctly; and (3) Outside RStudio, navigate to your ‘Activities’ subfolder within your ‘STAT155’ folder and locate the HTML file – you can open it again in your browser.\nClean up your RStudio session: End the rendering process by clicking the ‘Stop’ button in the ‘Background Jobs’ pane.\nCheck the solutions in the course website, at the bottom of the corresponding chapter.\nWork on homework!"
-  },
-  {
-    "objectID": "stat155.html",
-    "href": "stat155.html",
-    "title": "STAT 155 Resources",
-    "section": "",
-    "text": "In this course, we will build on the linear and logistic regression modeling techniques covered in STAT 155. As such, familiarity with key concepts from STAT 155 is expected. This includes, but is not necessarily limited to, the following topics:\n\ndata context: 5W’s + H (who, what, where, when, why, how)\ndata visualization in R\nlinear regression: least squares, model interpretation, prediction, model evaluation (eg residuals, \\(R^2\\))\nlogistic regression: odds, model interpretation, prediction, model evaluation (eg accuracy, sensitivity)\nbootstrapping\n\n\n\n\n\n\n\nTip\n\n\n\nIf you are rusty on any of these concepts, please review the resources linked below!\n\n\n\n\n\n\n\n\n\n\nLet \\(y\\) be a response variable with a set of \\(k\\) explanatory variables \\(x = (x_{1}, x_{2}, ..., x_{k})\\). Then the population linear regression model is\n\\[\\begin{split}\ny & = f(x) + \\varepsilon  = \\beta_0 + \\beta_1 x_{1} + \\beta_2 x_{2} + \\cdots + \\beta_k x_{k} + \\varepsilon \\\\\n\\end{split}\\]\nNOTES:\n\n\\(\\beta\\) is the Greek letter “beta”. \\(\\varepsilon\\) is the Greek letter “epsilon”.\n\n“Linear” regression is so named because it assumes that \\(y\\) is a linear combination of the \\(x\\)’s. It does not mean that the relationship itself is linear!! For example, one of the predictors might be a quadratic term: \\(x_2 = x_1^2\\).\n\\(f(x) = \\beta_0 + \\beta_1 x_{1} + \\beta_2 x_{2} + \\cdots + \\beta_k x_{k}\\) captures the trend of the relationship\n\n\\(\\beta_0\\) = intercept coefficient\nthe model value when \\(x_1=x_2=\\cdots=x_k=0\\)\n\\(\\beta_i\\) = \\(x_i\\) coefficient\nhow \\(x_i\\) is related to \\(y\\) when holding constant all other \\(x_i\\)\n\n\\(\\epsilon\\) reflects deviation from the trend (the residual)\n\n\n\n\nFitting the Model\nOnce we have a population model in mind, we can “fit the model” (i.e. estimate the \\(\\beta\\) population coefficients) using sample data:\n\\[\\begin{split}\ny & =  \\hat{f}(x) + \\varepsilon \\\\\n& = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_{1} + \\hat{\\beta}_2 x_{2} + \\cdots + \\hat{\\beta}_k x_{k} + \\varepsilon \\\\\n\\end{split}\\]\n\n\nTo this end, collect a sample of data on \\(n\\) subjects. Use subscripts to denote the data for subject \\(i\\): \\(y_i\\) and \\(x_{ij}\\). Then the predicted response and residual (prediction error) for subject \\(i\\) are\n\nprediction \\[\\hat{y}_i = \\hat{f}(x_i) = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_{i1} + \\hat{\\beta}_2 x_{i2} + \\cdots + \\hat{\\beta}_k x_{ik}\\]\nresidual / prediction error \\[y_i - \\hat{y}_i\\]\n\n\n\n\nLeast Squares Criterion\nEstimate (\\(\\beta_0, \\beta_1,..., \\beta_k\\)) by (\\(\\hat{\\beta}_0, \\hat{\\beta}_1,..., \\hat{\\beta}_k)\\) that minimize the sum of squared residuals: \\[\\sum_{i=1}^n(y_i - \\hat{y}_i)^2 = (y_1-\\hat{y}_1)^2 + (y_2-\\hat{y}_2)^2 + \\cdots + (y_n-\\hat{y}_n)^2\\]\n\n\n\n\n\n\nA comprehensive STAT 155 review is provided by the STAT 155 Notes created by Profs. Grinde, Heggeseth, and Myint (here) and Prof. Bill’s Fall 25 STAT 155 website (skim the topics from the ‘Activities’ tab as needed!) (here).",
-    "crumbs": [
-      "STAT 155 Resources"
-    ]
-  },
-  {
-    "objectID": "stat155.html#important-topics",
-    "href": "stat155.html#important-topics",
-    "title": "STAT 155 Resources",
-    "section": "",
-    "text": "In this course, we will build on the linear and logistic regression modeling techniques covered in STAT 155. As such, familiarity with key concepts from STAT 155 is expected. This includes, but is not necessarily limited to, the following topics:\n\ndata context: 5W’s + H (who, what, where, when, why, how)\ndata visualization in R\nlinear regression: least squares, model interpretation, prediction, model evaluation (eg residuals, \\(R^2\\))\nlogistic regression: odds, model interpretation, prediction, model evaluation (eg accuracy, sensitivity)\nbootstrapping\n\n\n\n\n\n\n\nTip\n\n\n\nIf you are rusty on any of these concepts, please review the resources linked below!",
-    "crumbs": [
-      "STAT 155 Resources"
-    ]
-  },
-  {
-    "objectID": "stat155.html#review-resources",
-    "href": "stat155.html#review-resources",
-    "title": "STAT 155 Resources",
-    "section": "",
-    "text": "Let \\(y\\) be a response variable with a set of \\(k\\) explanatory variables \\(x = (x_{1}, x_{2}, ..., x_{k})\\). Then the population linear regression model is\n\\[\\begin{split}\ny & = f(x) + \\varepsilon  = \\beta_0 + \\beta_1 x_{1} + \\beta_2 x_{2} + \\cdots + \\beta_k x_{k} + \\varepsilon \\\\\n\\end{split}\\]\nNOTES:\n\n\\(\\beta\\) is the Greek letter “beta”. \\(\\varepsilon\\) is the Greek letter “epsilon”.\n\n“Linear” regression is so named because it assumes that \\(y\\) is a linear combination of the \\(x\\)’s. It does not mean that the relationship itself is linear!! For example, one of the predictors might be a quadratic term: \\(x_2 = x_1^2\\).\n\\(f(x) = \\beta_0 + \\beta_1 x_{1} + \\beta_2 x_{2} + \\cdots + \\beta_k x_{k}\\) captures the trend of the relationship\n\n\\(\\beta_0\\) = intercept coefficient\nthe model value when \\(x_1=x_2=\\cdots=x_k=0\\)\n\\(\\beta_i\\) = \\(x_i\\) coefficient\nhow \\(x_i\\) is related to \\(y\\) when holding constant all other \\(x_i\\)\n\n\\(\\epsilon\\) reflects deviation from the trend (the residual)\n\n\n\n\nFitting the Model\nOnce we have a population model in mind, we can “fit the model” (i.e. estimate the \\(\\beta\\) population coefficients) using sample data:\n\\[\\begin{split}\ny & =  \\hat{f}(x) + \\varepsilon \\\\\n& = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_{1} + \\hat{\\beta}_2 x_{2} + \\cdots + \\hat{\\beta}_k x_{k} + \\varepsilon \\\\\n\\end{split}\\]\n\n\nTo this end, collect a sample of data on \\(n\\) subjects. Use subscripts to denote the data for subject \\(i\\): \\(y_i\\) and \\(x_{ij}\\). Then the predicted response and residual (prediction error) for subject \\(i\\) are\n\nprediction \\[\\hat{y}_i = \\hat{f}(x_i) = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_{i1} + \\hat{\\beta}_2 x_{i2} + \\cdots + \\hat{\\beta}_k x_{ik}\\]\nresidual / prediction error \\[y_i - \\hat{y}_i\\]\n\n\n\n\nLeast Squares Criterion\nEstimate (\\(\\beta_0, \\beta_1,..., \\beta_k\\)) by (\\(\\hat{\\beta}_0, \\hat{\\beta}_1,..., \\hat{\\beta}_k)\\) that minimize the sum of squared residuals: \\[\\sum_{i=1}^n(y_i - \\hat{y}_i)^2 = (y_1-\\hat{y}_1)^2 + (y_2-\\hat{y}_2)^2 + \\cdots + (y_n-\\hat{y}_n)^2\\]\n\n\n\n\n\n\nA comprehensive STAT 155 review is provided by the STAT 155 Notes created by Profs. Grinde, Heggeseth, and Myint (here) and Prof. Bill’s Fall 25 STAT 155 website (skim the topics from the ‘Activities’ tab as needed!) (here).",
-    "crumbs": [
-      "STAT 155 Resources"
-    ]
-  },
-  {
-    "objectID": "project.html",
-    "href": "project.html",
-    "title": "Project",
-    "section": "",
-    "text": "Please download and go through the Project Instructions in details.\nThe Rubrics for grading are here.\nParticipate in the STAT 155 Group Project Survey by Monday, October 27."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "STAT 253: Statistical Machine Learning",
-    "section": "",
-    "text": "STAT 253: Statistical Machine Learning\nMacalester College, Spring 2026\nStatistics is not just about theories & numbers — it’s about making sense of the world.\n\n\n\n\n\n\n📖 A Thought from H. G. Wells\n\n\n\n\n“Statistical thinking will one day be as necessary for efficient citizenship as the ability to read and write.”\n\n\n\nWelcome to the world of Statistics! In this course, you’ll learn how to analyze data, test research hypotheses, and make predictions in ways that matter.\nInstructor: Md Mutasim Billah  Class meeting times:\n\nSection 03: M/W/F 02:20-03:20pm, THTR 213\n\nOffice hours:\n\nLocation: My office (OLRI 234) and over Zoom\nTimes: M/W: 12:00pm - 12:30pm (in-person), T/TR: 2pm - 3pm (Over zoom, password: 123456)\nBy Appointment: I’m also happy to meet one-on-one if my normal drop-in/virtual hours don’t work for you. Shoot me an email and we can arrange it over zoom, password: 123456.\nEmail Response Time: I do my best to reply to emails promptly during weekdays. Please note that messages sent after 3:00 pm or on weekends may take longer to receive a response.\n\n\nSTAT 253 Preceptor Office Hours: There is a link to a Google Calendar containing all preceptor office hours available at the top of the course Moodle page!\nData and R Support: In addition to our course preceptors, there is support on campus for working with data and R / RStudio. See https://www.macalester.edu/mscs/data-support for more information.\n\nThis course website will be updated throughout the semester with new activities, assignments, and announcements, so please bookmark this page if you are enrolled in the course!\nIf you find any typos, bugs, dead links, or have other questions, please email mbillah@macalester.edu"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html",
-    "href": "activities/01_foundations_welcome.html",
-    "title": "Collecting and Summarizing Data",
-    "section": "",
-    "text": "You can download the .qmd file for this activity here and open in R-studio. The rendered version is posted in the course website (Activities tab). I often experiment with the class activities (and see it in live!) and make updates, but I always post the final version before class starts. To be sure you have the most up-to-date copy, please download it once you’ve settled in before class begins."
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#see-class-notes",
-    "href": "activities/01_foundations_welcome.html#see-class-notes",
-    "title": "Collecting and Summarizing Data",
-    "section": "See class notes",
-    "text": "See class notes\nGo to your class-notes to see what we covered in live-note taking!\n\n\n\nEXAMPLE 1: Tidy data (Class Activities!)\nWelcome to the first in-class activities of STAT 155! Fill out the Day 1 Activities form of the following questions (anonymous). We’ll come back to this in a future class. Wait until everyone in your group is done with this.\n\nHow many hours of sleep did you get last night?\nHow many cups of coffee did you drink this morning?\nWhat is your declared or potential major? (If you are a double major, just pick whichever one you think of first.)\nWhat is your anticipated graduation year?\nHow many stats/data science courses have you taken in the past?\nOn a scale of 1 (get me out of here) to 10 (yay!), how excited are you about this course?\nIs it your birthday this semester? (yes/no)\nHow many unread emails do you have in your inbox right now?"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#example-1-use-r-as-a-calculator",
-    "href": "activities/01_foundations_welcome.html#example-1-use-r-as-a-calculator",
-    "title": "Collecting and Summarizing Data",
-    "section": "Example 1: Use R as a calculator",
-    "text": "Example 1: Use R as a calculator\nType the following lines in the console (bottom left), one by one, hitting Return/Enter after each line. In some cases you might even get an error! This error is important to learning how R code does and doesn’t work.\n\n4 + 2\n\n\n4^2\n\n\n4*2\n\n\n4(2)"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#example-2-functions-and-arguments",
-    "href": "activities/01_foundations_welcome.html#example-2-functions-and-arguments",
-    "title": "Collecting and Summarizing Data",
-    "section": "Example 2: Functions and arguments",
-    "text": "Example 2: Functions and arguments\nWe can also use built-in functions to perform common tasks. These functions have names and require information about arguments in order to run:\nfunction(argument) Cheatcode: RiceCooker(Rice)\nTry out the following functions one by one in the RStudio console. For each function, note its…\n\nname\nthe argument or information it needs to run\nwhat output it produces (what the function does)\nhow the name connects to what the function does\n\n\nsqrt(9)\n\n\nnchar(\"macalester\")\n\n\nsqrt(nchar(\"snow\"))\n\nSome functions have more than 1 argument, separated by commas:\nfunction(argument1 = ___, argument2 = ___) Cheatcode: RiceCooker(Rice,Chicken)\nTry out the following, one by one.\n\nrep(x = 2, times = 5)\n\n\nrep(times = 5, x = 2)\n\n\nrep(2, 5)\n\n\nrep(5, 2)\n\nFinally, R is case sensitive. Try using Rep() instead of rep(). Take time to read the error message!\n\nRep(5, 2)"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#example-3-save-it-for-later",
-    "href": "activities/01_foundations_welcome.html#example-3-save-it-for-later",
-    "title": "Collecting and Summarizing Data",
-    "section": "Example 3: Save it for later",
-    "text": "Example 3: Save it for later\nWe’ll often want to store some R output for later use. In R:\nname &lt;- output\nwhere name is the name under which to store a result, output is the result we wish to store, and &lt;- is the assignment operator (I think of this as an arrow pointing the output into the name).\nIMPORTANT: Try out each line one at a time. Why doesn’t the first line produce any output?\n\ndegrees_c &lt;- -13\n\n\ndegrees_c\n\n\ndegrees_c * (9/5) + 32"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#example-4-import-data",
-    "href": "activities/01_foundations_welcome.html#example-4-import-data",
-    "title": "Collecting and Summarizing Data",
-    "section": "Example 4: Import data",
-    "text": "Example 4: Import data\nNext, let’s work with some data!! The first step is importing our data into RStudio. How we do this depends on:\n\nfile format (eg: .xls Excel spreadsheet, .csv, .txt)\nfile location (eg: online, on your desktop, built into RStudio itself).\n\nThe data from the survey you took before class is stored as a .csv file online. Import this data using the read_csv() function, and store it as survey using the code below:\nFirst, in the Console pane of RStudio, run the following command to install some necessary packages (you will need to do this any time you are installing a new package):\ninstall.packages(\"tidyverse\")\n\n# Load the \"tidyverse\" package which contains the read_csv() function\nlibrary(tidyverse)\n\n# Import the data\nsurvey &lt;- read_csv(\"https://mac-stat.github.io/data/112_fall_2024_survey.csv\")\n\n\n\nCheck out the data\nIn the Environment tab in the upper right pane of RStudio, click on survey. What happens?!\n\n\nIn the modern era, datasets often contain hundreds of variables and millions of observations. We need more effective ways to explore such data."
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#example-5-get-to-know-the-data",
-    "href": "activities/01_foundations_welcome.html#example-5-get-to-know-the-data",
-    "title": "Collecting and Summarizing Data",
-    "section": "Example 5: Get to know the data",
-    "text": "Example 5: Get to know the data\nPAUSE: Make sure you’re still in sync with your group.\nBefore we can learn anything from our data, we must understand its structure. For each function below:\n\ntry it out\ndiscuss with your group what the function does\ndiscuss with your group how the function’s name connects to what it does\n\n\ndim(survey) # (Number of row (case/obs.), Number of column (variable))\n\n\nnrow(survey) # Number of case/obs.\n\n\nncol(survey) # Number of variables\n\n\nhead(survey) # View first few rows of the dataset (6 rows, by default)\n\n\nhead(survey, 3) # Controlling the view of first few rows of the dataset\n\n\ntail(survey) # View first few rows of the dataset (6 rows, by default)\n\n\nnames(survey) # Get all column (variable) names\n\n\nstr(survey) # Overall info about data"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#example-6-code-communication",
-    "href": "activities/01_foundations_welcome.html#example-6-code-communication",
-    "title": "Collecting and Summarizing Data",
-    "section": "Example 6 : Code = communication",
-    "text": "Example 6 : Code = communication\nIt’s important to recognize from day 1 that code is a form of communication, both to yourself and others!!!!! Code structure and details are important to readability and clarity, just as grammar, punctuation, spelling, paragraphs, and line spacing are important in written essays. All of the code below works, but has bad structure. With your group, discuss what is unfortunate about each line, then make it better.\n\nseq(from=1, to=9, by=2)\nseq(from = 1, to=9, by=2)\ntemp_cel &lt;- -13\nthisisthetemperaturetodayincelsius &lt;- -13\nthis_is_the_temperature_today_in_celsius &lt;- -13"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#example-7-you-will-make-so-many-mistakes",
-    "href": "activities/01_foundations_welcome.html#example-7-you-will-make-so-many-mistakes",
-    "title": "Collecting and Summarizing Data",
-    "section": "Example 7: You will make so many mistakes!",
-    "text": "Example 7: You will make so many mistakes!\nMistakes are common when, and even important to, learning any new language. You’ll get better and better at interpreting error messages, finding help, and fixing errors. In addition to finding help online, R has built-in help files. For example:\n\nIn the console, type ?rep and press Return/Enter.\nCheck out the documentation file that pops up in the Help tab (lower right).\nQuickly scroll through, noting the type of information provided.\nPause at the “Examples” section at the bottom – perhaps the most useful section! Try out a couple of the provided examples in your console."
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#example-8-make-a-cheat-sheet",
-    "href": "activities/01_foundations_welcome.html#example-8-make-a-cheat-sheet",
-    "title": "Collecting and Summarizing Data",
-    "section": "Example 8: Make a “cheat sheet”",
-    "text": "Example 8: Make a “cheat sheet”\nYou will continue to pick up new R code and ideas. You’re highly encouraged to start tracking this in a cheat sheet (eg: in a Google doc). The cheat sheet will be a handy reference for you, and the act of making it will help deepen your understanding and retention."
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#exercise-complete-this-after-the-class",
-    "href": "activities/01_foundations_welcome.html#exercise-complete-this-after-the-class",
-    "title": "Collecting and Summarizing Data",
-    "section": "Exercise: Complete this after the class",
-    "text": "Exercise: Complete this after the class\nComplete this exercise after class. First, try it on your own (or with your group), and then check your work against the solution provided at the end of this .qmd file.\nUse R code to do the following:\n\nImport & name data on different Himalayan peaks from the url below:\nhttps://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/peaks.csv NOTE: A codebook, i.e. a description of the data, is here.\nUse a function to show which variables are recorded on each peak.\nHow many peaks are included in the dataset? Answer this using a function, not by counting up the rows yourself.\nShow the first 6 rows of the dataset. NOTE: This gives us a quick glimpse without having to print out the entire dataset!"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#exercise-1-use-r-as-a-calculator",
-    "href": "activities/01_foundations_welcome.html#exercise-1-use-r-as-a-calculator",
-    "title": "Collecting and Summarizing Data",
-    "section": "Exercise 1: Use R as a calculator",
-    "text": "Exercise 1: Use R as a calculator\n\n4 + 2\n## [1] 6\n4^2\n## [1] 16\n4*2\n## [1] 8\n#4(2) # We need to use * for multiplication"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#exercise-2-functions-and-arguments",
-    "href": "activities/01_foundations_welcome.html#exercise-2-functions-and-arguments",
-    "title": "Collecting and Summarizing Data",
-    "section": "Exercise 2: Functions and arguments",
-    "text": "Exercise 2: Functions and arguments\n\n# Calculate the square root of 9\nsqrt(9)\n## [1] 3\n\n# Calculate the number of characters in the word \"macalester\"\nnchar(\"macalester\")\n## [1] 10\n\n# Calculate the square root of the number of characters in the word \"snow\"\nsqrt(nchar(\"snow\"))\n## [1] 2\n\n\n# Repeat the number 2, 5 times\nrep(x = 2, times = 5)\n## [1] 2 2 2 2 2\n\n# Repeat the number 2, 5 times\nrep(times = 5, x = 2)\n## [1] 2 2 2 2 2\n\n# Repeat the number 2, 5 times\nrep(2, 5)\n## [1] 2 2 2 2 2\n\n# Repeat the number 5, 2 times\nrep(5, 2)\n## [1] 5 5"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#exercise-3-save-it-for-later",
-    "href": "activities/01_foundations_welcome.html#exercise-3-save-it-for-later",
-    "title": "Collecting and Summarizing Data",
-    "section": "Exercise 3: Save it for later",
-    "text": "Exercise 3: Save it for later\n\n# Nothing shows up -- all we're doing here is storing -13 as degrees_c\ndegrees_c &lt;- -13\n\n# Print the contents of degrees_c\ndegrees_c\n## [1] -13\n\n# We can \"do math\" with the contents of degrees_c\ndegrees_c * (9/5) + 32\n## [1] 8.6"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#exercise-4-import-data",
-    "href": "activities/01_foundations_welcome.html#exercise-4-import-data",
-    "title": "Collecting and Summarizing Data",
-    "section": "Exercise 4: Import data",
-    "text": "Exercise 4: Import data\n\n# Load the tidyverse package\nlibrary(tidyverse)\n\n# Import the data\nsurvey &lt;- read_csv(\"https://mac-stat.github.io/data/112_fall_2024_survey.csv\")"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#exercise-5-get-to-know-the-data",
-    "href": "activities/01_foundations_welcome.html#exercise-5-get-to-know-the-data",
-    "title": "Collecting and Summarizing Data",
-    "section": "Exercise 5: Get to know the data",
-    "text": "Exercise 5: Get to know the data\n\n# Dimensions of the survey data set\n# First number = number of rows\n# Second number = number of columns\ndim(survey)\n## [1] 98  4\n\n\n# Number of rows in the survey data set\nnrow(survey)\n## [1] 98\n\n\n# First 6 rows (the head) of the survey data set\nhead(survey)\n## # A tibble: 6 × 4\n##   cafe_mac     minutes_to_campus fave_temp hangout      \n##   &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;        \n## 1 Cheesecake                  15        18 the mountains\n## 2 Cheese pizza                10        24 a beach      \n## 3 udon noodles                 4        18 the mountains\n## 4 egg rolls                    7        10 a beach      \n## 5 Tacos                        5        18 the mountains\n## 6 pasta                       35         7 the mountains\n\n\n# First 3 rows of the survey data set\nhead(survey, 3)\n## # A tibble: 3 × 4\n##   cafe_mac     minutes_to_campus fave_temp hangout      \n##   &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;        \n## 1 Cheesecake                  15        18 the mountains\n## 2 Cheese pizza                10        24 a beach      \n## 3 udon noodles                 4        18 the mountains\n\n\n# Last 6 rows (the tail) of the survey data set\ntail(survey)\n## # A tibble: 6 × 4\n##   cafe_mac        minutes_to_campus fave_temp hangout \n##   &lt;chr&gt;                       &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;   \n## 1 Burger                         10        21 a forest\n## 2 Pepperoni Pizza                10        24 a beach \n## 3 Hamburger                       6        23 a beach \n## 4 Ginger Cookies                 10        26 a beach \n## 5 bbq chicken                     5        14 a city  \n## 6 Breakfast food                 15        25 a city\n\n\n# Names of the variables in the survey data set\nnames(survey)\n## [1] \"cafe_mac\"          \"minutes_to_campus\" \"fave_temp\"        \n## [4] \"hangout\"\n\n\n# Structure of all variables in the survey data set\nstr(survey)\n## spc_tbl_ [98 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)\n##  $ cafe_mac         : chr [1:98] \"Cheesecake\" \"Cheese pizza\" \"udon noodles\" \"egg rolls\" ...\n##  $ minutes_to_campus: num [1:98] 15 10 4 7 5 35 5 15 7 20 ...\n##  $ fave_temp        : num [1:98] 18 24 18 10 18 7 75 24 13 16 ...\n##  $ hangout          : chr [1:98] \"the mountains\" \"a beach\" \"the mountains\" \"a beach\" ...\n##  - attr(*, \"spec\")=\n##   .. cols(\n##   ..   cafe_mac = col_character(),\n##   ..   minutes_to_campus = col_double(),\n##   ..   fave_temp = col_double(),\n##   ..   hangout = col_character()\n##   .. )\n##  - attr(*, \"problems\")=&lt;externalptr&gt;"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#exercise-6-code-communication",
-    "href": "activities/01_foundations_welcome.html#exercise-6-code-communication",
-    "title": "Collecting and Summarizing Data",
-    "section": "Exercise 6: Code = communication",
-    "text": "Exercise 6: Code = communication\n\n# Make it less smooshy. Add spaces!\nseq(from = 1, to = 9, by = 2)\n## [1] 1 3 5 7 9\n\n# Use consistent spacing\nseq(from = 1, to = 9, by = 2)\n## [1] 1 3 5 7 9\n\n# Use more descriptive names when storing objects\nmy_output &lt;- -13\n\n# Use a shorter and easier to read name\ncelsius_today &lt;- -13\nCelsiusToday  &lt;- -13"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#exercise-7-you-will-make-so-many-mistakes",
-    "href": "activities/01_foundations_welcome.html#exercise-7-you-will-make-so-many-mistakes",
-    "title": "Collecting and Summarizing Data",
-    "section": "Exercise 7: You will make so many mistakes!",
-    "text": "Exercise 7: You will make so many mistakes!"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#exercise-8-your-turn",
-    "href": "activities/01_foundations_welcome.html#exercise-8-your-turn",
-    "title": "Collecting and Summarizing Data",
-    "section": "Exercise 8: Your turn",
-    "text": "Exercise 8: Your turn\n\n# a\npeaks &lt;- read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/peaks.csv\")\n\n# b\nnames(peaks)\n## [1] \"peak_id\"                    \"peak_name\"                 \n## [3] \"peak_alternative_name\"      \"height_metres\"             \n## [5] \"climbing_status\"            \"first_ascent_year\"         \n## [7] \"first_ascent_country\"       \"first_ascent_expedition_id\"\n\n# c\ndim(peaks)\n## [1] 468   8\nnrow(peaks)\n## [1] 468\n\n# d\nhead(peaks)\n## # A tibble: 6 × 8\n##   peak_id peak_name     peak_alternative_name height_metres climbing_status\n##   &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;                         &lt;dbl&gt; &lt;chr&gt;          \n## 1 AMAD    Ama Dablam    Amai Dablang                   6814 Climbed        \n## 2 AMPG    Amphu Gyabjen &lt;NA&gt;                           5630 Climbed        \n## 3 ANN1    Annapurna I   &lt;NA&gt;                           8091 Climbed        \n## 4 ANN2    Annapurna II  &lt;NA&gt;                           7937 Climbed        \n## 5 ANN3    Annapurna III &lt;NA&gt;                           7555 Climbed        \n## 6 ANN4    Annapurna IV  &lt;NA&gt;                           7525 Climbed        \n## # ℹ 3 more variables: first_ascent_year &lt;dbl&gt;, first_ascent_country &lt;chr&gt;,\n## #   first_ascent_expedition_id &lt;chr&gt;"
-  },
-  {
-    "objectID": "R_Resources.html",
-    "href": "R_Resources.html",
-    "title": "R Resources",
-    "section": "",
-    "text": "Tidymodels package documentation\nTidy Modeling with R textbook (Max Kuhn and Julia Silge)\nISLR Labs with Tidymodels (Emil Hvitfeldt)\nIntro to Tidymodels Presentation (Lucy D’Agostino McGowan)\n\n\n\n\n\nCOMP/STAT 112 website (with code examples and videos)\nR for Data Science\nExploratory Data Analysis with R\nJohn’s Hopkins Tidyverse course text\n\n\n\n\n\nggplot2 reference\nColors in R\n\n\n\n\n\nCOMP/STAT 112 website (including an example quarto document)\nQuarto cheatsheet\nQuarto tutorial\nComprehensive Quarto Guide\n\n\n\n\n\nRStudio cheatsheets\nAdvanced R\nR Programming Wikibook\nDebugging in R\n\nArticle\nVideo\n\n\n\n\n\n\nCreating new variables\ncase_when() from the dplyr package is a very versatile function for creating new variables based on existing variables. This can be useful for creating categorical or quantitative variables and for creating indices from multiple variables.\n\n# Turn quant_var into a Low/Med/High version\ndata &lt;- data %&gt;%\n    mutate(cat_var = case_when(\n            quant_var &lt; 10 ~ \"Low\",\n            quant_var &gt;= 10 & quant_var &lt;= 20 ~ \"Med\",\n            quant_var &gt; 20 ~ \"High\"\n        )\n    )\n\n# Turn cat_var (A, B, C categories) into another categorical variable\n# (collapse A and B into one category)\ndata &lt;- data %&gt;%\n    mutate(new_cat_var = case_when(\n            cat_var %in% c(\"A\", \"B\") ~ \"A or B\"\n            cat_var==\"C\" ~ \"C\"\n        )\n    )\n\n# Turn a categorical variable (x1) encoded as a numerical 0/1/2 variable into a different quantitative variable\n# Doing this for multiple variables allows you to create an index\ndata &lt;- data %&gt;%\n    mutate(x1_score = case_when(\n            x1==0 ~ 10,\n            x1==1 ~ 20,\n            x1==2 ~ 50\n        )\n    )\n\n# Add together multiple variables with mutate\ndata &lt;- data %&gt;%\n    mutate(index = x1_score + x2_score + x3_score)",
-    "crumbs": [
-      "R Resources"
-    ]
-  },
-  {
-    "objectID": "R_Resources.html#tidymodels-resources",
-    "href": "R_Resources.html#tidymodels-resources",
-    "title": "R Resources",
-    "section": "",
-    "text": "Tidymodels package documentation\nTidy Modeling with R textbook (Max Kuhn and Julia Silge)\nISLR Labs with Tidymodels (Emil Hvitfeldt)\nIntro to Tidymodels Presentation (Lucy D’Agostino McGowan)",
-    "crumbs": [
-      "R Resources"
-    ]
-  },
-  {
-    "objectID": "R_Resources.html#tidyverse-resources",
-    "href": "R_Resources.html#tidyverse-resources",
-    "title": "R Resources",
-    "section": "",
-    "text": "COMP/STAT 112 website (with code examples and videos)\nR for Data Science\nExploratory Data Analysis with R\nJohn’s Hopkins Tidyverse course text",
-    "crumbs": [
-      "R Resources"
-    ]
-  },
-  {
-    "objectID": "R_Resources.html#visualization-resources",
-    "href": "R_Resources.html#visualization-resources",
-    "title": "R Resources",
-    "section": "",
-    "text": "ggplot2 reference\nColors in R",
-    "crumbs": [
-      "R Resources"
-    ]
-  },
-  {
-    "objectID": "R_Resources.html#quarto-resources",
-    "href": "R_Resources.html#quarto-resources",
-    "title": "R Resources",
-    "section": "",
-    "text": "COMP/STAT 112 website (including an example quarto document)\nQuarto cheatsheet\nQuarto tutorial\nComprehensive Quarto Guide",
-    "crumbs": [
-      "R Resources"
-    ]
-  },
-  {
-    "objectID": "R_Resources.html#general-r-resources",
-    "href": "R_Resources.html#general-r-resources",
-    "title": "R Resources",
-    "section": "",
-    "text": "RStudio cheatsheets\nAdvanced R\nR Programming Wikibook\nDebugging in R\n\nArticle\nVideo",
-    "crumbs": [
-      "R Resources"
-    ]
-  },
-  {
-    "objectID": "R_Resources.html#some-example-code",
-    "href": "R_Resources.html#some-example-code",
-    "title": "R Resources",
-    "section": "",
-    "text": "Creating new variables\ncase_when() from the dplyr package is a very versatile function for creating new variables based on existing variables. This can be useful for creating categorical or quantitative variables and for creating indices from multiple variables.\n\n# Turn quant_var into a Low/Med/High version\ndata &lt;- data %&gt;%\n    mutate(cat_var = case_when(\n            quant_var &lt; 10 ~ \"Low\",\n            quant_var &gt;= 10 & quant_var &lt;= 20 ~ \"Med\",\n            quant_var &gt; 20 ~ \"High\"\n        )\n    )\n\n# Turn cat_var (A, B, C categories) into another categorical variable\n# (collapse A and B into one category)\ndata &lt;- data %&gt;%\n    mutate(new_cat_var = case_when(\n            cat_var %in% c(\"A\", \"B\") ~ \"A or B\"\n            cat_var==\"C\" ~ \"C\"\n        )\n    )\n\n# Turn a categorical variable (x1) encoded as a numerical 0/1/2 variable into a different quantitative variable\n# Doing this for multiple variables allows you to create an index\ndata &lt;- data %&gt;%\n    mutate(x1_score = case_when(\n            x1==0 ~ 10,\n            x1==1 ~ 20,\n            x1==2 ~ 50\n        )\n    )\n\n# Add together multiple variables with mutate\ndata &lt;- data %&gt;%\n    mutate(index = x1_score + x2_score + x3_score)",
-    "crumbs": [
-      "R Resources"
-    ]
-  },
-  {
-    "objectID": "R_Rstudio.html",
-    "href": "R_Rstudio.html",
-    "title": "R and RStudio Resources",
-    "section": "",
-    "text": "Follow these instructions to set up the software that we’ll be using throughout the semester.\n\n\n\n\n\n\nNote\n\n\n\nEven if you’ve already downloaded both R and RStudio for a previous class, you need to re-download to make sure that you have the most current versions.\n\n\n\n\n\n\n\nRequired: Create a folder for this course on your local harddrive (e.g. Desktop or Documents), not necessarily on a Cloud Drive as you may encounter large datasets in this class.\n\nHighly Recommended: Change the default file download location for your internet browser.\n\nGenerally by default, internet browsers automatically save all files to the Downloads folder on your computer. This does not encourage good file organization practices. You need to change this option so that your browser asks you where to save each file before downloading it.\nThis page has information on how to do this for the most common browsers.\n\n\n\n\n\n\n\nRequired: Install (or update) R and RStudio\n\nAs of January 2026, the latest versions of R and RStudio are:\n\nR: 4.5.2\nRStudio: 2026.01.0+392 \n\nIf you do not have the latest versions of both R and RStudio installed on your computer, see below. (Not sure if you do? See the THIRD step, below.)\n\nFIRST: Download R here.\n\nYou will see three links “Download R for …”\nChoose the link that corresponds to your computer operating system (and pay attention to processor chip type for Mac - M1/M2 or Intel; on your computer, click Apple &gt; About this Mac to find info about the chip).\n\nSECOND: Download RStudio here.\n\nClick the button under step 2 to install the version of RStudio recommended for your computer.\n\nTHIRD: Check your work\n\nOpen an RStudio session.\nRun the following in the Console, and repeat the FIRST or SECOND step if the version numbers that print out are not equal to (or more recent than) those listed above.\n\n\n\n# check R version\nR.Version()\n\n# check RStudio version\nrstudioapi::versionInfo()\n\n\nRequired: Install the most up-to-date versions of the required R packages for this course.\n\nAn R package is an extra bit of functionality that will help us in our data analysis efforts in a variety of ways.\nOpen RStudio and click inside the Console pane (by default, the bottom left pane). Copy and paste the following command into the Console. You should see the text below appear to the right of the &gt;, which is called the R prompt. After you paste, hit Enter.\n\n\ninstall.packages(c(\"tidyverse\",\"tidymodels\",\"GGally\",\"ISLR\"), dependencies = TRUE)\n\n\nIf you get a message that says “There are binary versions available the source versions are later” type no and press Enter.\nYou will see a lot of text from status messages appearing in the Console as the packages are being installed. Wait until you see the &gt; again.\nEnter the command library(ggplot2) and hit enter.\nIf you see the message Error in library(ggplot2) : there is no package called ggplot2, then there was a problem installing this package. Jump down to the Troubleshooting section below. (Any other messages that appear are fine, and a lack of any messages is also fine.)\nRepeat the above step for the commands:\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(GGally)\nlibrary(ISLR)\n\nQuit RStudio. You’re done setting up!\n\n\nHighly Recommended: Set essential RStudio options.\nGo to:\n\nWindows: Edit &gt; Preferences &gt; General\nMac: Tools &gt; Global Options… &gt; General\n\nNavigate to the “Workspace” section.\n\nRestore .RData into workspace at startup: Leave this unchecked\nSave workspace to .RData on exit: Select “Never”\nPress “Apply” and then “OK”\n\nIf you don’t change these options, RStudio will save all of the objects you ever create in your Global Environment. In practice, this leads to all of the objects, datasets, etc that you have ever worked with at Macalester being loaded in when you start RStudio.\n\nThis can make startup slow.\nIt clutters the Global Environment. (e.g., You’re working on something and referring to diamonds not knowing that a diamonds that was used in class last year is already in the Global Environment.)\n\n\nHighly Recommended: Watch this video made by Dr. Lisa Lendway that describes useful configuration options for RStudio.\n\nOptional: For a refresher on RStudio features, watch this video. It also shows you how to customize the layout and color scheme of RStudio.\n\n\n\n\n\n\nProblem: You are on a Mac and getting the following error (or something similar):\n\n\n    Error: package or namespace load failed for ‘ggplot2’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):\n     there is no package called ‘rlang’\nHere’s how to fix it:\n\nFirst install the suite of Command Line Tools for Mac using the instructions here.\nNext enter install.packages(\"rlang\") in the Console.\nFinally check that entering library(ggplot2) gives no errors.",
-    "crumbs": [
-      "R and RStudio Resources"
-    ]
-  },
-  {
-    "objectID": "R_Rstudio.html#file-organization",
-    "href": "R_Rstudio.html#file-organization",
-    "title": "R and RStudio Resources",
-    "section": "",
-    "text": "Required: Create a folder for this course on your local harddrive (e.g. Desktop or Documents), not necessarily on a Cloud Drive as you may encounter large datasets in this class.\n\nHighly Recommended: Change the default file download location for your internet browser.\n\nGenerally by default, internet browsers automatically save all files to the Downloads folder on your computer. This does not encourage good file organization practices. You need to change this option so that your browser asks you where to save each file before downloading it.\nThis page has information on how to do this for the most common browsers.",
-    "crumbs": [
-      "R and RStudio Resources"
-    ]
-  },
-  {
-    "objectID": "R_Rstudio.html#r-rstudio",
-    "href": "R_Rstudio.html#r-rstudio",
-    "title": "R and RStudio Resources",
-    "section": "",
-    "text": "Required: Install (or update) R and RStudio\n\nAs of January 2026, the latest versions of R and RStudio are:\n\nR: 4.5.2\nRStudio: 2026.01.0+392 \n\nIf you do not have the latest versions of both R and RStudio installed on your computer, see below. (Not sure if you do? See the THIRD step, below.)\n\nFIRST: Download R here.\n\nYou will see three links “Download R for …”\nChoose the link that corresponds to your computer operating system (and pay attention to processor chip type for Mac - M1/M2 or Intel; on your computer, click Apple &gt; About this Mac to find info about the chip).\n\nSECOND: Download RStudio here.\n\nClick the button under step 2 to install the version of RStudio recommended for your computer.\n\nTHIRD: Check your work\n\nOpen an RStudio session.\nRun the following in the Console, and repeat the FIRST or SECOND step if the version numbers that print out are not equal to (or more recent than) those listed above.\n\n\n\n# check R version\nR.Version()\n\n# check RStudio version\nrstudioapi::versionInfo()\n\n\nRequired: Install the most up-to-date versions of the required R packages for this course.\n\nAn R package is an extra bit of functionality that will help us in our data analysis efforts in a variety of ways.\nOpen RStudio and click inside the Console pane (by default, the bottom left pane). Copy and paste the following command into the Console. You should see the text below appear to the right of the &gt;, which is called the R prompt. After you paste, hit Enter.\n\n\ninstall.packages(c(\"tidyverse\",\"tidymodels\",\"GGally\",\"ISLR\"), dependencies = TRUE)\n\n\nIf you get a message that says “There are binary versions available the source versions are later” type no and press Enter.\nYou will see a lot of text from status messages appearing in the Console as the packages are being installed. Wait until you see the &gt; again.\nEnter the command library(ggplot2) and hit enter.\nIf you see the message Error in library(ggplot2) : there is no package called ggplot2, then there was a problem installing this package. Jump down to the Troubleshooting section below. (Any other messages that appear are fine, and a lack of any messages is also fine.)\nRepeat the above step for the commands:\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(GGally)\nlibrary(ISLR)\n\nQuit RStudio. You’re done setting up!\n\n\nHighly Recommended: Set essential RStudio options.\nGo to:\n\nWindows: Edit &gt; Preferences &gt; General\nMac: Tools &gt; Global Options… &gt; General\n\nNavigate to the “Workspace” section.\n\nRestore .RData into workspace at startup: Leave this unchecked\nSave workspace to .RData on exit: Select “Never”\nPress “Apply” and then “OK”\n\nIf you don’t change these options, RStudio will save all of the objects you ever create in your Global Environment. In practice, this leads to all of the objects, datasets, etc that you have ever worked with at Macalester being loaded in when you start RStudio.\n\nThis can make startup slow.\nIt clutters the Global Environment. (e.g., You’re working on something and referring to diamonds not knowing that a diamonds that was used in class last year is already in the Global Environment.)\n\n\nHighly Recommended: Watch this video made by Dr. Lisa Lendway that describes useful configuration options for RStudio.\n\nOptional: For a refresher on RStudio features, watch this video. It also shows you how to customize the layout and color scheme of RStudio.\n\n\n\n\n\n\nProblem: You are on a Mac and getting the following error (or something similar):\n\n\n    Error: package or namespace load failed for ‘ggplot2’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):\n     there is no package called ‘rlang’\nHere’s how to fix it:\n\nFirst install the suite of Command Line Tools for Mac using the instructions here.\nNext enter install.packages(\"rlang\") in the Console.\nFinally check that entering library(ggplot2) gives no errors.",
-    "crumbs": [
-      "R and RStudio Resources"
-    ]
-  },
-  {
-    "objectID": "assignments.html",
-    "href": "assignments.html",
-    "title": "Homework Assignment",
-    "section": "",
-    "text": "…due at 11:59 pm Central on Moodle!"
-  },
-  {
-    "objectID": "learning.html",
-    "href": "learning.html",
-    "title": "Learning Goals",
-    "section": "",
-    "text": "Specific skills and course topics are listed below. Use this list to guide your synthesis of video and reading material for specific topics, and your learning more generally, throughout the semester. It also serves as a study guide for quizzes and other assessments.",
-    "crumbs": [
-      "Learning Goals"
-    ]
-  },
-  {
-    "objectID": "learning.html#computational-thinking",
-    "href": "learning.html#computational-thinking",
-    "title": "Learning Goals",
-    "section": "Computational Thinking",
-    "text": "Computational Thinking\n\nDecomposition: Break a task into smaller tasks to be able to explain the process to another person or computer\nPattern Recognition: Recognize patterns in tasks by noticing similarities and common differences\nAbstraction: Represent an idea or process in general terms so that you can use it to solve other projects that are similar in nature\nAlgorithmic Thinking: Develop a step-by-step strategy for solving a problem",
-    "crumbs": [
-      "Learning Goals"
-    ]
-  },
-  {
-    "objectID": "learning.html#ethical-data-thinking",
-    "href": "learning.html#ethical-data-thinking",
-    "title": "Learning Goals",
-    "section": "Ethical Data Thinking",
-    "text": "Ethical Data Thinking\n\nIdentify ethical issues associated with applications of statistical machine learning in a variety of settings\nAssess and critique the actions of individuals and organizations as it relates to ethical use of data",
-    "crumbs": [
-      "Learning Goals"
-    ]
-  },
-  {
-    "objectID": "learning.html#data-communication",
-    "href": "learning.html#data-communication",
-    "title": "Learning Goals",
-    "section": "Data Communication",
-    "text": "Data Communication\n\nIn written and oral formats: Inform and justify data analysis and modeling process and the resulting conclusions with clear, organized, logical, and compelling details that adapt to the background, values, and motivations of the audience and context in which communication occurs.",
-    "crumbs": [
-      "Learning Goals"
-    ]
-  },
-  {
-    "objectID": "learning.html#collaborative-learning",
-    "href": "learning.html#collaborative-learning",
-    "title": "Learning Goals",
-    "section": "Collaborative Learning",
-    "text": "Collaborative Learning\n\nUnderstand and demonstrate characteristics of effective collaboration (team roles, interpersonal communication, self-reflection, awareness of social dynamics, advocating for yourself and others).\nDevelop a common purpose and agreement on goals.\nBe able to contribute questions or concerns in a respectful way.\nShare and contribute to the group’s learning in an equitable manner.",
-    "crumbs": [
-      "Learning Goals"
-    ]
-  },
-  {
-    "objectID": "learning.html#reflection",
-    "href": "learning.html#reflection",
-    "title": "Learning Goals",
-    "section": "Reflection",
-    "text": "Reflection\n\nRegularly reflect on your learning to make note of and celebrate your progress, identify opportunities for continued growth, and set goals",
-    "crumbs": [
-      "Learning Goals"
-    ]
-  },
-  {
-    "objectID": "learning.html#unit-0",
-    "href": "learning.html#unit-0",
-    "title": "Learning Goals",
-    "section": "Unit 0",
-    "text": "Unit 0\nIntroduction to Statistical Machine Learning\n\n\n\n\n\n\nTopics\n\n\n\n\nFormulate research questions that align with regression, classification, or unsupervised learning tasks.\nIdentify the appropriate task (regression, classification, unsupervised) for a given research question.",
-    "crumbs": [
-      "Learning Goals"
-    ]
-  },
-  {
-    "objectID": "learning.html#unit-1",
-    "href": "learning.html#unit-1",
-    "title": "Learning Goals",
-    "section": "Unit 1",
-    "text": "Unit 1\nEvaluating Regression Models\n\n\n\n\n\n\nTopics\n\n\n\n\nCreate and interpret residuals vs. fitted, residuals vs. predictor plots to identify improvements in modeling and address ethical concerns.\nCalculate and interpret MSE, RMSE, MAE, and R-squared in a contextually meaningful way.\n\n\n\nOverfitting and Cross-Validation\n\n\n\n\n\n\nTopics\n\n\n\n\nExplain why training/in-sample model evaluation metrics can provide a misleading view of true test/out-of-sample performance\nAccurately describe all steps of cross-validation to estimate the test/out-of-sample version of a model evaluation metric\nExplain what role CV has in a predictive modeling analysis and its connection to overfitting\nExplain the pros/cons of higher vs. lower k in k-fold CV in terms of sample size and computing time",
-    "crumbs": [
-      "Learning Goals"
-    ]
-  },
-  {
-    "objectID": "learning.html#unit-2",
-    "href": "learning.html#unit-2",
-    "title": "Learning Goals",
-    "section": "Unit 2",
-    "text": "Unit 2\nVariable Selection\n\n\n\n\n\n\nTopics\n\n\n\n\nExplain the difference between inferential models and predictive models and how the model building processes differ\nClearly describe the backward stepwise selection algorithm and why they are examples of greedy algorithms\nCompare best subset and stepwise algorithms in terms of optimality of output and computational time\n\n\n\nLASSO (shrinkage/regularization)\n\n\n\n\n\n\nTopics\n\n\n\n\nExplain how ordinary and penalized least squares are similar and different with regard to (1) the form of the objective function (i.e., the function we are trying to minimize) and (2) the goal of variable selection\nExplain how the lambda tuning parameter affects model performance and how this is related to overfitting",
-    "crumbs": [
-      "Learning Goals"
-    ]
-  },
-  {
-    "objectID": "learning.html#unit-3",
-    "href": "learning.html#unit-3",
-    "title": "Learning Goals",
-    "section": "Unit 3",
-    "text": "Unit 3\nKNN Regression and the Bias-Variance Tradeoff\n\n\n\n\n\n\nTopics\n\n\n\n\nClearly describe / implement by hand the KNN algorithm for making a regression prediction\nExplain how the number of neighbors relates to the bias-variance tradeoff\nExplain the difference between parametric and nonparametric methods\nExplain how the curse of dimensionality relates to the performance of KNN\n\n\n\nLocal Regression and Splines\n\n\n\n\n\n\nTopics\n\n\n\n\nClearly describe the local regression algorithm for making a prediction\nExplain how bandwidth (span) relate to the bias-variance tradeoff\nExplain the advantages of splines over global transformations (e.g. y ~ poly(x, 2)) and other types of piecewise polynomials\nExplain how splines are constructed by drawing connections to variable transformations and least squares\nExplain how the number of knots relates to the bias-variance tradeoff",
-    "crumbs": [
-      "Learning Goals"
-    ]
-  },
-  {
-    "objectID": "learning.html#unit-4",
-    "href": "learning.html#unit-4",
-    "title": "Learning Goals",
-    "section": "Unit 4",
-    "text": "Unit 4\nClassification via Logistic regression\n\n\n\n\n\n\nTopics\n\n\n\n\nUse a logistic regression model to make hard (class) and soft (probability) predictions\nInterpret non-intercept coefficients from logistic regression models in the data context\n\n\n\nEvaluating Classification Models\n\n\n\n\n\n\nTopics\n\n\n\n\nCalculate (by hand from confusion matrices) and contextually interpret overall accuracy, sensitivity, and specificity\nConstruct and interpret plots of predicted probabilities across classes\nExplain how a ROC curve is constructed and the rationale behind AUC as an evaluation metric\nAppropriately use and interpret the no-information rate to evaluate accuracy metrics",
-    "crumbs": [
-      "Learning Goals"
-    ]
-  },
-  {
-    "objectID": "learning.html#unit-5",
-    "href": "learning.html#unit-5",
-    "title": "Learning Goals",
-    "section": "Unit 5",
-    "text": "Unit 5\nKNN Classification\n\n\n\n\n\n\nTopics\n\n\n\n\nClearly describe / implement by hand the KNN algorithm for making a classification prediction\nInterpret a KNN classification region plot\nDiscuss the pros and cons of KNN classification relative to other classification tools (eg logistic regression, decision trees)\n\n\n\nDecision Trees\n\n\n\n\n\n\nTopics\n\n\n\n\nClearly describe the recursive binary splitting algorithm for tree building for both regression and classification\nCompute the weighted average Gini index to measure the quality of a classification tree split\nCompute the sum of squared residuals to measure the quality of a regression tree split\nExplain how recursive binary splitting is a greedy algorithm\nExplain how different tree parameters relate to the bias-variance tradeoff\n\n\n\nBagging and Random Forests\n\n\n\n\n\n\nTopics\n\n\n\n\nExplain the rationale for bagging\nExplain the rationale for selecting a random subset of predictors at each split (random forests)\nExplain how the size of the random subset of predictors at each split relates to the bias-variance tradeoff\nExplain the rationale for and implement out-of-bag error estimation for both regression and classification\nExplain the rationale behind the random forest variable importance measure and why it is biased towards quantitative predictors (in class)",
-    "crumbs": [
-      "Learning Goals"
-    ]
-  },
-  {
-    "objectID": "learning.html#unit-6",
-    "href": "learning.html#unit-6",
-    "title": "Learning Goals",
-    "section": "Unit 6",
-    "text": "Unit 6\nHierarchical Clustering\n\n\n\n\n\n\nTopics\n\n\n\n\nClearly describe / implement by hand the hierarchical clustering algorithm\nCompare and contrast k-means and hierarchical clustering in their outputs and algorithms\nInterpret cuts of the dendrogram for single and complete linkage\nDescribe the rationale for how clustering algorithms work in terms of within-cluster variation\nDescribe the tradeoff of more vs. less clusters in terms of interpretability\nImplement strategies for interpreting / contextualizing the clusters\n\n\n\nK-Means Clustering\n\n\n\n\n\n\nTopics\n\n\n\n\nClearly describe / implement by hand the k-means algorithm\nDescribe the rationale for how clustering algorithms work in terms of within-cluster variation\nDescribe the tradeoff of more vs. less clusters in terms of interpretability\nImplement strategies for interpreting / contextualizing the clusters",
-    "crumbs": [
-      "Learning Goals"
-    ]
-  },
-  {
-    "objectID": "learning.html#unit-7",
-    "href": "learning.html#unit-7",
-    "title": "Learning Goals",
-    "section": "Unit 7",
-    "text": "Unit 7\nPrincipal Component Analysis\n\n\n\n\n\n\nTopics\n\n\n\n\nExplain the goal of dimension reduction and how this can be useful in a supervised learning setting\nInterpret and use the information provided by principal component loadings and scores\nInterpret and use a scree plot to guide dimension reduction\n\n\n\nPrincipal Component Regression\n\n\n\n\n\n\nTopics\n\n\n\n\nClearly describe / implement the principal component regression algorithm\nDescribe the tradeoff of choice of principal components (k) in terms of the bias-variance tradeoff\nImplement strategies for choosing k\nDiscuss the pros and cons of principal component regression relative to variable selection and LASSO",
-    "crumbs": [
-      "Learning Goals"
-    ]
-  },
-  {
-    "objectID": "schedule.html",
-    "href": "schedule.html",
-    "title": "Course Schedule",
-    "section": "",
-    "text": "The (tentative) course schedule below will be filled in throughout the semester. For each day, there will be written on what is due ahead of class time OR whats’ the big thing (like quizzes!). Any important announcements will be made over email (moodle)."
-  },
-  {
     "objectID": "syllabus.html",
     "href": "syllabus.html",
     "title": "Syllabus",
@@ -785,6 +277,554 @@
     "text": "Footnotes\n\n\nMacalester Academic Advising – High School Preparation↩︎",
     "crumbs": [
       "Syllabus"
+    ]
+  },
+  {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Course Schedule",
+    "section": "",
+    "text": "The (tentative) course schedule below will be filled in throughout the semester. For each day, there will be written on what is due ahead of class time OR whats’ the big thing (like quizzes!). Any important announcements will be made over email (moodle)."
+  },
+  {
+    "objectID": "learning.html",
+    "href": "learning.html",
+    "title": "Learning Goals",
+    "section": "",
+    "text": "Specific skills and course topics are listed below. Use this list to guide your synthesis of video and reading material for specific topics, and your learning more generally, throughout the semester. It also serves as a study guide for quizzes and other assessments.",
+    "crumbs": [
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "learning.html#computational-thinking",
+    "href": "learning.html#computational-thinking",
+    "title": "Learning Goals",
+    "section": "Computational Thinking",
+    "text": "Computational Thinking\n\nDecomposition: Break a task into smaller tasks to be able to explain the process to another person or computer\nPattern Recognition: Recognize patterns in tasks by noticing similarities and common differences\nAbstraction: Represent an idea or process in general terms so that you can use it to solve other projects that are similar in nature\nAlgorithmic Thinking: Develop a step-by-step strategy for solving a problem",
+    "crumbs": [
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "learning.html#ethical-data-thinking",
+    "href": "learning.html#ethical-data-thinking",
+    "title": "Learning Goals",
+    "section": "Ethical Data Thinking",
+    "text": "Ethical Data Thinking\n\nIdentify ethical issues associated with applications of statistical machine learning in a variety of settings\nAssess and critique the actions of individuals and organizations as it relates to ethical use of data",
+    "crumbs": [
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "learning.html#data-communication",
+    "href": "learning.html#data-communication",
+    "title": "Learning Goals",
+    "section": "Data Communication",
+    "text": "Data Communication\n\nIn written and oral formats: Inform and justify data analysis and modeling process and the resulting conclusions with clear, organized, logical, and compelling details that adapt to the background, values, and motivations of the audience and context in which communication occurs.",
+    "crumbs": [
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "learning.html#collaborative-learning",
+    "href": "learning.html#collaborative-learning",
+    "title": "Learning Goals",
+    "section": "Collaborative Learning",
+    "text": "Collaborative Learning\n\nUnderstand and demonstrate characteristics of effective collaboration (team roles, interpersonal communication, self-reflection, awareness of social dynamics, advocating for yourself and others).\nDevelop a common purpose and agreement on goals.\nBe able to contribute questions or concerns in a respectful way.\nShare and contribute to the group’s learning in an equitable manner.",
+    "crumbs": [
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "learning.html#reflection",
+    "href": "learning.html#reflection",
+    "title": "Learning Goals",
+    "section": "Reflection",
+    "text": "Reflection\n\nRegularly reflect on your learning to make note of and celebrate your progress, identify opportunities for continued growth, and set goals",
+    "crumbs": [
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "learning.html#unit-0",
+    "href": "learning.html#unit-0",
+    "title": "Learning Goals",
+    "section": "Unit 0",
+    "text": "Unit 0\nIntroduction to Statistical Machine Learning\n\n\n\n\n\n\nTopics\n\n\n\n\nFormulate research questions that align with regression, classification, or unsupervised learning tasks.\nIdentify the appropriate task (regression, classification, unsupervised) for a given research question.",
+    "crumbs": [
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "learning.html#unit-1",
+    "href": "learning.html#unit-1",
+    "title": "Learning Goals",
+    "section": "Unit 1",
+    "text": "Unit 1\nEvaluating Regression Models\n\n\n\n\n\n\nTopics\n\n\n\n\nCreate and interpret residuals vs. fitted, residuals vs. predictor plots to identify improvements in modeling and address ethical concerns.\nCalculate and interpret MSE, RMSE, MAE, and R-squared in a contextually meaningful way.\n\n\n\nOverfitting and Cross-Validation\n\n\n\n\n\n\nTopics\n\n\n\n\nExplain why training/in-sample model evaluation metrics can provide a misleading view of true test/out-of-sample performance\nAccurately describe all steps of cross-validation to estimate the test/out-of-sample version of a model evaluation metric\nExplain what role CV has in a predictive modeling analysis and its connection to overfitting\nExplain the pros/cons of higher vs. lower k in k-fold CV in terms of sample size and computing time",
+    "crumbs": [
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "learning.html#unit-2",
+    "href": "learning.html#unit-2",
+    "title": "Learning Goals",
+    "section": "Unit 2",
+    "text": "Unit 2\nVariable Selection\n\n\n\n\n\n\nTopics\n\n\n\n\nExplain the difference between inferential models and predictive models and how the model building processes differ\nClearly describe the backward stepwise selection algorithm and why they are examples of greedy algorithms\nCompare best subset and stepwise algorithms in terms of optimality of output and computational time\n\n\n\nLASSO (shrinkage/regularization)\n\n\n\n\n\n\nTopics\n\n\n\n\nExplain how ordinary and penalized least squares are similar and different with regard to (1) the form of the objective function (i.e., the function we are trying to minimize) and (2) the goal of variable selection\nExplain how the lambda tuning parameter affects model performance and how this is related to overfitting",
+    "crumbs": [
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "learning.html#unit-3",
+    "href": "learning.html#unit-3",
+    "title": "Learning Goals",
+    "section": "Unit 3",
+    "text": "Unit 3\nKNN Regression and the Bias-Variance Tradeoff\n\n\n\n\n\n\nTopics\n\n\n\n\nClearly describe / implement by hand the KNN algorithm for making a regression prediction\nExplain how the number of neighbors relates to the bias-variance tradeoff\nExplain the difference between parametric and nonparametric methods\nExplain how the curse of dimensionality relates to the performance of KNN\n\n\n\nLocal Regression and Splines\n\n\n\n\n\n\nTopics\n\n\n\n\nClearly describe the local regression algorithm for making a prediction\nExplain how bandwidth (span) relate to the bias-variance tradeoff\nExplain the advantages of splines over global transformations (e.g. y ~ poly(x, 2)) and other types of piecewise polynomials\nExplain how splines are constructed by drawing connections to variable transformations and least squares\nExplain how the number of knots relates to the bias-variance tradeoff",
+    "crumbs": [
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "learning.html#unit-4",
+    "href": "learning.html#unit-4",
+    "title": "Learning Goals",
+    "section": "Unit 4",
+    "text": "Unit 4\nClassification via Logistic regression\n\n\n\n\n\n\nTopics\n\n\n\n\nUse a logistic regression model to make hard (class) and soft (probability) predictions\nInterpret non-intercept coefficients from logistic regression models in the data context\n\n\n\nEvaluating Classification Models\n\n\n\n\n\n\nTopics\n\n\n\n\nCalculate (by hand from confusion matrices) and contextually interpret overall accuracy, sensitivity, and specificity\nConstruct and interpret plots of predicted probabilities across classes\nExplain how a ROC curve is constructed and the rationale behind AUC as an evaluation metric\nAppropriately use and interpret the no-information rate to evaluate accuracy metrics",
+    "crumbs": [
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "learning.html#unit-5",
+    "href": "learning.html#unit-5",
+    "title": "Learning Goals",
+    "section": "Unit 5",
+    "text": "Unit 5\nKNN Classification\n\n\n\n\n\n\nTopics\n\n\n\n\nClearly describe / implement by hand the KNN algorithm for making a classification prediction\nInterpret a KNN classification region plot\nDiscuss the pros and cons of KNN classification relative to other classification tools (eg logistic regression, decision trees)\n\n\n\nDecision Trees\n\n\n\n\n\n\nTopics\n\n\n\n\nClearly describe the recursive binary splitting algorithm for tree building for both regression and classification\nCompute the weighted average Gini index to measure the quality of a classification tree split\nCompute the sum of squared residuals to measure the quality of a regression tree split\nExplain how recursive binary splitting is a greedy algorithm\nExplain how different tree parameters relate to the bias-variance tradeoff\n\n\n\nBagging and Random Forests\n\n\n\n\n\n\nTopics\n\n\n\n\nExplain the rationale for bagging\nExplain the rationale for selecting a random subset of predictors at each split (random forests)\nExplain how the size of the random subset of predictors at each split relates to the bias-variance tradeoff\nExplain the rationale for and implement out-of-bag error estimation for both regression and classification\nExplain the rationale behind the random forest variable importance measure and why it is biased towards quantitative predictors (in class)",
+    "crumbs": [
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "learning.html#unit-6",
+    "href": "learning.html#unit-6",
+    "title": "Learning Goals",
+    "section": "Unit 6",
+    "text": "Unit 6\nHierarchical Clustering\n\n\n\n\n\n\nTopics\n\n\n\n\nClearly describe / implement by hand the hierarchical clustering algorithm\nCompare and contrast k-means and hierarchical clustering in their outputs and algorithms\nInterpret cuts of the dendrogram for single and complete linkage\nDescribe the rationale for how clustering algorithms work in terms of within-cluster variation\nDescribe the tradeoff of more vs. less clusters in terms of interpretability\nImplement strategies for interpreting / contextualizing the clusters\n\n\n\nK-Means Clustering\n\n\n\n\n\n\nTopics\n\n\n\n\nClearly describe / implement by hand the k-means algorithm\nDescribe the rationale for how clustering algorithms work in terms of within-cluster variation\nDescribe the tradeoff of more vs. less clusters in terms of interpretability\nImplement strategies for interpreting / contextualizing the clusters",
+    "crumbs": [
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "learning.html#unit-7",
+    "href": "learning.html#unit-7",
+    "title": "Learning Goals",
+    "section": "Unit 7",
+    "text": "Unit 7\nPrincipal Component Analysis\n\n\n\n\n\n\nTopics\n\n\n\n\nExplain the goal of dimension reduction and how this can be useful in a supervised learning setting\nInterpret and use the information provided by principal component loadings and scores\nInterpret and use a scree plot to guide dimension reduction\n\n\n\nPrincipal Component Regression\n\n\n\n\n\n\nTopics\n\n\n\n\nClearly describe / implement the principal component regression algorithm\nDescribe the tradeoff of choice of principal components (k) in terms of the bias-variance tradeoff\nImplement strategies for choosing k\nDiscuss the pros and cons of principal component regression relative to variable selection and LASSO",
+    "crumbs": [
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "getting-started.html",
+    "href": "getting-started.html",
+    "title": "Getting Started",
+    "section": "",
+    "text": "Broadly, statistical machine learning consists of tools and algorithms to learn from data. Insights from machine learning help us take action by enabling us to make predictions and understand uncertainty. Applications of machine learning algorithms are used everywhere from finance to biology, medicine, social sciences, language, and the humanities.\nIn this course, you will build on the linear and logistic regression modeling techniques covered in STAT 155 to understand tools of regression (Units 1–3) and classification (Units 4–5) more broadly. You will also learn about unsupervised methods (Units 6–7) that can help you find underlying structure in data.\n\n\n\nWe’ll return to this diagram frequently throughout the semester!\n\n\n\n\n\n\nAs we build on ideas from STAT 155, familiarity with core concepts from that course is expected.\nCheck out the STAT 155 Review in the Appendix for a list of important topics that we’ll revisit this semester, as well as links to resources if you need a refresher on any of those topics.\n\n\n\n\n\nWe’ll also be building on your introduction to R/RStudio from STAT 155 (and COMP/STAT 112, if applicable).\nTO-DO: During the first week of class, work through the steps on the R and RStudio Setup page in the Appendix to get everything set up for the semester.\nThroughout the semester, if you find yourself needing a refresher or additional resources related to R, check out the R Resources page!\n\n\n\n\n\nYou’ll access most of the materials that you need for this course via this website. Each class period will have its own page on this site. There, you’ll find daily learning goals, lecture notes, discussion questions, and exercises designed to give you hands-on practice with newly introduced concepts.",
+    "crumbs": [
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#stat-155-review",
+    "href": "getting-started.html#stat-155-review",
+    "title": "Getting Started",
+    "section": "",
+    "text": "As we build on ideas from STAT 155, familiarity with core concepts from that course is expected.\nCheck out the STAT 155 Review in the Appendix for a list of important topics that we’ll revisit this semester, as well as links to resources if you need a refresher on any of those topics.",
+    "crumbs": [
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#r-setup-and-resources",
+    "href": "getting-started.html#r-setup-and-resources",
+    "title": "Getting Started",
+    "section": "",
+    "text": "We’ll also be building on your introduction to R/RStudio from STAT 155 (and COMP/STAT 112, if applicable).\nTO-DO: During the first week of class, work through the steps on the R and RStudio Setup page in the Appendix to get everything set up for the semester.\nThroughout the semester, if you find yourself needing a refresher or additional resources related to R, check out the R Resources page!",
+    "crumbs": [
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#course-notes",
+    "href": "getting-started.html#course-notes",
+    "title": "Getting Started",
+    "section": "",
+    "text": "You’ll access most of the materials that you need for this course via this website. Each class period will have its own page on this site. There, you’ll find daily learning goals, lecture notes, discussion questions, and exercises designed to give you hands-on practice with newly introduced concepts.",
+    "crumbs": [
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "activities/L01-introductions.html",
+    "href": "activities/L01-introductions.html",
+    "title": "Introduction to Statistical Machine Learning",
+    "section": "",
+    "text": "Identify the appropriate task (regression, classification, unsupervised) for a given research question\nDevelop foundation to be able to formulate research questions that align with regression, classification, or unsupervised learning tasks"
+  },
+  {
+    "objectID": "activities/L01-introductions.html#whats-machine-learning",
+    "href": "activities/L01-introductions.html#whats-machine-learning",
+    "title": "Introduction to Statistical Machine Learning",
+    "section": "What’s Machine Learning?",
+    "text": "What’s Machine Learning?\n\n\n“Machine Learning” was coined back in 1959 by Arthur Samuel, an early contributor to AI.\nFrom Kohavi & Provost (1998): Machine Learning is the exploration & application of algorithms that can learn from existing patterns and make predictions using data.\n\nIMPORTANT: humans are in charge of the “exploration & application”!\n\nFrom James et al (2021) [link]: Statistical Learning refers to a vast set of tools for understanding data."
+  },
+  {
+    "objectID": "activities/L01-introductions.html#in-stat-253-we-will",
+    "href": "activities/L01-introductions.html#in-stat-253-we-will",
+    "title": "Introduction to Statistical Machine Learning",
+    "section": "In STAT 253 we will…",
+    "text": "In STAT 253 we will…\n\n\nPick up where STAT 155 left off, acquiring tools that can be used to learn from data in greater depth and a wider variety of settings. (STAT 155 is a foundational subset of ML!)\nExplore universal ML concepts using tools and software common among statisticians (hence “statistical” machine learning).\nSurvey a breadth of modern ML tools and algorithms that fall into the workflow below. Part of the cognitive load will be:\n\nkeeping all the tools in place (what are they and when to use them)\nunderstanding the connections between the tools\nadapting (not memorizing) code to implement each tool\na new topic almost every day\n\nWe’ll focus on concepts and applications over mathematical theory. (Come chat with me in office hours if you’re interested in learning more about the theory!)"
+  },
+  {
+    "objectID": "activities/L01-introductions.html#types-of-ml-tasks",
+    "href": "activities/L01-introductions.html#types-of-ml-tasks",
+    "title": "Introduction to Statistical Machine Learning",
+    "section": "Types of ML Tasks",
+    "text": "Types of ML Tasks\n\nStatistical machine learning tools can be classified as follows:\n\nsupervised or unsupervised\nwithin supervised learning: regression vs classification\nwithin unsupervised learning: clustering vs dimension reduction\n\nKnowing which of these scenarios your research question falls into is an important first step in identifying which tool to use!"
+  },
+  {
+    "objectID": "activities/L01-introductions.html#supervised-learning",
+    "href": "activities/L01-introductions.html#supervised-learning",
+    "title": "Introduction to Statistical Machine Learning",
+    "section": "Supervised Learning",
+    "text": "Supervised Learning\nWe want to model the relationship between some output variable1 \\(y\\) and input variables2 \\(x = (x_1, x_2,..., x_p)\\):\n\\[\n\\begin{split}\ny\n& = f(x) + \\varepsilon \\\\\n& = \\text{(trend in the relationship) } + \\text{ (residual deviation from the trend)} \\\\\n\\end{split}\n\\]\nTypes of supervised learning tasks:\n\nregression: \\(y\\) is quantitative\nexample:\n\\(y\\) = number of dental caries (cavities)\n\\(x\\) = (genetic information at millions of markers, sex, age, age\\(^2\\), etc)\nproject details\nclassification: \\(y\\) is categorical\nexample:\n\\(y\\) = whether a patient experienced adverse surgery outcomes after undergoing an upper endoscopy (yes, no)\n\\(x\\) = (administration of sedation [anesthesia professional, nurse], age, medical comorbidities [eg sleep apnea], etc.)\nproject details"
+  },
+  {
+    "objectID": "activities/L01-introductions.html#unsupervised-learning",
+    "href": "activities/L01-introductions.html#unsupervised-learning",
+    "title": "Introduction to Statistical Machine Learning",
+    "section": "Unsupervised Learning",
+    "text": "Unsupervised Learning\nWe have some input variables \\(x = (x_1, x_2,..., x_p)\\) but there’s no output variable \\(y\\). Thus the goal is to use \\(x\\) to understand and/or modify the structure of our data.\nTypes of unsupervised learning tasks:\n\n\n\n\nclustering: Identify and examine groups or clusters of data points that are similar with respect to their \\(x_i\\) values.\nexample:\n\\(x\\) = (genetic data)\nproject details (led by a Mac alum!)\ndimension reduction: Turn the original set of \\(p\\) input variables, which are potentially correlated, into a smaller set of \\(k &lt; p\\) variables which still preserve the majority of information in the originals.\nexample:\n\\(x\\) = (genetic data)\nproject details\n\n\n\n\n\n\nSupplemental Figure 2A from Barragan et al (2023) [link] uses both clustering and dimension reduction!"
+  },
+  {
+    "objectID": "activities/L01-introductions.html#instructions",
+    "href": "activities/L01-introductions.html#instructions",
+    "title": "Introduction to Statistical Machine Learning",
+    "section": "Instructions",
+    "text": "Instructions\n\nDiscuss the following scenarios as a group, talking through your ideas, questions, and reasoning as you go.\nWrite down your answers, and any insights or questions that come up while working, in your notebook.\n\n(I’ll give you a Quarto template next time.)\n\nI’ll move around to groups to check in on your progress and see what questions you have.\nYou can check your answers by clicking the drop-down “Solutions” button."
+  },
+  {
+    "objectID": "activities/L01-introductions.html#questions",
+    "href": "activities/L01-introductions.html#questions",
+    "title": "Introduction to Statistical Machine Learning",
+    "section": "Questions",
+    "text": "Questions\nIndicate whether each scenario below represents a regression, classification, or clustering task.\n\nHow is the number of people that rent bikes on a given day in Washington, D.C. (\\(y\\)) explained by the temperature (\\(x_1\\)) and whether or not it’s a weekend (\\(x_2\\))?\n\n\n## Error in ggplot(politics, aes(y = riders_registered, x = temp_feel)): could not find function \"ggplot\"\n## Error in ggplot(politics, aes(y = riders_registered, x = temp_feel, color = weekend)): could not find function \"ggplot\"\n## Error in ggplot(politics, aes(x = riders_registered, fill = weekend)): could not find function \"ggplot\"\n## Error in grid.arrange(g1, g2, g3, ncol = 3): could not find function \"grid.arrange\"\n\n\n\nSolution\n\nregression. there’s a quantitative output variable \\(y\\).\n\n\n\nGiven the observed bill length (\\(x_1\\)) and bill depth (\\(x_2\\)) on a set of penguins, how many different penguin species might there be?\n\n\n## Error in ggplot(penguins, aes(y = bill_length_mm, x = bill_depth_mm)): could not find function \"ggplot\"\n\n\n\nSolution\n\nclustering. there’s no output variable \\(y\\).\n\n\n\nHow can we determine whether somebody has a certain infection (\\(y\\)) based on two different blood sample measurements, Measure A (\\(x_1\\)) and Measure B (\\(x_2\\))?\n\n\n## Error in conflicts_prefer(dplyr::filter): could not find function \"conflicts_prefer\"\n## Error in ggplot(dat, aes(y = y, x = x, color = status)): could not find function \"ggplot\"\n\n\n\nSolution\n\nclassification. there’s a categorical output variable \\(y\\).\n\n\n\nMachine learn about each other! Scenario A.\nI collected some data on STAT 253 students (you!) and analyzed it using a machine learning algorithm. In your groups: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; and (3) summarize what the output tells you about your classmates.\n\n\n## Error: object 'survey_clean' not found\n## Error in eval(expr, p): object 'new_dat' not found\n## Error: object 'tree_0' not found\n\n\n\nSolution\n\n\npredict someone’s major based on other survey responses\nclassification (\\(y\\) = major is categorical)\n(will vary by semester – what do you learn about the majors represented in this class and the variables that are useful for predicting it?)\n\n\n\n\nMachine learn about each other! Scenario B.\nSame directions as for Scenario A: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; and (3) summarize what the output tells you about your classmates.\n\n\n## Error in ggplot(survey_clean, aes(y = `Walk Time`, x = `Photo Rating`)): could not find function \"ggplot\"\n## Error in ggplot(., aes(y = `Walk Time`, x = year)): could not find function \"ggplot\"\n## Error in grid.arrange(g1, g2, ncol = 2): could not find function \"grid.arrange\"\n\n\n\nSolution\n\n\npredict walk time to Mac based on photo rating and class year\nregression (\\(y\\) = time to mac is quantitative)\n(answers will vary by semester – what do you learn about the relationships between these variables?)\n\n\n\n\nMachine learn about each other! Scenario C.\nSame directions as for Scenario A: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; and (3) summarize what the output tells you about your classmates.\n\n\n## Error: object 'survey_clean' not found\n## Error: object 'survey_clean' not found\n## Error: object 'fake_names' not found\n## Error: object 'fake_names' not found\n## Error in daisy(survey_sub, metric = \"gower\", type = list(logratio = 3)): could not find function \"daisy\"\n## Error: object 'gower_dist' not found\n## Error: object 'class_cluster' not found\n\n\n\nSolution\n\n\nwhich students in the class are most similar to which other students?\nclustering (no outcome \\(y\\), interested in structure/similarities across observations)\n(answers will vary by semester – to whom are you most similar? how many “natural” groupings of students do you see? etc.)\n\n\n\n\nUse Spotify users’ previous listening behavior to identify groups of similar users.\n\n\n\nSolution\n\nclustering\n\n \n\nPredict workers’ wages by their years of experience.\n\n\n\n\nSolution\n\nregression (\\(y\\) = wages)\n\n\n\nPredict workers’ wages by their college major.\n\n\n\n\nSolution\n\nregression (\\(y\\) = wages)\n\n\n\nUse a customer’s age to predict whether they’ve seen the Barbie movie.\n\n\n\n\nSolution\n\nclassification (\\(y\\) = whether or not watched the film)\n\n\n\nLook for similarities among genetic samples taken from a group of patients.\n\n\n\n\nSolution\n\nclustering (no outcome \\(y\\))\n\n\n\n\nIf you finish all of the questions above, move on to the Scavenger Hunt in the next section."
+  },
+  {
+    "objectID": "activities/L01-introductions.html#scavenger-hunt",
+    "href": "activities/L01-introductions.html#scavenger-hunt",
+    "title": "Introduction to Statistical Machine Learning",
+    "section": "Scavenger Hunt",
+    "text": "Scavenger Hunt\nWorking with your table, take a few minutes to find all of the following. Write down the “answers” in your notebook. Then, bookmark any important sites.\n\ncourse website\nsyllabus\ntextbook\nSTAT 253 Slack\noffice hour times and locations\nassignment deadlines\ninformation on what you need to complete before class each day (including your homework for next class!)\nin-class activities\nassignment instructions / submission"
+  },
+  {
+    "objectID": "activities/L01-introductions.html#whats-next",
+    "href": "activities/L01-introductions.html#whats-next",
+    "title": "Introduction to Statistical Machine Learning",
+    "section": "What’s next?",
+    "text": "What’s next?\nWhat to work on after class today:\n\ncomplete the pre-class tasks for next class (videos/reading/checkpoint)\n\nfind this info on the schedule page\nreview the checkpoint instructions & policies on Moodle before you start!\n\nstart HW0\n\ndue next Tuesday (at 11:59 pm)\nreview the Stat 155 Review resources as needed\n\n\n\n\njoin Slack (invite link)\ncomplete the recommended R and RStudio Setup steps\ncarefully review the syllabus\n\nif time allows, we’ll discuss a few highlights now!\nmore to come in the next few class sessions"
+  },
+  {
+    "objectID": "activities/L01-introductions.html#footnotes",
+    "href": "activities/L01-introductions.html#footnotes",
+    "title": "Introduction to Statistical Machine Learning",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\notherwise known as outcome, response, dependent variable↩︎\notherwise known as predictors, features, independent variables↩︎"
+  },
+  {
+    "objectID": "R_Rstudio.html",
+    "href": "R_Rstudio.html",
+    "title": "R and RStudio Resources",
+    "section": "",
+    "text": "Follow these instructions to set up the software that we’ll be using throughout the semester.\n\n\n\n\n\n\nNote\n\n\n\nEven if you’ve already downloaded both R and RStudio for a previous class, you need to re-download to make sure that you have the most current versions.\n\n\n\n\n\n\n\nRequired: Create a folder for this course on your local harddrive (e.g. Desktop or Documents), not necessarily on a Cloud Drive as you may encounter large datasets in this class.\n\nHighly Recommended: Change the default file download location for your internet browser.\n\nGenerally by default, internet browsers automatically save all files to the Downloads folder on your computer. This does not encourage good file organization practices. You need to change this option so that your browser asks you where to save each file before downloading it.\nThis page has information on how to do this for the most common browsers.\n\n\n\n\n\n\n\nRequired: Install (or update) R and RStudio\n\nAs of January 2026, the latest versions of R and RStudio are:\n\nR: 4.5.2\nRStudio: 2026.01.0+392 \n\nIf you do not have the latest versions of both R and RStudio installed on your computer, see below. (Not sure if you do? See the THIRD step, below.)\n\nFIRST: Download R here.\n\nYou will see three links “Download R for …”\nChoose the link that corresponds to your computer operating system (and pay attention to processor chip type for Mac - M1/M2 or Intel; on your computer, click Apple &gt; About this Mac to find info about the chip).\n\nSECOND: Download RStudio here.\n\nClick the button under step 2 to install the version of RStudio recommended for your computer.\n\nTHIRD: Check your work\n\nOpen an RStudio session.\nRun the following in the Console, and repeat the FIRST or SECOND step if the version numbers that print out are not equal to (or more recent than) those listed above.\n\n\n\n# check R version\nR.Version()\n\n# check RStudio version\nrstudioapi::versionInfo()\n\n\nRequired: Install the most up-to-date versions of the required R packages for this course.\n\nAn R package is an extra bit of functionality that will help us in our data analysis efforts in a variety of ways.\nOpen RStudio and click inside the Console pane (by default, the bottom left pane). Copy and paste the following command into the Console. You should see the text below appear to the right of the &gt;, which is called the R prompt. After you paste, hit Enter.\n\n\ninstall.packages(c(\"tidyverse\",\"tidymodels\",\"GGally\",\"ISLR\"), dependencies = TRUE)\n\n\nIf you get a message that says “There are binary versions available the source versions are later” type no and press Enter.\nYou will see a lot of text from status messages appearing in the Console as the packages are being installed. Wait until you see the &gt; again.\nEnter the command library(ggplot2) and hit enter.\nIf you see the message Error in library(ggplot2) : there is no package called ggplot2, then there was a problem installing this package. Jump down to the Troubleshooting section below. (Any other messages that appear are fine, and a lack of any messages is also fine.)\nRepeat the above step for the commands:\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(GGally)\nlibrary(ISLR)\n\nQuit RStudio. You’re done setting up!\n\n\nHighly Recommended: Set essential RStudio options.\nGo to:\n\nWindows: Edit &gt; Preferences &gt; General\nMac: Tools &gt; Global Options… &gt; General\n\nNavigate to the “Workspace” section.\n\nRestore .RData into workspace at startup: Leave this unchecked\nSave workspace to .RData on exit: Select “Never”\nPress “Apply” and then “OK”\n\nIf you don’t change these options, RStudio will save all of the objects you ever create in your Global Environment. In practice, this leads to all of the objects, datasets, etc that you have ever worked with at Macalester being loaded in when you start RStudio.\n\nThis can make startup slow.\nIt clutters the Global Environment. (e.g., You’re working on something and referring to diamonds not knowing that a diamonds that was used in class last year is already in the Global Environment.)\n\n\nHighly Recommended: Watch this video made by Dr. Lisa Lendway that describes useful configuration options for RStudio.\n\nOptional: For a refresher on RStudio features, watch this video. It also shows you how to customize the layout and color scheme of RStudio.\n\n\n\n\n\n\nProblem: You are on a Mac and getting the following error (or something similar):\n\n\n    Error: package or namespace load failed for ‘ggplot2’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):\n     there is no package called ‘rlang’\nHere’s how to fix it:\n\nFirst install the suite of Command Line Tools for Mac using the instructions here.\nNext enter install.packages(\"rlang\") in the Console.\nFinally check that entering library(ggplot2) gives no errors.",
+    "crumbs": [
+      "R and RStudio Resources"
+    ]
+  },
+  {
+    "objectID": "R_Rstudio.html#file-organization",
+    "href": "R_Rstudio.html#file-organization",
+    "title": "R and RStudio Resources",
+    "section": "",
+    "text": "Required: Create a folder for this course on your local harddrive (e.g. Desktop or Documents), not necessarily on a Cloud Drive as you may encounter large datasets in this class.\n\nHighly Recommended: Change the default file download location for your internet browser.\n\nGenerally by default, internet browsers automatically save all files to the Downloads folder on your computer. This does not encourage good file organization practices. You need to change this option so that your browser asks you where to save each file before downloading it.\nThis page has information on how to do this for the most common browsers.",
+    "crumbs": [
+      "R and RStudio Resources"
+    ]
+  },
+  {
+    "objectID": "R_Rstudio.html#r-rstudio",
+    "href": "R_Rstudio.html#r-rstudio",
+    "title": "R and RStudio Resources",
+    "section": "",
+    "text": "Required: Install (or update) R and RStudio\n\nAs of January 2026, the latest versions of R and RStudio are:\n\nR: 4.5.2\nRStudio: 2026.01.0+392 \n\nIf you do not have the latest versions of both R and RStudio installed on your computer, see below. (Not sure if you do? See the THIRD step, below.)\n\nFIRST: Download R here.\n\nYou will see three links “Download R for …”\nChoose the link that corresponds to your computer operating system (and pay attention to processor chip type for Mac - M1/M2 or Intel; on your computer, click Apple &gt; About this Mac to find info about the chip).\n\nSECOND: Download RStudio here.\n\nClick the button under step 2 to install the version of RStudio recommended for your computer.\n\nTHIRD: Check your work\n\nOpen an RStudio session.\nRun the following in the Console, and repeat the FIRST or SECOND step if the version numbers that print out are not equal to (or more recent than) those listed above.\n\n\n\n# check R version\nR.Version()\n\n# check RStudio version\nrstudioapi::versionInfo()\n\n\nRequired: Install the most up-to-date versions of the required R packages for this course.\n\nAn R package is an extra bit of functionality that will help us in our data analysis efforts in a variety of ways.\nOpen RStudio and click inside the Console pane (by default, the bottom left pane). Copy and paste the following command into the Console. You should see the text below appear to the right of the &gt;, which is called the R prompt. After you paste, hit Enter.\n\n\ninstall.packages(c(\"tidyverse\",\"tidymodels\",\"GGally\",\"ISLR\"), dependencies = TRUE)\n\n\nIf you get a message that says “There are binary versions available the source versions are later” type no and press Enter.\nYou will see a lot of text from status messages appearing in the Console as the packages are being installed. Wait until you see the &gt; again.\nEnter the command library(ggplot2) and hit enter.\nIf you see the message Error in library(ggplot2) : there is no package called ggplot2, then there was a problem installing this package. Jump down to the Troubleshooting section below. (Any other messages that appear are fine, and a lack of any messages is also fine.)\nRepeat the above step for the commands:\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(GGally)\nlibrary(ISLR)\n\nQuit RStudio. You’re done setting up!\n\n\nHighly Recommended: Set essential RStudio options.\nGo to:\n\nWindows: Edit &gt; Preferences &gt; General\nMac: Tools &gt; Global Options… &gt; General\n\nNavigate to the “Workspace” section.\n\nRestore .RData into workspace at startup: Leave this unchecked\nSave workspace to .RData on exit: Select “Never”\nPress “Apply” and then “OK”\n\nIf you don’t change these options, RStudio will save all of the objects you ever create in your Global Environment. In practice, this leads to all of the objects, datasets, etc that you have ever worked with at Macalester being loaded in when you start RStudio.\n\nThis can make startup slow.\nIt clutters the Global Environment. (e.g., You’re working on something and referring to diamonds not knowing that a diamonds that was used in class last year is already in the Global Environment.)\n\n\nHighly Recommended: Watch this video made by Dr. Lisa Lendway that describes useful configuration options for RStudio.\n\nOptional: For a refresher on RStudio features, watch this video. It also shows you how to customize the layout and color scheme of RStudio.\n\n\n\n\n\n\nProblem: You are on a Mac and getting the following error (or something similar):\n\n\n    Error: package or namespace load failed for ‘ggplot2’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):\n     there is no package called ‘rlang’\nHere’s how to fix it:\n\nFirst install the suite of Command Line Tools for Mac using the instructions here.\nNext enter install.packages(\"rlang\") in the Console.\nFinally check that entering library(ggplot2) gives no errors.",
+    "crumbs": [
+      "R and RStudio Resources"
+    ]
+  },
+  {
+    "objectID": "R_Resources.html",
+    "href": "R_Resources.html",
+    "title": "R Resources",
+    "section": "",
+    "text": "Tidymodels package documentation\nTidy Modeling with R textbook (Max Kuhn and Julia Silge)\nISLR Labs with Tidymodels (Emil Hvitfeldt)\nIntro to Tidymodels Presentation (Lucy D’Agostino McGowan)\n\n\n\n\n\nCOMP/STAT 112 website (with code examples and videos)\nR for Data Science\nExploratory Data Analysis with R\nJohn’s Hopkins Tidyverse course text\n\n\n\n\n\nggplot2 reference\nColors in R\n\n\n\n\n\nCOMP/STAT 112 website (including an example quarto document)\nQuarto cheatsheet\nQuarto tutorial\nComprehensive Quarto Guide\n\n\n\n\n\nRStudio cheatsheets\nAdvanced R\nR Programming Wikibook\nDebugging in R\n\nArticle\nVideo\n\n\n\n\n\n\nCreating new variables\ncase_when() from the dplyr package is a very versatile function for creating new variables based on existing variables. This can be useful for creating categorical or quantitative variables and for creating indices from multiple variables.\n\n# Turn quant_var into a Low/Med/High version\ndata &lt;- data %&gt;%\n    mutate(cat_var = case_when(\n            quant_var &lt; 10 ~ \"Low\",\n            quant_var &gt;= 10 & quant_var &lt;= 20 ~ \"Med\",\n            quant_var &gt; 20 ~ \"High\"\n        )\n    )\n\n# Turn cat_var (A, B, C categories) into another categorical variable\n# (collapse A and B into one category)\ndata &lt;- data %&gt;%\n    mutate(new_cat_var = case_when(\n            cat_var %in% c(\"A\", \"B\") ~ \"A or B\"\n            cat_var==\"C\" ~ \"C\"\n        )\n    )\n\n# Turn a categorical variable (x1) encoded as a numerical 0/1/2 variable into a different quantitative variable\n# Doing this for multiple variables allows you to create an index\ndata &lt;- data %&gt;%\n    mutate(x1_score = case_when(\n            x1==0 ~ 10,\n            x1==1 ~ 20,\n            x1==2 ~ 50\n        )\n    )\n\n# Add together multiple variables with mutate\ndata &lt;- data %&gt;%\n    mutate(index = x1_score + x2_score + x3_score)",
+    "crumbs": [
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "R_Resources.html#tidymodels-resources",
+    "href": "R_Resources.html#tidymodels-resources",
+    "title": "R Resources",
+    "section": "",
+    "text": "Tidymodels package documentation\nTidy Modeling with R textbook (Max Kuhn and Julia Silge)\nISLR Labs with Tidymodels (Emil Hvitfeldt)\nIntro to Tidymodels Presentation (Lucy D’Agostino McGowan)",
+    "crumbs": [
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "R_Resources.html#tidyverse-resources",
+    "href": "R_Resources.html#tidyverse-resources",
+    "title": "R Resources",
+    "section": "",
+    "text": "COMP/STAT 112 website (with code examples and videos)\nR for Data Science\nExploratory Data Analysis with R\nJohn’s Hopkins Tidyverse course text",
+    "crumbs": [
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "R_Resources.html#visualization-resources",
+    "href": "R_Resources.html#visualization-resources",
+    "title": "R Resources",
+    "section": "",
+    "text": "ggplot2 reference\nColors in R",
+    "crumbs": [
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "R_Resources.html#quarto-resources",
+    "href": "R_Resources.html#quarto-resources",
+    "title": "R Resources",
+    "section": "",
+    "text": "COMP/STAT 112 website (including an example quarto document)\nQuarto cheatsheet\nQuarto tutorial\nComprehensive Quarto Guide",
+    "crumbs": [
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "R_Resources.html#general-r-resources",
+    "href": "R_Resources.html#general-r-resources",
+    "title": "R Resources",
+    "section": "",
+    "text": "RStudio cheatsheets\nAdvanced R\nR Programming Wikibook\nDebugging in R\n\nArticle\nVideo",
+    "crumbs": [
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "R_Resources.html#some-example-code",
+    "href": "R_Resources.html#some-example-code",
+    "title": "R Resources",
+    "section": "",
+    "text": "Creating new variables\ncase_when() from the dplyr package is a very versatile function for creating new variables based on existing variables. This can be useful for creating categorical or quantitative variables and for creating indices from multiple variables.\n\n# Turn quant_var into a Low/Med/High version\ndata &lt;- data %&gt;%\n    mutate(cat_var = case_when(\n            quant_var &lt; 10 ~ \"Low\",\n            quant_var &gt;= 10 & quant_var &lt;= 20 ~ \"Med\",\n            quant_var &gt; 20 ~ \"High\"\n        )\n    )\n\n# Turn cat_var (A, B, C categories) into another categorical variable\n# (collapse A and B into one category)\ndata &lt;- data %&gt;%\n    mutate(new_cat_var = case_when(\n            cat_var %in% c(\"A\", \"B\") ~ \"A or B\"\n            cat_var==\"C\" ~ \"C\"\n        )\n    )\n\n# Turn a categorical variable (x1) encoded as a numerical 0/1/2 variable into a different quantitative variable\n# Doing this for multiple variables allows you to create an index\ndata &lt;- data %&gt;%\n    mutate(x1_score = case_when(\n            x1==0 ~ 10,\n            x1==1 ~ 20,\n            x1==2 ~ 50\n        )\n    )\n\n# Add together multiple variables with mutate\ndata &lt;- data %&gt;%\n    mutate(index = x1_score + x2_score + x3_score)",
+    "crumbs": [
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html",
+    "href": "activities/01_foundations_welcome.html",
+    "title": "Collecting and Summarizing Data",
+    "section": "",
+    "text": "You can download the .qmd file for this activity here and open in R-studio. The rendered version is posted in the course website (Activities tab). I often experiment with the class activities (and see it in live!) and make updates, but I always post the final version before class starts. To be sure you have the most up-to-date copy, please download it once you’ve settled in before class begins."
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#see-class-notes",
+    "href": "activities/01_foundations_welcome.html#see-class-notes",
+    "title": "Collecting and Summarizing Data",
+    "section": "See class notes",
+    "text": "See class notes\nGo to your class-notes to see what we covered in live-note taking!\n\n\n\nEXAMPLE 1: Tidy data (Class Activities!)\nWelcome to the first in-class activities of STAT 155! Fill out the Day 1 Activities form of the following questions (anonymous). We’ll come back to this in a future class. Wait until everyone in your group is done with this.\n\nHow many hours of sleep did you get last night?\nHow many cups of coffee did you drink this morning?\nWhat is your declared or potential major? (If you are a double major, just pick whichever one you think of first.)\nWhat is your anticipated graduation year?\nHow many stats/data science courses have you taken in the past?\nOn a scale of 1 (get me out of here) to 10 (yay!), how excited are you about this course?\nIs it your birthday this semester? (yes/no)\nHow many unread emails do you have in your inbox right now?"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#example-1-use-r-as-a-calculator",
+    "href": "activities/01_foundations_welcome.html#example-1-use-r-as-a-calculator",
+    "title": "Collecting and Summarizing Data",
+    "section": "Example 1: Use R as a calculator",
+    "text": "Example 1: Use R as a calculator\nType the following lines in the console (bottom left), one by one, hitting Return/Enter after each line. In some cases you might even get an error! This error is important to learning how R code does and doesn’t work.\n\n4 + 2\n\n\n4^2\n\n\n4*2\n\n\n4(2)"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#example-2-functions-and-arguments",
+    "href": "activities/01_foundations_welcome.html#example-2-functions-and-arguments",
+    "title": "Collecting and Summarizing Data",
+    "section": "Example 2: Functions and arguments",
+    "text": "Example 2: Functions and arguments\nWe can also use built-in functions to perform common tasks. These functions have names and require information about arguments in order to run:\nfunction(argument) Cheatcode: RiceCooker(Rice)\nTry out the following functions one by one in the RStudio console. For each function, note its…\n\nname\nthe argument or information it needs to run\nwhat output it produces (what the function does)\nhow the name connects to what the function does\n\n\nsqrt(9)\n\n\nnchar(\"macalester\")\n\n\nsqrt(nchar(\"snow\"))\n\nSome functions have more than 1 argument, separated by commas:\nfunction(argument1 = ___, argument2 = ___) Cheatcode: RiceCooker(Rice,Chicken)\nTry out the following, one by one.\n\nrep(x = 2, times = 5)\n\n\nrep(times = 5, x = 2)\n\n\nrep(2, 5)\n\n\nrep(5, 2)\n\nFinally, R is case sensitive. Try using Rep() instead of rep(). Take time to read the error message!\n\nRep(5, 2)"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#example-3-save-it-for-later",
+    "href": "activities/01_foundations_welcome.html#example-3-save-it-for-later",
+    "title": "Collecting and Summarizing Data",
+    "section": "Example 3: Save it for later",
+    "text": "Example 3: Save it for later\nWe’ll often want to store some R output for later use. In R:\nname &lt;- output\nwhere name is the name under which to store a result, output is the result we wish to store, and &lt;- is the assignment operator (I think of this as an arrow pointing the output into the name).\nIMPORTANT: Try out each line one at a time. Why doesn’t the first line produce any output?\n\ndegrees_c &lt;- -13\n\n\ndegrees_c\n\n\ndegrees_c * (9/5) + 32"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#example-4-import-data",
+    "href": "activities/01_foundations_welcome.html#example-4-import-data",
+    "title": "Collecting and Summarizing Data",
+    "section": "Example 4: Import data",
+    "text": "Example 4: Import data\nNext, let’s work with some data!! The first step is importing our data into RStudio. How we do this depends on:\n\nfile format (eg: .xls Excel spreadsheet, .csv, .txt)\nfile location (eg: online, on your desktop, built into RStudio itself).\n\nThe data from the survey you took before class is stored as a .csv file online. Import this data using the read_csv() function, and store it as survey using the code below:\nFirst, in the Console pane of RStudio, run the following command to install some necessary packages (you will need to do this any time you are installing a new package):\ninstall.packages(\"tidyverse\")\n\n# Load the \"tidyverse\" package which contains the read_csv() function\nlibrary(tidyverse)\n\n# Import the data\nsurvey &lt;- read_csv(\"https://mac-stat.github.io/data/112_fall_2024_survey.csv\")\n\n\n\nCheck out the data\nIn the Environment tab in the upper right pane of RStudio, click on survey. What happens?!\n\n\nIn the modern era, datasets often contain hundreds of variables and millions of observations. We need more effective ways to explore such data."
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#example-5-get-to-know-the-data",
+    "href": "activities/01_foundations_welcome.html#example-5-get-to-know-the-data",
+    "title": "Collecting and Summarizing Data",
+    "section": "Example 5: Get to know the data",
+    "text": "Example 5: Get to know the data\nPAUSE: Make sure you’re still in sync with your group.\nBefore we can learn anything from our data, we must understand its structure. For each function below:\n\ntry it out\ndiscuss with your group what the function does\ndiscuss with your group how the function’s name connects to what it does\n\n\ndim(survey) # (Number of row (case/obs.), Number of column (variable))\n\n\nnrow(survey) # Number of case/obs.\n\n\nncol(survey) # Number of variables\n\n\nhead(survey) # View first few rows of the dataset (6 rows, by default)\n\n\nhead(survey, 3) # Controlling the view of first few rows of the dataset\n\n\ntail(survey) # View first few rows of the dataset (6 rows, by default)\n\n\nnames(survey) # Get all column (variable) names\n\n\nstr(survey) # Overall info about data"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#example-6-code-communication",
+    "href": "activities/01_foundations_welcome.html#example-6-code-communication",
+    "title": "Collecting and Summarizing Data",
+    "section": "Example 6 : Code = communication",
+    "text": "Example 6 : Code = communication\nIt’s important to recognize from day 1 that code is a form of communication, both to yourself and others!!!!! Code structure and details are important to readability and clarity, just as grammar, punctuation, spelling, paragraphs, and line spacing are important in written essays. All of the code below works, but has bad structure. With your group, discuss what is unfortunate about each line, then make it better.\n\nseq(from=1, to=9, by=2)\nseq(from = 1, to=9, by=2)\ntemp_cel &lt;- -13\nthisisthetemperaturetodayincelsius &lt;- -13\nthis_is_the_temperature_today_in_celsius &lt;- -13"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#example-7-you-will-make-so-many-mistakes",
+    "href": "activities/01_foundations_welcome.html#example-7-you-will-make-so-many-mistakes",
+    "title": "Collecting and Summarizing Data",
+    "section": "Example 7: You will make so many mistakes!",
+    "text": "Example 7: You will make so many mistakes!\nMistakes are common when, and even important to, learning any new language. You’ll get better and better at interpreting error messages, finding help, and fixing errors. In addition to finding help online, R has built-in help files. For example:\n\nIn the console, type ?rep and press Return/Enter.\nCheck out the documentation file that pops up in the Help tab (lower right).\nQuickly scroll through, noting the type of information provided.\nPause at the “Examples” section at the bottom – perhaps the most useful section! Try out a couple of the provided examples in your console."
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#example-8-make-a-cheat-sheet",
+    "href": "activities/01_foundations_welcome.html#example-8-make-a-cheat-sheet",
+    "title": "Collecting and Summarizing Data",
+    "section": "Example 8: Make a “cheat sheet”",
+    "text": "Example 8: Make a “cheat sheet”\nYou will continue to pick up new R code and ideas. You’re highly encouraged to start tracking this in a cheat sheet (eg: in a Google doc). The cheat sheet will be a handy reference for you, and the act of making it will help deepen your understanding and retention."
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#exercise-complete-this-after-the-class",
+    "href": "activities/01_foundations_welcome.html#exercise-complete-this-after-the-class",
+    "title": "Collecting and Summarizing Data",
+    "section": "Exercise: Complete this after the class",
+    "text": "Exercise: Complete this after the class\nComplete this exercise after class. First, try it on your own (or with your group), and then check your work against the solution provided at the end of this .qmd file.\nUse R code to do the following:\n\nImport & name data on different Himalayan peaks from the url below:\nhttps://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/peaks.csv NOTE: A codebook, i.e. a description of the data, is here.\nUse a function to show which variables are recorded on each peak.\nHow many peaks are included in the dataset? Answer this using a function, not by counting up the rows yourself.\nShow the first 6 rows of the dataset. NOTE: This gives us a quick glimpse without having to print out the entire dataset!"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#exercise-1-use-r-as-a-calculator",
+    "href": "activities/01_foundations_welcome.html#exercise-1-use-r-as-a-calculator",
+    "title": "Collecting and Summarizing Data",
+    "section": "Exercise 1: Use R as a calculator",
+    "text": "Exercise 1: Use R as a calculator\n\n4 + 2\n## [1] 6\n4^2\n## [1] 16\n4*2\n## [1] 8\n#4(2) # We need to use * for multiplication"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#exercise-2-functions-and-arguments",
+    "href": "activities/01_foundations_welcome.html#exercise-2-functions-and-arguments",
+    "title": "Collecting and Summarizing Data",
+    "section": "Exercise 2: Functions and arguments",
+    "text": "Exercise 2: Functions and arguments\n\n# Calculate the square root of 9\nsqrt(9)\n## [1] 3\n\n# Calculate the number of characters in the word \"macalester\"\nnchar(\"macalester\")\n## [1] 10\n\n# Calculate the square root of the number of characters in the word \"snow\"\nsqrt(nchar(\"snow\"))\n## [1] 2\n\n\n# Repeat the number 2, 5 times\nrep(x = 2, times = 5)\n## [1] 2 2 2 2 2\n\n# Repeat the number 2, 5 times\nrep(times = 5, x = 2)\n## [1] 2 2 2 2 2\n\n# Repeat the number 2, 5 times\nrep(2, 5)\n## [1] 2 2 2 2 2\n\n# Repeat the number 5, 2 times\nrep(5, 2)\n## [1] 5 5"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#exercise-3-save-it-for-later",
+    "href": "activities/01_foundations_welcome.html#exercise-3-save-it-for-later",
+    "title": "Collecting and Summarizing Data",
+    "section": "Exercise 3: Save it for later",
+    "text": "Exercise 3: Save it for later\n\n# Nothing shows up -- all we're doing here is storing -13 as degrees_c\ndegrees_c &lt;- -13\n\n# Print the contents of degrees_c\ndegrees_c\n## [1] -13\n\n# We can \"do math\" with the contents of degrees_c\ndegrees_c * (9/5) + 32\n## [1] 8.6"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#exercise-4-import-data",
+    "href": "activities/01_foundations_welcome.html#exercise-4-import-data",
+    "title": "Collecting and Summarizing Data",
+    "section": "Exercise 4: Import data",
+    "text": "Exercise 4: Import data\n\n# Load the tidyverse package\nlibrary(tidyverse)\n\n# Import the data\nsurvey &lt;- read_csv(\"https://mac-stat.github.io/data/112_fall_2024_survey.csv\")"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#exercise-5-get-to-know-the-data",
+    "href": "activities/01_foundations_welcome.html#exercise-5-get-to-know-the-data",
+    "title": "Collecting and Summarizing Data",
+    "section": "Exercise 5: Get to know the data",
+    "text": "Exercise 5: Get to know the data\n\n# Dimensions of the survey data set\n# First number = number of rows\n# Second number = number of columns\ndim(survey)\n## [1] 98  4\n\n\n# Number of rows in the survey data set\nnrow(survey)\n## [1] 98\n\n\n# First 6 rows (the head) of the survey data set\nhead(survey)\n## # A tibble: 6 × 4\n##   cafe_mac     minutes_to_campus fave_temp hangout      \n##   &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;        \n## 1 Cheesecake                  15        18 the mountains\n## 2 Cheese pizza                10        24 a beach      \n## 3 udon noodles                 4        18 the mountains\n## 4 egg rolls                    7        10 a beach      \n## 5 Tacos                        5        18 the mountains\n## 6 pasta                       35         7 the mountains\n\n\n# First 3 rows of the survey data set\nhead(survey, 3)\n## # A tibble: 3 × 4\n##   cafe_mac     minutes_to_campus fave_temp hangout      \n##   &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;        \n## 1 Cheesecake                  15        18 the mountains\n## 2 Cheese pizza                10        24 a beach      \n## 3 udon noodles                 4        18 the mountains\n\n\n# Last 6 rows (the tail) of the survey data set\ntail(survey)\n## # A tibble: 6 × 4\n##   cafe_mac        minutes_to_campus fave_temp hangout \n##   &lt;chr&gt;                       &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;   \n## 1 Burger                         10        21 a forest\n## 2 Pepperoni Pizza                10        24 a beach \n## 3 Hamburger                       6        23 a beach \n## 4 Ginger Cookies                 10        26 a beach \n## 5 bbq chicken                     5        14 a city  \n## 6 Breakfast food                 15        25 a city\n\n\n# Names of the variables in the survey data set\nnames(survey)\n## [1] \"cafe_mac\"          \"minutes_to_campus\" \"fave_temp\"        \n## [4] \"hangout\"\n\n\n# Structure of all variables in the survey data set\nstr(survey)\n## spc_tbl_ [98 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)\n##  $ cafe_mac         : chr [1:98] \"Cheesecake\" \"Cheese pizza\" \"udon noodles\" \"egg rolls\" ...\n##  $ minutes_to_campus: num [1:98] 15 10 4 7 5 35 5 15 7 20 ...\n##  $ fave_temp        : num [1:98] 18 24 18 10 18 7 75 24 13 16 ...\n##  $ hangout          : chr [1:98] \"the mountains\" \"a beach\" \"the mountains\" \"a beach\" ...\n##  - attr(*, \"spec\")=\n##   .. cols(\n##   ..   cafe_mac = col_character(),\n##   ..   minutes_to_campus = col_double(),\n##   ..   fave_temp = col_double(),\n##   ..   hangout = col_character()\n##   .. )\n##  - attr(*, \"problems\")=&lt;externalptr&gt;"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#exercise-6-code-communication",
+    "href": "activities/01_foundations_welcome.html#exercise-6-code-communication",
+    "title": "Collecting and Summarizing Data",
+    "section": "Exercise 6: Code = communication",
+    "text": "Exercise 6: Code = communication\n\n# Make it less smooshy. Add spaces!\nseq(from = 1, to = 9, by = 2)\n## [1] 1 3 5 7 9\n\n# Use consistent spacing\nseq(from = 1, to = 9, by = 2)\n## [1] 1 3 5 7 9\n\n# Use more descriptive names when storing objects\nmy_output &lt;- -13\n\n# Use a shorter and easier to read name\ncelsius_today &lt;- -13\nCelsiusToday  &lt;- -13"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#exercise-7-you-will-make-so-many-mistakes",
+    "href": "activities/01_foundations_welcome.html#exercise-7-you-will-make-so-many-mistakes",
+    "title": "Collecting and Summarizing Data",
+    "section": "Exercise 7: You will make so many mistakes!",
+    "text": "Exercise 7: You will make so many mistakes!"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#exercise-8-your-turn",
+    "href": "activities/01_foundations_welcome.html#exercise-8-your-turn",
+    "title": "Collecting and Summarizing Data",
+    "section": "Exercise 8: Your turn",
+    "text": "Exercise 8: Your turn\n\n# a\npeaks &lt;- read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/peaks.csv\")\n\n# b\nnames(peaks)\n## [1] \"peak_id\"                    \"peak_name\"                 \n## [3] \"peak_alternative_name\"      \"height_metres\"             \n## [5] \"climbing_status\"            \"first_ascent_year\"         \n## [7] \"first_ascent_country\"       \"first_ascent_expedition_id\"\n\n# c\ndim(peaks)\n## [1] 468   8\nnrow(peaks)\n## [1] 468\n\n# d\nhead(peaks)\n## # A tibble: 6 × 8\n##   peak_id peak_name     peak_alternative_name height_metres climbing_status\n##   &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;                         &lt;dbl&gt; &lt;chr&gt;          \n## 1 AMAD    Ama Dablam    Amai Dablang                   6814 Climbed        \n## 2 AMPG    Amphu Gyabjen &lt;NA&gt;                           5630 Climbed        \n## 3 ANN1    Annapurna I   &lt;NA&gt;                           8091 Climbed        \n## 4 ANN2    Annapurna II  &lt;NA&gt;                           7937 Climbed        \n## 5 ANN3    Annapurna III &lt;NA&gt;                           7555 Climbed        \n## 6 ANN4    Annapurna IV  &lt;NA&gt;                           7525 Climbed        \n## # ℹ 3 more variables: first_ascent_year &lt;dbl&gt;, first_ascent_country &lt;chr&gt;,\n## #   first_ascent_expedition_id &lt;chr&gt;"
+  },
+  {
+    "objectID": "assignments.html",
+    "href": "assignments.html",
+    "title": "Homework Assignment",
+    "section": "",
+    "text": "…due at 11:59 pm Central on Moodle!"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "STAT 253: Statistical Machine Learning",
+    "section": "",
+    "text": "STAT 253: Statistical Machine Learning\nMacalester College, Spring 2026\nStatistics is not just about theories & numbers — it’s about making sense of the world.\n\n\n\n\n\n\n📖 A Thought from H. G. Wells\n\n\n\n\n“Statistical thinking will one day be as necessary for efficient citizenship as the ability to read and write.”\n\n\n\nWelcome to the world of Statistics! In this course, you’ll learn how to analyze data, test research hypotheses, and make predictions in ways that matter.\nInstructor: Md Mutasim Billah  Class meeting times:\n\nSection 03: M/W/F 02:20-03:20pm, THTR 213\n\nOffice hours:\n\nLocation: My office (OLRI 234) and over Zoom\nTimes: M/W: 12:00pm - 12:30pm (in-person), T/TR: 2pm - 3pm (Over zoom, password: 123456)\nBy Appointment: I’m also happy to meet one-on-one if my normal drop-in/virtual hours don’t work for you. Shoot me an email and we can arrange it over zoom, password: 123456.\nEmail Response Time: I do my best to reply to emails promptly during weekdays. Please note that messages sent after 3:00 pm or on weekends may take longer to receive a response.\n\n\nSTAT 253 Preceptor Office Hours: There is a link to a Google Calendar containing all preceptor office hours available at the top of the course Moodle page!\nData and R Support: In addition to our course preceptors, there is support on campus for working with data and R / RStudio. See https://www.macalester.edu/mscs/data-support for more information.\n\nThis course website will be updated throughout the semester with new activities, assignments, and announcements, so please bookmark this page if you are enrolled in the course!\nIf you find any typos, bugs, dead links, or have other questions, please email mbillah@macalester.edu"
+  },
+  {
+    "objectID": "project.html",
+    "href": "project.html",
+    "title": "Project",
+    "section": "",
+    "text": "Please download and go through the Project Instructions in details.\nThe Rubrics for grading are here.\nParticipate in the STAT 155 Group Project Survey by Monday, October 27."
+  },
+  {
+    "objectID": "stat155.html",
+    "href": "stat155.html",
+    "title": "STAT 155 Resources",
+    "section": "",
+    "text": "In this course, we will build on the linear and logistic regression modeling techniques covered in STAT 155. As such, familiarity with key concepts from STAT 155 is expected. This includes, but is not necessarily limited to, the following topics:\n\ndata context: 5W’s + H (who, what, where, when, why, how)\ndata visualization in R\nlinear regression: least squares, model interpretation, prediction, model evaluation (eg residuals, \\(R^2\\))\nlogistic regression: odds, model interpretation, prediction, model evaluation (eg accuracy, sensitivity)\nbootstrapping\n\n\n\n\n\n\n\nTip\n\n\n\nIf you are rusty on any of these concepts, please review the resources linked below!\n\n\n\n\n\n\n\n\n\n\nLet \\(y\\) be a response variable with a set of \\(k\\) explanatory variables \\(x = (x_{1}, x_{2}, ..., x_{k})\\). Then the population linear regression model is\n\\[\\begin{split}\ny & = f(x) + \\varepsilon  = \\beta_0 + \\beta_1 x_{1} + \\beta_2 x_{2} + \\cdots + \\beta_k x_{k} + \\varepsilon \\\\\n\\end{split}\\]\nNOTES:\n\n\\(\\beta\\) is the Greek letter “beta”. \\(\\varepsilon\\) is the Greek letter “epsilon”.\n\n“Linear” regression is so named because it assumes that \\(y\\) is a linear combination of the \\(x\\)’s. It does not mean that the relationship itself is linear!! For example, one of the predictors might be a quadratic term: \\(x_2 = x_1^2\\).\n\\(f(x) = \\beta_0 + \\beta_1 x_{1} + \\beta_2 x_{2} + \\cdots + \\beta_k x_{k}\\) captures the trend of the relationship\n\n\\(\\beta_0\\) = intercept coefficient\nthe model value when \\(x_1=x_2=\\cdots=x_k=0\\)\n\\(\\beta_i\\) = \\(x_i\\) coefficient\nhow \\(x_i\\) is related to \\(y\\) when holding constant all other \\(x_i\\)\n\n\\(\\epsilon\\) reflects deviation from the trend (the residual)\n\n\n\n\nFitting the Model\nOnce we have a population model in mind, we can “fit the model” (i.e. estimate the \\(\\beta\\) population coefficients) using sample data:\n\\[\\begin{split}\ny & =  \\hat{f}(x) + \\varepsilon \\\\\n& = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_{1} + \\hat{\\beta}_2 x_{2} + \\cdots + \\hat{\\beta}_k x_{k} + \\varepsilon \\\\\n\\end{split}\\]\n\n\nTo this end, collect a sample of data on \\(n\\) subjects. Use subscripts to denote the data for subject \\(i\\): \\(y_i\\) and \\(x_{ij}\\). Then the predicted response and residual (prediction error) for subject \\(i\\) are\n\nprediction \\[\\hat{y}_i = \\hat{f}(x_i) = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_{i1} + \\hat{\\beta}_2 x_{i2} + \\cdots + \\hat{\\beta}_k x_{ik}\\]\nresidual / prediction error \\[y_i - \\hat{y}_i\\]\n\n\n\n\nLeast Squares Criterion\nEstimate (\\(\\beta_0, \\beta_1,..., \\beta_k\\)) by (\\(\\hat{\\beta}_0, \\hat{\\beta}_1,..., \\hat{\\beta}_k)\\) that minimize the sum of squared residuals: \\[\\sum_{i=1}^n(y_i - \\hat{y}_i)^2 = (y_1-\\hat{y}_1)^2 + (y_2-\\hat{y}_2)^2 + \\cdots + (y_n-\\hat{y}_n)^2\\]\n\n\n\n\n\n\nA comprehensive STAT 155 review is provided by the STAT 155 Notes created by Profs. Grinde, Heggeseth, and Myint (here) and Prof. Bill’s Fall 25 STAT 155 website (skim the topics from the ‘Activities’ tab as needed!) (here).",
+    "crumbs": [
+      "STAT 155 Resources"
+    ]
+  },
+  {
+    "objectID": "stat155.html#important-topics",
+    "href": "stat155.html#important-topics",
+    "title": "STAT 155 Resources",
+    "section": "",
+    "text": "In this course, we will build on the linear and logistic regression modeling techniques covered in STAT 155. As such, familiarity with key concepts from STAT 155 is expected. This includes, but is not necessarily limited to, the following topics:\n\ndata context: 5W’s + H (who, what, where, when, why, how)\ndata visualization in R\nlinear regression: least squares, model interpretation, prediction, model evaluation (eg residuals, \\(R^2\\))\nlogistic regression: odds, model interpretation, prediction, model evaluation (eg accuracy, sensitivity)\nbootstrapping\n\n\n\n\n\n\n\nTip\n\n\n\nIf you are rusty on any of these concepts, please review the resources linked below!",
+    "crumbs": [
+      "STAT 155 Resources"
+    ]
+  },
+  {
+    "objectID": "stat155.html#review-resources",
+    "href": "stat155.html#review-resources",
+    "title": "STAT 155 Resources",
+    "section": "",
+    "text": "Let \\(y\\) be a response variable with a set of \\(k\\) explanatory variables \\(x = (x_{1}, x_{2}, ..., x_{k})\\). Then the population linear regression model is\n\\[\\begin{split}\ny & = f(x) + \\varepsilon  = \\beta_0 + \\beta_1 x_{1} + \\beta_2 x_{2} + \\cdots + \\beta_k x_{k} + \\varepsilon \\\\\n\\end{split}\\]\nNOTES:\n\n\\(\\beta\\) is the Greek letter “beta”. \\(\\varepsilon\\) is the Greek letter “epsilon”.\n\n“Linear” regression is so named because it assumes that \\(y\\) is a linear combination of the \\(x\\)’s. It does not mean that the relationship itself is linear!! For example, one of the predictors might be a quadratic term: \\(x_2 = x_1^2\\).\n\\(f(x) = \\beta_0 + \\beta_1 x_{1} + \\beta_2 x_{2} + \\cdots + \\beta_k x_{k}\\) captures the trend of the relationship\n\n\\(\\beta_0\\) = intercept coefficient\nthe model value when \\(x_1=x_2=\\cdots=x_k=0\\)\n\\(\\beta_i\\) = \\(x_i\\) coefficient\nhow \\(x_i\\) is related to \\(y\\) when holding constant all other \\(x_i\\)\n\n\\(\\epsilon\\) reflects deviation from the trend (the residual)\n\n\n\n\nFitting the Model\nOnce we have a population model in mind, we can “fit the model” (i.e. estimate the \\(\\beta\\) population coefficients) using sample data:\n\\[\\begin{split}\ny & =  \\hat{f}(x) + \\varepsilon \\\\\n& = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_{1} + \\hat{\\beta}_2 x_{2} + \\cdots + \\hat{\\beta}_k x_{k} + \\varepsilon \\\\\n\\end{split}\\]\n\n\nTo this end, collect a sample of data on \\(n\\) subjects. Use subscripts to denote the data for subject \\(i\\): \\(y_i\\) and \\(x_{ij}\\). Then the predicted response and residual (prediction error) for subject \\(i\\) are\n\nprediction \\[\\hat{y}_i = \\hat{f}(x_i) = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_{i1} + \\hat{\\beta}_2 x_{i2} + \\cdots + \\hat{\\beta}_k x_{ik}\\]\nresidual / prediction error \\[y_i - \\hat{y}_i\\]\n\n\n\n\nLeast Squares Criterion\nEstimate (\\(\\beta_0, \\beta_1,..., \\beta_k\\)) by (\\(\\hat{\\beta}_0, \\hat{\\beta}_1,..., \\hat{\\beta}_k)\\) that minimize the sum of squared residuals: \\[\\sum_{i=1}^n(y_i - \\hat{y}_i)^2 = (y_1-\\hat{y}_1)^2 + (y_2-\\hat{y}_2)^2 + \\cdots + (y_n-\\hat{y}_n)^2\\]\n\n\n\n\n\n\nA comprehensive STAT 155 review is provided by the STAT 155 Notes created by Profs. Grinde, Heggeseth, and Myint (here) and Prof. Bill’s Fall 25 STAT 155 website (skim the topics from the ‘Activities’ tab as needed!) (here).",
+    "crumbs": [
+      "STAT 155 Resources"
     ]
   }
 ]

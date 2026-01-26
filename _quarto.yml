@@ -25,8 +25,6 @@ website:
       - file: index.qmd
         text: "Welcome!"
       - sidebar:overview
-      - file: schedule.qmd
-        text: "Schedule"
       - sidebar:activities
       - file: assignments.qmd
         text: "Homework Assignments"
@@ -39,11 +37,12 @@ website:
       contents:
           - "syllabus.qmd"
           - "learning.qmd"
+          - "getting-started.qmd"
 
     - id: activities
       title: "Activities"
       contents:
-          - "!activities/01_foundations_welcome.qmd"
+          - "!activities/L01-introductions.qmd"
 
     - id: appendices
       title: "Appendices"

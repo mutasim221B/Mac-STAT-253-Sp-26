@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Course Schedule – STAT 253</title>
+<title>getting-started – STAT 253</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -72,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -148,39 +148,100 @@ ul.task-list li input[type="checkbox"] {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./getting-started.html">Getting Started</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning Goals</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./getting-started.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Getting Started</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started">Getting Started</a>
+  <ul class="collapse">
+  <li><a href="#stat-155-review" id="toc-stat-155-review" class="nav-link" data-scroll-target="#stat-155-review">STAT 155 Review</a></li>
+  <li><a href="#r-setup-and-resources" id="toc-r-setup-and-resources" class="nav-link" data-scroll-target="#r-setup-and-resources">R Setup and Resources</a></li>
+  <li><a href="#course-notes" id="toc-course-notes" class="nav-link" data-scroll-target="#course-notes">Course Notes</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Course Schedule</h1>
+
+
+
+<section id="getting-started" class="level1 unnumbered">
+<h1 class="unnumbered">Getting Started</h1>
+<p>Broadly, statistical machine learning consists of tools and algorithms to learn from data. Insights from machine learning help us take action by enabling us to make predictions and understand uncertainty. Applications of machine learning algorithms are used everywhere from finance to biology, medicine, social sciences, language, and the humanities.</p>
+<p>In this course, you will build on the linear and logistic regression modeling techniques covered in STAT 155 to understand tools of <strong>regression</strong> (Units 1–3) and <strong>classification</strong> (Units 4–5) more broadly. You will also learn about <strong>unsupervised methods</strong> (Units 6–7) that can help you find underlying structure in data.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/MLdiagram.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>We’ll return to this diagram frequently throughout the semester!</figcaption>
+</figure>
 </div>
+<p><br>
+</p>
+<section id="stat-155-review" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="stat-155-review">STAT 155 Review</h2>
+<p>As we build on ideas from STAT 155, familiarity with core concepts from that course is expected.</p>
+<p>Check out the <a href="./stat155.html">STAT 155 Review</a> in the Appendix for a list of important topics that we’ll revisit this semester, as well as links to resources if you need a refresher on any of those topics.</p>
+<p><br>
+</p>
+</section>
+<section id="r-setup-and-resources" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="r-setup-and-resources">R Setup and Resources</h2>
+<p>We’ll also be building on your introduction to R/RStudio from STAT 155 (and COMP/STAT 112, if applicable).</p>
+<p><span class="text-primary"><strong>TO-DO:</strong></span> During the first week of class, work through the steps on the <a href="./R_Rstudio.html">R and RStudio Setup</a> page in the Appendix to get everything set up for the semester.</p>
+<p>Throughout the semester, if you find yourself needing a refresher or additional resources related to R, check out the <a href="./R_Resources.html">R Resources</a> page!</p>
+<p><br>
+</p>
+</section>
+<section id="course-notes" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="course-notes">Course Notes</h2>
+<p>You’ll access most of the materials that you need for this course via this website. Each class period will have its own page on this site. There, you’ll find daily learning goals, lecture notes, discussion questions, and exercises designed to give you hands-on practice with newly introduced concepts.</p>
 
 
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>The (tentative) course schedule below will be filled in throughout the semester. For each day, there will be written on what is due ahead of class time OR whats’ the big thing (like quizzes!). Any important announcements will be made over email (moodle).</p>
-
-
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

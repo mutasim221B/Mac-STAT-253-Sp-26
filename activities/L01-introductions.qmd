@@ -1,0 +1,482 @@
+---
+title: "Introduction to Statistical Machine Learning"
+subtitle: "Notes and in-class exercises"
+format: 
+  html:
+    embed-resources: true
+    toc: true
+---
+
+
+```{r setup}
+#| include: false
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  warning = FALSE,
+  message = FALSE,
+  error = TRUE,
+  fig.height = 2.75, 
+  fig.width = 4.25,
+  fig.env = 'figure',
+  fig.pos = 'h',
+  fig.align = 'center')
+```
+
+
+
+
+
+
+# Learning Goals {.unnumbered .smaller}
+
+- Identify the appropriate task (regression, classification, unsupervised) for a given research question
+- Develop foundation to be able to formulate research questions that align with regression, classification, or unsupervised learning tasks
+
+
+# Brief Overview of STAT 253 {.unnumbered .smaller}
+
+## What's Machine Learning? {.unnumbered .smaller}
+
+:::: .columns
+::: {.column width=50%} 
+
+**"Machine Learning"** was coined back in 1959 by Arthur Samuel, an early contributor to AI.
+
+**From Kohavi & Provost (1998):** Machine Learning is the exploration & application of algorithms that can *learn* from existing patterns and make predictions using data. 
+
+> **IMPORTANT:** _humans_ are in charge of the "exploration & application"!
+
+**From James et al (2021) [[link]](https://www.statlearning.com/):** *Statistical Learning* refers to a vast set of tools for *understanding data*.
+
+:::
+
+::: {.column width=45%}
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/AI-ML-DL.svg/440px-AI-ML-DL.svg.png){width="90%" fig-align="right"}
+
+:::
+
+::::
+
+
+\
+
+## In STAT 253 we will... {.unnumbered .smaller}
+
+::: {.incremental}
+- Pick up where **STAT 155** left off, acquiring tools that can be used to learn from data in greater depth and a wider variety of settings. (STAT 155 is a foundational subset of ML!)
+
+- Explore *universal* ML concepts using tools and software common among statisticians (hence "statistical" machine learning).
+
+- **Survey** a breadth of modern ML tools and algorithms that fall into the workflow below. Part of the cognitive load will be:  
+
+  - keeping all the tools in place (what are they and when to use them)
+  
+  - understanding the connections between the tools
+  
+  - adapting (not memorizing) code to implement each tool
+  
+  - *a new topic almost every day* 
+  
+- We'll focus on concepts and applications over mathematical theory. (Come chat with me in office hours if you're interested in learning more about the theory!)
+:::
+
+
+![](../images/MLdiagram.jpg){width="80%"}
+
+
+\
+\
+
+# Notes: Machine Learning Overview {.unnumbered}
+
+## Types of ML Tasks {.unnumbered .smaller}
+
+![](../images/MLdiagram.jpg){width=100%}
+
+Statistical machine learning tools can be classified as follows:
+
+- **supervised** or **unsupervised**
+- within supervised learning: **regression** vs **classification**
+- within unsupervised learning: **clustering** vs **dimension reduction** 
+
+Knowing which of these scenarios your research question falls into is an important first step in identifying which tool to use!
+
+
+\
+
+## Supervised Learning {.unnumbered .smaller}       
+
+We want to model the relationship between some *output* variable[^1] $y$ and *input*  variables[^2] $x = (x_1, x_2,..., x_p)$: 
+
+[^1]: otherwise known as *outcome*, *response*, *dependent variable*
+[^2]: otherwise known as *predictors*, *features*, *independent variables*
+
+$$
+\begin{split}
+y 
+& = f(x) + \varepsilon \\
+& = \text{(trend in the relationship) } + \text{ (residual deviation from the trend)} \\
+\end{split}
+$$
+
+
+Types of supervised learning tasks:     
+
+- **regression**: $y$ is *quantitative*       
+    example:        
+    $y$ = number of dental caries (cavities)  
+    $x$ = (genetic information at millions of markers, sex, age, age$^2$, etc)  
+    [project details](https://www.nature.com/articles/s41467-019-10630-1)
+    
+- **classification**: $y$ is *categorical*        
+    example:        
+    $y$ = whether a patient experienced adverse surgery outcomes after undergoing an upper endoscopy (yes, no)   
+    $x$ = (administration of sedation [anesthesia professional, nurse], age, medical comorbidities [eg sleep apnea], etc.)  
+    [project details](https://www.giejournal.org/article/S0016-5107(18)32182-5/fulltext)    
+
+
+\
+
+
+## Unsupervised Learning {.unnumbered .smaller}     
+
+We have some *input* variables $x = (x_1, x_2,..., x_p)$ but there's **no *output* variable** $y$. Thus the goal is to use $x$ to understand and/or modify the structure of our data.
+
+
+Types of unsupervised learning tasks:       
+
+
+:::: .columns
+::: {.column width=60%} 
+
+<!-- update to use examples from instructor's research! -->
+
+- **clustering**: Identify and examine *groups* or *clusters* of data points that are similar with respect to their $x_i$ values.   
+    example:   
+    $x$ = (genetic data)   
+    [project details](https://onlinelibrary.wiley.com/doi/full/10.1002/cam4.5266) (led by a Mac alum!)
+    
+- **dimension reduction**: Turn the original set of $p$ input variables, which are potentially correlated, into a smaller set of $k < p$ variables which still preserve the majority of information in the originals.   
+    example:   
+    $x$ = (genetic data)     
+    [project details](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1011242) 
+
+:::
+
+::: {.column width=35%} 
+
+![Supplemental Figure 2A from Barragan et al (2023) [[link]](https://onlinelibrary.wiley.com/doi/full/10.1002/cam4.5266) uses *both* clustering and dimension reduction!](../images/clustering-example-b-all.png){width=90% fig-alight="right"}
+
+:::
+
+::::
+
+
+\
+\
+
+# Exercises {.unnumbered .smaller}
+
+## Instructions {.unnumbered .smaller} 
+
+- Discuss the following scenarios as a group, talking through your ideas, questions, and reasoning as you go.
+- Write down your answers, and any insights or questions that come up while working, in your notebook. 
+    - (I'll give you a Quarto template next time.)
+- I'll move around to groups to check in on your progress and see what questions you have.
+- You can check your answers by clicking the drop-down "Solutions" button.
+
+\
+
+## Questions {.unnumbered .smaller}
+
+Indicate whether each scenario below represents a regression, classification, or clustering task.
+
+1. How is the number of people that rent bikes on a given day in Washington, D.C. ($y$) explained by the temperature ($x_1$) and whether or not it's a weekend ($x_2$)?  
+         
+```{r echo=FALSE, fig.width=8, fig.height=3, cache=TRUE}
+politics <- read.csv("https://www.dropbox.com/s/08smmgkaoj1ulhx/bike_share.csv?dl=1")
+```
+    
+```{r echo=FALSE, fig.width=10, fig.height=2.5, fig.align="center",warning=FALSE,message=FALSE}
+g1 <- ggplot(politics, aes(y=riders_registered, x=temp_feel)) + geom_point() + labs(x="temperature", y="riders") + geom_smooth(method="lm", se=FALSE)
+g3 <- ggplot(politics, aes(y=riders_registered, x=temp_feel, color=weekend)) + geom_point() + labs(x="temperature", y="riders") + geom_smooth(method="lm", se=FALSE) + scale_color_viridis_d()
+g2 <- ggplot(politics, aes(x=riders_registered, fill=weekend)) + geom_density(alpha=0.5) + labs(x="riders") + geom_vline(xintercept=3926, color="red")  + geom_vline(xintercept=2988, color="blue")+ scale_fill_viridis_d()
+grid.arrange(g1, g2, g3, ncol=3)
+```    
+
+
+<details>
+<summary>Solution</summary>
+regression.  there's a _quantitative_ output variable $y$.
+</details>
+
+<br><br>
+
+2. Given the observed bill length ($x_1$) and bill depth ($x_2$) on a set of penguins, how many different penguin species might there be? 
+
+```{r echo=FALSE, fig.align="center", warning=FALSE, fig.width = 3.5}
+library(palmerpenguins)
+data(penguins)
+ggplot(penguins, aes(y = bill_length_mm, x = bill_depth_mm)) + geom_point()
+``` 
+
+<details>
+<summary>Solution</summary>
+clustering.  there's no output variable $y$.
+</details>
+
+<br><br>
+
+3. How can we determine whether somebody has a certain infection ($y$) based on two different blood sample measurements, Measure A ($x_1$) and Measure B ($x_2$)?   
+    
+```{r echo=FALSE, fig.align="center", warning=FALSE}
+conflicts_prefer(dplyr::filter)
+set.seed(2010)
+dat <- data.frame(x=c(rnorm(50,3.5,1.25), rnorm(50,2,1.25), rnorm(75,0.5,1.25)), y=c(rnorm(50,2,1.25),rnorm(50,5,1.25),rnorm(75,1,1.25)), status=rep(c("WNV","SLE","Negative"), c(50,50,75)))
+suppressPackageStartupMessages(library(dplyr))
+dat <- dat %>% filter(x>0 & y>0)
+ggplot(dat, aes(y=y, x=x, color=status)) + 
+  geom_point() + 
+  labs(x="Measure A", y="Measure B") +
+  scale_color_manual(values = c("#01426A", "#D44420", "#A5ADAF"))
+``` 
+    
+<details>
+<summary>Solution</summary>
+classification.  there's a _categorical_ output variable $y$.
+</details>
+
+<br><br>
+
+
+4. **Machine learn about each other! Scenario A.**    
+    I collected some data on STAT 253 students (you!) and analyzed it using a machine learning algorithm. In your groups: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; _and_ (3) summarize what the output tells you about your classmates.
+    
+```{r exercise4}
+#| echo: false
+#| eval: true
+#| fig-width: 16
+#| fig-height: 7
+
+library(rpart)
+library(rpart.plot)
+# Classification
+# new_dat <- survey %>% 
+#       select(-fake_name, -email, -section,-name) %>% 
+#       unique()
+new_dat <- survey_clean %>% 
+      select(-`Preferred Name`, -`Unique Word`, -Section) %>% 
+      unique()
+    
+# increase minsplit to prune tree.  this is essentially the number of students that can be in a terminal node
+# or do two trees -- one pruned and one unpruned
+set.seed(1)
+# tree_0 <- rpart(major ~ ., new_dat, 
+#                     control = rpart.control(minsplit = 5, cp = 0.02))
+tree_0 <- rpart(Major ~ ., new_dat, 
+                    control = rpart.control(minsplit = 5, cp = 0.02))
+rpart.plot(tree_0, cex = 1.15, type = 0, extra = 2, box.palette="Blues")
+```
+    
+    
+<details>
+<summary>Solution</summary>
+1. predict someone's major based on other survey responses
+2. classification ($y$ = major is categorical)
+3. (will vary by semester -- what do you learn about the majors represented in this class and the variables that are useful for predicting it?)
+</details>
+
+ <br><br> 
+        
+    
+
+
+
+5. **Machine learn about each other! Scenario B.**    
+    Same directions as for Scenario A:    (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; _and_ (3) summarize what the output tells you about your classmates.
+    
+```{r exercise5}
+#| echo: false
+#| eval: true
+#| fig-width: 6
+#| warning: false
+#| message: false
+
+# regression
+# g1 <- ggplot(survey, aes(y = time_to_mac, x = cute_pic)) + 
+#   geom_point() + 
+#   geom_smooth(se = FALSE)
+g1 <- ggplot(survey_clean, aes(y = `Walk Time`, x = `Photo Rating`)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE)
+# g2 <- ggplot(survey %>% mutate(year = fct_relevel(year,c('First Year','Sophomore','Junior','Senior'))), aes(y = time_to_mac, x = year)) + 
+#   geom_boxplot()
+g2 <- survey_clean %>% 
+  mutate(year = fct_relevel(`Class Year`, c('First Year', 'Sophomore', 'Junior', 'Senior'))) %>%
+  ggplot(aes(y = `Walk Time`, x = year)) + 
+  geom_boxplot()
+grid.arrange(g1,g2,ncol=2)
+```
+
+
+<details>
+<summary>Solution</summary>
+1. predict walk time to Mac based on photo rating and class year
+2. regression ($y$ = time to mac is quantitative)
+3. (answers will vary by semester -- what do you learn about the relationships between these variables?)
+</details> 
+<br><br>
+
+
+
+6. **Machine learn about each other! Scenario C.**    
+    Same directions as for Scenario A: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; _and_ (3) summarize what the output tells you about your classmates. 
+    
+```{r exercise6-clustering}
+#| echo: false
+#| eval: true
+#| fig-width: 8
+#| fig-height: 6
+
+# prep data
+survey_sub <- survey_clean %>% 
+  select(-Section, -`Unique Word`, -`Preferred Name`)
+fake_names <- survey_clean$`Unique Word`
+
+# check for duplicates and add "2" if so
+# might not need this (could comment out if so)
+if(length(unique(fake_names)) != length(fake_names)){
+  fake_names[duplicated(fake_names)] <- paste0(fake_names[duplicated(fake_names)], '2')
+}
+
+rownames(survey_sub) <- fake_names
+    
+    
+# Dendrogram of scaled data
+gower_dist <- daisy(survey_sub, metric = "gower", type = list(logratio = 3))
+class_cluster <- hclust(gower_dist)
+plot(class_cluster, cex = 0.8, main = "", axes = FALSE, xlab = "", ylab = "", sub = "")
+```
+    
+<details>
+<summary>Solution</summary>
+1. which students in the class are most similar to which other students?
+2. clustering (no outcome $y$, interested in structure/similarities across observations)
+3. (answers will vary by semester -- to whom are you most similar? how many "natural" groupings of students do you see? etc.)
+</details> 
+
+<br><br>
+
+7. Use Spotify users' previous listening behavior to identify groups of similar users.     
+
+<details>
+<summary>Solution</summary>
+clustering
+</details>
+
+<br><br>
+<!-- clustering -->
+
+8. Predict workers' wages by their years of experience.    
+
+<!-- regression -->
+<details>
+<summary>Solution</summary>
+regression ($y$ = wages)
+</details>
+
+<br><br>
+
+9. Predict workers' wages by their college major.    
+
+
+<!-- regression -->
+
+<details>
+<summary>Solution</summary>
+regression ($y$ = wages)
+</details>
+
+ <br><br>
+
+10. Use a customer's age to predict whether they've seen the *Barbie* movie.    
+
+<!-- classification -->
+<details>
+<summary>Solution</summary>
+classification ($y$ = whether or not watched the film)
+</details>
+
+<br><br>
+
+11. Look for similarities among genetic samples taken from a group of patients.  
+
+<!-- clustering -->
+
+<details>
+<summary>Solution</summary>
+clustering (no outcome $y$)
+</details> 
+
+\
+\
+
+If you finish all of the questions above, move on to the **Scavenger Hunt** in the next section.
+
+
+\
+\
+
+# Wrapping Up {.unnumbered .smaller}
+
+## Scavenger Hunt {.unnumbered .smaller}
+
+Working with your table, 
+take a few minutes to find all of the following. 
+Write down the "answers" in your notebook. 
+Then, bookmark any important sites. 
+
+- course website
+- syllabus
+- textbook
+- STAT 253 Slack
+- office hour times and locations
+- assignment deadlines
+- information on what you need to complete before class each day (including your homework for next class!)
+- in-class activities
+- assignment instructions / submission 
+
+<!-- add solutions? -->
+
+
+\
+
+## What's next? {.unnumbered .smaller}
+
+What to work on after class today: 
+
+- [ ] complete the pre-class tasks for next class (videos/reading/checkpoint) 
+  * find this info on the [schedule page](../logistics/schedule.qmd)
+  * review the checkpoint instructions & policies on Moodle before you start! 
+  
+- [ ] start HW0
+  * due next Tuesday (at 11:59 pm)
+  * review the [Stat 155 Review](../appendices/stat155.qmd) resources as needed 
+
+<!-- update invite link each semester -->
+- [ ] join Slack [(invite link)](https://join.slack.com/t/macstat253/shared_invite/zt-3bb2nfby9-mXBpm31ZJ9jpGHfbi7XSYw) 
+
+- [ ] complete the recommended [R and RStudio Setup](../appendices/r_rstudio.qmd) steps
+
+- [ ] **carefully** review the syllabus 
+  * if time allows, we'll discuss a few highlights now!
+  * more to come in the next few class sessions
+
+
+
+
+
+\
+\
+
