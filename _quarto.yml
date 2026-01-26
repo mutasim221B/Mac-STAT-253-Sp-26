@@ -42,7 +42,7 @@ website:
     - id: activities
       title: "Activities"
       contents:
-          - "!activities/L01-introductions.qmd"
+          - "activities/L01-introductions.qmd"
 
     - id: appendices
       title: "Appendices"

@@ -22,9 +22,47 @@ knitr::opts_chunk$set(
   fig.align = 'center')
 ```
 
+```{r packages}
+#| echo: false
+#| eval: true
+#| cache: false
+#| warning: false
+#| message: false
+
+# packages
+library(conflicted)
+conflicts_prefer(dplyr::filter)
+library(tidyverse)
+library(gridExtra)
+library(here)
+library(forcats)
+#install.packages('googlesheets4')
+library(googlesheets4)
+library(cluster)
+```
 
 
 
+You can download the .qmd file for this activity [here](../activity_templates/L01-introductions.qmd) and open in R-studio. The rendered version is posted in the [course website](https://mutasim221b.github.io/Mac-STAT-253-Sp-26/) (Activities tab). I often experiment with the class activities (and see it in live!) and make updates, but I always post the final version before class starts. To be sure you have the most up-to-date copy, please download it once you’ve settled in before class begins.
+
+# Welcome {-}
+
+\
+
+**Settling in**
+
+
+- Sit in groups of **4 (preferably) or 3 (at least)**. 
+- Share your names and pronouns (again!?). Discuss a high point of your holiday season.
+
+
+\
+
+
+- Open the online manual:
+    - [https://mutasim221b.github.io/Mac-STAT-155-Fall-25/](https://mutasim221b.github.io/Mac-STAT-155-Fall-25/) (also linked in Moodle)
+    - Top bar < Activities < Collecting and Summarizing Data
+    - We will do some reading, live-note taking, in-class activities, solving examples, doing exercises...until we ran out of time!
 
 
 # Learning Goals {.unnumbered .smaller}
@@ -52,7 +90,7 @@ knitr::opts_chunk$set(
 
 ::: {.column width=45%}
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/AI-ML-DL.svg/440px-AI-ML-DL.svg.png){width="90%" fig-align="right"}
+![](../images/ai.png){width="90%" fig-align="right"}
 
 :::
 
@@ -81,12 +119,21 @@ knitr::opts_chunk$set(
 - We'll focus on concepts and applications over mathematical theory. (Come chat with me in office hours if you're interested in learning more about the theory!)
 :::
 
+## Course Structure
 
-![](../images/MLdiagram.jpg){width="80%"}
+## Before Class
+In order to dedicate our class time to hands-on learning, you will prepare for class by watching short videos, reading from our textbook, and completing short quizzes (checkpoints) to assess your initial understanding of concepts. You can reattempt each checkpoint question multiple times, with a small penalty for incorrect responses. 
+
+## During Class
+During class time, you will engage with each other in exercises and discussions that build upon the pre-class work. Please bring your laptop to class every day. Consistent attendance and active participation in these activities is expected of all students and, most importantly, will be crucial for your learning!
+
+## After Class
+After class, you will  be expected to finish any remaining exercises from the class activity and review/organize your notes. For each unit, you will also complete homework assignments designed to help you practice and synthesize material and provide an opportunity to receive feedback to further guide your learning. 
 
 
 \
 \
+
 
 # Notes: Machine Learning Overview {.unnumbered}
 
@@ -181,8 +228,7 @@ Types of unsupervised learning tasks:
 ## Instructions {.unnumbered .smaller} 
 
 - Discuss the following scenarios as a group, talking through your ideas, questions, and reasoning as you go.
-- Write down your answers, and any insights or questions that come up while working, in your notebook. 
-    - (I'll give you a Quarto template next time.)
+- Write down your answers, and any insights or questions that come up while working, in your notebook or simply type in here and render your own work!
 - I'll move around to groups to check in on your progress and see what questions you have.
 - You can check your answers by clicking the drop-down "Solutions" button.
 
@@ -251,34 +297,9 @@ classification.  there's a _categorical_ output variable $y$.
 
 
 4. **Machine learn about each other! Scenario A.**    
-    I collected some data on STAT 253 students (you!) and analyzed it using a machine learning algorithm. In your groups: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; _and_ (3) summarize what the output tells you about your classmates.
+    The following data were from past STAT 253 students (you!) and were analyzed using a machine learning algorithm. In your groups: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; _and_ (3) summarize what the output tells you about the students.
     
-```{r exercise4}
-#| echo: false
-#| eval: true
-#| fig-width: 16
-#| fig-height: 7
-
-library(rpart)
-library(rpart.plot)
-# Classification
-# new_dat <- survey %>% 
-#       select(-fake_name, -email, -section,-name) %>% 
-#       unique()
-new_dat <- survey_clean %>% 
-      select(-`Preferred Name`, -`Unique Word`, -Section) %>% 
-      unique()
-    
-# increase minsplit to prune tree.  this is essentially the number of students that can be in a terminal node
-# or do two trees -- one pruned and one unpruned
-set.seed(1)
-# tree_0 <- rpart(major ~ ., new_dat, 
-#                     control = rpart.control(minsplit = 5, cp = 0.02))
-tree_0 <- rpart(Major ~ ., new_dat, 
-                    control = rpart.control(minsplit = 5, cp = 0.02))
-rpart.plot(tree_0, cex = 1.15, type = 0, extra = 2, box.palette="Blues")
-```
-    
+![](../images/L01-1.png){width=100%}
     
 <details>
 <summary>Solution</summary>
@@ -294,30 +315,9 @@ rpart.plot(tree_0, cex = 1.15, type = 0, extra = 2, box.palette="Blues")
 
 
 5. **Machine learn about each other! Scenario B.**    
-    Same directions as for Scenario A:    (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; _and_ (3) summarize what the output tells you about your classmates.
+    Same directions as for Scenario A:    (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; _and_ (3) summarize what the output tells you about the students.
     
-```{r exercise5}
-#| echo: false
-#| eval: true
-#| fig-width: 6
-#| warning: false
-#| message: false
-
-# regression
-# g1 <- ggplot(survey, aes(y = time_to_mac, x = cute_pic)) + 
-#   geom_point() + 
-#   geom_smooth(se = FALSE)
-g1 <- ggplot(survey_clean, aes(y = `Walk Time`, x = `Photo Rating`)) + 
-  geom_point() + 
-  geom_smooth(se = FALSE)
-# g2 <- ggplot(survey %>% mutate(year = fct_relevel(year,c('First Year','Sophomore','Junior','Senior'))), aes(y = time_to_mac, x = year)) + 
-#   geom_boxplot()
-g2 <- survey_clean %>% 
-  mutate(year = fct_relevel(`Class Year`, c('First Year', 'Sophomore', 'Junior', 'Senior'))) %>%
-  ggplot(aes(y = `Walk Time`, x = year)) + 
-  geom_boxplot()
-grid.arrange(g1,g2,ncol=2)
-```
+![](../images/L01-2.png){width=100%}
 
 
 <details>
@@ -422,56 +422,23 @@ clustering (no outcome $y$)
 \
 \
 
-If you finish all of the questions above, move on to the **Scavenger Hunt** in the next section.
-
-
-\
-\
-
-# Wrapping Up {.unnumbered .smaller}
-
-## Scavenger Hunt {.unnumbered .smaller}
-
-Working with your table, 
-take a few minutes to find all of the following. 
-Write down the "answers" in your notebook. 
-Then, bookmark any important sites. 
-
-- course website
-- syllabus
-- textbook
-- STAT 253 Slack
-- office hour times and locations
-- assignment deadlines
-- information on what you need to complete before class each day (including your homework for next class!)
-- in-class activities
-- assignment instructions / submission 
-
-<!-- add solutions? -->
-
-
-\
 
 ## What's next? {.unnumbered .smaller}
 
 What to work on after class today: 
 
-- [ ] complete the pre-class tasks for next class (videos/reading/checkpoint) 
-  * find this info on the [schedule page](../logistics/schedule.qmd)
+- [ ] complete the pre-class tasks for next class on Friday (videos/reading/checkpoint)- note that no class on Wednesday!
   * review the checkpoint instructions & policies on Moodle before you start! 
   
-- [ ] start HW0
-  * due next Tuesday (at 11:59 pm)
+- [ ] start HW0 (I will post it soon)
+  * due Friday (at 11:59 pm)
   * review the [Stat 155 Review](../appendices/stat155.qmd) resources as needed 
 
-<!-- update invite link each semester -->
-- [ ] join Slack [(invite link)](https://join.slack.com/t/macstat253/shared_invite/zt-3bb2nfby9-mXBpm31ZJ9jpGHfbi7XSYw) 
 
 - [ ] complete the recommended [R and RStudio Setup](../appendices/r_rstudio.qmd) steps
 
-- [ ] **carefully** review the syllabus 
-  * if time allows, we'll discuss a few highlights now!
-  * more to come in the next few class sessions
+- [ ] **carefully** review the course logistics (in the course website)
+
 
 
 

@@ -471,77 +471,140 @@
     "href": "activities/L01-introductions.html",
     "title": "Introduction to Statistical Machine Learning",
     "section": "",
-    "text": "Identify the appropriate task (regression, classification, unsupervised) for a given research question\nDevelop foundation to be able to formulate research questions that align with regression, classification, or unsupervised learning tasks"
+    "text": "You can download the .qmd file for this activity here and open in R-studio. The rendered version is posted in the course website (Activities tab). I often experiment with the class activities (and see it in live!) and make updates, but I always post the final version before class starts. To be sure you have the most up-to-date copy, please download it once you’ve settled in before class begins.",
+    "crumbs": [
+      "Introduction to Statistical Machine Learning"
+    ]
   },
   {
     "objectID": "activities/L01-introductions.html#whats-machine-learning",
     "href": "activities/L01-introductions.html#whats-machine-learning",
     "title": "Introduction to Statistical Machine Learning",
     "section": "What’s Machine Learning?",
-    "text": "What’s Machine Learning?\n\n\n“Machine Learning” was coined back in 1959 by Arthur Samuel, an early contributor to AI.\nFrom Kohavi & Provost (1998): Machine Learning is the exploration & application of algorithms that can learn from existing patterns and make predictions using data.\n\nIMPORTANT: humans are in charge of the “exploration & application”!\n\nFrom James et al (2021) [link]: Statistical Learning refers to a vast set of tools for understanding data."
+    "text": "What’s Machine Learning?\n\n\n“Machine Learning” was coined back in 1959 by Arthur Samuel, an early contributor to AI.\nFrom Kohavi & Provost (1998): Machine Learning is the exploration & application of algorithms that can learn from existing patterns and make predictions using data.\n\nIMPORTANT: humans are in charge of the “exploration & application”!\n\nFrom James et al (2021) [link]: Statistical Learning refers to a vast set of tools for understanding data.",
+    "crumbs": [
+      "Introduction to Statistical Machine Learning"
+    ]
   },
   {
     "objectID": "activities/L01-introductions.html#in-stat-253-we-will",
     "href": "activities/L01-introductions.html#in-stat-253-we-will",
     "title": "Introduction to Statistical Machine Learning",
     "section": "In STAT 253 we will…",
-    "text": "In STAT 253 we will…\n\n\nPick up where STAT 155 left off, acquiring tools that can be used to learn from data in greater depth and a wider variety of settings. (STAT 155 is a foundational subset of ML!)\nExplore universal ML concepts using tools and software common among statisticians (hence “statistical” machine learning).\nSurvey a breadth of modern ML tools and algorithms that fall into the workflow below. Part of the cognitive load will be:\n\nkeeping all the tools in place (what are they and when to use them)\nunderstanding the connections between the tools\nadapting (not memorizing) code to implement each tool\na new topic almost every day\n\nWe’ll focus on concepts and applications over mathematical theory. (Come chat with me in office hours if you’re interested in learning more about the theory!)"
+    "text": "In STAT 253 we will…\n\n\nPick up where STAT 155 left off, acquiring tools that can be used to learn from data in greater depth and a wider variety of settings. (STAT 155 is a foundational subset of ML!)\nExplore universal ML concepts using tools and software common among statisticians (hence “statistical” machine learning).\nSurvey a breadth of modern ML tools and algorithms that fall into the workflow below. Part of the cognitive load will be:\n\nkeeping all the tools in place (what are they and when to use them)\nunderstanding the connections between the tools\nadapting (not memorizing) code to implement each tool\na new topic almost every day\n\nWe’ll focus on concepts and applications over mathematical theory. (Come chat with me in office hours if you’re interested in learning more about the theory!)",
+    "crumbs": [
+      "Introduction to Statistical Machine Learning"
+    ]
+  },
+  {
+    "objectID": "activities/L01-introductions.html#course-structure",
+    "href": "activities/L01-introductions.html#course-structure",
+    "title": "Introduction to Statistical Machine Learning",
+    "section": "Course Structure",
+    "text": "Course Structure",
+    "crumbs": [
+      "Introduction to Statistical Machine Learning"
+    ]
+  },
+  {
+    "objectID": "activities/L01-introductions.html#before-class",
+    "href": "activities/L01-introductions.html#before-class",
+    "title": "Introduction to Statistical Machine Learning",
+    "section": "Before Class",
+    "text": "Before Class\nIn order to dedicate our class time to hands-on learning, you will prepare for class by watching short videos, reading from our textbook, and completing short quizzes (checkpoints) to assess your initial understanding of concepts. You can reattempt each checkpoint question multiple times, with a small penalty for incorrect responses.",
+    "crumbs": [
+      "Introduction to Statistical Machine Learning"
+    ]
+  },
+  {
+    "objectID": "activities/L01-introductions.html#during-class",
+    "href": "activities/L01-introductions.html#during-class",
+    "title": "Introduction to Statistical Machine Learning",
+    "section": "During Class",
+    "text": "During Class\nDuring class time, you will engage with each other in exercises and discussions that build upon the pre-class work. Please bring your laptop to class every day. Consistent attendance and active participation in these activities is expected of all students and, most importantly, will be crucial for your learning!",
+    "crumbs": [
+      "Introduction to Statistical Machine Learning"
+    ]
+  },
+  {
+    "objectID": "activities/L01-introductions.html#after-class",
+    "href": "activities/L01-introductions.html#after-class",
+    "title": "Introduction to Statistical Machine Learning",
+    "section": "After Class",
+    "text": "After Class\nAfter class, you will be expected to finish any remaining exercises from the class activity and review/organize your notes. For each unit, you will also complete homework assignments designed to help you practice and synthesize material and provide an opportunity to receive feedback to further guide your learning.",
+    "crumbs": [
+      "Introduction to Statistical Machine Learning"
+    ]
   },
   {
     "objectID": "activities/L01-introductions.html#types-of-ml-tasks",
     "href": "activities/L01-introductions.html#types-of-ml-tasks",
     "title": "Introduction to Statistical Machine Learning",
     "section": "Types of ML Tasks",
-    "text": "Types of ML Tasks\n\nStatistical machine learning tools can be classified as follows:\n\nsupervised or unsupervised\nwithin supervised learning: regression vs classification\nwithin unsupervised learning: clustering vs dimension reduction\n\nKnowing which of these scenarios your research question falls into is an important first step in identifying which tool to use!"
+    "text": "Types of ML Tasks\n\nStatistical machine learning tools can be classified as follows:\n\nsupervised or unsupervised\nwithin supervised learning: regression vs classification\nwithin unsupervised learning: clustering vs dimension reduction\n\nKnowing which of these scenarios your research question falls into is an important first step in identifying which tool to use!",
+    "crumbs": [
+      "Introduction to Statistical Machine Learning"
+    ]
   },
   {
     "objectID": "activities/L01-introductions.html#supervised-learning",
     "href": "activities/L01-introductions.html#supervised-learning",
     "title": "Introduction to Statistical Machine Learning",
     "section": "Supervised Learning",
-    "text": "Supervised Learning\nWe want to model the relationship between some output variable1 \\(y\\) and input variables2 \\(x = (x_1, x_2,..., x_p)\\):\n\\[\n\\begin{split}\ny\n& = f(x) + \\varepsilon \\\\\n& = \\text{(trend in the relationship) } + \\text{ (residual deviation from the trend)} \\\\\n\\end{split}\n\\]\nTypes of supervised learning tasks:\n\nregression: \\(y\\) is quantitative\nexample:\n\\(y\\) = number of dental caries (cavities)\n\\(x\\) = (genetic information at millions of markers, sex, age, age\\(^2\\), etc)\nproject details\nclassification: \\(y\\) is categorical\nexample:\n\\(y\\) = whether a patient experienced adverse surgery outcomes after undergoing an upper endoscopy (yes, no)\n\\(x\\) = (administration of sedation [anesthesia professional, nurse], age, medical comorbidities [eg sleep apnea], etc.)\nproject details"
+    "text": "Supervised Learning\nWe want to model the relationship between some output variable1 \\(y\\) and input variables2 \\(x = (x_1, x_2,..., x_p)\\):\n\\[\n\\begin{split}\ny\n& = f(x) + \\varepsilon \\\\\n& = \\text{(trend in the relationship) } + \\text{ (residual deviation from the trend)} \\\\\n\\end{split}\n\\]\nTypes of supervised learning tasks:\n\nregression: \\(y\\) is quantitative\nexample:\n\\(y\\) = number of dental caries (cavities)\n\\(x\\) = (genetic information at millions of markers, sex, age, age\\(^2\\), etc)\nproject details\nclassification: \\(y\\) is categorical\nexample:\n\\(y\\) = whether a patient experienced adverse surgery outcomes after undergoing an upper endoscopy (yes, no)\n\\(x\\) = (administration of sedation [anesthesia professional, nurse], age, medical comorbidities [eg sleep apnea], etc.)\nproject details",
+    "crumbs": [
+      "Introduction to Statistical Machine Learning"
+    ]
   },
   {
     "objectID": "activities/L01-introductions.html#unsupervised-learning",
     "href": "activities/L01-introductions.html#unsupervised-learning",
     "title": "Introduction to Statistical Machine Learning",
     "section": "Unsupervised Learning",
-    "text": "Unsupervised Learning\nWe have some input variables \\(x = (x_1, x_2,..., x_p)\\) but there’s no output variable \\(y\\). Thus the goal is to use \\(x\\) to understand and/or modify the structure of our data.\nTypes of unsupervised learning tasks:\n\n\n\n\nclustering: Identify and examine groups or clusters of data points that are similar with respect to their \\(x_i\\) values.\nexample:\n\\(x\\) = (genetic data)\nproject details (led by a Mac alum!)\ndimension reduction: Turn the original set of \\(p\\) input variables, which are potentially correlated, into a smaller set of \\(k &lt; p\\) variables which still preserve the majority of information in the originals.\nexample:\n\\(x\\) = (genetic data)\nproject details\n\n\n\n\n\n\nSupplemental Figure 2A from Barragan et al (2023) [link] uses both clustering and dimension reduction!"
+    "text": "Unsupervised Learning\nWe have some input variables \\(x = (x_1, x_2,..., x_p)\\) but there’s no output variable \\(y\\). Thus the goal is to use \\(x\\) to understand and/or modify the structure of our data.\nTypes of unsupervised learning tasks:\n\n\n\n\nclustering: Identify and examine groups or clusters of data points that are similar with respect to their \\(x_i\\) values.\nexample:\n\\(x\\) = (genetic data)\nproject details (led by a Mac alum!)\ndimension reduction: Turn the original set of \\(p\\) input variables, which are potentially correlated, into a smaller set of \\(k &lt; p\\) variables which still preserve the majority of information in the originals.\nexample:\n\\(x\\) = (genetic data)\nproject details\n\n\n\n\n\n\nSupplemental Figure 2A from Barragan et al (2023) [link] uses both clustering and dimension reduction!",
+    "crumbs": [
+      "Introduction to Statistical Machine Learning"
+    ]
   },
   {
     "objectID": "activities/L01-introductions.html#instructions",
     "href": "activities/L01-introductions.html#instructions",
     "title": "Introduction to Statistical Machine Learning",
     "section": "Instructions",
-    "text": "Instructions\n\nDiscuss the following scenarios as a group, talking through your ideas, questions, and reasoning as you go.\nWrite down your answers, and any insights or questions that come up while working, in your notebook.\n\n(I’ll give you a Quarto template next time.)\n\nI’ll move around to groups to check in on your progress and see what questions you have.\nYou can check your answers by clicking the drop-down “Solutions” button."
+    "text": "Instructions\n\nDiscuss the following scenarios as a group, talking through your ideas, questions, and reasoning as you go.\nWrite down your answers, and any insights or questions that come up while working, in your notebook or simply type in here and render your own work!\nI’ll move around to groups to check in on your progress and see what questions you have.\nYou can check your answers by clicking the drop-down “Solutions” button.",
+    "crumbs": [
+      "Introduction to Statistical Machine Learning"
+    ]
   },
   {
     "objectID": "activities/L01-introductions.html#questions",
     "href": "activities/L01-introductions.html#questions",
     "title": "Introduction to Statistical Machine Learning",
     "section": "Questions",
-    "text": "Questions\nIndicate whether each scenario below represents a regression, classification, or clustering task.\n\nHow is the number of people that rent bikes on a given day in Washington, D.C. (\\(y\\)) explained by the temperature (\\(x_1\\)) and whether or not it’s a weekend (\\(x_2\\))?\n\n\n## Error in ggplot(politics, aes(y = riders_registered, x = temp_feel)): could not find function \"ggplot\"\n## Error in ggplot(politics, aes(y = riders_registered, x = temp_feel, color = weekend)): could not find function \"ggplot\"\n## Error in ggplot(politics, aes(x = riders_registered, fill = weekend)): could not find function \"ggplot\"\n## Error in grid.arrange(g1, g2, g3, ncol = 3): could not find function \"grid.arrange\"\n\n\n\nSolution\n\nregression. there’s a quantitative output variable \\(y\\).\n\n\n\nGiven the observed bill length (\\(x_1\\)) and bill depth (\\(x_2\\)) on a set of penguins, how many different penguin species might there be?\n\n\n## Error in ggplot(penguins, aes(y = bill_length_mm, x = bill_depth_mm)): could not find function \"ggplot\"\n\n\n\nSolution\n\nclustering. there’s no output variable \\(y\\).\n\n\n\nHow can we determine whether somebody has a certain infection (\\(y\\)) based on two different blood sample measurements, Measure A (\\(x_1\\)) and Measure B (\\(x_2\\))?\n\n\n## Error in conflicts_prefer(dplyr::filter): could not find function \"conflicts_prefer\"\n## Error in ggplot(dat, aes(y = y, x = x, color = status)): could not find function \"ggplot\"\n\n\n\nSolution\n\nclassification. there’s a categorical output variable \\(y\\).\n\n\n\nMachine learn about each other! Scenario A.\nI collected some data on STAT 253 students (you!) and analyzed it using a machine learning algorithm. In your groups: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; and (3) summarize what the output tells you about your classmates.\n\n\n## Error: object 'survey_clean' not found\n## Error in eval(expr, p): object 'new_dat' not found\n## Error: object 'tree_0' not found\n\n\n\nSolution\n\n\npredict someone’s major based on other survey responses\nclassification (\\(y\\) = major is categorical)\n(will vary by semester – what do you learn about the majors represented in this class and the variables that are useful for predicting it?)\n\n\n\n\nMachine learn about each other! Scenario B.\nSame directions as for Scenario A: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; and (3) summarize what the output tells you about your classmates.\n\n\n## Error in ggplot(survey_clean, aes(y = `Walk Time`, x = `Photo Rating`)): could not find function \"ggplot\"\n## Error in ggplot(., aes(y = `Walk Time`, x = year)): could not find function \"ggplot\"\n## Error in grid.arrange(g1, g2, ncol = 2): could not find function \"grid.arrange\"\n\n\n\nSolution\n\n\npredict walk time to Mac based on photo rating and class year\nregression (\\(y\\) = time to mac is quantitative)\n(answers will vary by semester – what do you learn about the relationships between these variables?)\n\n\n\n\nMachine learn about each other! Scenario C.\nSame directions as for Scenario A: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; and (3) summarize what the output tells you about your classmates.\n\n\n## Error: object 'survey_clean' not found\n## Error: object 'survey_clean' not found\n## Error: object 'fake_names' not found\n## Error: object 'fake_names' not found\n## Error in daisy(survey_sub, metric = \"gower\", type = list(logratio = 3)): could not find function \"daisy\"\n## Error: object 'gower_dist' not found\n## Error: object 'class_cluster' not found\n\n\n\nSolution\n\n\nwhich students in the class are most similar to which other students?\nclustering (no outcome \\(y\\), interested in structure/similarities across observations)\n(answers will vary by semester – to whom are you most similar? how many “natural” groupings of students do you see? etc.)\n\n\n\n\nUse Spotify users’ previous listening behavior to identify groups of similar users.\n\n\n\nSolution\n\nclustering\n\n \n\nPredict workers’ wages by their years of experience.\n\n\n\n\nSolution\n\nregression (\\(y\\) = wages)\n\n\n\nPredict workers’ wages by their college major.\n\n\n\n\nSolution\n\nregression (\\(y\\) = wages)\n\n\n\nUse a customer’s age to predict whether they’ve seen the Barbie movie.\n\n\n\n\nSolution\n\nclassification (\\(y\\) = whether or not watched the film)\n\n\n\nLook for similarities among genetic samples taken from a group of patients.\n\n\n\n\nSolution\n\nclustering (no outcome \\(y\\))\n\n\n\n\nIf you finish all of the questions above, move on to the Scavenger Hunt in the next section."
-  },
-  {
-    "objectID": "activities/L01-introductions.html#scavenger-hunt",
-    "href": "activities/L01-introductions.html#scavenger-hunt",
-    "title": "Introduction to Statistical Machine Learning",
-    "section": "Scavenger Hunt",
-    "text": "Scavenger Hunt\nWorking with your table, take a few minutes to find all of the following. Write down the “answers” in your notebook. Then, bookmark any important sites.\n\ncourse website\nsyllabus\ntextbook\nSTAT 253 Slack\noffice hour times and locations\nassignment deadlines\ninformation on what you need to complete before class each day (including your homework for next class!)\nin-class activities\nassignment instructions / submission"
+    "text": "Questions\nIndicate whether each scenario below represents a regression, classification, or clustering task.\n\nHow is the number of people that rent bikes on a given day in Washington, D.C. (\\(y\\)) explained by the temperature (\\(x_1\\)) and whether or not it’s a weekend (\\(x_2\\))?\n\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\nregression. there’s a quantitative output variable \\(y\\).\n\n\n\nGiven the observed bill length (\\(x_1\\)) and bill depth (\\(x_2\\)) on a set of penguins, how many different penguin species might there be?\n\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\nclustering. there’s no output variable \\(y\\).\n\n\n\nHow can we determine whether somebody has a certain infection (\\(y\\)) based on two different blood sample measurements, Measure A (\\(x_1\\)) and Measure B (\\(x_2\\))?\n\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\nclassification. there’s a categorical output variable \\(y\\).\n\n\n\nMachine learn about each other! Scenario A.\nThe following data were from past STAT 253 students (you!) and were analyzed using a machine learning algorithm. In your groups: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; and (3) summarize what the output tells you about the students.\n\n\n\n\nSolution\n\n\npredict someone’s major based on other survey responses\nclassification (\\(y\\) = major is categorical)\n(will vary by semester – what do you learn about the majors represented in this class and the variables that are useful for predicting it?)\n\n\n\n\nMachine learn about each other! Scenario B.\nSame directions as for Scenario A: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; and (3) summarize what the output tells you about the students.\n\n\n\n\nSolution\n\n\npredict walk time to Mac based on photo rating and class year\nregression (\\(y\\) = time to mac is quantitative)\n(answers will vary by semester – what do you learn about the relationships between these variables?)\n\n\n\n\nMachine learn about each other! Scenario C.\nSame directions as for Scenario A: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; and (3) summarize what the output tells you about your classmates.\n\n\n## Error: object 'survey_clean' not found\n## Error: object 'survey_clean' not found\n## Error: object 'fake_names' not found\n## Error: object 'fake_names' not found\n## Error: object 'survey_sub' not found\n## Error: object 'gower_dist' not found\n## Error: object 'class_cluster' not found\n\n\n\nSolution\n\n\nwhich students in the class are most similar to which other students?\nclustering (no outcome \\(y\\), interested in structure/similarities across observations)\n(answers will vary by semester – to whom are you most similar? how many “natural” groupings of students do you see? etc.)\n\n\n\n\nUse Spotify users’ previous listening behavior to identify groups of similar users.\n\n\n\nSolution\n\nclustering\n\n \n\nPredict workers’ wages by their years of experience.\n\n\n\n\nSolution\n\nregression (\\(y\\) = wages)\n\n\n\nPredict workers’ wages by their college major.\n\n\n\n\nSolution\n\nregression (\\(y\\) = wages)\n\n\n\nUse a customer’s age to predict whether they’ve seen the Barbie movie.\n\n\n\n\nSolution\n\nclassification (\\(y\\) = whether or not watched the film)\n\n\n\nLook for similarities among genetic samples taken from a group of patients.\n\n\n\n\nSolution\n\nclustering (no outcome \\(y\\))",
+    "crumbs": [
+      "Introduction to Statistical Machine Learning"
+    ]
   },
   {
     "objectID": "activities/L01-introductions.html#whats-next",
     "href": "activities/L01-introductions.html#whats-next",
     "title": "Introduction to Statistical Machine Learning",
     "section": "What’s next?",
-    "text": "What’s next?\nWhat to work on after class today:\n\ncomplete the pre-class tasks for next class (videos/reading/checkpoint)\n\nfind this info on the schedule page\nreview the checkpoint instructions & policies on Moodle before you start!\n\nstart HW0\n\ndue next Tuesday (at 11:59 pm)\nreview the Stat 155 Review resources as needed\n\n\n\n\njoin Slack (invite link)\ncomplete the recommended R and RStudio Setup steps\ncarefully review the syllabus\n\nif time allows, we’ll discuss a few highlights now!\nmore to come in the next few class sessions"
+    "text": "What’s next?\nWhat to work on after class today:\n\ncomplete the pre-class tasks for next class on Friday (videos/reading/checkpoint)- note that no class on Wednesday!\n\nreview the checkpoint instructions & policies on Moodle before you start!\n\nstart HW0 (I will post it soon)\n\ndue Friday (at 11:59 pm)\nreview the Stat 155 Review resources as needed\n\ncomplete the recommended R and RStudio Setup steps\ncarefully review the course logistics (in the course website)",
+    "crumbs": [
+      "Introduction to Statistical Machine Learning"
+    ]
   },
   {
     "objectID": "activities/L01-introductions.html#footnotes",
     "href": "activities/L01-introductions.html#footnotes",
     "title": "Introduction to Statistical Machine Learning",
     "section": "Footnotes",
-    "text": "Footnotes\n\n\notherwise known as outcome, response, dependent variable↩︎\notherwise known as predictors, features, independent variables↩︎"
+    "text": "Footnotes\n\n\notherwise known as outcome, response, dependent variable↩︎\notherwise known as predictors, features, independent variables↩︎",
+    "crumbs": [
+      "Introduction to Statistical Machine Learning"
+    ]
   },
   {
     "objectID": "R_Rstudio.html",
