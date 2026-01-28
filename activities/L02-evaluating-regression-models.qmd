@@ -33,6 +33,10 @@ conflicts_prefer(dplyr::filter)
 ```
 
 
+You can download the .qmd file for this activity [here](../activity_templates/L02-evaluating-regression-models.qmd) and open in R-studio. The rendered version is posted in the [course website](https://mutasim221b.github.io/Mac-STAT-253-Sp-26/) (Activities tab). I often experiment with the class activities (and see it in live!) and make updates, but I always post the final version before class starts. To be sure you have the most up-to-date copy, please download it once you’ve settled in before class begins.
+
+# Welcome {-}
+
 
 
 :::{.callout-note title="STAT 155 Review"}

@@ -471,7 +471,7 @@
     "href": "activities/L02-evaluating-regression-models.html",
     "title": "Model Evaluation",
     "section": "",
-    "text": "STAT 155 Review\n\n\n\nToday’s material will build on the following concepts from STAT 155:\n\nvisualizing relationships between two or more variables\nlinear regression: fitting a model in R, interpreting coefficient estimates, model evaluation (residuals, \\(R^2\\), residual plots)\n\nIf you need a refresher on any of these topics before, during, or after class: check out these sections in the STAT 155 Notes:\n\nChapter 2: Visualizing Data (especially 2.3, 2.8, 2.9) [link]\nChapter 3: Linear Regression Models (especially 3.1, 3.6, 3.7, 3.8) [link]",
+    "text": "You can download the .qmd file for this activity here and open in R-studio. The rendered version is posted in the course website (Activities tab). I often experiment with the class activities (and see it in live!) and make updates, but I always post the final version before class starts. To be sure you have the most up-to-date copy, please download it once you’ve settled in before class begins.",
     "crumbs": [
       "Model Evaluation"
     ]
