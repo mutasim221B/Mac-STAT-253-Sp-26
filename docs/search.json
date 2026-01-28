@@ -467,6 +467,329 @@
     ]
   },
   {
+    "objectID": "activities/L02-evaluating-regression-models.html",
+    "href": "activities/L02-evaluating-regression-models.html",
+    "title": "Model Evaluation",
+    "section": "",
+    "text": "STAT 155 Review\n\n\n\nToday’s material will build on the following concepts from STAT 155:\n\nvisualizing relationships between two or more variables\nlinear regression: fitting a model in R, interpreting coefficient estimates, model evaluation (residuals, \\(R^2\\), residual plots)\n\nIf you need a refresher on any of these topics before, during, or after class: check out these sections in the STAT 155 Notes:\n\nChapter 2: Visualizing Data (especially 2.3, 2.8, 2.9) [link]\nChapter 3: Linear Regression Models (especially 3.1, 3.6, 3.7, 3.8) [link]",
+    "crumbs": [
+      "Model Evaluation"
+    ]
+  },
+  {
+    "objectID": "activities/L02-evaluating-regression-models.html#instructions",
+    "href": "activities/L02-evaluating-regression-models.html#instructions",
+    "title": "Model Evaluation",
+    "section": "Instructions",
+    "text": "Instructions\n\nIn small groups, please first introduce yourself (in whatever way you feel appropriate) and check in with each other as human beings.\nWhen everyone is ready, glance through the summary of concepts covered in the video (see “Video Recap” below) and discuss the following prompts:\n\nWhat vocabulary or notation was new to you?\nWhat concepts were new to you?\nWhat concepts are still unclear to you at this moment?\n\nPrepare to share a few highlights from your group discussion with the entire class",
+    "crumbs": [
+      "Model Evaluation"
+    ]
+  },
+  {
+    "objectID": "activities/L02-evaluating-regression-models.html#video-recap",
+    "href": "activities/L02-evaluating-regression-models.html#video-recap",
+    "title": "Model Evaluation",
+    "section": "Video Recap",
+    "text": "Video Recap\n\nWe are in the regression setting. We want to build a model of some quantitative output variable \\(y\\) by some predictors \\(x\\):\n\\[y = f(x) + \\varepsilon\\]\nThere are many regression tools that we might use to build this model. We’ll use a linear regression model which assumes that \\(y\\) is a linear combination of the \\(x\\)’s:\n\\[y = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\cdots \\beta_p x_p + \\varepsilon\\]\nAfter building any model, it’s important to evaluate it: Is our regression model a “good” model?\n\nIs the model wrong?\n\nIs the model strong?\n\nDoes the model produce accurate predictions?\n\nIs the model fair?\n\nWe will review these concepts through today’s exercises. A detailed overview is provided in the Unit 1 “Motivating Question” section on the course website.",
+    "crumbs": [
+      "Model Evaluation"
+    ]
+  },
+  {
+    "objectID": "activities/L02-evaluating-regression-models.html#intro-to-tidymodels",
+    "href": "activities/L02-evaluating-regression-models.html#intro-to-tidymodels",
+    "title": "Model Evaluation",
+    "section": "Intro to tidymodels",
+    "text": "Intro to tidymodels\nThroughout the semester, we are going to use the tidymodels package in R.\n\nSimilar flavor to tidyverse structure\nMore general structure that allows us to fit many other types of models\n\n\n\nAt first, it will seem like a lot more code (perhaps even unnecessarily so).\n\n\nFor example, what you did in STAT 155 with\n\nlm(y ~ x1 + x2, data = sample_data)\n\nwill now look like\n\n# STEP 1: model specification\nlm_spec &lt;- linear_reg() %&gt;% # we want a linear regression model\n  set_mode(\"regression\") %&gt;%  # this is a regression task (y is quantitative)\n  set_engine(\"lm\")# we'll estimate the model using the lm function\n\n# STEP 2: model estimation\nmodel_estimate &lt;- lm_spec %&gt;% \n  fit(y ~ x1 + x2, data = sample_data)\n\n\n\nFor now, you’ll need to trust me that this will be end up being useful. (It will be!)\n\n\nLet’s take a look at some code that we’ll use to build future models. Compare the model specification code above to the examples below.\n\nWhat similarities and differences do you notice?\nWhy might the designers of tidymodels have chosen to design the code this way?\n\n\n# Specification for a LASSO model\nlasso_spec &lt;- linear_reg() %&gt;%             \n  set_mode(\"regression\") %&gt;% \n  set_engine(\"glmnet\")\n\n# Specification for a k-nearest neighbors model\nknn_spec &lt;- nearest_neighbor() %&gt;%\n  set_mode(\"regression\") %&gt;% \n  set_engine(engine = \"kknn\")\n\n# Specification for a logistic regression model\nlogistic_spec &lt;- logistic_reg() %&gt;%\n  set_mode(\"classification\") %&gt;% \n  set_engine(\"glm\")",
+    "crumbs": [
+      "Model Evaluation"
+    ]
+  },
+  {
+    "objectID": "activities/L02-evaluating-regression-models.html#quick-highlight",
+    "href": "activities/L02-evaluating-regression-models.html#quick-highlight",
+    "title": "Model Evaluation",
+    "section": "Quick Highlight",
+    "text": "Quick Highlight\nA few useful functions to use on model_estimate:\n\nmodel_estimate %&gt;% \n  tidy() #gives you coefficients (and se, t-statistics)\n\n\nmodel_estimate %&gt;% \n  augment(new_data = sample_data) # gives you predictions and residuals for sample_data\n\n\nmodel_estimate %&gt;% \n  glance() #gives you some model evaluation metrics (is it strong?)\n\n\nmodel_estimate %&gt;% \n  augment(new_data = sample_data) %&gt;% # get predictions, and then...\n  mae(truth = y, estimate = .pred) # calculate MAE to measure accuracy of predictions\n\nMore info, for future reference, below!",
+    "crumbs": [
+      "Model Evaluation"
+    ]
+  },
+  {
+    "objectID": "activities/L02-evaluating-regression-models.html#future-reference",
+    "href": "activities/L02-evaluating-regression-models.html#future-reference",
+    "title": "Model Evaluation",
+    "section": "Future Reference",
+    "text": "Future Reference\n\n\n\n\n\n\nNote\n\n\n\nThis section is for future reference. It is a summary of code you’ll learn below for building and evaluating regression models. You do not need to (and in fact should not) run the code in this section verbatim in R; it is example code and meant for future reference only.\n\n\nBuilding and evaluating regression models using tidymodels.\nThroughout, suppose we wish to build and evaluate a linear regression model of y vs x1 and x2 using a dataset called sample_data.\nYou’ll need both of these packages:\n\n# Load packages\nlibrary(tidyverse)\nlibrary(tidymodels)\n\nBuilding a linear regression model\n\n# STEP 1: specify the type of model to build\nlm_spec &lt;- linear_reg() %&gt;% # we want a linear regression model\n  set_mode(\"regression\") %&gt;%  # this is a regression task (y is quantitative)\n  set_engine(\"lm\") # we'll estimate the model using the lm function\n\n# STEP 2: estimate the specified model using sample data\nmodel_estimate &lt;- lm_spec %&gt;% \n  fit(y ~ x1 + x2, data = sample_data)\n\n# Get the model coefficients\nmodel_estimate %&gt;% \n  tidy()\n\nObtaining predictions (& residuals) for each observation\n\n# Obtain y predictions and residuals for each observation in our sample_data\n# (We can replace sample_data with any data frame that includes y, x1, and x2)\nmodel_estimate %&gt;% \n  augment(new_data = sample_data)\n\n# Obtain y predictions (but not residuals) for some given x1, x2 values, when we haven't yet observed y\n# (We can replace the data.frame with any data frame that includes x1 and x2)\nmodel_estimate %&gt;% \n  augment(new_data = data.frame(x1 = ___, x2 = ___))\n  \n# Another approach using predict()\nmodel_estimate %&gt;% \n  predict(new_data = data.frame(x1 = ___, x2 = ___))\n\nEvaluating the model\n\n# Is it strong? (R^2)\nmodel_estimate %&gt;% \n  glance()\n\n# Does it produce accurate predictions? (MAE)\nmodel_estimate %&gt;% \n  augment(new_data = sample_data) %&gt;% \n  mae(truth = y, estimate = .pred)\n\n# Is it wrong? (residual plot)\nmodel_estimate %&gt;% \n  augment(new_data = sample_data) %&gt;% \n  ggplot(aes(x = .pred, y = .resid)) + \n  geom_point() + \n  geom_hline(yintercept = 0) + \n  geom_smooth()",
+    "crumbs": [
+      "Model Evaluation"
+    ]
+  },
+  {
+    "objectID": "activities/L02-evaluating-regression-models.html#instructions-1",
+    "href": "activities/L02-evaluating-regression-models.html#instructions-1",
+    "title": "Model Evaluation",
+    "section": "Instructions",
+    "text": "Instructions\n\n\nWork through these exercises as a group, talking through your ideas, questions, and reasoning as you go and taking notes in your QMD.\nFocus on patterns in code. Review, but do not try to memorize any provided code. Focus on the general steps and patterns.\nIf you’re given some starter code with blanks (e.g. below), don’t type in those chunks. Instead, copy, paste, and modify the starter code in the chunk below it.\n\n\n# Start small: rides vs temp\nggplot(___, aes(y = ___, x = ___)) + \n  geom___()\n\n\nAsk questions! We will not have time to discuss all exercises at the end of class. Talk through your questions as a group, and ask me questions as I walk around the room!\nBe kind to yourself/each other! You will be rusty and make mistakes, and that’s ok! Mistakes are important to learning.\n\nIf you’re feeling rusty on STAT 155 material, in particular, check out the STAT 155 Review Appendix on our course website or the links at the top of the notes for today.\n\nCollaborate. We’re sitting in groups for a reason. Collaboration improves higher-level thinking, confidence, communication, community, and more. I expect you to:\n\nActively contribute to discussion (don’t work on your own).\nActively include all group members in discussion.\nCreate a space where others feel comfortable making mistakes & sharing their ideas (remember that we all come to this class with different experiences, both personal and academic).\nStay in sync while respecting that everybody has different learning strategies, work styles, note taking strategies, etc. If some people are working on exercise 10 and others are on exercise 2, that’s probably not a good collaboration.\nDon’t rush. You won’t hand anything in and can finish up outside of class.",
+    "crumbs": [
+      "Model Evaluation"
+    ]
+  },
+  {
+    "objectID": "activities/L02-evaluating-regression-models.html#questions",
+    "href": "activities/L02-evaluating-regression-models.html#questions",
+    "title": "Model Evaluation",
+    "section": "Questions",
+    "text": "Questions\nCapital Bikeshare provides a bike-sharing service in the Washington DC area. Customers can pick up and drop off bikes at any station around the city. Of primary interest to the company is:\nHow many registered riders can we expect today?\nTo this end, you will build, evaluate, and compare 2 different linear regression models of ridership using the following Capital Bikeshare dataset (originally from the UCI Machine Learning Repository):\n\nModel 1: rides ~ windspeed + temp\nModel 2: rides ~ windspeed + temp + weekend\n\n\n\n\n\nExplore the data\n\nTake a minute to get familiar with the data.\n\n# Load packages we'll need to wrangle and plot the data\nlibrary(tidyverse)\n\n# Load the data\nbikes &lt;- read.csv(\"https://Mac-Stat.github.io/data/bike_share.csv\")\n\n# Only keep / select some variables\n# And round some variables (just for our demo purposes)\nbikes &lt;- bikes %&gt;% \n  rename(rides = riders_registered, temp = temp_feel) %&gt;% \n  mutate(windspeed = round(windspeed), temp = round(temp)) %&gt;% \n  select(rides, windspeed, temp, weekend)\n\n\n# Check out the dimensions\ndim(bikes)\n## [1] 731   4\n\n# Check out the first 3 rows\nhead(bikes, 3)\n##   rides windspeed temp weekend\n## 1   654        11   65    TRUE\n## 2   670        17   64    TRUE\n## 3  1229        17   49   FALSE\n\nThis dataset contains the following information for a sample of different dates:\n\n\n\nvariable\ndescription\n\n\n\n\nrides\ncount of daily rides by registered users\n\n\nwindspeed\nwind speed in miles per hour\n\n\ntemp\nwhat the temperature feels like in degrees Fahrenheit\n\n\nweekend\nwhether or not it falls on a weekend\n\n\n\n\n\n\n\nPlot the relationships\n\nFirst, let’s plot these relationships.\nREMEMBER: Don’t write in any chunk with starter code. Copy, paste, and modify the code in the chunk below it.\n\n# Start small: rides vs temp\nggplot(___, aes(y = ___, x = ___)) + \n  geom___()\n\n\n# Start small: rides vs temp\n\n\n# rides vs temp & windspeed\nggplot(bikes, aes(y = ___, x = ___, ___ = windspeed)) + \n  geom_point()\n\n\n# rides vs temp & windspeed & weekend\nggplot(bikes, aes(y = ___, x = ___, ___ = windspeed)) + \n  geom_point() +  \n  facet_wrap(~ ___)\n\n\n\n\n\ntidymodels STEP 1\n\nWe’ll build and evaluate our two models of ridership using the tidymodels package. This code is more complicated than the lm() function we used in STAT 155. BUT:\n\ntidymodels is part of the broader tidyverse (what we use to plot and wrangle data), thus the syntax is more consistent\ntidymodels generalizes to the other ML algorithms we’ll survey in this course, thus will eventually minimize the unique syntax we need to learn\n\n\n# Load package\nlibrary(tidymodels)\n\nThe first step is to specify what type of model we want to build. We’ll store this as lm_spec, our linear regression model (lm) specification (spec).\n\nlm_spec &lt;- linear_reg() %&gt;%   # we want a linear regression model\n  set_mode(\"regression\") %&gt;%  # this is a regression task (y is quantitative)\n  set_engine(\"lm\")            # we'll estimate the model using the lm function\n\nThis code specifies but doesn’t build any model – we didn’t even give it any data or specify the variables of interest!\n\n# Check it out\nlm_spec\n## Linear Regression Model Specification (regression)\n## \n## Computational engine: lm\n\n\n\n\n\ntidymodels STEP 2\n\nWe can now estimate or fit our two ridership models using the specified model structure (lm_spec) and our sample bikes data:\n\n# Fit bike_model_1\nbike_model_1 &lt;- lm_spec %&gt;% \n  fit(rides ~ windspeed + temp, data = bikes)\n\n# Check out the coefficients\nbike_model_1 %&gt;% \n  tidy()\n## # A tibble: 3 × 5\n##   term        estimate std.error statistic  p.value\n##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n## 1 (Intercept)    -20.8    300.     -0.0694 9.45e- 1\n## 2 windspeed      -36.1      9.42   -3.83   1.37e- 4\n## 3 temp            55.4      3.33   16.6    7.58e-53\n\n\n# YOUR TURN\n# Fit bike_model_2 & check out the coefficients\n\n\n\n\n\nIs it fair?\n\nNow, let’s evaluate our two models. First, do you have any concerns about the context in which the data were collected and analyzed? About the potential impact of this analysis?\n\n\n\n\nIs it strong?\n\nWe can measure and compare the strength of these models using \\(R^2\\), the proportion of variability in our response variable that’s explained by the model. Report which model is stronger and interpret its \\(R^2\\).\n\n# Obtain R^2 for bike_model_1\nbike_model_1 %&gt;% \n  glance()\n## # A tibble: 1 × 12\n##   r.squared adj.r.squared sigma statistic  p.value    df logLik    AIC    BIC\n##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n## 1     0.310         0.308 1298.      163. 2.44e-59     2 -6276. 12560. 12578.\n## # ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;\n\n\n# YOUR TURN\n# Obtain R^2 for bike_model_2\n\n\n\n\n\nPause – predictions and residuals\n\nOur next model evaluation questions will focus on the models’ predictions and prediction errors, or residuals. We can obtain this information by augmenting our models with our original bikes data. For example:\n\n# Calculate predicted ridership (.pred) & corresponding residuals (.resid) using bike_model_1\n# Just look at first 6 days\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  head()\n## # A tibble: 6 × 6\n##   .pred .resid rides windspeed  temp weekend\n##   &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;  \n## 1 3183. -2529.   654        11    65 TRUE   \n## 2 2911. -2241.   670        17    64 TRUE   \n## 3 2080.  -851.  1229        17    49 FALSE  \n## 4 2407.  -953.  1454        11    51 FALSE  \n## 5 2446.  -928.  1518        13    53 FALSE  \n## 6 2699. -1181.  1518         6    53 FALSE\n\nWe can also predict outcomes for new observations using either augment() or predict(). Note the difference in the output:\n\n# Predict ridership on a 60 degree day with 20 mph winds\nbike_model_1 %&gt;% \n  augment(new_data = data.frame(windspeed = 20, temp = 60))\n## # A tibble: 1 × 3\n##   .pred windspeed  temp\n##   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;\n## 1 2581.        20    60\n\n\n# Predict ridership on a 60 degree day with 20 mph winds\nbike_model_1 %&gt;% \n  predict(new_data = data.frame(windspeed = 20, temp = 60))\n## # A tibble: 1 × 1\n##   .pred\n##   &lt;dbl&gt;\n## 1 2581.\n\n\n\n\n\nDoes it produce accurate predictions?\n\nRecall that the mean absolute error (MAE) measures the typical prediction error. Specifically, it is the mean of the absolute values of the residual errors for the days in our dataset.\n\nUse the residuals to calculate the MAE for the 2 models. HINT: abs()\n\n\n# DON'T TYPE IN THIS CHUNK\n# MAE for bike_model_1\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  summarize(mae = ___(___(___)))\n\n\n# MAE for bike_model_1\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  summarize(mae = mean(abs(.resid)))\n## # A tibble: 1 × 1\n##     mae\n##   &lt;dbl&gt;\n## 1 1080.\n\n\n# YOUR TURN: MAE for bike_model_2\n\n\nDoing the calculation from scratch helps solidify your understanding of how MAE is calculated, thus interpreted. Check your calculations using a shortcut function.\n\n\n# Calculate MAE for the first model\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  mae(truth = rides, estimate = .pred)\n## # A tibble: 1 × 3\n##   .metric .estimator .estimate\n##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n## 1 mae     standard       1080.\n\n\n# YOUR TURN\n# Calculate MAE for the second model\n\n\nWhich model has more accurate predictions?\nInterpret the MAE for this model, in context, and comment on whether it’s “large” or “small”. NOTE: “large” or “small” is defined by the context (e.g. relative to the observed range of ridership, the consequences of a bad prediction, etc).\n\n\n\n\n\nIs it wrong?\n\nTo determine whether the linear regression assumptions behind bike_model_1 and bike_model_2 are reasonable, we can review residual plots, i.e. plots of the residuals vs predictions for each observation in our dataset. Run the code below and summarize your assessment of whether our models are wrong. RECALL: We want the points to appear random and centered around 0 across the entire range of the model / predictions.\n\n# Residual plot for bike_model_1\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  ggplot(aes(x = .pred, y = .resid)) + \n    geom_point() + \n    geom_hline(yintercept = 0) + \n    geom_smooth() # add trend line\n\n\n\n\n\n\n\n\n\n# YOUR TURN\n# Residual plot for bike_model_2\n\n\n\n\n\nArt vs science\n\nInspecting residual plots is more art than science.1 It requires a lot of practice. Consider another example using simulated data. First, build a model that assumes all predictors are roughly linearly related:\n\n# Import data\nsimulated_data &lt;- read.csv(\"https://Mac-Stat.github.io/data/simulated_data.csv\")\n\n# Model y by the 6 input variables\nnew_model &lt;- lm_spec %&gt;% \n  fit(y ~ x1 + x2 + x3 + x4 + x5 + x6, simulated_data)\n\nNext, check out a pairs plot. Is there anything here that makes you think that our model assumption is bad? (NOTE: if you are not familiar with the ggpairs function we are using below, chat with your group and look for resources to figure out what this is doing!)\n\nnew_model %&gt;% \n  augment(new_data = simulated_data) %&gt;% \n  ggplot(aes(x = .pred, y = .resid)) + \n  geom_point(size = 0.1) + \n  geom_hline(yintercept = 0)\n\n\n\n\n\n\n\n\n\n\n\n\nDetails – communication & code style\n\nCommunication is a key machine learning skill, including written summaries, presentations, and code. Just like an essay, code must have structure, signposts, and grammar that will make it easier for others to follow. The below code runs, but it is “bad code”.\n\nFix this code and add comments so that it is easier for yourself and others to follow.\nAlso pay attention to what this code does.\n\n\nbikes%&gt;%group_by(weekend)%&gt;%summarize(median(rides))\n## # A tibble: 2 × 2\n##   weekend `median(rides)`\n##   &lt;lgl&gt;             &lt;dbl&gt;\n## 1 FALSE              3848\n## 2 TRUE               2955\n\n\nmynewdatasetissmallerthantheoriginal&lt;-bikes%&gt;%filter(rides&lt;=700,weekend==FALSE,temp&gt;60)\nmynewdatasetissmallerthantheoriginal\n##   rides windspeed temp weekend\n## 1   577        18   67   FALSE\n## 2   655        18   68   FALSE\n## 3    20        24   72   FALSE\n\n\nmynewdatasetusescelsius&lt;-bikes%&gt;%mutate(temp=(temp-32)*5/9)\nhead(mynewdatasetusescelsius)\n##   rides windspeed      temp weekend\n## 1   654        11 18.333333    TRUE\n## 2   670        17 17.777778    TRUE\n## 3  1229        17  9.444444   FALSE\n## 4  1454        11 10.555556   FALSE\n## 5  1518        13 11.666667   FALSE\n## 6  1518         6 11.666667   FALSE\n\n\n\n\n\nSTAT 155 Review – model interpretation & application\n\nLet’s interpret and apply bike_model_2.\n\n___ %&gt;% \n  tidy()\n\n\nHow can we interpret the temp coefficient?\n\n\nWe expect roughly 54 more riders on warm days.\nWe expect roughly 54 more riders per every 1 degree increase in temperature.\nWhen controlling for windspeed and weekend status, we expect roughly 54 more riders on warm days.\nWhen controlling for windspeed and weekend status, we expect roughly 54 more riders per every 1 degree increase in temperature.\n\n\nHow can we interpret the weekendTRUE coefficient?\n\n\nWe expect roughly 858 fewer riders on weekends.\nWe expect roughly 858 fewer riders per every extra weekend.\nWhen controlling for windspeed and temperature, we expect roughly 858 fewer riders on weekends.\nWhen controlling for windspeed and temperature, we expect roughly 858 fewer riders per every extra weekend.\n\n\nReproduce the predicted ridership and corresponding residual for day 1 from scratch (how were these calculated?!):\n\n\nbike_model_2 %&gt;% \n  ___(new_data = bikes) %&gt;% \n  head(1)\n\n\n\n\n\nSTAT 155 Review – data wrangling\n\nThrough the “Details: communication & code style” and elsewhere, you’ve reviewed the use of various dplyr data wrangling verbs: filter(), mutate(), summarize(), group_by(), select(), arrange(). Use these to complete the following tasks.\n\nCalculate the mean temperature across all days in the data set.\n\n\nCalculate the mean temperature on weekends vs weekdays.\n\n\nPrint out the 3 days with the highest temperatures. HINT: arrange() or arrange(desc())\n\n\nName and store a new data set which:\n\n\nonly includes the days that fall on a weekend and have temps below 80 degrees\nhas a new variable, temp_above_freezing, which calculates how far the temperature is above (or below) freezing (32 degrees F)\nonly includes the windspeed, temp, and temp_above_freezing variables.\n\n\n\n\n\nSTAT 155 Review – plots\n\nConstruct plots of the following relationships:\n\n# rides vs temp\n\n\n# rides vs weekend\n\n\n# rides vs temp and weekend",
+    "crumbs": [
+      "Model Evaluation"
+    ]
+  },
+  {
+    "objectID": "activities/L02-evaluating-regression-models.html#footnotes",
+    "href": "activities/L02-evaluating-regression-models.html#footnotes",
+    "title": "Model Evaluation",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nStefanski, Leonard A. (2007). Residual (Sur)Realism. “The American Statistician,” 61, pp 163-177.↩︎",
+    "crumbs": [
+      "Model Evaluation"
+    ]
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html",
+    "href": "activities/01_foundations_welcome.html",
+    "title": "Collecting and Summarizing Data",
+    "section": "",
+    "text": "You can download the .qmd file for this activity here and open in R-studio. The rendered version is posted in the course website (Activities tab). I often experiment with the class activities (and see it in live!) and make updates, but I always post the final version before class starts. To be sure you have the most up-to-date copy, please download it once you’ve settled in before class begins."
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#see-class-notes",
+    "href": "activities/01_foundations_welcome.html#see-class-notes",
+    "title": "Collecting and Summarizing Data",
+    "section": "See class notes",
+    "text": "See class notes\nGo to your class-notes to see what we covered in live-note taking!\n\n\n\nEXAMPLE 1: Tidy data (Class Activities!)\nWelcome to the first in-class activities of STAT 155! Fill out the Day 1 Activities form of the following questions (anonymous). We’ll come back to this in a future class. Wait until everyone in your group is done with this.\n\nHow many hours of sleep did you get last night?\nHow many cups of coffee did you drink this morning?\nWhat is your declared or potential major? (If you are a double major, just pick whichever one you think of first.)\nWhat is your anticipated graduation year?\nHow many stats/data science courses have you taken in the past?\nOn a scale of 1 (get me out of here) to 10 (yay!), how excited are you about this course?\nIs it your birthday this semester? (yes/no)\nHow many unread emails do you have in your inbox right now?"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#example-1-use-r-as-a-calculator",
+    "href": "activities/01_foundations_welcome.html#example-1-use-r-as-a-calculator",
+    "title": "Collecting and Summarizing Data",
+    "section": "Example 1: Use R as a calculator",
+    "text": "Example 1: Use R as a calculator\nType the following lines in the console (bottom left), one by one, hitting Return/Enter after each line. In some cases you might even get an error! This error is important to learning how R code does and doesn’t work.\n\n4 + 2\n\n\n4^2\n\n\n4*2\n\n\n4(2)"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#example-2-functions-and-arguments",
+    "href": "activities/01_foundations_welcome.html#example-2-functions-and-arguments",
+    "title": "Collecting and Summarizing Data",
+    "section": "Example 2: Functions and arguments",
+    "text": "Example 2: Functions and arguments\nWe can also use built-in functions to perform common tasks. These functions have names and require information about arguments in order to run:\nfunction(argument) Cheatcode: RiceCooker(Rice)\nTry out the following functions one by one in the RStudio console. For each function, note its…\n\nname\nthe argument or information it needs to run\nwhat output it produces (what the function does)\nhow the name connects to what the function does\n\n\nsqrt(9)\n\n\nnchar(\"macalester\")\n\n\nsqrt(nchar(\"snow\"))\n\nSome functions have more than 1 argument, separated by commas:\nfunction(argument1 = ___, argument2 = ___) Cheatcode: RiceCooker(Rice,Chicken)\nTry out the following, one by one.\n\nrep(x = 2, times = 5)\n\n\nrep(times = 5, x = 2)\n\n\nrep(2, 5)\n\n\nrep(5, 2)\n\nFinally, R is case sensitive. Try using Rep() instead of rep(). Take time to read the error message!\n\nRep(5, 2)"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#example-3-save-it-for-later",
+    "href": "activities/01_foundations_welcome.html#example-3-save-it-for-later",
+    "title": "Collecting and Summarizing Data",
+    "section": "Example 3: Save it for later",
+    "text": "Example 3: Save it for later\nWe’ll often want to store some R output for later use. In R:\nname &lt;- output\nwhere name is the name under which to store a result, output is the result we wish to store, and &lt;- is the assignment operator (I think of this as an arrow pointing the output into the name).\nIMPORTANT: Try out each line one at a time. Why doesn’t the first line produce any output?\n\ndegrees_c &lt;- -13\n\n\ndegrees_c\n\n\ndegrees_c * (9/5) + 32"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#example-4-import-data",
+    "href": "activities/01_foundations_welcome.html#example-4-import-data",
+    "title": "Collecting and Summarizing Data",
+    "section": "Example 4: Import data",
+    "text": "Example 4: Import data\nNext, let’s work with some data!! The first step is importing our data into RStudio. How we do this depends on:\n\nfile format (eg: .xls Excel spreadsheet, .csv, .txt)\nfile location (eg: online, on your desktop, built into RStudio itself).\n\nThe data from the survey you took before class is stored as a .csv file online. Import this data using the read_csv() function, and store it as survey using the code below:\nFirst, in the Console pane of RStudio, run the following command to install some necessary packages (you will need to do this any time you are installing a new package):\ninstall.packages(\"tidyverse\")\n\n# Load the \"tidyverse\" package which contains the read_csv() function\nlibrary(tidyverse)\n\n# Import the data\nsurvey &lt;- read_csv(\"https://mac-stat.github.io/data/112_fall_2024_survey.csv\")\n\n\n\nCheck out the data\nIn the Environment tab in the upper right pane of RStudio, click on survey. What happens?!\n\n\nIn the modern era, datasets often contain hundreds of variables and millions of observations. We need more effective ways to explore such data."
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#example-5-get-to-know-the-data",
+    "href": "activities/01_foundations_welcome.html#example-5-get-to-know-the-data",
+    "title": "Collecting and Summarizing Data",
+    "section": "Example 5: Get to know the data",
+    "text": "Example 5: Get to know the data\nPAUSE: Make sure you’re still in sync with your group.\nBefore we can learn anything from our data, we must understand its structure. For each function below:\n\ntry it out\ndiscuss with your group what the function does\ndiscuss with your group how the function’s name connects to what it does\n\n\ndim(survey) # (Number of row (case/obs.), Number of column (variable))\n\n\nnrow(survey) # Number of case/obs.\n\n\nncol(survey) # Number of variables\n\n\nhead(survey) # View first few rows of the dataset (6 rows, by default)\n\n\nhead(survey, 3) # Controlling the view of first few rows of the dataset\n\n\ntail(survey) # View first few rows of the dataset (6 rows, by default)\n\n\nnames(survey) # Get all column (variable) names\n\n\nstr(survey) # Overall info about data"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#example-6-code-communication",
+    "href": "activities/01_foundations_welcome.html#example-6-code-communication",
+    "title": "Collecting and Summarizing Data",
+    "section": "Example 6 : Code = communication",
+    "text": "Example 6 : Code = communication\nIt’s important to recognize from day 1 that code is a form of communication, both to yourself and others!!!!! Code structure and details are important to readability and clarity, just as grammar, punctuation, spelling, paragraphs, and line spacing are important in written essays. All of the code below works, but has bad structure. With your group, discuss what is unfortunate about each line, then make it better.\n\nseq(from=1, to=9, by=2)\nseq(from = 1, to=9, by=2)\ntemp_cel &lt;- -13\nthisisthetemperaturetodayincelsius &lt;- -13\nthis_is_the_temperature_today_in_celsius &lt;- -13"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#example-7-you-will-make-so-many-mistakes",
+    "href": "activities/01_foundations_welcome.html#example-7-you-will-make-so-many-mistakes",
+    "title": "Collecting and Summarizing Data",
+    "section": "Example 7: You will make so many mistakes!",
+    "text": "Example 7: You will make so many mistakes!\nMistakes are common when, and even important to, learning any new language. You’ll get better and better at interpreting error messages, finding help, and fixing errors. In addition to finding help online, R has built-in help files. For example:\n\nIn the console, type ?rep and press Return/Enter.\nCheck out the documentation file that pops up in the Help tab (lower right).\nQuickly scroll through, noting the type of information provided.\nPause at the “Examples” section at the bottom – perhaps the most useful section! Try out a couple of the provided examples in your console."
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#example-8-make-a-cheat-sheet",
+    "href": "activities/01_foundations_welcome.html#example-8-make-a-cheat-sheet",
+    "title": "Collecting and Summarizing Data",
+    "section": "Example 8: Make a “cheat sheet”",
+    "text": "Example 8: Make a “cheat sheet”\nYou will continue to pick up new R code and ideas. You’re highly encouraged to start tracking this in a cheat sheet (eg: in a Google doc). The cheat sheet will be a handy reference for you, and the act of making it will help deepen your understanding and retention."
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#exercise-complete-this-after-the-class",
+    "href": "activities/01_foundations_welcome.html#exercise-complete-this-after-the-class",
+    "title": "Collecting and Summarizing Data",
+    "section": "Exercise: Complete this after the class",
+    "text": "Exercise: Complete this after the class\nComplete this exercise after class. First, try it on your own (or with your group), and then check your work against the solution provided at the end of this .qmd file.\nUse R code to do the following:\n\nImport & name data on different Himalayan peaks from the url below:\nhttps://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/peaks.csv NOTE: A codebook, i.e. a description of the data, is here.\nUse a function to show which variables are recorded on each peak.\nHow many peaks are included in the dataset? Answer this using a function, not by counting up the rows yourself.\nShow the first 6 rows of the dataset. NOTE: This gives us a quick glimpse without having to print out the entire dataset!"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#exercise-1-use-r-as-a-calculator",
+    "href": "activities/01_foundations_welcome.html#exercise-1-use-r-as-a-calculator",
+    "title": "Collecting and Summarizing Data",
+    "section": "Exercise 1: Use R as a calculator",
+    "text": "Exercise 1: Use R as a calculator\n\n4 + 2\n## [1] 6\n4^2\n## [1] 16\n4*2\n## [1] 8\n#4(2) # We need to use * for multiplication"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#exercise-2-functions-and-arguments",
+    "href": "activities/01_foundations_welcome.html#exercise-2-functions-and-arguments",
+    "title": "Collecting and Summarizing Data",
+    "section": "Exercise 2: Functions and arguments",
+    "text": "Exercise 2: Functions and arguments\n\n# Calculate the square root of 9\nsqrt(9)\n## [1] 3\n\n# Calculate the number of characters in the word \"macalester\"\nnchar(\"macalester\")\n## [1] 10\n\n# Calculate the square root of the number of characters in the word \"snow\"\nsqrt(nchar(\"snow\"))\n## [1] 2\n\n\n# Repeat the number 2, 5 times\nrep(x = 2, times = 5)\n## [1] 2 2 2 2 2\n\n# Repeat the number 2, 5 times\nrep(times = 5, x = 2)\n## [1] 2 2 2 2 2\n\n# Repeat the number 2, 5 times\nrep(2, 5)\n## [1] 2 2 2 2 2\n\n# Repeat the number 5, 2 times\nrep(5, 2)\n## [1] 5 5"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#exercise-3-save-it-for-later",
+    "href": "activities/01_foundations_welcome.html#exercise-3-save-it-for-later",
+    "title": "Collecting and Summarizing Data",
+    "section": "Exercise 3: Save it for later",
+    "text": "Exercise 3: Save it for later\n\n# Nothing shows up -- all we're doing here is storing -13 as degrees_c\ndegrees_c &lt;- -13\n\n# Print the contents of degrees_c\ndegrees_c\n## [1] -13\n\n# We can \"do math\" with the contents of degrees_c\ndegrees_c * (9/5) + 32\n## [1] 8.6"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#exercise-4-import-data",
+    "href": "activities/01_foundations_welcome.html#exercise-4-import-data",
+    "title": "Collecting and Summarizing Data",
+    "section": "Exercise 4: Import data",
+    "text": "Exercise 4: Import data\n\n# Load the tidyverse package\nlibrary(tidyverse)\n\n# Import the data\nsurvey &lt;- read_csv(\"https://mac-stat.github.io/data/112_fall_2024_survey.csv\")"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#exercise-5-get-to-know-the-data",
+    "href": "activities/01_foundations_welcome.html#exercise-5-get-to-know-the-data",
+    "title": "Collecting and Summarizing Data",
+    "section": "Exercise 5: Get to know the data",
+    "text": "Exercise 5: Get to know the data\n\n# Dimensions of the survey data set\n# First number = number of rows\n# Second number = number of columns\ndim(survey)\n## [1] 98  4\n\n\n# Number of rows in the survey data set\nnrow(survey)\n## [1] 98\n\n\n# First 6 rows (the head) of the survey data set\nhead(survey)\n## # A tibble: 6 × 4\n##   cafe_mac     minutes_to_campus fave_temp hangout      \n##   &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;        \n## 1 Cheesecake                  15        18 the mountains\n## 2 Cheese pizza                10        24 a beach      \n## 3 udon noodles                 4        18 the mountains\n## 4 egg rolls                    7        10 a beach      \n## 5 Tacos                        5        18 the mountains\n## 6 pasta                       35         7 the mountains\n\n\n# First 3 rows of the survey data set\nhead(survey, 3)\n## # A tibble: 3 × 4\n##   cafe_mac     minutes_to_campus fave_temp hangout      \n##   &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;        \n## 1 Cheesecake                  15        18 the mountains\n## 2 Cheese pizza                10        24 a beach      \n## 3 udon noodles                 4        18 the mountains\n\n\n# Last 6 rows (the tail) of the survey data set\ntail(survey)\n## # A tibble: 6 × 4\n##   cafe_mac        minutes_to_campus fave_temp hangout \n##   &lt;chr&gt;                       &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;   \n## 1 Burger                         10        21 a forest\n## 2 Pepperoni Pizza                10        24 a beach \n## 3 Hamburger                       6        23 a beach \n## 4 Ginger Cookies                 10        26 a beach \n## 5 bbq chicken                     5        14 a city  \n## 6 Breakfast food                 15        25 a city\n\n\n# Names of the variables in the survey data set\nnames(survey)\n## [1] \"cafe_mac\"          \"minutes_to_campus\" \"fave_temp\"        \n## [4] \"hangout\"\n\n\n# Structure of all variables in the survey data set\nstr(survey)\n## spc_tbl_ [98 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)\n##  $ cafe_mac         : chr [1:98] \"Cheesecake\" \"Cheese pizza\" \"udon noodles\" \"egg rolls\" ...\n##  $ minutes_to_campus: num [1:98] 15 10 4 7 5 35 5 15 7 20 ...\n##  $ fave_temp        : num [1:98] 18 24 18 10 18 7 75 24 13 16 ...\n##  $ hangout          : chr [1:98] \"the mountains\" \"a beach\" \"the mountains\" \"a beach\" ...\n##  - attr(*, \"spec\")=\n##   .. cols(\n##   ..   cafe_mac = col_character(),\n##   ..   minutes_to_campus = col_double(),\n##   ..   fave_temp = col_double(),\n##   ..   hangout = col_character()\n##   .. )\n##  - attr(*, \"problems\")=&lt;externalptr&gt;"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#exercise-6-code-communication",
+    "href": "activities/01_foundations_welcome.html#exercise-6-code-communication",
+    "title": "Collecting and Summarizing Data",
+    "section": "Exercise 6: Code = communication",
+    "text": "Exercise 6: Code = communication\n\n# Make it less smooshy. Add spaces!\nseq(from = 1, to = 9, by = 2)\n## [1] 1 3 5 7 9\n\n# Use consistent spacing\nseq(from = 1, to = 9, by = 2)\n## [1] 1 3 5 7 9\n\n# Use more descriptive names when storing objects\nmy_output &lt;- -13\n\n# Use a shorter and easier to read name\ncelsius_today &lt;- -13\nCelsiusToday  &lt;- -13"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#exercise-7-you-will-make-so-many-mistakes",
+    "href": "activities/01_foundations_welcome.html#exercise-7-you-will-make-so-many-mistakes",
+    "title": "Collecting and Summarizing Data",
+    "section": "Exercise 7: You will make so many mistakes!",
+    "text": "Exercise 7: You will make so many mistakes!"
+  },
+  {
+    "objectID": "activities/01_foundations_welcome.html#exercise-8-your-turn",
+    "href": "activities/01_foundations_welcome.html#exercise-8-your-turn",
+    "title": "Collecting and Summarizing Data",
+    "section": "Exercise 8: Your turn",
+    "text": "Exercise 8: Your turn\n\n# a\npeaks &lt;- read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/peaks.csv\")\n\n# b\nnames(peaks)\n## [1] \"peak_id\"                    \"peak_name\"                 \n## [3] \"peak_alternative_name\"      \"height_metres\"             \n## [5] \"climbing_status\"            \"first_ascent_year\"         \n## [7] \"first_ascent_country\"       \"first_ascent_expedition_id\"\n\n# c\ndim(peaks)\n## [1] 468   8\nnrow(peaks)\n## [1] 468\n\n# d\nhead(peaks)\n## # A tibble: 6 × 8\n##   peak_id peak_name     peak_alternative_name height_metres climbing_status\n##   &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;                         &lt;dbl&gt; &lt;chr&gt;          \n## 1 AMAD    Ama Dablam    Amai Dablang                   6814 Climbed        \n## 2 AMPG    Amphu Gyabjen &lt;NA&gt;                           5630 Climbed        \n## 3 ANN1    Annapurna I   &lt;NA&gt;                           8091 Climbed        \n## 4 ANN2    Annapurna II  &lt;NA&gt;                           7937 Climbed        \n## 5 ANN3    Annapurna III &lt;NA&gt;                           7555 Climbed        \n## 6 ANN4    Annapurna IV  &lt;NA&gt;                           7525 Climbed        \n## # ℹ 3 more variables: first_ascent_year &lt;dbl&gt;, first_ascent_country &lt;chr&gt;,\n## #   first_ascent_expedition_id &lt;chr&gt;"
+  },
+  {
+    "objectID": "R_Resources.html",
+    "href": "R_Resources.html",
+    "title": "R Resources",
+    "section": "",
+    "text": "Tidymodels package documentation\nTidy Modeling with R textbook (Max Kuhn and Julia Silge)\nISLR Labs with Tidymodels (Emil Hvitfeldt)\nIntro to Tidymodels Presentation (Lucy D’Agostino McGowan)\n\n\n\n\n\nCOMP/STAT 112 website (with code examples and videos)\nR for Data Science\nExploratory Data Analysis with R\nJohn’s Hopkins Tidyverse course text\n\n\n\n\n\nggplot2 reference\nColors in R\n\n\n\n\n\nCOMP/STAT 112 website (including an example quarto document)\nQuarto cheatsheet\nQuarto tutorial\nComprehensive Quarto Guide\n\n\n\n\n\nRStudio cheatsheets\nAdvanced R\nR Programming Wikibook\nDebugging in R\n\nArticle\nVideo\n\n\n\n\n\n\nCreating new variables\ncase_when() from the dplyr package is a very versatile function for creating new variables based on existing variables. This can be useful for creating categorical or quantitative variables and for creating indices from multiple variables.\n\n# Turn quant_var into a Low/Med/High version\ndata &lt;- data %&gt;%\n    mutate(cat_var = case_when(\n            quant_var &lt; 10 ~ \"Low\",\n            quant_var &gt;= 10 & quant_var &lt;= 20 ~ \"Med\",\n            quant_var &gt; 20 ~ \"High\"\n        )\n    )\n\n# Turn cat_var (A, B, C categories) into another categorical variable\n# (collapse A and B into one category)\ndata &lt;- data %&gt;%\n    mutate(new_cat_var = case_when(\n            cat_var %in% c(\"A\", \"B\") ~ \"A or B\"\n            cat_var==\"C\" ~ \"C\"\n        )\n    )\n\n# Turn a categorical variable (x1) encoded as a numerical 0/1/2 variable into a different quantitative variable\n# Doing this for multiple variables allows you to create an index\ndata &lt;- data %&gt;%\n    mutate(x1_score = case_when(\n            x1==0 ~ 10,\n            x1==1 ~ 20,\n            x1==2 ~ 50\n        )\n    )\n\n# Add together multiple variables with mutate\ndata &lt;- data %&gt;%\n    mutate(index = x1_score + x2_score + x3_score)",
+    "crumbs": [
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "R_Resources.html#tidymodels-resources",
+    "href": "R_Resources.html#tidymodels-resources",
+    "title": "R Resources",
+    "section": "",
+    "text": "Tidymodels package documentation\nTidy Modeling with R textbook (Max Kuhn and Julia Silge)\nISLR Labs with Tidymodels (Emil Hvitfeldt)\nIntro to Tidymodels Presentation (Lucy D’Agostino McGowan)",
+    "crumbs": [
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "R_Resources.html#tidyverse-resources",
+    "href": "R_Resources.html#tidyverse-resources",
+    "title": "R Resources",
+    "section": "",
+    "text": "COMP/STAT 112 website (with code examples and videos)\nR for Data Science\nExploratory Data Analysis with R\nJohn’s Hopkins Tidyverse course text",
+    "crumbs": [
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "R_Resources.html#visualization-resources",
+    "href": "R_Resources.html#visualization-resources",
+    "title": "R Resources",
+    "section": "",
+    "text": "ggplot2 reference\nColors in R",
+    "crumbs": [
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "R_Resources.html#quarto-resources",
+    "href": "R_Resources.html#quarto-resources",
+    "title": "R Resources",
+    "section": "",
+    "text": "COMP/STAT 112 website (including an example quarto document)\nQuarto cheatsheet\nQuarto tutorial\nComprehensive Quarto Guide",
+    "crumbs": [
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "R_Resources.html#general-r-resources",
+    "href": "R_Resources.html#general-r-resources",
+    "title": "R Resources",
+    "section": "",
+    "text": "RStudio cheatsheets\nAdvanced R\nR Programming Wikibook\nDebugging in R\n\nArticle\nVideo",
+    "crumbs": [
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "R_Resources.html#some-example-code",
+    "href": "R_Resources.html#some-example-code",
+    "title": "R Resources",
+    "section": "",
+    "text": "Creating new variables\ncase_when() from the dplyr package is a very versatile function for creating new variables based on existing variables. This can be useful for creating categorical or quantitative variables and for creating indices from multiple variables.\n\n# Turn quant_var into a Low/Med/High version\ndata &lt;- data %&gt;%\n    mutate(cat_var = case_when(\n            quant_var &lt; 10 ~ \"Low\",\n            quant_var &gt;= 10 & quant_var &lt;= 20 ~ \"Med\",\n            quant_var &gt; 20 ~ \"High\"\n        )\n    )\n\n# Turn cat_var (A, B, C categories) into another categorical variable\n# (collapse A and B into one category)\ndata &lt;- data %&gt;%\n    mutate(new_cat_var = case_when(\n            cat_var %in% c(\"A\", \"B\") ~ \"A or B\"\n            cat_var==\"C\" ~ \"C\"\n        )\n    )\n\n# Turn a categorical variable (x1) encoded as a numerical 0/1/2 variable into a different quantitative variable\n# Doing this for multiple variables allows you to create an index\ndata &lt;- data %&gt;%\n    mutate(x1_score = case_when(\n            x1==0 ~ 10,\n            x1==1 ~ 20,\n            x1==2 ~ 50\n        )\n    )\n\n# Add together multiple variables with mutate\ndata &lt;- data %&gt;%\n    mutate(index = x1_score + x2_score + x3_score)",
+    "crumbs": [
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "R_Rstudio.html",
+    "href": "R_Rstudio.html",
+    "title": "R and RStudio Resources",
+    "section": "",
+    "text": "Follow these instructions to set up the software that we’ll be using throughout the semester.\n\n\n\n\n\n\nNote\n\n\n\nEven if you’ve already downloaded both R and RStudio for a previous class, you need to re-download to make sure that you have the most current versions.\n\n\n\n\n\n\n\nRequired: Create a folder for this course on your local harddrive (e.g. Desktop or Documents), not necessarily on a Cloud Drive as you may encounter large datasets in this class.\n\nHighly Recommended: Change the default file download location for your internet browser.\n\nGenerally by default, internet browsers automatically save all files to the Downloads folder on your computer. This does not encourage good file organization practices. You need to change this option so that your browser asks you where to save each file before downloading it.\nThis page has information on how to do this for the most common browsers.\n\n\n\n\n\n\n\nRequired: Install (or update) R and RStudio\n\nAs of January 2026, the latest versions of R and RStudio are:\n\nR: 4.5.2\nRStudio: 2026.01.0+392 \n\nIf you do not have the latest versions of both R and RStudio installed on your computer, see below. (Not sure if you do? See the THIRD step, below.)\n\nFIRST: Download R here.\n\nYou will see three links “Download R for …”\nChoose the link that corresponds to your computer operating system (and pay attention to processor chip type for Mac - M1/M2 or Intel; on your computer, click Apple &gt; About this Mac to find info about the chip).\n\nSECOND: Download RStudio here.\n\nClick the button under step 2 to install the version of RStudio recommended for your computer.\n\nTHIRD: Check your work\n\nOpen an RStudio session.\nRun the following in the Console, and repeat the FIRST or SECOND step if the version numbers that print out are not equal to (or more recent than) those listed above.\n\n\n\n# check R version\nR.Version()\n\n# check RStudio version\nrstudioapi::versionInfo()\n\n\nRequired: Install the most up-to-date versions of the required R packages for this course.\n\nAn R package is an extra bit of functionality that will help us in our data analysis efforts in a variety of ways.\nOpen RStudio and click inside the Console pane (by default, the bottom left pane). Copy and paste the following command into the Console. You should see the text below appear to the right of the &gt;, which is called the R prompt. After you paste, hit Enter.\n\n\ninstall.packages(c(\"tidyverse\",\"tidymodels\",\"GGally\",\"ISLR\"), dependencies = TRUE)\n\n\nIf you get a message that says “There are binary versions available the source versions are later” type no and press Enter.\nYou will see a lot of text from status messages appearing in the Console as the packages are being installed. Wait until you see the &gt; again.\nEnter the command library(ggplot2) and hit enter.\nIf you see the message Error in library(ggplot2) : there is no package called ggplot2, then there was a problem installing this package. Jump down to the Troubleshooting section below. (Any other messages that appear are fine, and a lack of any messages is also fine.)\nRepeat the above step for the commands:\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(GGally)\nlibrary(ISLR)\n\nQuit RStudio. You’re done setting up!\n\n\nHighly Recommended: Set essential RStudio options.\nGo to:\n\nWindows: Edit &gt; Preferences &gt; General\nMac: Tools &gt; Global Options… &gt; General\n\nNavigate to the “Workspace” section.\n\nRestore .RData into workspace at startup: Leave this unchecked\nSave workspace to .RData on exit: Select “Never”\nPress “Apply” and then “OK”\n\nIf you don’t change these options, RStudio will save all of the objects you ever create in your Global Environment. In practice, this leads to all of the objects, datasets, etc that you have ever worked with at Macalester being loaded in when you start RStudio.\n\nThis can make startup slow.\nIt clutters the Global Environment. (e.g., You’re working on something and referring to diamonds not knowing that a diamonds that was used in class last year is already in the Global Environment.)\n\n\nHighly Recommended: Watch this video made by Dr. Lisa Lendway that describes useful configuration options for RStudio.\n\nOptional: For a refresher on RStudio features, watch this video. It also shows you how to customize the layout and color scheme of RStudio.\n\n\n\n\n\n\nProblem: You are on a Mac and getting the following error (or something similar):\n\n\n    Error: package or namespace load failed for ‘ggplot2’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):\n     there is no package called ‘rlang’\nHere’s how to fix it:\n\nFirst install the suite of Command Line Tools for Mac using the instructions here.\nNext enter install.packages(\"rlang\") in the Console.\nFinally check that entering library(ggplot2) gives no errors.",
+    "crumbs": [
+      "R and RStudio Resources"
+    ]
+  },
+  {
+    "objectID": "R_Rstudio.html#file-organization",
+    "href": "R_Rstudio.html#file-organization",
+    "title": "R and RStudio Resources",
+    "section": "",
+    "text": "Required: Create a folder for this course on your local harddrive (e.g. Desktop or Documents), not necessarily on a Cloud Drive as you may encounter large datasets in this class.\n\nHighly Recommended: Change the default file download location for your internet browser.\n\nGenerally by default, internet browsers automatically save all files to the Downloads folder on your computer. This does not encourage good file organization practices. You need to change this option so that your browser asks you where to save each file before downloading it.\nThis page has information on how to do this for the most common browsers.",
+    "crumbs": [
+      "R and RStudio Resources"
+    ]
+  },
+  {
+    "objectID": "R_Rstudio.html#r-rstudio",
+    "href": "R_Rstudio.html#r-rstudio",
+    "title": "R and RStudio Resources",
+    "section": "",
+    "text": "Required: Install (or update) R and RStudio\n\nAs of January 2026, the latest versions of R and RStudio are:\n\nR: 4.5.2\nRStudio: 2026.01.0+392 \n\nIf you do not have the latest versions of both R and RStudio installed on your computer, see below. (Not sure if you do? See the THIRD step, below.)\n\nFIRST: Download R here.\n\nYou will see three links “Download R for …”\nChoose the link that corresponds to your computer operating system (and pay attention to processor chip type for Mac - M1/M2 or Intel; on your computer, click Apple &gt; About this Mac to find info about the chip).\n\nSECOND: Download RStudio here.\n\nClick the button under step 2 to install the version of RStudio recommended for your computer.\n\nTHIRD: Check your work\n\nOpen an RStudio session.\nRun the following in the Console, and repeat the FIRST or SECOND step if the version numbers that print out are not equal to (or more recent than) those listed above.\n\n\n\n# check R version\nR.Version()\n\n# check RStudio version\nrstudioapi::versionInfo()\n\n\nRequired: Install the most up-to-date versions of the required R packages for this course.\n\nAn R package is an extra bit of functionality that will help us in our data analysis efforts in a variety of ways.\nOpen RStudio and click inside the Console pane (by default, the bottom left pane). Copy and paste the following command into the Console. You should see the text below appear to the right of the &gt;, which is called the R prompt. After you paste, hit Enter.\n\n\ninstall.packages(c(\"tidyverse\",\"tidymodels\",\"GGally\",\"ISLR\"), dependencies = TRUE)\n\n\nIf you get a message that says “There are binary versions available the source versions are later” type no and press Enter.\nYou will see a lot of text from status messages appearing in the Console as the packages are being installed. Wait until you see the &gt; again.\nEnter the command library(ggplot2) and hit enter.\nIf you see the message Error in library(ggplot2) : there is no package called ggplot2, then there was a problem installing this package. Jump down to the Troubleshooting section below. (Any other messages that appear are fine, and a lack of any messages is also fine.)\nRepeat the above step for the commands:\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(GGally)\nlibrary(ISLR)\n\nQuit RStudio. You’re done setting up!\n\n\nHighly Recommended: Set essential RStudio options.\nGo to:\n\nWindows: Edit &gt; Preferences &gt; General\nMac: Tools &gt; Global Options… &gt; General\n\nNavigate to the “Workspace” section.\n\nRestore .RData into workspace at startup: Leave this unchecked\nSave workspace to .RData on exit: Select “Never”\nPress “Apply” and then “OK”\n\nIf you don’t change these options, RStudio will save all of the objects you ever create in your Global Environment. In practice, this leads to all of the objects, datasets, etc that you have ever worked with at Macalester being loaded in when you start RStudio.\n\nThis can make startup slow.\nIt clutters the Global Environment. (e.g., You’re working on something and referring to diamonds not knowing that a diamonds that was used in class last year is already in the Global Environment.)\n\n\nHighly Recommended: Watch this video made by Dr. Lisa Lendway that describes useful configuration options for RStudio.\n\nOptional: For a refresher on RStudio features, watch this video. It also shows you how to customize the layout and color scheme of RStudio.\n\n\n\n\n\n\nProblem: You are on a Mac and getting the following error (or something similar):\n\n\n    Error: package or namespace load failed for ‘ggplot2’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):\n     there is no package called ‘rlang’\nHere’s how to fix it:\n\nFirst install the suite of Command Line Tools for Mac using the instructions here.\nNext enter install.packages(\"rlang\") in the Console.\nFinally check that entering library(ggplot2) gives no errors.",
+    "crumbs": [
+      "R and RStudio Resources"
+    ]
+  },
+  {
     "objectID": "activities/L01-introductions.html",
     "href": "activities/L01-introductions.html",
     "title": "Introduction to Statistical Machine Learning",
@@ -605,239 +928,6 @@
     "crumbs": [
       "Introduction to Statistical Machine Learning"
     ]
-  },
-  {
-    "objectID": "R_Rstudio.html",
-    "href": "R_Rstudio.html",
-    "title": "R and RStudio Resources",
-    "section": "",
-    "text": "Follow these instructions to set up the software that we’ll be using throughout the semester.\n\n\n\n\n\n\nNote\n\n\n\nEven if you’ve already downloaded both R and RStudio for a previous class, you need to re-download to make sure that you have the most current versions.\n\n\n\n\n\n\n\nRequired: Create a folder for this course on your local harddrive (e.g. Desktop or Documents), not necessarily on a Cloud Drive as you may encounter large datasets in this class.\n\nHighly Recommended: Change the default file download location for your internet browser.\n\nGenerally by default, internet browsers automatically save all files to the Downloads folder on your computer. This does not encourage good file organization practices. You need to change this option so that your browser asks you where to save each file before downloading it.\nThis page has information on how to do this for the most common browsers.\n\n\n\n\n\n\n\nRequired: Install (or update) R and RStudio\n\nAs of January 2026, the latest versions of R and RStudio are:\n\nR: 4.5.2\nRStudio: 2026.01.0+392 \n\nIf you do not have the latest versions of both R and RStudio installed on your computer, see below. (Not sure if you do? See the THIRD step, below.)\n\nFIRST: Download R here.\n\nYou will see three links “Download R for …”\nChoose the link that corresponds to your computer operating system (and pay attention to processor chip type for Mac - M1/M2 or Intel; on your computer, click Apple &gt; About this Mac to find info about the chip).\n\nSECOND: Download RStudio here.\n\nClick the button under step 2 to install the version of RStudio recommended for your computer.\n\nTHIRD: Check your work\n\nOpen an RStudio session.\nRun the following in the Console, and repeat the FIRST or SECOND step if the version numbers that print out are not equal to (or more recent than) those listed above.\n\n\n\n# check R version\nR.Version()\n\n# check RStudio version\nrstudioapi::versionInfo()\n\n\nRequired: Install the most up-to-date versions of the required R packages for this course.\n\nAn R package is an extra bit of functionality that will help us in our data analysis efforts in a variety of ways.\nOpen RStudio and click inside the Console pane (by default, the bottom left pane). Copy and paste the following command into the Console. You should see the text below appear to the right of the &gt;, which is called the R prompt. After you paste, hit Enter.\n\n\ninstall.packages(c(\"tidyverse\",\"tidymodels\",\"GGally\",\"ISLR\"), dependencies = TRUE)\n\n\nIf you get a message that says “There are binary versions available the source versions are later” type no and press Enter.\nYou will see a lot of text from status messages appearing in the Console as the packages are being installed. Wait until you see the &gt; again.\nEnter the command library(ggplot2) and hit enter.\nIf you see the message Error in library(ggplot2) : there is no package called ggplot2, then there was a problem installing this package. Jump down to the Troubleshooting section below. (Any other messages that appear are fine, and a lack of any messages is also fine.)\nRepeat the above step for the commands:\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(GGally)\nlibrary(ISLR)\n\nQuit RStudio. You’re done setting up!\n\n\nHighly Recommended: Set essential RStudio options.\nGo to:\n\nWindows: Edit &gt; Preferences &gt; General\nMac: Tools &gt; Global Options… &gt; General\n\nNavigate to the “Workspace” section.\n\nRestore .RData into workspace at startup: Leave this unchecked\nSave workspace to .RData on exit: Select “Never”\nPress “Apply” and then “OK”\n\nIf you don’t change these options, RStudio will save all of the objects you ever create in your Global Environment. In practice, this leads to all of the objects, datasets, etc that you have ever worked with at Macalester being loaded in when you start RStudio.\n\nThis can make startup slow.\nIt clutters the Global Environment. (e.g., You’re working on something and referring to diamonds not knowing that a diamonds that was used in class last year is already in the Global Environment.)\n\n\nHighly Recommended: Watch this video made by Dr. Lisa Lendway that describes useful configuration options for RStudio.\n\nOptional: For a refresher on RStudio features, watch this video. It also shows you how to customize the layout and color scheme of RStudio.\n\n\n\n\n\n\nProblem: You are on a Mac and getting the following error (or something similar):\n\n\n    Error: package or namespace load failed for ‘ggplot2’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):\n     there is no package called ‘rlang’\nHere’s how to fix it:\n\nFirst install the suite of Command Line Tools for Mac using the instructions here.\nNext enter install.packages(\"rlang\") in the Console.\nFinally check that entering library(ggplot2) gives no errors.",
-    "crumbs": [
-      "R and RStudio Resources"
-    ]
-  },
-  {
-    "objectID": "R_Rstudio.html#file-organization",
-    "href": "R_Rstudio.html#file-organization",
-    "title": "R and RStudio Resources",
-    "section": "",
-    "text": "Required: Create a folder for this course on your local harddrive (e.g. Desktop or Documents), not necessarily on a Cloud Drive as you may encounter large datasets in this class.\n\nHighly Recommended: Change the default file download location for your internet browser.\n\nGenerally by default, internet browsers automatically save all files to the Downloads folder on your computer. This does not encourage good file organization practices. You need to change this option so that your browser asks you where to save each file before downloading it.\nThis page has information on how to do this for the most common browsers.",
-    "crumbs": [
-      "R and RStudio Resources"
-    ]
-  },
-  {
-    "objectID": "R_Rstudio.html#r-rstudio",
-    "href": "R_Rstudio.html#r-rstudio",
-    "title": "R and RStudio Resources",
-    "section": "",
-    "text": "Required: Install (or update) R and RStudio\n\nAs of January 2026, the latest versions of R and RStudio are:\n\nR: 4.5.2\nRStudio: 2026.01.0+392 \n\nIf you do not have the latest versions of both R and RStudio installed on your computer, see below. (Not sure if you do? See the THIRD step, below.)\n\nFIRST: Download R here.\n\nYou will see three links “Download R for …”\nChoose the link that corresponds to your computer operating system (and pay attention to processor chip type for Mac - M1/M2 or Intel; on your computer, click Apple &gt; About this Mac to find info about the chip).\n\nSECOND: Download RStudio here.\n\nClick the button under step 2 to install the version of RStudio recommended for your computer.\n\nTHIRD: Check your work\n\nOpen an RStudio session.\nRun the following in the Console, and repeat the FIRST or SECOND step if the version numbers that print out are not equal to (or more recent than) those listed above.\n\n\n\n# check R version\nR.Version()\n\n# check RStudio version\nrstudioapi::versionInfo()\n\n\nRequired: Install the most up-to-date versions of the required R packages for this course.\n\nAn R package is an extra bit of functionality that will help us in our data analysis efforts in a variety of ways.\nOpen RStudio and click inside the Console pane (by default, the bottom left pane). Copy and paste the following command into the Console. You should see the text below appear to the right of the &gt;, which is called the R prompt. After you paste, hit Enter.\n\n\ninstall.packages(c(\"tidyverse\",\"tidymodels\",\"GGally\",\"ISLR\"), dependencies = TRUE)\n\n\nIf you get a message that says “There are binary versions available the source versions are later” type no and press Enter.\nYou will see a lot of text from status messages appearing in the Console as the packages are being installed. Wait until you see the &gt; again.\nEnter the command library(ggplot2) and hit enter.\nIf you see the message Error in library(ggplot2) : there is no package called ggplot2, then there was a problem installing this package. Jump down to the Troubleshooting section below. (Any other messages that appear are fine, and a lack of any messages is also fine.)\nRepeat the above step for the commands:\n\nlibrary(tidyverse)\nlibrary(tidymodels)\nlibrary(GGally)\nlibrary(ISLR)\n\nQuit RStudio. You’re done setting up!\n\n\nHighly Recommended: Set essential RStudio options.\nGo to:\n\nWindows: Edit &gt; Preferences &gt; General\nMac: Tools &gt; Global Options… &gt; General\n\nNavigate to the “Workspace” section.\n\nRestore .RData into workspace at startup: Leave this unchecked\nSave workspace to .RData on exit: Select “Never”\nPress “Apply” and then “OK”\n\nIf you don’t change these options, RStudio will save all of the objects you ever create in your Global Environment. In practice, this leads to all of the objects, datasets, etc that you have ever worked with at Macalester being loaded in when you start RStudio.\n\nThis can make startup slow.\nIt clutters the Global Environment. (e.g., You’re working on something and referring to diamonds not knowing that a diamonds that was used in class last year is already in the Global Environment.)\n\n\nHighly Recommended: Watch this video made by Dr. Lisa Lendway that describes useful configuration options for RStudio.\n\nOptional: For a refresher on RStudio features, watch this video. It also shows you how to customize the layout and color scheme of RStudio.\n\n\n\n\n\n\nProblem: You are on a Mac and getting the following error (or something similar):\n\n\n    Error: package or namespace load failed for ‘ggplot2’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):\n     there is no package called ‘rlang’\nHere’s how to fix it:\n\nFirst install the suite of Command Line Tools for Mac using the instructions here.\nNext enter install.packages(\"rlang\") in the Console.\nFinally check that entering library(ggplot2) gives no errors.",
-    "crumbs": [
-      "R and RStudio Resources"
-    ]
-  },
-  {
-    "objectID": "R_Resources.html",
-    "href": "R_Resources.html",
-    "title": "R Resources",
-    "section": "",
-    "text": "Tidymodels package documentation\nTidy Modeling with R textbook (Max Kuhn and Julia Silge)\nISLR Labs with Tidymodels (Emil Hvitfeldt)\nIntro to Tidymodels Presentation (Lucy D’Agostino McGowan)\n\n\n\n\n\nCOMP/STAT 112 website (with code examples and videos)\nR for Data Science\nExploratory Data Analysis with R\nJohn’s Hopkins Tidyverse course text\n\n\n\n\n\nggplot2 reference\nColors in R\n\n\n\n\n\nCOMP/STAT 112 website (including an example quarto document)\nQuarto cheatsheet\nQuarto tutorial\nComprehensive Quarto Guide\n\n\n\n\n\nRStudio cheatsheets\nAdvanced R\nR Programming Wikibook\nDebugging in R\n\nArticle\nVideo\n\n\n\n\n\n\nCreating new variables\ncase_when() from the dplyr package is a very versatile function for creating new variables based on existing variables. This can be useful for creating categorical or quantitative variables and for creating indices from multiple variables.\n\n# Turn quant_var into a Low/Med/High version\ndata &lt;- data %&gt;%\n    mutate(cat_var = case_when(\n            quant_var &lt; 10 ~ \"Low\",\n            quant_var &gt;= 10 & quant_var &lt;= 20 ~ \"Med\",\n            quant_var &gt; 20 ~ \"High\"\n        )\n    )\n\n# Turn cat_var (A, B, C categories) into another categorical variable\n# (collapse A and B into one category)\ndata &lt;- data %&gt;%\n    mutate(new_cat_var = case_when(\n            cat_var %in% c(\"A\", \"B\") ~ \"A or B\"\n            cat_var==\"C\" ~ \"C\"\n        )\n    )\n\n# Turn a categorical variable (x1) encoded as a numerical 0/1/2 variable into a different quantitative variable\n# Doing this for multiple variables allows you to create an index\ndata &lt;- data %&gt;%\n    mutate(x1_score = case_when(\n            x1==0 ~ 10,\n            x1==1 ~ 20,\n            x1==2 ~ 50\n        )\n    )\n\n# Add together multiple variables with mutate\ndata &lt;- data %&gt;%\n    mutate(index = x1_score + x2_score + x3_score)",
-    "crumbs": [
-      "R Resources"
-    ]
-  },
-  {
-    "objectID": "R_Resources.html#tidymodels-resources",
-    "href": "R_Resources.html#tidymodels-resources",
-    "title": "R Resources",
-    "section": "",
-    "text": "Tidymodels package documentation\nTidy Modeling with R textbook (Max Kuhn and Julia Silge)\nISLR Labs with Tidymodels (Emil Hvitfeldt)\nIntro to Tidymodels Presentation (Lucy D’Agostino McGowan)",
-    "crumbs": [
-      "R Resources"
-    ]
-  },
-  {
-    "objectID": "R_Resources.html#tidyverse-resources",
-    "href": "R_Resources.html#tidyverse-resources",
-    "title": "R Resources",
-    "section": "",
-    "text": "COMP/STAT 112 website (with code examples and videos)\nR for Data Science\nExploratory Data Analysis with R\nJohn’s Hopkins Tidyverse course text",
-    "crumbs": [
-      "R Resources"
-    ]
-  },
-  {
-    "objectID": "R_Resources.html#visualization-resources",
-    "href": "R_Resources.html#visualization-resources",
-    "title": "R Resources",
-    "section": "",
-    "text": "ggplot2 reference\nColors in R",
-    "crumbs": [
-      "R Resources"
-    ]
-  },
-  {
-    "objectID": "R_Resources.html#quarto-resources",
-    "href": "R_Resources.html#quarto-resources",
-    "title": "R Resources",
-    "section": "",
-    "text": "COMP/STAT 112 website (including an example quarto document)\nQuarto cheatsheet\nQuarto tutorial\nComprehensive Quarto Guide",
-    "crumbs": [
-      "R Resources"
-    ]
-  },
-  {
-    "objectID": "R_Resources.html#general-r-resources",
-    "href": "R_Resources.html#general-r-resources",
-    "title": "R Resources",
-    "section": "",
-    "text": "RStudio cheatsheets\nAdvanced R\nR Programming Wikibook\nDebugging in R\n\nArticle\nVideo",
-    "crumbs": [
-      "R Resources"
-    ]
-  },
-  {
-    "objectID": "R_Resources.html#some-example-code",
-    "href": "R_Resources.html#some-example-code",
-    "title": "R Resources",
-    "section": "",
-    "text": "Creating new variables\ncase_when() from the dplyr package is a very versatile function for creating new variables based on existing variables. This can be useful for creating categorical or quantitative variables and for creating indices from multiple variables.\n\n# Turn quant_var into a Low/Med/High version\ndata &lt;- data %&gt;%\n    mutate(cat_var = case_when(\n            quant_var &lt; 10 ~ \"Low\",\n            quant_var &gt;= 10 & quant_var &lt;= 20 ~ \"Med\",\n            quant_var &gt; 20 ~ \"High\"\n        )\n    )\n\n# Turn cat_var (A, B, C categories) into another categorical variable\n# (collapse A and B into one category)\ndata &lt;- data %&gt;%\n    mutate(new_cat_var = case_when(\n            cat_var %in% c(\"A\", \"B\") ~ \"A or B\"\n            cat_var==\"C\" ~ \"C\"\n        )\n    )\n\n# Turn a categorical variable (x1) encoded as a numerical 0/1/2 variable into a different quantitative variable\n# Doing this for multiple variables allows you to create an index\ndata &lt;- data %&gt;%\n    mutate(x1_score = case_when(\n            x1==0 ~ 10,\n            x1==1 ~ 20,\n            x1==2 ~ 50\n        )\n    )\n\n# Add together multiple variables with mutate\ndata &lt;- data %&gt;%\n    mutate(index = x1_score + x2_score + x3_score)",
-    "crumbs": [
-      "R Resources"
-    ]
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html",
-    "href": "activities/01_foundations_welcome.html",
-    "title": "Collecting and Summarizing Data",
-    "section": "",
-    "text": "You can download the .qmd file for this activity here and open in R-studio. The rendered version is posted in the course website (Activities tab). I often experiment with the class activities (and see it in live!) and make updates, but I always post the final version before class starts. To be sure you have the most up-to-date copy, please download it once you’ve settled in before class begins."
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#see-class-notes",
-    "href": "activities/01_foundations_welcome.html#see-class-notes",
-    "title": "Collecting and Summarizing Data",
-    "section": "See class notes",
-    "text": "See class notes\nGo to your class-notes to see what we covered in live-note taking!\n\n\n\nEXAMPLE 1: Tidy data (Class Activities!)\nWelcome to the first in-class activities of STAT 155! Fill out the Day 1 Activities form of the following questions (anonymous). We’ll come back to this in a future class. Wait until everyone in your group is done with this.\n\nHow many hours of sleep did you get last night?\nHow many cups of coffee did you drink this morning?\nWhat is your declared or potential major? (If you are a double major, just pick whichever one you think of first.)\nWhat is your anticipated graduation year?\nHow many stats/data science courses have you taken in the past?\nOn a scale of 1 (get me out of here) to 10 (yay!), how excited are you about this course?\nIs it your birthday this semester? (yes/no)\nHow many unread emails do you have in your inbox right now?"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#example-1-use-r-as-a-calculator",
-    "href": "activities/01_foundations_welcome.html#example-1-use-r-as-a-calculator",
-    "title": "Collecting and Summarizing Data",
-    "section": "Example 1: Use R as a calculator",
-    "text": "Example 1: Use R as a calculator\nType the following lines in the console (bottom left), one by one, hitting Return/Enter after each line. In some cases you might even get an error! This error is important to learning how R code does and doesn’t work.\n\n4 + 2\n\n\n4^2\n\n\n4*2\n\n\n4(2)"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#example-2-functions-and-arguments",
-    "href": "activities/01_foundations_welcome.html#example-2-functions-and-arguments",
-    "title": "Collecting and Summarizing Data",
-    "section": "Example 2: Functions and arguments",
-    "text": "Example 2: Functions and arguments\nWe can also use built-in functions to perform common tasks. These functions have names and require information about arguments in order to run:\nfunction(argument) Cheatcode: RiceCooker(Rice)\nTry out the following functions one by one in the RStudio console. For each function, note its…\n\nname\nthe argument or information it needs to run\nwhat output it produces (what the function does)\nhow the name connects to what the function does\n\n\nsqrt(9)\n\n\nnchar(\"macalester\")\n\n\nsqrt(nchar(\"snow\"))\n\nSome functions have more than 1 argument, separated by commas:\nfunction(argument1 = ___, argument2 = ___) Cheatcode: RiceCooker(Rice,Chicken)\nTry out the following, one by one.\n\nrep(x = 2, times = 5)\n\n\nrep(times = 5, x = 2)\n\n\nrep(2, 5)\n\n\nrep(5, 2)\n\nFinally, R is case sensitive. Try using Rep() instead of rep(). Take time to read the error message!\n\nRep(5, 2)"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#example-3-save-it-for-later",
-    "href": "activities/01_foundations_welcome.html#example-3-save-it-for-later",
-    "title": "Collecting and Summarizing Data",
-    "section": "Example 3: Save it for later",
-    "text": "Example 3: Save it for later\nWe’ll often want to store some R output for later use. In R:\nname &lt;- output\nwhere name is the name under which to store a result, output is the result we wish to store, and &lt;- is the assignment operator (I think of this as an arrow pointing the output into the name).\nIMPORTANT: Try out each line one at a time. Why doesn’t the first line produce any output?\n\ndegrees_c &lt;- -13\n\n\ndegrees_c\n\n\ndegrees_c * (9/5) + 32"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#example-4-import-data",
-    "href": "activities/01_foundations_welcome.html#example-4-import-data",
-    "title": "Collecting and Summarizing Data",
-    "section": "Example 4: Import data",
-    "text": "Example 4: Import data\nNext, let’s work with some data!! The first step is importing our data into RStudio. How we do this depends on:\n\nfile format (eg: .xls Excel spreadsheet, .csv, .txt)\nfile location (eg: online, on your desktop, built into RStudio itself).\n\nThe data from the survey you took before class is stored as a .csv file online. Import this data using the read_csv() function, and store it as survey using the code below:\nFirst, in the Console pane of RStudio, run the following command to install some necessary packages (you will need to do this any time you are installing a new package):\ninstall.packages(\"tidyverse\")\n\n# Load the \"tidyverse\" package which contains the read_csv() function\nlibrary(tidyverse)\n\n# Import the data\nsurvey &lt;- read_csv(\"https://mac-stat.github.io/data/112_fall_2024_survey.csv\")\n\n\n\nCheck out the data\nIn the Environment tab in the upper right pane of RStudio, click on survey. What happens?!\n\n\nIn the modern era, datasets often contain hundreds of variables and millions of observations. We need more effective ways to explore such data."
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#example-5-get-to-know-the-data",
-    "href": "activities/01_foundations_welcome.html#example-5-get-to-know-the-data",
-    "title": "Collecting and Summarizing Data",
-    "section": "Example 5: Get to know the data",
-    "text": "Example 5: Get to know the data\nPAUSE: Make sure you’re still in sync with your group.\nBefore we can learn anything from our data, we must understand its structure. For each function below:\n\ntry it out\ndiscuss with your group what the function does\ndiscuss with your group how the function’s name connects to what it does\n\n\ndim(survey) # (Number of row (case/obs.), Number of column (variable))\n\n\nnrow(survey) # Number of case/obs.\n\n\nncol(survey) # Number of variables\n\n\nhead(survey) # View first few rows of the dataset (6 rows, by default)\n\n\nhead(survey, 3) # Controlling the view of first few rows of the dataset\n\n\ntail(survey) # View first few rows of the dataset (6 rows, by default)\n\n\nnames(survey) # Get all column (variable) names\n\n\nstr(survey) # Overall info about data"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#example-6-code-communication",
-    "href": "activities/01_foundations_welcome.html#example-6-code-communication",
-    "title": "Collecting and Summarizing Data",
-    "section": "Example 6 : Code = communication",
-    "text": "Example 6 : Code = communication\nIt’s important to recognize from day 1 that code is a form of communication, both to yourself and others!!!!! Code structure and details are important to readability and clarity, just as grammar, punctuation, spelling, paragraphs, and line spacing are important in written essays. All of the code below works, but has bad structure. With your group, discuss what is unfortunate about each line, then make it better.\n\nseq(from=1, to=9, by=2)\nseq(from = 1, to=9, by=2)\ntemp_cel &lt;- -13\nthisisthetemperaturetodayincelsius &lt;- -13\nthis_is_the_temperature_today_in_celsius &lt;- -13"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#example-7-you-will-make-so-many-mistakes",
-    "href": "activities/01_foundations_welcome.html#example-7-you-will-make-so-many-mistakes",
-    "title": "Collecting and Summarizing Data",
-    "section": "Example 7: You will make so many mistakes!",
-    "text": "Example 7: You will make so many mistakes!\nMistakes are common when, and even important to, learning any new language. You’ll get better and better at interpreting error messages, finding help, and fixing errors. In addition to finding help online, R has built-in help files. For example:\n\nIn the console, type ?rep and press Return/Enter.\nCheck out the documentation file that pops up in the Help tab (lower right).\nQuickly scroll through, noting the type of information provided.\nPause at the “Examples” section at the bottom – perhaps the most useful section! Try out a couple of the provided examples in your console."
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#example-8-make-a-cheat-sheet",
-    "href": "activities/01_foundations_welcome.html#example-8-make-a-cheat-sheet",
-    "title": "Collecting and Summarizing Data",
-    "section": "Example 8: Make a “cheat sheet”",
-    "text": "Example 8: Make a “cheat sheet”\nYou will continue to pick up new R code and ideas. You’re highly encouraged to start tracking this in a cheat sheet (eg: in a Google doc). The cheat sheet will be a handy reference for you, and the act of making it will help deepen your understanding and retention."
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#exercise-complete-this-after-the-class",
-    "href": "activities/01_foundations_welcome.html#exercise-complete-this-after-the-class",
-    "title": "Collecting and Summarizing Data",
-    "section": "Exercise: Complete this after the class",
-    "text": "Exercise: Complete this after the class\nComplete this exercise after class. First, try it on your own (or with your group), and then check your work against the solution provided at the end of this .qmd file.\nUse R code to do the following:\n\nImport & name data on different Himalayan peaks from the url below:\nhttps://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/peaks.csv NOTE: A codebook, i.e. a description of the data, is here.\nUse a function to show which variables are recorded on each peak.\nHow many peaks are included in the dataset? Answer this using a function, not by counting up the rows yourself.\nShow the first 6 rows of the dataset. NOTE: This gives us a quick glimpse without having to print out the entire dataset!"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#exercise-1-use-r-as-a-calculator",
-    "href": "activities/01_foundations_welcome.html#exercise-1-use-r-as-a-calculator",
-    "title": "Collecting and Summarizing Data",
-    "section": "Exercise 1: Use R as a calculator",
-    "text": "Exercise 1: Use R as a calculator\n\n4 + 2\n## [1] 6\n4^2\n## [1] 16\n4*2\n## [1] 8\n#4(2) # We need to use * for multiplication"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#exercise-2-functions-and-arguments",
-    "href": "activities/01_foundations_welcome.html#exercise-2-functions-and-arguments",
-    "title": "Collecting and Summarizing Data",
-    "section": "Exercise 2: Functions and arguments",
-    "text": "Exercise 2: Functions and arguments\n\n# Calculate the square root of 9\nsqrt(9)\n## [1] 3\n\n# Calculate the number of characters in the word \"macalester\"\nnchar(\"macalester\")\n## [1] 10\n\n# Calculate the square root of the number of characters in the word \"snow\"\nsqrt(nchar(\"snow\"))\n## [1] 2\n\n\n# Repeat the number 2, 5 times\nrep(x = 2, times = 5)\n## [1] 2 2 2 2 2\n\n# Repeat the number 2, 5 times\nrep(times = 5, x = 2)\n## [1] 2 2 2 2 2\n\n# Repeat the number 2, 5 times\nrep(2, 5)\n## [1] 2 2 2 2 2\n\n# Repeat the number 5, 2 times\nrep(5, 2)\n## [1] 5 5"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#exercise-3-save-it-for-later",
-    "href": "activities/01_foundations_welcome.html#exercise-3-save-it-for-later",
-    "title": "Collecting and Summarizing Data",
-    "section": "Exercise 3: Save it for later",
-    "text": "Exercise 3: Save it for later\n\n# Nothing shows up -- all we're doing here is storing -13 as degrees_c\ndegrees_c &lt;- -13\n\n# Print the contents of degrees_c\ndegrees_c\n## [1] -13\n\n# We can \"do math\" with the contents of degrees_c\ndegrees_c * (9/5) + 32\n## [1] 8.6"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#exercise-4-import-data",
-    "href": "activities/01_foundations_welcome.html#exercise-4-import-data",
-    "title": "Collecting and Summarizing Data",
-    "section": "Exercise 4: Import data",
-    "text": "Exercise 4: Import data\n\n# Load the tidyverse package\nlibrary(tidyverse)\n\n# Import the data\nsurvey &lt;- read_csv(\"https://mac-stat.github.io/data/112_fall_2024_survey.csv\")"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#exercise-5-get-to-know-the-data",
-    "href": "activities/01_foundations_welcome.html#exercise-5-get-to-know-the-data",
-    "title": "Collecting and Summarizing Data",
-    "section": "Exercise 5: Get to know the data",
-    "text": "Exercise 5: Get to know the data\n\n# Dimensions of the survey data set\n# First number = number of rows\n# Second number = number of columns\ndim(survey)\n## [1] 98  4\n\n\n# Number of rows in the survey data set\nnrow(survey)\n## [1] 98\n\n\n# First 6 rows (the head) of the survey data set\nhead(survey)\n## # A tibble: 6 × 4\n##   cafe_mac     minutes_to_campus fave_temp hangout      \n##   &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;        \n## 1 Cheesecake                  15        18 the mountains\n## 2 Cheese pizza                10        24 a beach      \n## 3 udon noodles                 4        18 the mountains\n## 4 egg rolls                    7        10 a beach      \n## 5 Tacos                        5        18 the mountains\n## 6 pasta                       35         7 the mountains\n\n\n# First 3 rows of the survey data set\nhead(survey, 3)\n## # A tibble: 3 × 4\n##   cafe_mac     minutes_to_campus fave_temp hangout      \n##   &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;        \n## 1 Cheesecake                  15        18 the mountains\n## 2 Cheese pizza                10        24 a beach      \n## 3 udon noodles                 4        18 the mountains\n\n\n# Last 6 rows (the tail) of the survey data set\ntail(survey)\n## # A tibble: 6 × 4\n##   cafe_mac        minutes_to_campus fave_temp hangout \n##   &lt;chr&gt;                       &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;   \n## 1 Burger                         10        21 a forest\n## 2 Pepperoni Pizza                10        24 a beach \n## 3 Hamburger                       6        23 a beach \n## 4 Ginger Cookies                 10        26 a beach \n## 5 bbq chicken                     5        14 a city  \n## 6 Breakfast food                 15        25 a city\n\n\n# Names of the variables in the survey data set\nnames(survey)\n## [1] \"cafe_mac\"          \"minutes_to_campus\" \"fave_temp\"        \n## [4] \"hangout\"\n\n\n# Structure of all variables in the survey data set\nstr(survey)\n## spc_tbl_ [98 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)\n##  $ cafe_mac         : chr [1:98] \"Cheesecake\" \"Cheese pizza\" \"udon noodles\" \"egg rolls\" ...\n##  $ minutes_to_campus: num [1:98] 15 10 4 7 5 35 5 15 7 20 ...\n##  $ fave_temp        : num [1:98] 18 24 18 10 18 7 75 24 13 16 ...\n##  $ hangout          : chr [1:98] \"the mountains\" \"a beach\" \"the mountains\" \"a beach\" ...\n##  - attr(*, \"spec\")=\n##   .. cols(\n##   ..   cafe_mac = col_character(),\n##   ..   minutes_to_campus = col_double(),\n##   ..   fave_temp = col_double(),\n##   ..   hangout = col_character()\n##   .. )\n##  - attr(*, \"problems\")=&lt;externalptr&gt;"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#exercise-6-code-communication",
-    "href": "activities/01_foundations_welcome.html#exercise-6-code-communication",
-    "title": "Collecting and Summarizing Data",
-    "section": "Exercise 6: Code = communication",
-    "text": "Exercise 6: Code = communication\n\n# Make it less smooshy. Add spaces!\nseq(from = 1, to = 9, by = 2)\n## [1] 1 3 5 7 9\n\n# Use consistent spacing\nseq(from = 1, to = 9, by = 2)\n## [1] 1 3 5 7 9\n\n# Use more descriptive names when storing objects\nmy_output &lt;- -13\n\n# Use a shorter and easier to read name\ncelsius_today &lt;- -13\nCelsiusToday  &lt;- -13"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#exercise-7-you-will-make-so-many-mistakes",
-    "href": "activities/01_foundations_welcome.html#exercise-7-you-will-make-so-many-mistakes",
-    "title": "Collecting and Summarizing Data",
-    "section": "Exercise 7: You will make so many mistakes!",
-    "text": "Exercise 7: You will make so many mistakes!"
-  },
-  {
-    "objectID": "activities/01_foundations_welcome.html#exercise-8-your-turn",
-    "href": "activities/01_foundations_welcome.html#exercise-8-your-turn",
-    "title": "Collecting and Summarizing Data",
-    "section": "Exercise 8: Your turn",
-    "text": "Exercise 8: Your turn\n\n# a\npeaks &lt;- read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/peaks.csv\")\n\n# b\nnames(peaks)\n## [1] \"peak_id\"                    \"peak_name\"                 \n## [3] \"peak_alternative_name\"      \"height_metres\"             \n## [5] \"climbing_status\"            \"first_ascent_year\"         \n## [7] \"first_ascent_country\"       \"first_ascent_expedition_id\"\n\n# c\ndim(peaks)\n## [1] 468   8\nnrow(peaks)\n## [1] 468\n\n# d\nhead(peaks)\n## # A tibble: 6 × 8\n##   peak_id peak_name     peak_alternative_name height_metres climbing_status\n##   &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;                         &lt;dbl&gt; &lt;chr&gt;          \n## 1 AMAD    Ama Dablam    Amai Dablang                   6814 Climbed        \n## 2 AMPG    Amphu Gyabjen &lt;NA&gt;                           5630 Climbed        \n## 3 ANN1    Annapurna I   &lt;NA&gt;                           8091 Climbed        \n## 4 ANN2    Annapurna II  &lt;NA&gt;                           7937 Climbed        \n## 5 ANN3    Annapurna III &lt;NA&gt;                           7555 Climbed        \n## 6 ANN4    Annapurna IV  &lt;NA&gt;                           7525 Climbed        \n## # ℹ 3 more variables: first_ascent_year &lt;dbl&gt;, first_ascent_country &lt;chr&gt;,\n## #   first_ascent_expedition_id &lt;chr&gt;"
   },
   {
     "objectID": "assignments.html",

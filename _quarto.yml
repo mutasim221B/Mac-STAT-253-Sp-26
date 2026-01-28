@@ -41,6 +41,7 @@ website:
       title: "Activities"
       contents:
           - "activities/L01-introductions.qmd"
+          - "activities/L02-evaluating-regression-models.qmd"
 
     - id: appendices
       title: "Appendices"
