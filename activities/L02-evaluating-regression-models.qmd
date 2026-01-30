@@ -417,6 +417,7 @@ ggplot(___, aes(y = ___, x = ___)) +
 
 ```{r}
 # Start small: rides vs temp
+# Start small: rides vs temp
 
 ```
 
@@ -712,7 +713,9 @@ Communication is a key machine learning skill, including written summaries, pres
 - Also pay attention to what this code *does*.
 
 ```{r}
-bikes%>%group_by(weekend)%>%summarize(median(rides))
+bikes %>%
+  group_by(weekend) %>%
+  summarize(median(rides))
 ```
 
 ```{r}

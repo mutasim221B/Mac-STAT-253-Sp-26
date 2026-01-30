@@ -1,0 +1,1257 @@
+---
+title: "Overfitting"
+subtitle: "Notes and in-class exercises"
+format: 
+  html:
+    embed-resources: true
+    toc: true
+---
+
+
+```{r setup}
+#| include: false
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  warning = FALSE,
+  message = FALSE,
+  error = TRUE,
+  fig.height = 2.75, 
+  fig.width = 4.25,
+  fig.env = 'figure',
+  fig.pos = 'h',
+  fig.align = 'center')
+```
+
+
+You can download the .qmd file for this activity [here](../activity_templates/L03-Overfitting.qmd) and open in R-studio. The rendered version is posted in the [course website](https://mutasim221b.github.io/Mac-STAT-253-Sp-26/) (Activities tab). I often experiment with the class activities (and see it in live!) and make updates, but I always post the final version before class starts. To be sure you have the most up-to-date copy, please download it once you’ve settled in before class begins.
+
+
+# Small Group Discussion {-}
+
+To start class today, we're going to do a Model Evaluation Experiment!
+
+First, we'll review some model evaluation ideas from last class.
+
+
+\
+
+## Directions {.unnumbered .smaller}
+
+Let's *build* and *evaluate* a predicted model of an adult's height ($y$) 
+using some predictors $x_i$ (e.g., age, weight, etc.).
+
+- Introduce yourself in whatever way you feel appropriate and check in with 
+each other as human beings
+- Come up with a team name
+- Work through the steps below as a group
+  - Each group will be given a different sample of 40 adults
+  - Start by predicting `height` (in) using `hip` circumference (cm)
+  - Evaluate the model on your sample.
+- **Be prepared to share your answers to:** 
+  - How good is your simple model?
+  - What would happen if we added more predictors?
+
+
+\
+
+## Questions {.unnumbered .smaller}
+
+![](../images/MLdiagram.jpg){width=100%}
+
+
+
+**Goal**
+
+- Let's *build* and *evaluate* a predictive model of an adult's height ($y$) using some predictors $x_i$ (eg: age, height, etc).
+
+- Since $y$ is *quantitative* this is a **regression task**.
+
+- There are countless possible models of $y$ vs $x$. We'll utilize a **linear regression model**:
+
+$$y = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p + \varepsilon$$
+
+- And after building this model, we'll **evaluate** it.
+
+
+
+
+\
+
+**Data:** Each group will be given a different sample of 40 adults.
+
+```{r packages}
+# Load packages needed for this analysis
+library(tidyverse)
+library(tidymodels)
+```
+
+
+Using the following starter code, fill in the blank in the URL with the appropriate number depending on your group number. 
+
+- Group 1: 50
+- Group 2: 143
+
+
+**REMINDER:** _Do not edit the starter code directly. Instead, copy-paste the code into an empty code chunk below. Then, make edits (eg fill in blanks) in that second code chunk._
+
+```{r data-starter}
+#| eval: false
+# Load data
+humans <- read.csv("https://Mac-Stat.github.io/data/bodyfat___.csv") %>% 
+  filter(ankle < 30) %>% 
+  rename(body_fat = fatSiri)
+```
+
+```{r data-yourturn}
+
+```
+
+
+
+
+\
+
+Check out a density plot of your outcome:
+
+```{r plot-starter}
+#| eval: false
+# Plot data
+ggplot(humans, aes(x = ___)) + 
+  geom____()
+```
+
+```{r plot-yourturn}
+
+```
+
+
+
+
+
+\
+
+**Model building:** Build a linear regression model of `height` (in) by `hip` circumference (cm).
+
+```{r step1-starter}
+#| eval: false
+# STEP 1: model specification
+lm_spec <- ___() %>% 
+  set_mode(___) %>% 
+  set_engine(___)
+```
+
+```{r step1-yourturn}
+
+```
+
+
+```{r step2-starter}
+#| eval: false
+# STEP 2: model estimation
+model_1 <- ___ %>% 
+  ___(height ~ hip, data = humans)
+```
+
+```{r step2-yourturn}
+
+```
+
+```{r step3-coef}
+# Check out the coefficients
+# Do all groups have the same coefficients? Should they?
+
+```
+
+
+
+
+\
+
+**Model evaluation:** How *good* is our model?
+
+```{r calculate-r2}
+# Calculate the R^2 for model_1
+
+```
+
+
+```{r predict-starter}
+#| eval: false
+# Use your model to predict height for your subjects
+# Just print the first 6 results
+model_1 %>% 
+  ___(new_data = ___) %>% 
+  head()
+```
+
+```{r predict-yourturn}
+
+```
+
+
+```{r mae-starter}
+#| eval: false
+# Calculate the MAE, i.e. typical prediction error, for your model
+model_1 %>% 
+  augment(new_data = humans) %>% 
+  ___(truth = ___, estimate = ___)
+```
+
+```{r mae-yourturn}
+
+```
+
+
+
+
+\
+
+**Reflection**
+
+In addition to `hip` circumference, suppose we incorporated more predictors into our model of `height`. What would happen to $R^2$? To the MAE?
+
+> 
+
+
+
+
+
+\
+\
+\
+
+# Exercises (Part 1) {-}
+
+## Directions {.unnumbered .smaller}
+
+- Take **5 minutes** to complete exercises 1 and 2 (choosing one of three models).
+- We'll pause for a few minutes to discuss each group's answers to these exercises.
+- Then, and only then, you can finish exercises 3 - 5. 
+
+REMINDERS: 
+
+- Be kind to yourself/each other. You will make mistakes!
+- Collaborate: 
+  - actively contribute to discussion (don't work on your own)
+  - actively include all group members in discussion 
+  - create a space where others feel comfortable making mistakes and sharing their ideas
+  - stay in sync
+
+
+\
+
+## Questions {.unnumbered .smaller}
+
+1. **Select a model**       
+
+Consider 3 different models of `height`, estimated below. As a group, use *your* data to choose which is the best predictive model of `height`. Calculate the MAE for this model.
+
+
+```{r fit-models}
+# height vs hip
+model_1 <- lm_spec %>% 
+  fit(height ~ hip, data = humans)
+
+model_1 %>% 
+  tidy()
+
+# height vs hip & weight
+model_2 <- lm_spec %>% 
+  fit(height ~ hip + weight, data = humans)
+
+model_2 %>% 
+  tidy()
+
+# height vs a lot of predictors (AND some interaction terms)
+model_3 <- lm_spec %>% 
+  fit(height ~ chest * age * weight * body_fat * abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist, data = humans)
+
+model_3 %>% 
+  tidy()
+```
+    
+```{r}
+# Calculate the MAE for your model
+___ %>% 
+  augment(new_data = humans) %>% 
+  mae(truth = height, estimate = .pred)
+```
+    
+
+
+\
+
+
+
+🛑 **WAIT.** Don't keep going.
+
+
+
+
+
+
+
+
+
+
+
+\
+\
+\
+\
+\
+\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**Don't peek**
+
+What do you know?! 40 new people just walked into the doctor's office and the doctor wants to predict their `height`:
+
+```{r}
+# Import the new data
+new_patients <- read.csv("https://Mac-Stat.github.io/data/bodyfat182.csv") %>% 
+  filter(ankle < 30) %>% 
+  rename(body_fat = fatSiri)
+```
+
+
+\
+\
+
+2. **Intuition**        
+    Consider using *your* models to predict `height` for these 40 *new* subjects. 
+    On average, do you think these predictions will be _better_ or _worse_ than for your original patients? 
+    Why?
+    
+
+
+
+\
+\
+
+3. **How well does your models do in the real world?**       
+    Use *your* model to predict `height` for the *new* patients 
+    and calculate the typical prediction error (MAE). 
+    **Record this in the Google sheet.** (`MAE: NEW PATIENTS`)     
+    
+```{r}
+___ %>% 
+  augment(new_data = new_patients) %>% 
+  mae(truth = height, estimate = .pred)
+```
+
+
+
+\
+\
+
+4. **Reflection**       
+    In summary, which model seems best? 
+    What's the central theme here?
+    
+>
+
+
+
+
+# Overfitting: Learning Goals {-}
+
+- Explain why training/in-sample model evaluation metrics can provide a misleading view of true test/out-of-sample performance
+- Implement testing and training sets in R using the `tidymodels` package
+
+\
+\
+
+
+# Notes {-}
+
+## Overfitting {.unnumbered .smaller}
+
+
+When we add more and more predictors into a model, it can become *overfit* to the noise in our sample data:
+
+- our model loses the broader trend / big picture
+- thus does not generalize to *new* data
+- thus results in bad predictions and a bad understanding of the relationship among the new data points
+
+
+\
+
+**Preventing overfitting: training and testing**
+
+- **In-sample** metrics, i.e. measures of how well the model performs on the same sample data that we used to build it, tend to be overly optimistic and lead to overfitting. 
+- Instead, we should *build* and *evaluate*, or **train** and **test**, our model using different data.
+
+
+
+
+
+\
+\
+
+## R Code {.unnumbered .smaller}
+
+
+:::{.callout-note}
+This section is for **future** reference. 
+It is a summary of code you'll learn below for creating and applying training and testing data. 
+You don't need to (and in fact should not) run the code in this section---just use this as example code for future reference.
+:::
+
+
+Suppose we wish to build and evaluate a linear regression model of `y` vs `x1` and `x2` using our `sample_data`. 
+
+```{r eval = FALSE}
+# Load packages
+library(tidyverse)
+library(tidymodels)
+```
+
+
+**Split the sample data into training and test sets**    
+
+```{r eval = FALSE}
+# Set the random number seed
+set.seed(___)
+
+# Split the sample_data
+# "prop" is the proportion of data assigned to the training set
+# it must be some number between 0 and 1
+data_split <- initial_split(sample_data, strata = y, prop = ___)
+
+# Get the training data from the split
+data_train <- data_split %>% 
+  training()
+
+# Get the testing data from the split
+data_test <- data_split %>% 
+  testing()
+```
+
+
+**Build a training model**    
+
+```{r eval = FALSE}
+# STEP 1: model specification
+lm_spec <- linear_reg() %>% 
+  set_mode("regression") %>% 
+  set_engine("lm")
+
+# STEP 2: model estimation using the training data
+model_train <- lm_spec %>% 
+  fit(y ~ x1 + x2, data = data_train)
+```
+
+
+**Use the training model to make predictions for the test data**        
+
+```{r eval = FALSE}
+# Make predictions
+model_train %>% 
+  augment(new_data = data_test)
+```
+
+
+
+**Evaluate the training model using the test data**
+
+```{r eval = FALSE}
+# Calculate the test MAE
+model_train %>% 
+  augment(new_data = data_test) %>% 
+  mae(truth = y, estimate = .pred)
+```
+
+
+\
+\
+
+
+# Exercises Part 2 {-}
+
+
+
+## Questions {.unnumbered .smaller}
+
+The following exercises are inspired by Chapter 5.3.1 of ISLR.
+
+```{r}
+# Load packages
+# NOTE: You might first need to install the ISLR package
+library(tidyverse)
+library(tidymodels)
+library(ISLR) # install the package ISLR if you haven't already
+
+# Load data
+data(Auto)
+
+# Select three variables from Auto data
+# Save as a data frame called "cars"
+cars <- Auto %>% 
+  dplyr::select(mpg, horsepower, year)
+head(cars)
+dim(cars)
+```
+
+\
+
+Let's use the `cars` data to compare three **linear regression models** of fuel efficiency in miles per gallon (`mpg`) by engine power (`horsepower`):
+
+```{r}
+# Raw data
+cars_plot <- ggplot(cars, aes(x = horsepower, y = mpg)) + 
+  geom_point()
+cars_plot
+```
+
+```{r}
+# model 1: 1 predictor (y = b0 + b1 x)
+cars_plot + 
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+```{r}
+# model 2: 2 predictors (y = b0 + b1 x + b2 x^2)
+cars_plot + 
+  geom_smooth(method = "lm", se = FALSE, formula = y ~ poly(x, 2))
+```
+
+```{r}
+# model 3: 19 predictors (y = b0 + b1 x + b2 x^2 + ... + b19 x^19)
+cars_plot + 
+  geom_smooth(method = "lm", se = FALSE, formula = y ~ poly(x, 19))
+```
+
+
+\
+
+**Goal**    
+
+Let's evaluate and compare these models by **training** and **testing** them using different data. 
+
+
+\
+
+1. **155 review: set.seed()**       
+
+Run the two chunks below *multiple* times each. Afterward, summarize what `set.seed()` does and why it's important to being able to *reproduce* a random sample.
+    
+```{r}
+sample_n(cars, 2)
+```
+    
+```{r}
+set.seed(253)
+sample_n(cars, 2)
+```
+
+
+\    
+
+2.  **Training and test sets**       
+
+Let's *randomly* split our original 392 sample cars into two separate pieces: select 80% of the cars to **train (build)** the model and the other 20% to **test (evaluate)** the model.
+    
+```{r}
+# Set the random number seed
+set.seed(8)
+    
+# Split the cars data into 80% / 20%
+# Ensure that the sub-samples are similar with respect to mpg
+cars_split <- initial_split(cars, strata = mpg, prop = 0.8)
+```
+  
+```{r}
+# Check it out
+# What do these numbers mean?
+cars_split
+```
+    
+```{r}
+# Get the training data from the split
+cars_train <- cars_split %>% 
+  training()
+    
+# Get the testing data from the split
+cars_test <- cars_split %>% 
+  testing()
+```
+    
+```{r}
+# The original data has 392 cars
+nrow(cars)
+    
+# How many cars are in cars_train?
+nrow(cars_train)
+
+# How many cars are in cars_test?
+nrow(cars_test)
+```
+    
+
+
+
+\
+
+3. **Reflect on the above code**   
+
+a. Why do we want the training and testing data to be similar with respect to `mpg` (`strata = mpg`)? What if they *weren't*?
+
+> Suppose, for example, the training cars all had higher mpg than the test cars. Then the training model likely would not perform well on the test cars, thus we’d get an overly pessimistic measure of model quality.
+
+b. Why did we need all this new code instead of just using the *first* 80% of cars in the sample for training and the *last* 20% for testing?
+    
+> If the cars are ordered in some way (eg: from biggest to smallest) then our training and testing samples would have systematically different properties.
+
+
+
+
+
+\
+
+4.  **Build the training model**   
+
+```{r eval = FALSE}
+# STEP 1: model specification
+lm_spec <- linear_reg() %>% 
+  set_mode("regression") %>% 
+  set_engine("lm")
+
+# STEP 2: model estimation using the training data
+# Construct the 19th order polynomial model using the TRAINING data
+model_19_train <- ___ %>% 
+  ___(mpg ~ poly(horsepower, 19), data = ___)
+```
+    
+```{r}
+# STEP 1: model specification
+lm_spec <- linear_reg() %>% 
+  set_mode("regression") %>% 
+  set_engine("lm")
+
+# STEP 2: model estimation using the training data
+# Construct the 19th order polynomial model using the TRAINING data
+model_19_train <- lm_spec %>% 
+  fit(mpg ~ poly(horsepower, 19), data = cars_train)
+```
+
+
+
+
+
+
+\
+
+5. **Evaluate the training model** 
+
+```{r eval = FALSE}
+# How well does the TRAINING model predict the TRAINING data?
+# Calculate the training (in-sample) MAE
+model_19_train %>% 
+  augment(new_data = ___) %>% 
+  mae(truth = mpg, estimate = .pred)
+```
+    
+    
+```{r}
+# How well does the training model predict the training data?
+# Calculate the training (in-sample) MAE
+model_19_train %>% 
+  augment(new_data = cars_train) %>% 
+  mae(truth = mpg, estimate = .pred)
+```
+    
+```{r eval = FALSE}
+# How well does the TRAINING model predict the TEST data?
+# Calculate the test MAE
+model_19_train %>% 
+  augment(new_data = ___) %>% 
+  mae(truth = mpg, estimate = .pred)
+```
+    
+```{r}
+
+# Calculate the test MAE
+model_19_train %>% 
+  augment(new_data = cars_test) %>% 
+  mae(truth = mpg, estimate = .pred)
+```
+
+
+
+
+
+
+\
+
+6. **Punchline**    
+
+The table below summarizes your results for `train_model_19` as well as the other two models of interest. 
+(You should confirm the other two model results outside of class!) 
+    
+Model                         Training MAE   Testing MAE
+---------------------------- ------------- -------------
+`mpg ~ horsepower`                    3.78          4.00
+`mpg ~ poly(horsepower, 2)`           3.20          3.49
+`mpg ~ poly(horsepower, 19)`          2.99          6.59
+
+
+Let us discuss following and reflect on why each answer *makes sense*:  
+
+a. *Within* each model, how do the training errors compare to the testing errors? (This isn't *always* the case, but is common.)
+
+> the training errors are smaller
+
+b. What about the training and test errors for the third model suggest that it is *overfit* to our sample data?
+
+> the test MAE is much larger than the training MAE
+
+c. Which model seems the best with respect to the *training* errors?
+
+> the 19th order polynomial
+
+d. Which model is the best with respect to the *testing* errors?
+
+> the quadratic
+
+e. Which model would you choose?    
+
+> the quadratic
+
+    
+
+\
+
+7.  **Final reflection**    
+
+a. The training / testing procedure provided a more honest evaluation and comparison of our model predictions. How might we *improve* upon this procedure? What problems can you anticipate in splitting our data into 80% / 20%?
+b. Summarize the key themes from today in your own words.
+    
+
+
+\
+
+8. **STAT 155 REVIEW: data drill**    
+
+a. Construct and interpret a plot of `mpg` vs `horsepower` and `year`.
+b. Calculate the average `mpg`.
+c. Calculate the average `mpg` for each `year`. HINT: `group_by()`
+d. Plot the *average* `mpg` by `year`.
+
+
+\
+
+9. **Code for the curious (optional)**    
+
+I wrote a function calculate_MAE() to automate the calculations in the table. If you’re curious, pick through this code!
+
+```{r}
+# Write function to calculate MAEs
+calculate_MAE <- function(poly_order){
+  # Construct a training model
+  model <- lm_spec %>% 
+    fit(mpg ~ poly(horsepower, poly_order), cars_train)
+  
+  # Calculate the training MAE
+  train_it <- model %>% 
+    augment(new_data = cars_train) %>% 
+    mae(truth = mpg, estimate = .pred)
+      
+  # Calculate the testing MAE
+  test_it <- model %>% 
+    augment(new_data = cars_test) %>% 
+    mae(truth = mpg, estimate = .pred)
+      
+  # Return the results
+  return(data.frame(train_MAE = train_it$.estimate, test_MAE = test_it$.estimate))
+}
+    
+# Calculate training and testing MSEs
+calculate_MAE(poly_order = 1)
+calculate_MAE(poly_order = 2)
+calculate_MAE(poly_order = 19)
+
+# For those of you interested in trying all orders...
+
+results <- purrr::map_df(1:19,calculate_MAE) %>% 
+  mutate(order = 1:19) %>%
+  pivot_longer(cols=1:2,names_to='Metric',values_to = 'MAE') 
+
+results %>%
+  ggplot(aes(x = order, y = MAE, color = Metric)) + 
+  geom_line() + 
+  geom_point(data = results %>% filter(Metric == 'test_MAE') %>% slice_min(MAE)) + 
+  geom_point(data = results %>% filter(Metric == 'train_MAE') %>% slice_min(MAE))
+
+```
+
+
+
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+# Solutions  {.unnumbered}
+
+## Small Group Discussion  {.unnumbered .smaller}
+
+**Data**
+<details>
+<summary>Solution</summary>
+Each group will have slightly different plots because they have different samples of data.
+
+Throughout the solutions I'll use one of the datasets as an example: 
+
+```{r}
+#| label: soln-discuss-data
+#| eval: true
+humans <- read.csv("https://Mac-Stat.github.io/data/bodyfat50.csv") %>% 
+  filter(ankle < 30) %>% 
+  rename(body_fat = fatSiri)
+
+ggplot(humans, aes(x = height)) + 
+  geom_density()
+```
+</details><br>
+
+**Model building**
+<details>
+<summary>Solution</summary>
+
+Each group will have slightly different coefficients because they have different samples of data.
+
+```{r}
+#| label: soln-discuss-build
+#| eval: true
+# STEP 1: model specification
+lm_spec <- linear_reg() %>% 
+  set_mode('regression') %>% 
+  set_engine('lm')
+
+# STEP 2: model estimation
+model_1 <- lm_spec %>% 
+  fit(height ~ hip, data = humans)
+
+# Check out the coefficients
+model_1  %>% 
+  tidy()
+```
+
+</details>
+<br>
+
+**Model evaluation**
+<details>
+<summary>Solution</summary>
+
+Again, each group will have slightly different answers here because they have different samples of data.
+
+```{r}
+#| label: soln-discuss-evaluate
+#| eval: true
+# Calculate the R^2 for model_1
+model_1 %>%
+  glance()
+
+# Use your model to predict height for your subjects
+# Just print the first 6 results
+model_1 %>% 
+  augment(new_data = humans) %>% 
+  head()
+
+# Calculate the MAE, i.e. typical prediction error, for your model
+model_1 %>% 
+  augment(new_data = humans) %>% 
+  mae(truth = height, estimate = .pred)
+```
+
+</details>
+<br>
+
+
+**Reflection**
+<details>
+<summary>Solution</summary>
+$R^2$ would increase and MAE would decrease.
+</details>
+<br>
+
+**BONUS**
+<details>
+<summary>Solution</summary>
+Review your notes from last class and stop by office hours to discuss!
+</details>
+
+\
+\
+
+## Exercises (Part 1) {.unnumbered .smaller}
+
+1. **Select a model** 
+
+<details>
+<summary>Solution</summary>
+Will vary by group. MAE is calculated here for each model. 
+
+_REMINDER: Throughout the solutions I'm using one of the datasets as an example: `bodyfat50.csv`._
+
+```{r}
+#| label: soln-part1-q1
+#| eval: true
+# Build the models
+model_1 <- lm_spec %>% 
+  fit(height ~ hip, data = humans)
+model_2 <- lm_spec %>% 
+  fit(height ~ hip + weight, data = humans)
+model_3 <- lm_spec %>% 
+  fit(height ~ chest * age * weight * body_fat * abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist, data = humans)
+
+# Evaluate the models
+model_1 %>% 
+  augment(new_data = humans) %>% 
+  mae(truth = height, estimate = .pred)
+model_2 %>% 
+  augment(new_data = humans) %>% 
+  mae(truth = height, estimate = .pred)
+model_3 %>% 
+  augment(new_data = humans) %>% 
+  mae(truth = height, estimate = .pred)
+```
+</details><br>
+
+
+2. **Share your results.**
+
+<details>
+<summary>Solution</summary>
+Done! (Model 3 had the best MAE for this dataset.)
+</details><br>
+
+3. **Intuition.**
+
+<details>
+<summary>Solution</summary>
+Answers will vary.
+</details><br>
+
+4. **How well does your model do in the real world?**  
+
+<details>
+<summary>Solution</summary>
+```{r}
+#| label: soln-part1-q4-data
+#| eval: true
+#| echo: false
+new_patients <- read.csv("https://Mac-Stat.github.io/data/bodyfat182.csv") %>% 
+  filter(ankle < 30) %>% 
+  rename(body_fat = fatSiri)
+```
+
+```{r}
+#| label: soln-part1-q4-predict
+#| eval: true
+# Predict height (assume, for example, I choose model_1)
+model_1 %>% 
+  augment(new_data = new_patients) %>% 
+  head()
+```
+
+```{r}
+#| label: soln-part1-q4-MAE
+#| eval: true
+# Calculate the MAE for model_1
+model_1 %>% 
+  augment(new_data = new_patients) %>% 
+  mae(truth = height, estimate = .pred)
+
+# Calculate the MAE for model_2
+model_2 %>% 
+  augment(new_data = new_patients) %>% 
+  mae(truth = height, estimate = .pred)
+
+# Calculate the MAE for model_3
+model_3 %>% 
+  augment(new_data = new_patients) %>% 
+  mae(truth = height, estimate = .pred)
+```
+
+</details>
+<br>
+
+5. **Reflection**  
+
+<details>
+<summary>Solution</summary>
+A few takeaways: 
+
+- In general, models tend to perform worse on new data than on the data on which they were built/trained.
+- In this particular dataset, Model 2 looks best on new data, and Model 3 performs horribly. 
+- Model 3 is *overfit* to the training data. This is more likely to happen with an overly complicated model.
+</details>
+
+
+\
+\
+
+## Exercises (Part 2) {.unnumbered .smaller}
+
+```{r echo=FALSE,eval=TRUE}
+# Load packages & data
+# NOTE: You might first need to install the ISLR package
+library(tidyverse)
+library(tidymodels)
+library(ISLR)
+data(Auto)
+cars <- Auto %>% 
+  dplyr::select(mpg, horsepower, year)
+```
+
+1. **155 review: set.seed()**  
+
+<details>
+<summary>Solution</summary>
+`set.seed()` is used to create the same "random numbers" each time a random function is called.
+
+Note that is if you want to get exactly the same random result, `set.seed()` needs to be run right before the call to random function, every time.
+
+It is important so that you can reproduce the same random sample every time you knit your work. 
+
+There might be different results across computers/platforms as they might be using different pseudo-random number generators. The most important thing is for your code to be consistent.
+</details>
+<br>
+
+2.  **Training and test sets** 
+
+<details>
+<summary>Solution</summary>
+
+```{r eval=TRUE}
+# Set the random number seed
+set.seed(8)
+
+# Split the cars data into 80% / 20%
+# Ensure that the sub-samples are similar with respect to mpg
+cars_split <- initial_split(cars, strata = mpg, prop = 0.8)
+
+# Check it out
+cars_split
+
+# Get the training data from the split
+cars_train <- cars_split %>% 
+  training()
+
+# Get the testing data from the split
+cars_test <- cars_split %>% 
+  testing()
+
+# The original data has 392 cars
+nrow(cars)
+
+# How many cars are in cars_train?
+nrow(cars_train)
+
+# How many cars are in cars_test?
+nrow(cars_test)
+```
+
+</details>
+<br>
+
+3. **Reflect on the above code** 
+
+<details>
+<summary>Solution</summary>
+   
+a. Suppose, for example, the training cars all had higher `mpg` than the test cars. Then the training model likely would not perform well on the test cars, thus we'd get an overly pessimistic measure of model quality.
+b. If the cars are ordered in some way (eg: from biggest to smallest) then our training and testing samples would have systematically different properties.
+
+</details>
+<br>
+
+
+4.  **Build the training model** 
+
+<details>
+<summary>Solution</summary>
+  
+```{r eval=TRUE}
+# STEP 1: model specification
+lm_spec <- linear_reg() %>% 
+  set_mode("regression") %>% 
+  set_engine("lm")
+
+# STEP 2: model estimation using the training data
+# Construct the 19th order polynomial model using the TRAINING data
+model_19_train <- lm_spec %>% 
+  fit(mpg ~ poly(horsepower, 19), data = cars_train)
+```
+
+</details>
+<br>
+
+5. **Evaluate the training model** 
+
+<details>
+<summary>Solution</summary>
+     
+```{r eval = TRUE}
+# How well does the training model predict the training data?
+# Calculate the training (in-sample) MAE
+model_19_train %>% 
+  augment(new_data = cars_train) %>% 
+  mae(truth = mpg, estimate = .pred)
+
+# How well does the training model predict the test data?
+# Calculate the test MAE
+model_19_train %>% 
+  augment(new_data = cars_test) %>% 
+  mae(truth = mpg, estimate = .pred)
+```
+
+
+</details>
+<br>
+
+6. **Punchline**
+
+<details>
+<summary>Solution</summary>
+   
+a. the training errors are smaller    
+b. the test MAE is much larger than the training MAE
+c. the 19th order polynomial    
+d. the quadratic    
+e. the quadratic    
+    
+**Code for the curious**    
+    
+I wrote a function `calculate_MAE()` to automate the calculations in the table. If you're curious, pick through this code!
+    
+```{r eval=TRUE}
+# Write function to calculate MAEs
+calculate_MAE <- function(poly_order){
+  # Construct a training model
+  model <- lm_spec %>% 
+    fit(mpg ~ poly(horsepower, poly_order), cars_train)
+  
+  # Calculate the training MAE
+  train_it <- model %>% 
+    augment(new_data = cars_train) %>% 
+    mae(truth = mpg, estimate = .pred)
+      
+  # Calculate the testing MAE
+  test_it <- model %>% 
+    augment(new_data = cars_test) %>% 
+    mae(truth = mpg, estimate = .pred)
+      
+  # Return the results
+  return(data.frame(train_MAE = train_it$.estimate, test_MAE = test_it$.estimate))
+}
+    
+# Calculate training and testing MSEs
+calculate_MAE(poly_order = 1)
+calculate_MAE(poly_order = 2)
+calculate_MAE(poly_order = 19)
+```
+
+```{r eval=TRUE}
+# For those of you interested in trying all orders...
+
+results <- purrr::map_df(1:19,calculate_MAE) %>% 
+  mutate(order = 1:19) %>%
+  pivot_longer(cols=1:2,names_to='Metric',values_to = 'MAE') 
+
+results %>%
+  ggplot(aes(x = order, y = MAE, color = Metric)) + 
+  geom_line() + 
+  geom_point(data = results %>% filter(Metric == 'test_MAE') %>% slice_min(MAE)) + 
+  geom_point(data = results %>% filter(Metric == 'train_MAE') %>% slice_min(MAE))
+```
+
+
+</details>
+<br>
+
+7.  **Final reflection**  
+
+
+<details>
+<summary>Solution</summary>
+  
+This will be discussed in the next video!
+    
+ <!-- %These comparisons are based on the training and test sets we happened to get.  Obviously, if we chose new training and test sets, we would get different answers!   -->
+<!-- %We're only using half of the data to train the model.  We'd get better predictions if we used more.  Tends to overestimate error (p178) -->
+
+</details>
+<br>
+
+
+8. **STAT 155 REVIEW: data drill**
+
+<details>
+<summary>Solution</summary>
+  
+```{r eval=TRUE}
+# a. One of many options
+ggplot(cars, aes(x = horsepower, y = mpg, color = year)) + 
+  geom_point()
+
+# b
+cars %>% 
+  summarize(mean(mpg))
+
+# c
+cars %>% 
+  group_by(year) %>% 
+  summarize(mean_mpg = mean(mpg))
+
+# d
+cars %>% 
+  group_by(year) %>% 
+  summarize(mean_mpg = mean(mpg)) %>% 
+  ggplot(aes(y = mean_mpg, x = year)) + 
+  geom_point()
+```
+
+</details>
+<br>
+
+
+
+
+\
+\
+
+# Wrapping Up {.unnumbered}
+
+*If you didn't finish the exercises during class time today, no problem!*
+Just be sure to complete them outside of class, 
+review the solutions in the online manual, 
+and ask any outstanding questions on course Moodle or in office hours.
+
