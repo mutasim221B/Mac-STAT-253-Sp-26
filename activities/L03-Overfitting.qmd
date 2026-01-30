@@ -30,7 +30,6 @@ You can download the .qmd file for this activity [here](../activity_templates/L0
 
 To start class today, we're going to do a Model Evaluation Experiment!
 
-First, we'll review some model evaluation ideas from last class.
 
 
 \
@@ -40,8 +39,7 @@ First, we'll review some model evaluation ideas from last class.
 Let's *build* and *evaluate* a predicted model of an adult's height ($y$) 
 using some predictors $x_i$ (e.g., age, weight, etc.).
 
-- Introduce yourself in whatever way you feel appropriate and check in with 
-each other as human beings
+- Introduce yourself in whatever way you feel appropriate and check in with each other as human beings
 - Come up with a team name
 - Work through the steps below as a group
   - Each group will be given a different sample of 40 adults

@@ -42,6 +42,7 @@ website:
       contents:
           - "activities/L01-introductions.qmd"
           - "activities/L02-evaluating-regression-models.qmd"
+          - "activities/L03-Overfitting.qmd"
 
     - id: appendices
       title: "Appendices"
