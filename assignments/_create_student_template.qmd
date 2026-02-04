@@ -1,0 +1,72 @@
+```{r}
+#| echo: false
+#| eval: true
+#| messages: false
+#| warning: false
+#install.packages('devtools')
+#remotes::install_github("rundel/parsermd")
+#install.packages('parsermd')
+library(parsermd)
+library(tidyverse)
+```
+
+
+```{r}
+#| echo: false
+#| eval: true
+make_student_template <- function(title, file_path){
+    yaml_content <- paste0(
+        "---\n",
+        'title: "',title,'"\n',
+        'subtitle: "Stat 253"\n',
+        'author: "Your Name"\n',
+        'date: today\n',
+        'format:\n',
+        '  html:\n',
+        '    toc: true\n',
+        '    toc-depth: 2\n',
+        '    embed-resources: true\n',
+        '    fig-width: 5\n',
+        '    fig-height: 3\n',
+        'execute:\n',
+        '  error: false\n',
+        '  warning: false\n',
+        'knitr:\n',
+        '  opts_chunk:\n',
+        '    collapse: true\n',
+        '    message: false\n',
+        "---\n\n")
+    
+    top_content <- paste0(
+      "# Notes \n\n",
+      "(@) Please **update the author name** to your name! \n",
+      "(@) This document is for your answers only. Do NOT write out the homework questions in this document. Writing out the questions makes it very challenging to grade the homework. (You can create a separate document for your own records if you wish.) \n",
+      "(@) Besides adding your answers/code, please DO NOT make any deletions or changes to the structure of this template! \n\n\n\n",
+      
+      "# Setup \n\n",
+      "Put any code you need to load packages and load/prep data here. \n\n",
+      "```{r}\n\n",
+      "```\n\n"
+    
+    )
+    
+    bottom_content <- paste0(
+      "\n\n# Done!\n\n",
+      "- Render your QMD to HTML.\n",
+      "- Check that HTML to make sure there are no errors or formatting issues. \n",
+      "- Submit the HTML on Moodle.\n\n"
+    )
+    
+    middle_content <- parse_rmd(file_path) %>%
+      rmd_select(by_section("Exercises")) %>%
+      rmd_select(has_type("rmd_heading")) %>%
+      as_document() %>%
+      paste(collapse = "\n\n")
+    
+    content <- c(yaml_content, top_content, middle_content, bottom_content)
+    writeLines(content, paste0(file_path %>% str_remove('.qmd'),'_template.qmd'))
+}   
+```
+
+
+

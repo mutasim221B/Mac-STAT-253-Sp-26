@@ -43,6 +43,7 @@ website:
           - "activities/L01-introductions.qmd"
           - "activities/L02-evaluating-regression-models.qmd"
           - "activities/L03-Overfitting.qmd"
+          - "activities/L04-cross-validation.qmd"
 
     - id: appendices
       title: "Appendices"

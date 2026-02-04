@@ -1,0 +1,932 @@
+---
+title: "Cross-Validation"
+subtitle: "Notes and in-class exercises"
+format: 
+  html:
+    embed-resources: true
+    toc: true
+---
+
+
+```{r setup}
+#| include: false
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  warning = FALSE,
+  message = FALSE,
+  error = TRUE,
+  fig.height = 2.75, 
+  fig.width = 4.25,
+  fig.env = 'figure',
+  fig.pos = 'h',
+  fig.align = 'center')
+```
+
+
+You can download the .qmd file for this activity [here](../activity_templates/L04-cross-validation.qmd) and open in R-studio. The rendered version is posted in the [course website](https://mutasim221b.github.io/Mac-STAT-253-Sp-26/) (Activities tab). I often experiment with the class activities (and see it in live!) and make updates, but I always post the final version before class starts. To be sure you have the most up-to-date copy, please download it once you’ve settled in before class begins.
+
+
+
+
+
+
+
+# Learning Goals {.unnumbered .smaller}
+
+-   Accurately describe all steps of cross-validation to estimate the test/out-of-sample version of a model evaluation metric
+-   Explain what role CV has in a predictive modeling analysis and its connection to overfitting
+-   Explain the pros/cons of higher vs. lower k in k-fold CV in terms of sample size and computing time
+-   Implement cross-validation in R using the `tidymodels` package
+-   Use these tools and concepts to inform and justify data analysis and modeling process 
+
+
+\
+\
+
+# Notes: Cross-Validation {-}
+
+## Context: Evaluating Regression Models {.unnumbered .smaller}
+
+A reminder of our current context:
+
+![](../images/MLdiagram.jpg){width=100%}
+
+- **world = supervised learning**       
+    We want to model some output variable $y$ by some predictors $x$.
+
+- **task = regression**       
+    $y$ is quantitative
+
+- **model = linear regression model via least squares algorithm**       
+    We'll assume that the relationship between $y$ and $x$ can be represented by
+    
+    $$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_p x_p + \varepsilon$$
+
+<br>
+
+
+**GOAL: model evaluation** 
+
+We want more **honest** metrics of prediction quality that 
+
+(1) assess how well our model predicts **new outcomes**; and 
+(2) help prevent [**overfitting**](L03-overfitting.html#overfitting).
+    
+
+\
+
+
+![](https://www.lucagiusti.it/wp-content/uploads/2022/10/overfitting-Trading-strategy.png){width=400px}
+
+
+\
+
+
+## Why is overfitting so bad? {.unnumbered .smaller}
+
+Not only can overfitting produce misleading models, it can have serious societal impacts. 
+
+Examples:
+
+::: {.incremental}
+
+- Facial recognition algorithms are often _overfit_ to the people who build them (who are not broadly representative of society). As one example, this has led to [disproportionate bias in policing](https://www.nytimes.com/2019/07/08/us/detroit-facial-recognition-cameras.html). For more on this topic, you might check out [Coded Bias](https://www.youtube.com/watch?v=jZl55PsfZJQ), a documentary by Shalini Kantayya which features MIT Media Lab researcher Joy Buolamwini.
+
+- Polygenic risk scores (PRSs), which aim to predict a person's risk of developing a particular disease/trait 
+based on their genetics, are often _overfit_ to the data on which they are built (which, historically, 
+has exclusively---or at least primarily---included individuals of European ancestry). 
+As a result, PRS predictions tend to be more accurate in European populations and new
+research suggests that their [continued use in clinical settings could exacerbate health disparities](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6563838/). 
+
+- There are connections to overfitting in the article for the ethics reflection on HW1 (about [a former Amazon recruiting algorithm](https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G).
+
+:::
+
+
+\
+
+
+## k-Fold Cross Validation {.unnumbered .smaller}
+
+We can use **k-fold cross-validation** to estimate the typical error in our model predictions for *new* data:
+
+::: incremental
+-   Divide the data into $k$ folds (or groups) of approximately equal size.\
+-   Repeat the following procedures for each fold $j = 1,2,...,k$:
+    -   Remove fold $j$ from the data set.\
+    -   Fit a model using the data in the other $k-1$ folds (training).\
+    -   Use this model to predict the responses for the $n_j$ cases in fold $j$: $\hat{y}_1, ..., \hat{y}_{n_j}$.\
+    -   Calculate the MAE for fold $j$ (testing): $\text{MAE}_j = \frac{1}{n_j}\sum_{i=1}^{n_j} |y_i - \hat{y}_i|$.
+-   Combine this information into one measure of model quality: $$\text{CV}_{(k)} = \frac{1}{k} \sum_{j=1}^k \text{MAE}_j$$
+:::
+
+![](../images/crossval.png){width=100%}
+
+
+
+
+
+
+\
+\
+
+# Small Group Discussion {-}
+
+Algorithms and Tuning
+
+## Definitions {.unnumbered .smaller}
+
+- **algorithm** = a step-by-step procedure for solving a problem (Merriam-Webster)
+
+- **tuning parameter** = a *parameter* or *quantity* upon which an algorithm depends, that must be *selected* or *tuned* to "optimize" the algorithm
+
+![](https://c1.wallpaperflare.com/preview/461/820/840/music-low-electric-bass-strings.jpg){width=250px}^[https://www.wallpaperflare.com/grayscale-photography-of-guitar-headstock-music-low-electric-bass-wallpaper-zzbyn]
+![](https://p1.pxfuel.com/preview/870/881/120/mixer-music-audio-studio-sound-studio-sound-mixer.jpg){width=250px}
+
+
+## Prompts {.unnumbered .smaller}
+
+1. **Synchronize as a Team!**
+
+<br>
+
+
+2. **Conceptual check**
+
+a. Why is $k$-fold cross-validation an *algorithm*?
+
+> It follows a list of steps to get to its goal.
+
+b. What is the *tuning parameter* of this algorithm and what values can this take?
+
+> $k$, the number of folds, is a tuning parameter. $k$ can be any integer from 2, ..., $n$ where $n$ is our sample size.
+
+**SPECIAL CASE:** Leave One Out Cross-Validation (LOOCV). 
+  
+LOOCV is a special case of k-fold cross-validation in which, in each iteration, we hold out **one** data point as a test case and use the other $n-1$ data points for training.  Thus LOOCV is equivalent to $k = n$ fold CV. 
+
+In pictures: In the end, we fit $n$ training models (blue lines) and test each on one test car (red dots). 
+
+```{r}
+#| echo: false
+#| eval: true
+#| message: false
+
+library(ISLR)
+library(infer)
+data(Auto)
+cars <- Auto
+
+# take a sample of size 20
+set.seed(2)
+cars_rep <- cars %>% 
+  sample_n(size = 20, replace = FALSE)
+
+# perform LOOCV "by hand"
+pred <- rep(0,20)
+for(i in 1:20){ 
+   train <- cars_rep[-i,] 
+   test  <- cars_rep[i,] 
+   pred[i] <- predict(lm(mpg ~ horsepower, train), newdata = test) 
+}
+
+cars_rep <- cars_rep %>% 
+  mutate(prediction = pred) %>% 
+  rep_sample_n(reps = 20, size = 20, replace = FALSE) %>% 
+  group_by(replicate) %>% 
+  arrange(name) %>%  
+  mutate(test = (1:20 == replicate)) %>%  
+  mutate(replicate = as.factor(replicate))
+
+train_sets <- cars_rep[cars_rep$test == FALSE, ]
+test_sets  <- cars_rep[cars_rep$test == TRUE, ]
+```
+
+```{r fig.width=4, fig.height=4, echo = FALSE, eval = FALSE}
+# plot results
+library(gganimate)
+ggplot(train_sets, aes(x = horsepower, y = mpg)) +
+    geom_point() +
+    stat_smooth(method = "lm", aes(group = replicate), se=FALSE, fullrange = TRUE) +
+    geom_point(data = test_sets, aes(x = horsepower, y = mpg), color = "red", size = 4) +
+    geom_segment(data = test_sets, aes(x = horsepower, xend = horsepower, y = mpg, yend = prediction), color = "red") +
+    transition_states(replicate, state_length = 5) 
+```
+
+```{r fig.width=4, fig.height=4, echo = FALSE, eval = TRUE}
+# plot results
+ggplot(train_sets, aes(x = horsepower, y = mpg)) +
+    geom_point() +
+    stat_smooth(method = "lm", aes(group = replicate), se=FALSE, fullrange = TRUE) +
+    geom_point(data = test_sets, aes(x = horsepower, y = mpg), color = "red", size = 4) +
+    geom_segment(data = test_sets, aes(x = horsepower, xend = horsepower, y = mpg, yend = prediction), color = "red")
+```
+
+
+c. How is 2-fold cross-validation (CV) different from *validation*? (*Validation* is what we did last class: splitting our sample into a training dataset and a testing dataset.)
+
+> We use both groups as training and testing, in turn.
+
+d. Why might 3-fold CV be better than 2-fold CV?
+
+> We have a larger dataset to train our model on. We are less likely to get an unrepresentative set as our training data. We are also averaging our overall cross-validated MAE estimate over more testing folds, which is likely to result in a more stable estimate of out-of-sample error.
+
+e. Why might LOOCV (leave-one-out CV) (k-fold CV where k = sample size) be worse than 3-fold cross-validation?
+
+> Prediction error for 1 person is highly variable. Also, for computational time reasons, fitting models can be very slow.
+
+f. In practice, $k = 10$ and $k=7$ are common choices for cross-validation.  This has been shown to hit the 'sweet spot' between the extremes of $k=n$ (LOOCV) and $k=2$.   
+
+- $k=2$ only utilizes 50% of the data for each training model, thus might result in overestimating the prediction error 
+- $k=n$ leave-one-out cross-validation (LOOCV) requires us to build $n$ training models, thus might be computationally expensive for larger sample sizes $n$. Further, with only one data point in each test set, the training sets have a lot of overlap.  This correlation among the training sets can make the ultimate corresponding estimate of prediction error less reliable. 
+
+
+
+
+<br>
+
+
+3. **R Code Preview**
+
+We've been doing a 2-step process to build **linear regression models** using the **tidymodels** package:
+
+```{r eval = FALSE}
+# STEP 1: model specification
+lm_spec <- linear_reg() %>%
+  set_mode("regression") %>% 
+  set_engine("lm")
+  
+# STEP 2: model estimation
+my_model <- lm_spec %>% 
+  fit(
+    y ~ x1 + x2,
+    data = sample_data
+  )
+```
+
+
+For k-fold cross-validation, we can *tweak* STEP 2.
+Discuss the code below:
+
+- What's similar? What's different? 
+> Similar to fit(), we tell the function fit_resamples what model to fit and which data to use. But, instead of fitting that model once to the full data, we use CV.
+
+- What do you think each new, or otherwise modified, line does?
+- Why do we need `set.seed`?
+
+```{r}
+#| eval: false
+set.seed(___) # set seed for reproducibility
+
+my_model_cv <- lm_spec %>% # take the model specs we defined earlier, and then
+  
+  fit_resamples( # fit multiple models (across multiple resamples of the data)
+    
+    y ~ x1 + x2, # the model we want to fit
+    
+    resamples = vfold_cv(sample_data, v = ___), # use "v"-fold CV to create the resamples (fill in the blank to specify "v", aka "k")
+    
+    metrics = metric_set(mae, rsq) # specify which evaluation metric(s) (MAE, R^2) to use 
+    
+  )
+```
+
+Here are a few general tips for breaking down complex code: 
+
+- Read the R Documentation / help page for any new functions (eg type `?fit_resamples` into the Console)
+- Try removing or otherwise modifying each line of code and see what happens!
+
+
+
+_Why set a seed?_
+The process of creating the folds is random, so we should set the seed to have reproducibility within our work. 
+
+
+\
+\
+
+
+
+\
+\
+
+# Notes: R Code {.unnumbered}
+
+:::{.callout-note title="Reminder"}
+This section is for **future** reference. 
+It is a summary of code you'll learn below for doing k-fold cross-validation.
+You do not need to (and in fact should not) run the code in this section verbatim in R; it is example code and meant for future reference only.
+:::
+
+-------------------------------------------------
+
+Suppose we wish to build and evaluate a linear regression model of `y` vs `x1` and `x2` using our `sample_data`. 
+
+
+
+**Load the appropriate packages**
+
+```{r eval = FALSE}
+# Load packages
+library(tidyverse)
+library(tidymodels)
+```
+
+
+
+**Obtain k-fold cross-validated estimates of MAE and $R^2$**
+
+(Review above for discussion of these steps.)
+
+```{r eval = FALSE}
+# model specification
+lm_spec <- linear_reg() %>%
+  set_mode("regression") %>% 
+  set_engine("lm")
+
+# k-fold cross-validation
+# For "v", put your number of folds k
+set.seed(___)
+model_cv <- lm_spec %>% 
+  fit_resamples(
+    y ~ x1 + x2,
+    resamples = vfold_cv(sample_data, v = ___), 
+    metrics = metric_set(mae, rsq)
+)
+```
+
+
+
+**Obtain the cross-validated metrics**
+
+```{r eval = FALSE}
+model_cv %>% 
+  collect_metrics()
+```
+
+
+
+**Get the MAE and R-squared for each test fold**
+
+```{r eval = FALSE}
+# MAE for each test fold: Model 1
+model_cv %>% 
+  unnest(.metrics)
+```
+
+
+
+
+\
+\
+
+
+# Exercises {-}
+
+## Instructions {.unnumbered .smaller}
+
+::: {.incremental}
+- Go to the Course Schedule and find the QMD template for today 
+  - Save this in your STAT 253 Notes folder, NOT your downloads!
+- Work through the exercises implementing CV to compare two possible models predicting `height` 
+- Same directions as before: 
+  - Be kind to yourself/each other
+  - **Collaborate**
+  - DON'T edit starter code (i.e., code with blanks `___`). Instead, copy-paste 
+  into a new code chunk below and edit from there.
+- Ask me questions as I move around the room
+:::
+
+
+\
+
+## Questions {.unnumbered .smaller}
+
+```{r message = FALSE, warning = FALSE}
+# Load packages and data
+library(tidyverse)
+library(tidymodels)
+humans <- read.csv("https://Mac-Stat.github.io/data/bodyfat50.csv") %>% 
+  filter(ankle < 30) %>% 
+  rename(body_fat = fatSiri)
+```
+
+
+\
+
+
+1. **Review: In-sample metrics**- As Group
+
+Use the `humans` data to build two separate models of `height`:
+
+```{r eval = FALSE}
+# STEP 1: model specification
+lm_spec <- ___() %>% 
+  set_mode(___) %>% 
+  set_engine(___)
+```
+
+```{r}
+
+```
+    
+```{r eval = FALSE}
+# STEP 2: model estimation
+model_1 <- ___ %>% 
+  ___(height ~ hip + weight + thigh + knee + ankle, data = humans)
+model_2 <- ___ %>% 
+  ___(height ~ chest * age * weight * body_fat + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist, data = humans)
+```
+
+```{r}
+
+```   
+    
+Calculate the **in-sample** R-squared for both models:
+    
+```{r eval = FALSE}
+# IN-SAMPLE R^2 for model_1 = ???
+model_1 %>% 
+  ___()
+```
+
+```{r}
+
+```
+    
+```{r eval = FALSE}
+# IN-SAMPLE R^2 for model_2 = ???
+model_2 %>% 
+  ___()
+```
+
+```{r}
+
+```
+    
+Calculate the **in-sample** MAE for both models:
+    
+```{r eval = FALSE}
+# IN-SAMPLE MAE for model_1 = ???
+model_1 %>% 
+  ___(new_data = ___) %>% 
+  mae(truth = ___, estimate = ___)
+```
+
+```{r}
+
+```
+    
+```{r eval = FALSE}
+# IN-SAMPLE MAE for model_2 = ???
+model_2 %>% 
+  ___(new_data = ___) %>% 
+  mae(truth = ___, estimate = ___)
+```
+
+```{r}
+
+```
+
+
+
+\
+
+2. **In-sample model comparison** - As Group
+
+Which model seems "better" by the in-sample metrics you calculated above? 
+Any concerns about either of these models?
+
+> Type your answer
+
+
+
+
+\
+
+3. **10-fold CV** - As Group  
+
+Complete the code to run 10-fold cross-validation for our two models.
+    
+  Model 1: `height ~ hip + weight + thigh + knee + ankle`       
+  Model 2: `height ~ chest * age * weight * body_fat + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist`
+    
+```{r eval = FALSE}
+# 10-fold cross-validation for model_1
+set.seed(253)
+model_1_cv <- ___ %>% 
+  ___(
+    ___,
+    ___ = vfold_cv(___, v = ___), 
+    ___ = metric_set(mae, rsq)
+  )
+```
+
+```{r}
+
+```
+    
+```{r eval = FALSE}
+# 10-fold cross-validation for model_2
+set.seed(253)
+model_2_cv <- ___ %>% 
+  ___(
+    ___,
+    ___ = vfold_cv(___, v = ___), 
+    ___ = metric_set(mae, rsq)
+  )
+```
+  
+```{r}
+
+```  
+    
+
+
+
+
+\
+
+4. **Calculating the CV MAE** - As Group
+
+a. Use `collect_metrics()` to obtain the cross-validated MAE and $R^2$ for both models.
+
+```{r eval = FALSE}
+# HINT
+___ %>% 
+  collect_metrics()
+```
+        
+```{r}
+
+```
+        
+        
+b. Interpret the cross-validated MAE *and* $R^2$ for `model_1`.    
+    
+
+
+
+
+
+
+\
+
+5. **Details: fold-by-fold results** - As Group
+
+The `collect_metrics()` function gave the final CV MAE, or the average MAE across all 10 test folds. 
+If you want the MAE from *each* test fold, try `unnest(.metrics)`.
+    
+a. Obtain the fold-by-fold results for the `model_1` cross-validation procedure using `unnest(.metrics)`. 
+    
+```{r eval = FALSE}
+# HINT
+___ %>% 
+  unnest(.metrics)
+```
+
+```{r}
+
+```
+        
+b. Which fold had the worst average prediction error and what was it?
+
+
+c. Recall that `collect_metrics()` reported a final CV MAE of 1.87 for `model_1`. Confirm this calculation by wrangling the fold-by-fold results from part a.
+    
+```{r}
+
+```    
+    
+
+
+    
+    
+    
+
+
+\
+
+6. **Comparing models** - As Team    
+
+The table below summarizes the in-sample and 10-fold CV MAE for both models.    
+    
+    
+  Model        IN-SAMPLE MAE  10-fold CV MAE
+  ----------- -------------- ---------------
+  `model_1`             1.55            1.87
+  `model_2`             0.64            2.47
+
+
+    
+a. Based on the in-sample MAE alone, which model appears better?    
+
+> model_2
+
+b. Based on the CV MAE alone, which model appears better?    
+
+> model_1
+
+c. Based on all of these results, which model would you pick?
+
+> model_1 – model_2 produces bad predictions for new adults
+
+d. Do the in-sample and CV MAE suggest that `model_1` is overfit to our `humans` sample data? What about `model_2`? Why/why not? 
+
+> model_1 is NOT overfit – its predictions of height for new adults seem roughly as accurate as the predictions for the adults in our sample. model_2 IS overfit – its predictions of height for new adults are worse than the predictions for the adults in our sample.
+
+
+
+\
+
+7.  **LOOCV**- As Team 
+
+No code to implement for this exercise--just answer the following conceptually.
+
+a. How could we adapt the code in Exercise 3 to use LOOCV MAE instead of the 10-fold CV MAE?
+
+There are 39 people in our sample, thus LOOCV is equivalent to 39-fold CV: 
+
+```{r}
+#| eval: false
+nrow(humans)
+model_1_loocv <- lm_spec %>% 
+  fit_resamples(
+    height ~ hip + weight + thigh + knee + ankle,
+    resamples = vfold_cv(humans, v = nrow(humans)), # this will throw an error and tell you to use loo_cv() instead
+    metrics = metric_set(mae)
+  )
+    
+model_1_loocv %>% 
+  collect_metrics()
+```
+    
+b. Why do we technically not *need* to `set.seed()` for the LOOCV algorithm?
+
+> There's no randomness in the test folds. Each test fold is a single person.
+ 
+
+
+
+
+\
+
+8. **Additional Exercise: Data drill**    
+
+a. Calculate the average height of people under 40 years old vs people 40+ years old.
+
+```{r}
+
+```
+
+b. Plot height vs age among our subjects that are 30+ years old.
+
+```{r}
+
+```
+
+c. Fix this code:       
+
+```{r eval = FALSE}
+model_3<-lm_spec%>%fit(height~age,data=humans)
+model_3%>%tidy()
+```
+
+```{r}
+
+```
+
+
+
+
+\
+
+9. **Reflection: Part 1**       
+
+The "regular" exercises are over, but class is not done! 
+Your group should agree to either work on HW1 or the remaining reflection questions.
+    
+_This is the end of Unit 1 on "Regression: Model Evaluation"!_
+Let's reflect on the technical content of this unit:
+
+- What was the main motivation / goal behind this unit?
+- What are the four main questions that were important to this unit?
+- For each of the following tools, describe how they work and what questions they help us address:        
+  - R-squared
+  - residual plots
+  - out-of-sample MAE
+  - in-sample MAE
+  - validation
+  - cross-validation
+- In your own words, define the following: 
+  - overfitting
+  - algorithm
+  - tuning parameter
+- Review the new `tidymodels` syntax from this unit. Identify key themes and patterns.
+
+
+\
+\
+
+# Wrapping Up {.unnumbered .smaller}
+
+## Today's Material {.unnumbered .smaller}
+
+- If you didn't finish the exercises, no problem! 
+Be sure to complete them outside of class, review the solutions on the course site, and ask any outstanding questions on Discussion board on Moodle or in office hours.
+
+- **This is the end of Unit 1,** so there are [*reflection questions*]{.text-primary} at the end of the exercises to help you organize the concepts in your mind.
+This is a good time to **pause**, review the material we've covered so far, and 
+stop by office hours with any questions!
+
+- An R tutorial video, talking through the new code, is posted on class schedule.
+  
+## Upcoming Deadlines {.unnumbered .smaller}
+
+- CP4: 
+  - due 10 minutes before our next class
+
+- HW1: 
+  - due Sunday, 02/08 at 11:59 pm
+  - you have everything you need to finish this assignment after today's class!
+  - review the homework and late work/extension policies on Syllabus: deadline is so we can get timely feedback to you; three 3-day extensions to acknowledge "life happens".
+
+
+
+\
+\
+\
+\
+
+# Solutions {.unnumbered .smaller}
+
+## Exercises {-}
+
+```{r soln-setup}
+#| echo: false
+#| eval: true
+# Load packages and data
+library(tidyverse)
+library(tidymodels)
+humans <- read.csv("https://Mac-Stat.github.io/data/bodyfat50.csv") %>% 
+  filter(ankle < 30) %>% 
+  rename(body_fat = fatSiri)
+```
+
+1. **Review: In-sample metrics**  
+
+<details>
+<summary>Solution</summary>
+```{r soln-1}
+#| eval: true
+# STEP 1: model specification
+lm_spec <- linear_reg() %>% 
+  set_mode("regression") %>% 
+  set_engine("lm")
+
+# STEP 2: model estimation
+model_1 <- lm_spec %>% 
+  fit(height ~ hip + weight + thigh + knee + ankle, data = humans)
+model_2 <- lm_spec %>% 
+  fit(height ~ chest * age * weight * body_fat + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist, data = humans)
+
+# IN-SAMPLE R^2 for model_1 = 0.40
+model_1 %>% 
+  glance()
+
+# IN-SAMPLE R^2 for model_2 = 0.87
+model_2 %>% 
+  glance()
+
+# IN-SAMPLE MAE for model_1 = 1.55
+model_1 %>% 
+  augment(new_data = humans) %>% 
+  mae(truth = height, estimate = .pred)
+
+# IN-SAMPLE MAE for model_2 = 0.64
+model_2 %>% 
+  augment(new_data = humans) %>% 
+  mae(truth = height, estimate = .pred)
+```
+</details><br>
+
+
+2. **In-sample model comparison**  
+
+<details>
+<summary>Solution</summary>
+The in-sample metrics are better for `model_2`, but from experience in our previous class, we should expect this to be overfit.
+</details>
+<br>
+
+
+3. **10-fold CV** 
+
+<details>
+<summary>Solution</summary>
+```{r soln-3}
+#| eval: true
+# 10-fold cross-validation for model_1
+set.seed(253)
+model_1_cv <- lm_spec %>% 
+  fit_resamples(
+    height ~ hip + weight + thigh + knee + ankle,
+    resamples = vfold_cv(humans, v = 10), 
+    metrics = metric_set(mae, rsq)
+  )
+
+# STEP 2: 10-fold cross-validation for model_2
+set.seed(253)
+model_2_cv <- lm_spec %>% 
+  fit_resamples(
+    height ~ chest * age * weight * body_fat + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist,
+    resamples = vfold_cv(humans, v = 10), 
+    metrics = metric_set(mae, rsq)
+  )
+```
+</details><br>
+
+
+4. **Calculating the CV MAE**  
+
+<details>
+<summary>Solution</summary>
+
+a.        
+```{r soln-4a}
+#| eval: true
+# model_1
+# CV MAE = 1.87, CV R-squared = 0.41
+model_1_cv %>% 
+  collect_metrics()
+
+# model_2
+# CV MAE = 2.47, CV R-squared = 0.53
+model_2_cv %>% 
+  collect_metrics()
+```
+
+b. We expect our first model to explain roughly 40% of variability in height among new adults, and to produce predictions of height (for new adults) that are off by 1.9 inches on average.
+
+</details><br>
+
+
+5. **Details: fold-by-fold results**    
+
+<details>
+<summary>Solution</summary>
+```{r soln-5}
+#| eval: true
+# a. model_1 MAE for each test fold
+model_1_cv %>% 
+  unnest(.metrics) %>% 
+  filter(.metric == "mae")
+
+# b. fold 3 had the worst error (2.56)
+
+# c. use these metrics to confirm the 1.87 CV MAE for model_1
+model_1_cv %>% 
+  unnest(.metrics) %>% 
+  filter(.metric == "mae") %>% 
+  summarize(mean(.estimate))
+```
+</details><br>
+
+
+6. **Comparing models**  
+
+<details>
+<summary>Solution</summary>
+
+a. `model_2`
+b. `model_1`
+c. `model_1` -- `model_2` produces bad predictions for new adults
+d. `model_1` is *NOT* overfit -- its predictions of height for new adults seem roughly as accurate as the predictions for the adults in our sample. `model_2` *IS* overfit -- its predictions of height for new adults are worse than the predictions for the adults in our sample.
+</details><br>
+
+
+
+8. **Data drill**  
+
+<details>
+<summary>Solution</summary>
+```{r soln-8}
+#| eval: true
+# a (one of many solutions)
+humans %>% 
+  mutate(younger_older = age < 40) %>% 
+  group_by(younger_older) %>% 
+  summarize(mean(height))
+
+# b
+humans %>% 
+  filter(age >= 30) %>% 
+  ggplot(aes(x = age, y = height)) + 
+  geom_point()
+
+# c
+model_3 <- lm_spec %>%
+  fit(height ~ age, data = humans)
+model_3 %>%
+  tidy()
+```

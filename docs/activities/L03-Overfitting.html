@@ -4033,6 +4033,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../activities/L03-Overfitting.html">
  <span class="dropdown-text">Overfitting</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../activities/L04-cross-validation.html">
+ <span class="dropdown-text">Cross-Validation</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -4093,6 +4097,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../activities/L03-Overfitting.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Overfitting</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../activities/L04-cross-validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cross-Validation</span></a>
   </div>
 </li>
     </ul>
@@ -4391,7 +4401,7 @@ Use <em>your</em> model to predict <code>height</code> for the <em>new</em> pati
 In summary, which model seems best? What’s the central theme here?</li>
 </ol>
 <blockquote class="blockquote">
-
+<p>In general, models tend to perform worse on new data than on the data on which they were built/trained. In this particular dataset, Model 2 looks best on new data, and Model 3 performs horribly. Model 3 is overfit to the training data. This is more likely to happen with an overly complicated model.</p>
 </blockquote>
 </section>
 </section>
@@ -4588,9 +4598,9 @@ Note
 <p>Run the two chunks below <em>multiple</em> times each. Afterward, summarize what <code>set.seed()</code> does and why it’s important to being able to <em>reproduce</em> a random sample.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample_n</span>(cars, <span class="dv">2</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="do">##     mpg horsepower year</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 384  32         67   82</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 96   12        225   73</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="do">##      mpg horsepower year</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 198 29.0         70   76</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 298 25.4         77   79</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>

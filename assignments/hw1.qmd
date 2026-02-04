@@ -1,0 +1,869 @@
+---
+title: 'Homework 1: Regression Model Evaluation'
+subtitle: "STAT 253"
+format:
+  html:
+    toc: true
+    embed-resources: true
+---
+
+<!-- create student template based on this QMD -->
+{{< include _create_student_template.qmd >}}
+
+```{r create-template}
+#| echo: false
+#| eval: true
+#| cache: false
+make_student_template('Homework 1', 'hw1.qmd')
+```
+
+
+
+
+<!-- other setup -->
+
+```{r setup}
+#| include: false
+#| eval: true
+# DO NOT MODIFY THIS CHUNK
+# this just sets up some styling (eg: default image sizes)
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  warning = FALSE,
+  message = FALSE,
+  error = TRUE,
+  fig.height = 2.75, 
+  fig.width = 4.25,
+  fig.env='figure',
+  fig.pos = 'h',
+  fig.align = 'center')
+```
+
+
+::: {.content-hidden when-profile="solutions"}
+
+# Learning Goals
+
+- Practice **data wrangling and visualization**, the foundations of any data analysis.
+- Practice **building** and **evaluating** *linear regression models*.
+- Explore the concepts of variable **scaling** and **transformations**.
+
+\
+\
+
+
+
+# Directions & Policies (READ ME)
+
+## Tips 
+
+To make HW go more smoothly, deepen your learning, & maximize happiness:
+
+- *Before* starting HW, **review** the last couple weeks of material.  
+- Start early! HW isn't designed to be completed in a single sitting.  
+- Use Slack to invite others to join you. 
+    - Just make sure that the work you submit, _including code_, is written **in your own words**.
+- WHEN you have questions:
+    - Ask questions in the `#help-homework` channel on Slack.
+    - Stop by office hours. (Please remember that OH are for *group* discussion and exploring concepts / specific questions, **not** doing HW step by step or checking your answers.)
+
+
+
+## Content     
+
+HW includes exercises that apply course concepts to novel settings, and open-ended questions that challenge you to **synthesize** and **build upon** course concepts. This is just like a language class! You learn the grammar, vocabulary, and structure needed to express your own ideas (as opposed to memorizing every sentence you might ever want to say).
+This is challenging *by design* -- it encourages you to practice taking academic risks, be comfortable making mistakes, gain confidence outside the classroom setting, and discover more depth in the material.
+
+
+
+## Timing & Flexibility 
+
+- Deadlines:
+  - are posted on Moodle and the course calendar
+  - provide common checkpoints such that we can build upon the new knowledge in class (the concepts in this course build on each other!)
+  - allow the instructor and preceptors to get feedback to you in a timely manner
+  - help us all manage and plan our workloads
+- Grace period: 
+  - late work will be accepted, without any penalty to your grade, if it is submitted within **1 hour** of the deadline
+- Extensions: 
+  - if you are unable to submit your work by the deadline (or within the grace period), please contact your instructor to request an extension; you do not need to provide a reason for your request
+  - all STAT 253 students will automatically be granted three 3-day homework extensions to use throughout the semester
+  - extensions should be requested **before** the assignment so that instructors and preceptors can plan their grading accordingly
+  - except in rare circumstances, we will not be able to accommodate homework being submitted more than 3 days past the deadline (because the concepts in this course build on each other quickly); plan accordingly
+- Why are the course policies designed in this way?
+  - to provide flexibility and grace to students while ensuring that they stay on track to succeed in this course
+  - to provide structure to allow the instructor and preceptors to efficiently give feedback
+
+
+
+## Academic Integrity 
+
+Review and stick to the academic integrity expectations in the syllabus. 
+
+You **may _not_:**
+
+- use any materials from past iterations of STAT 253
+- use any online solutions manuals or forums where you post HW related questions
+- pass off another person's work as your own. (You're encouraged to discuss HW with classmates but all submitted work must be your own, from the words to the code.)
+
+You **_may_** use ChatGPT or other online resources to help get unstuck. However...
+
+- you **may _not_** copy-and-paste content and pass it off as your own (this doesn't help you learn!)
+- your use of AI should be **cited**; there is space for you at the end of the assignment to do so
+- note that AI uses a lot of resources; if you can do something in a more energy-efficient way (eg using pre-existing course materials) please do so!
+
+
+
+
+
+
+In general:
+
+- You must be able to defend / explain any content in your homework, if asked. In other words, **all of the work that you submit must be an accurate reflection of YOUR understanding.**
+- You must **use the tools, code, techniques, etc. from this course**. (Be particularly careful here if using ChatGPT or other online resources that were not provided by your instructor.)
+
+
+
+
+
+
+## Feedback
+
+Within one week of the assignment deadline, preceptors and your instructor will provide qualitative feedback on most exercises and an overall score of PASS, ATTEMPT, or UNABLE TO ASSESS.
+
+You will make mistakes and your HW won't be perfect. That’s ok! This is an opportunity to *practice* and *synthesize* material and that will involve making mistakes. 
+To align with our learning goals, we're looking for students to "pass" the HW. 
+
+To **PASS**, you must meet the following goals:    
+
+1. Your HW is handed in on time, or within the grace period.
+
+2. Your work is reproducible and presented professionally. Specifically:
+    - Use the provided QMD template.       
+        - Update the author (your name).
+        - You can make necessary modifications to this template (eg: add answers, R chunks), but cannot make any deletions or changes to the structure.
+    - Include all RStudio code and output that's relevant to the HW exercises.        
+    - Omit any RStudio code that's *not* relevant to the HW exercises.
+    - Submit your *rendered HTML* (not QMD) file to the correct HW link on Moodle.
+    
+3. Your submission demonstrates a good faith effort to complete all, or almost all, exercises. 
+
+4. Your answers to *most* (but not necessarily all!) exercises are either "correct" or "almost correct". 
+    - The following are required to earn a "correct" score:    
+        - Answer is correct and complete.
+        - Answer is supported with appropriate evidence (e.g. R code and output).
+        - Discussions are based in the context of the exercise, not general definitions.
+        - R code is well-formatted and organized.
+    - The following are required to earn a "almost correct" score:
+        - There are some mistakes, but you got more than ~75% correct.
+        - You demonstrated an earnest attempt at each part of the exercise.
+
+\
+\
+
+:::
+
+
+
+# Exercises
+
+## Data Context
+
+A meteorologist in Australia wants to improve their forecasts for the cities of Hobart, Adelaide, Canberra, Brisbane, Melbourne, and Sydney. They go on the news at 9am and hire you to predict what the temperature will be at 3pm. They provide you with the `weatherAUS` data set from the `rattle` package which contains daily weather information from multiple locations throughout Australia:
+
+```{r}
+#| eval: true
+library(rattle)
+data(weatherAUS)
+dim(weatherAUS)
+```
+
+You can access a codebook by typing the following in your *console* (don't put this in your QMD):
+
+```{r}
+#| eval: false
+?weatherAUS
+```
+
+
+
+
+\
+
+## Exercise 1
+
+**Getting to know the data: data wrangling and visualization**    
+
+Before building any models, let's get to know the data itself using our **tidyverse** tools: `ggplot()` and the `dplyr` verbs `filter()`, `arrange()`, `mutate()`, `select()`, `summarize()`, `group_by()`. 
+
+If you need a refresher: the appendix of the course website includes an *R Resources* guide. I recommend the "Six Main Verbs" section of Comp/Stat 112. 
+
+
+### Part a
+
+Create a smaller "`weather`" dataset with the following features:
+
+- includes data on only the 6 locations for which the meteorologist provides forecasts
+- converts `Temp9am` and `Temp3pm` to Fahrenheit, from Celsius
+- only includes `Temp3pm` and information that would be available at 9am: `Location`, `WindSpeed9am`, `Humidity9am`, `Pressure9am`, `Temp9am`
+        
+
+::: {.content-hidden when-profile="solutions"}
+::: {.callout-tip icon=false title="Hint"}
+You should work out this exercise in pieces, then use this code as a final template:    
+        
+```{r eval=FALSE}
+___ <- ___ %>% 
+  ___(Location %in% c(___)) %>% 
+  ___(Temp9am = ___, Temp3pm = ___) %>% 
+  ___(Temp3pm, Location, WindSpeed9am, Humidity9am, Pressure9am, 
+      Temp9am)
+```
+        
+
+**Demonstrate that your work produces the following output:**
+
+```{r}
+#| eval: true
+#| echo: false
+library(tidyverse)
+weather <- weatherAUS %>% 
+  filter(Location %in% c("Hobart", "Adelaide","Brisbane", "Canberra", "Melbourne", "Sydney")) %>% 
+  mutate(Temp9am = 9/5*Temp9am + 32, Temp3pm = 9/5*Temp3pm + 32) %>% 
+  select(Temp3pm, Location, WindSpeed9am, Humidity9am, Pressure9am, Temp9am)
+```
+
+```{r}
+#| eval: true
+dim(weather)
+head(weather, 2)
+```
+:::
+:::
+
+
+::: {.content-visible when-profile="solutions"}
+
+```{r update-code-chunk-opts}
+#| eval: true
+#| echo: false
+knitr::opts_chunk$set(eval = TRUE)
+```
+
+:::{.callout-note icon=false title="Answer"}
+```{r}
+# Load necessary packages
+library(tidyverse)
+
+# Simplify the data
+weather <- weatherAUS %>% 
+  filter(Location %in% c("Hobart", "Adelaide","Brisbane", "Canberra", "Melbourne", "Sydney")) %>% 
+  mutate(Temp9am = 9/5*Temp9am + 32, Temp3pm = 9/5*Temp3pm + 32) %>% 
+  select(Temp3pm, Location, WindSpeed9am, Humidity9am, Pressure9am, Temp9am)
+
+# Check the features
+dim(weather)
+head(weather, 2)
+```
+:::
+:::
+
+
+
+### Part b
+
+Display data for the 3 days with the hottest 3pm temperatures.    
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+```{r}
+weather %>% 
+  arrange(desc(Temp3pm)) %>% 
+  head(3)
+```
+:::
+:::
+
+
+
+### Part c
+
+Calculate the mean 3pm temperature at each of the six locations.  Since there are some missing values in the data (NA), use `mean(___, na.rm = TRUE)` to remove (`rm`) these `na` values from the calculation. 
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+```{r}
+weather %>% 
+  group_by(Location) %>% 
+  summarize(Mean_Temp3pm = mean(Temp3pm, na.rm = TRUE))
+```
+:::
+:::
+
+
+
+### Part d
+
+Reproduce the 2 visualizations below.
+     
+```{r echo = FALSE, fig.width = 8, eval=TRUE}
+g1 <- ggplot(weather, aes(x = Temp3pm, fill = Location)) + 
+  geom_density(alpha = 0.5)
+g2 <- ggplot(weather, aes(y = Temp3pm, x = Temp9am, color = Humidity9am)) + 
+  geom_point(alpha = 0.5) +
+   facet_wrap(~ Location)
+library(gridExtra)
+grid.arrange(g1,g2,ncol = 2)
+```
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+```{r}
+ggplot(weather, aes(x = Temp3pm, fill = Location)) + 
+  geom_density(alpha = 0.5)
+
+ggplot(weather, aes(y = Temp3pm, x = Temp9am, color = Humidity9am)) + 
+  geom_point(alpha = 0.5) +
+  facet_wrap(~ Location)
+```
+:::
+:::
+
+
+
+### Part e
+
+**REVIEW:** Write a 1-2 sentence summary of each plot in part d. (If some plot feature is tough to interpret, you can say so!)
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+The first plot (density plot) allows us compare the distribution of 3pm temperatures across the different locations across Australia. Brisbane appears to have the highest 3pm temperatures (is shifted farthest to the right), followed by Sydney. However, these density plots don't make it easy to compare the centers of the distributions. (Side-by-side boxplots would be better for this.) It is hard to compare the centers for the other locations. We can get a sense of the shape of the distribution at each location, and these seem to be a mix of symmetric and slightly right skewed distributions.
+
+The second plot (scatterplot grid) allows us to see how the relationship between 3pm temperature and 9am temperature compares across locations. They all look fairly linear with a clear positive relationship. (Adding a smoothing line with `geom_smooth()` could help us see this more clearly.) The inclusion of 9am humidity with color allows us to see how 9am humidity is related to 9am and 3pm temperatures. It seems that there are more dark blue points towards the right of each scatterplot, which suggests that hotter 9am and 3pm temperatures are associated with lower 9am humidity. However, the overlay of the points makes it hard to assess clearly. If we wanted to investigate this further, we could make separate scatterplots where humidity is plotted against the temperature variables.
+:::
+:::
+
+
+
+
+
+
+\
+
+## Exercise 2
+
+**Model building and evaluation**       
+
+Next, let's do some modeling. We'll start with the following predictive model of 3pm temperatures using the `weather` (not `weatherAUS` data):
+
+  `Temp3pm ~ Temp9am + Location + Pressure9am`
+    
+
+
+### Part a
+
+Using **tidymodels** tools, estimate the linear regression model of `Temp3pm` and store the results as `weather_model_1`. 
+
+::: {.content-hidden when-profile="solutions"}
+::: {.callout-tip icon=false title="Hint"}
+Confirm that your results match the following: 
+
+```{r echo = FALSE, eval=TRUE}
+library(tidymodels)
+
+# STEP 1: model specification
+lm_spec <- linear_reg() %>% 
+  set_mode("regression") %>% 
+  set_engine("lm")
+
+# STEP 2: model estimation
+weather_model_1 <- lm_spec %>% 
+  fit(Temp3pm ~ Temp9am + Location + Pressure9am, data = weather)
+```
+
+```{r echo = TRUE, eval=TRUE}
+weather_model_1 %>% 
+  tidy()
+```
+:::
+:::
+
+    
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+```{r}
+# Load necessary packages
+library(tidymodels)
+
+# STEP 1: model specification
+lm_spec <- linear_reg() %>% 
+  set_mode("regression") %>% 
+  set_engine("lm")
+
+# STEP 2: model estimation
+weather_model_1 <- lm_spec %>% 
+  fit(Temp3pm ~ Temp9am + Location + Pressure9am, data = weather)
+
+# Check it out
+weather_model_1 %>% 
+  tidy()
+```
+:::
+:::
+
+
+
+
+### Part b
+
+Next, let's *evaluate* this model. To begin, **is the model wrong?** Support your answer using a residual plot.    
+    
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+**COMMENT:** Looks fairly good! The points are balanced above and below 0 for most of the days and appear to be random. You might notice more positive residuals, on average, for lower 3pm temperature predictions, but there are fewer days with those low predictions. You *might* notice some slight heteroskedasticity but it's not extreme enough to worry about.         
+
+
+```{r}
+weather_model_1 %>% 
+  augment(new_data = weather) %>% 
+  ggplot(aes(x = .pred, y = .resid)) + 
+    geom_point() + 
+    geom_hline(yintercept = 0) +
+    geom_smooth(se = FALSE)
+```
+
+:::
+:::
+
+
+
+### Part c
+
+**Is the model strong?** Support your answer with an appropriate metric and *interpret* this metric.
+    
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+**COMMENT:** The model is quite strong! Roughly 76% (R^2^ = 0.7569) of the variability in 3pm temperatures is explained by this model, i.e. by location, 9am temperature, and 9am air pressure.
+
+```{r}
+weather_model_1 %>% 
+  glance()
+```
+
+:::
+:::
+
+
+
+### Part d
+
+**Does the model produce accurate predictions?**  Support your answer using an appropriate **in-sample** metric and *interpret* this metric.
+    
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+    
+**COMMENT:** On average, the 3pm temperature predictions are off by 4.2 degrees Fahrenheit. Given that the temperatures tend to range between 40 and 100 degrees, a 4.2 degree prediction error seems pretty good to me.       
+    
+```{r}
+# You can also use summarize() instead of mae()!
+weather_model_1 %>% 
+  augment(new_data = weather) %>% 
+  mae(truth = Temp3pm, estimate = .pred)
+```
+
+:::
+:::
+
+
+
+### Part e
+
+**Is the model fair?** Consider the data being used and the data context. Who might benefit and who might be harmed in the use this model for predicting temperature at 3pm?  
+    
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+Answers may vary here. 
+Can you think of any benefits/harms from the way the data were collected (or the fact they were collected at all)?
+Can you think of any benefits/harms from our analysis or results? 
+
+When we look up the documentation (`?weatherAUS` in the Console) for this dataset, we see that data were obtained from Australian Commonwealth Bureau of Meteorology. We might want to look into whether this organization uses high quality measurement technologies and records weather variables that are agreed upon by the scientific community. (Are they missing key weather variables?)
+
+We may also want to assess how accurate our predictions are in different areas of Australia and the demographics of these regions. If we are systematically making larger errors in areas that already experience higher degrees of marginalization, that could potentially lead to some noticeable injustices. (e.g., Mistakenly not warning about a heat advisory later in the day could put people's health at risk.)
+:::
+:::
+
+
+
+### Part f
+
+**REVIEW:** Interpret the `Temp9am` and `LocationHobart` coefficients. 
+        
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+`Temp9am`: Within a fixed location and among days with the same 9am atmospheric pressure, every 1 degree Celsius increase in 9am temperature is associated with an average 0.951 degree Celsius increase in 3pm temperature.
+
+`LocationHobart`: (Adelaide is the reference category.) On days with the same 9am temperature and pressure, average 3pm temperatures in Hobart are 1.29 degrees Celsius cooler than in Adelaide.
+:::
+:::
+
+
+
+
+
+
+\
+
+## Exercise 3
+
+**Choosing between two models**    
+
+Let's compare `weather_model_1` to `weather_model_2`, the linear regression model of `Temp3pm` by *all* possible predictors in the `weather` data: `Temp3pm ~ .` (`.` is a shortcut for writing out all column names)
+
+### Part a
+
+Which is the better predictive model of 3pm temperatures? Support your answer using 10-fold cross-validated metrics and a random number seed of 253 for both models.
+    
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+**COMMENT:** There are 2 reasonable answers here:
+
+- Model 2 is better. It has the lower CV MAE.
+- Model 1 is better. The CV MAE for Model 2 is slightly lower, but not enough to warrant the bigger, more complicated model.
+
+
+```{r}
+# Calculate 10-fold CV MAE for model 1
+set.seed(253)
+weather_model_1_cv <- lm_spec %>% 
+  fit_resamples(
+    Temp3pm ~ Temp9am + Location + Pressure9am,
+    resamples = vfold_cv(weather, v = 10), 
+    metrics = metric_set(mae)
+  )
+weather_model_1_cv %>% 
+  collect_metrics()
+
+# Calculate 10-fold CV MAE for model 2
+set.seed(253)
+weather_model_2_cv <- lm_spec %>% 
+  fit_resamples(
+    Temp3pm ~ .,
+    resamples = vfold_cv(weather, v = 10), 
+    metrics = metric_set(mae)
+  )
+weather_model_2_cv %>% 
+  collect_metrics()
+```
+
+:::
+:::
+
+
+
+### Part b
+
+Answer the following in your own words:
+*Why is it better to compare the 2 models using cross-validated vs in-sample metrics?*
+    
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+- In-sample metrics, i.e. measures of how well the model performs on the same sample data that we used to build it, tend to be overly optimistic and lead to overfitting. 
+- Cross-validation aims to avoid this issue by splitting our data into separate train and test sets, wherein we train/build our model on one subset of data and evaluate our model on another. This allows us to better estimate out-of-sample metrics (i.e., how does our model do when it sees new data).
+- Using in-sample metrics to compare models might lead us to make a different choice than using out-of-sample/cross-validated metrics, and we're more likely to fall prey to overfitting and choosing the more complicated model.
+- **Key idea:** in-sample metrics do NOT estimate a model's performance on new data, but cross-validation does. If our goal is to choose a model that does well on new data, we need to use an evaluation metric that tells us how our candidate models are likely to perform on new data.
+
+:::
+:::
+
+    
+    
+### Part c
+
+Answer the following in your own words:
+*Why is it important to set the seed here? What if you didn't?*
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+If we didn't set the seed, we would get different random splits of the data during cross-validation each time we ran the code. This would lead to different estimates of out-of-sample model performance, which wouldn't be good for reproducibility of our analysis.
+:::
+:::
+
+
+
+
+
+\
+
+## Exercise 4
+
+**Scaling & transforming**    
+
+In this exercise, you'll use weather data from rainy days in Melbourne to explore the impact of variable *transformations*:       
+
+```{r eval=TRUE}
+melbourne <- read.csv('https://mac-stat.github.io/data/weather_melbourne.csv')
+```
+
+First, consider a model of `Humidity3pm` by `Humidity9am` and `Temp9am` (Celsius). (You can use the output here. You do not need to run this code yourself.)
+    
+```{r eval=TRUE}
+# Estimate the model. Assuming you named your model specification "lm_spec"...
+temp_model_1 <- lm_spec %>% 
+  fit(Humidity3pm ~ Temp9am + Humidity9am, data = melbourne)
+
+temp_model_1 %>%
+  tidy()
+    
+# Predict the 3pm humidity when at 9am it is 15 degrees (C) with 75% humidity 
+temp_model_1 %>% 
+  predict(new_data = data.frame(Temp9am = 15, Humidity9am = 75))
+```
+        
+        
+### Part a
+
+`melbourne` also includes 9am temperature in degrees Fahrenheit, `Temp9amF`. `Temp9amF` reports temperatures on a different **scale** than `Temp9am` using a **linear transformation**:  
+
+  `Temp9amF` = a + b`Temp9am` = 32 + (9/5)`Temp9am`
+
+        
+In part b we'll use `Temp9amF` instead of `Temp9am` in a new model of `Humidity3pm`: 
+        
+```{r}
+temp_model_2 <- lm_spec %>% 
+  fit(Humidity3pm ~ Temp9amF + Humidity9am, data = melbourne)
+```
+        
+
+Answer the following questions using your **intuition** -- don't yet examine any code. It is ok if your intuition is wrong! You will only be graded on *sharing* your intuition.
+        
+- Will the `Temp9amF` coefficient in `temp_model_2` differ from the `Temp9am` coefficient in `temp_model_1`?
+- Will the `Temp9amF` p-value in `temp_model_2`, hence the overall significance of 9am temperature, differ from that in `temp_model_1`?
+- Will the `Humidity9am` coefficient in `temp_model_2` differ from that in `temp_model_1`?
+- `temp_model_1` predicted a 3pm humidity of 63.1% when it's 15 degrees Celsius (59 Fahrenheit) and 75% humidity at 9am. Will `temp_model_2` produce the same prediction?
+    
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+Intuition might vary from student to student. 
+The only *incorrect* answer is an *incomplete* answer.
+In other words, this question should be marked *correct* as long as the student's 
+response demonstrates a reasonable effort to answer each of the 4 questions above. 
+:::
+:::
+
+
+
+### Part b
+
+Using the appropriate code, check your intuition to each question in part a. Comment on any areas where your intuition was incorrect.
+    
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+You should note here whether your intuition was correct or incorrect. Only for clarity, I will address what you should observe for each question.
+
+- The `Temp9amF` and `Temp9am` coefficients *differ*. Mainly, a 1 degree increase in Fahrenheit is different than a 1 degree increase in Celsius.
+- The 9am temperature p-values are the *same* in both models. Changing the scale doesn't impact the significance of the predictor.
+- The `Humidity3pm` coefficients are the *same* in both models. Changing the temperature scale doesn't impact the humidity predictor.
+- The predictions are the *same* in both models. This makes sense -- we're feeding in the same information, just on different scales.
+
+```{r}
+# Estimate the model (using code from above)
+temp_model_2 <- lm_spec %>% 
+  fit(Humidity3pm ~ Temp9amF + Humidity9am, data = melbourne)
+
+# Look at coefficient estimates, p-values, etc
+temp_model_2 %>%
+  tidy()
+
+# Predict the 3pm humidity when at 9am it is 59 degrees F with 75% humidity 
+temp_model_2 %>% 
+  predict(new_data = data.frame(Temp9amF = 59, Humidity9am = 75))
+```
+
+:::
+:::
+
+
+
+
+### Part c
+
+For some machine learning models, the **scale of a predictor** can impact our overall model conclusions (e.g. model predictions, other predictors, conclusions about predictor significance). Upon reflecting on parts a and b, does predictor scaling impact the overall conclusions from a **linear regression model**? A simple yes or no suffices.        
+    
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+NO
+
+:::
+:::
+
+
+
+
+### Part d
+
+Whereas linear transformations simply change the *scales* of our model variables, *non*-linear transformations can sometimes turn a "bad" model into a "good" model! Consider using the `mammalsleep` data to model the brain weight in grams of different mammals (`brw`) by their gestation time in days (`gt`): `brw` = $\beta_0$ + $\beta_1$ `gt` + $\epsilon$
+    
+```{r eval=TRUE}
+library(mice)
+data(mammalsleep)
+mammalsleep <- mammalsleep %>% 
+  filter(brw > 1) %>% 
+  mutate(log_brw = log(brw))
+```  
+        
+```{r echo = FALSE, fig.width = 8, fig.height = 2.5, eval=TRUE}
+g0 <- ggplot(mammalsleep, aes(x = brw)) + 
+  geom_density()
+
+
+g1 <- ggplot(mammalsleep, aes(y = brw, x = gt)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE)
+
+
+g2 <- lm_spec %>% 
+  fit(brw ~ gt, mammalsleep) %>% 
+  augment(new_data = mammalsleep) %>% 
+  ggplot(aes(x = .pred, y = .resid)) + 
+  geom_point() + 
+  geom_hline(yintercept = 0)
+
+library(gridExtra)
+grid.arrange(g0,g1,g2,ncol=3)
+```
+
+This model is **bad** -- it is extremely heteroskedastic. This issue often occurs when our response variable is seriously right skewed, as `brw` is here. Luckily, logging the response variable is often an easy fix: `log_brw` = $\beta_0$ + $\beta_1$ `gt` + $\epsilon$^[By default, "log" in statistics refers to the natural log function _ln_.] 
+        
+        
+- Create the 3 plots above, now using `log_brw` instead of `brw`.
+- Comment on how the log transformation changes the "shape" of the `brw` data.
+- Comment on whether the log transformation "fixes" the model of brain weight vs gestation time.
+        
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+**COMMENT:** The logged brain weights are more symmetric and the model is better -- the relationship is more linear and less heteroskedastic.
+
+
+```{r}
+# Use transformation code provided above
+library(mice)
+data(mammalsleep)
+mammalsleep <- mammalsleep %>% 
+  filter(brw > 1) %>%
+  mutate(log_brw = log(brw)) 
+```
+
+```{r fig.width = 8, fig.height = 2.5}
+# You don't need to put these in a grid! I just like to.
+
+# density plot log brain weight
+g0 <- ggplot(mammalsleep, aes(x = log_brw)) + 
+  geom_density()
+          
+# scatterplot of gestational time vs log brain weight
+# with line of best fit
+g1 <- ggplot(mammalsleep, aes(y = log_brw, x = gt)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE)
+
+# residual vs fitted plot
+## (first we need to fit the model)
+new_model <- lm_spec %>% 
+  fit(log_brw ~ gt, mammalsleep)
+## (then we can calculate and plot residuals)
+g2 <- new_model %>% 
+  augment(new_data = mammalsleep) %>% 
+  ggplot(aes(x = .pred, y = .resid)) + 
+    geom_point() + 
+    geom_hline(yintercept = 0)
+
+# put all the plots together in a grid (OPTIONAL)
+library(gridExtra)
+grid.arrange(g0, g1, g2, ncol = 3)
+```
+
+:::
+:::
+
+
+
+
+### Part e
+
+**CHALLENGE:** Logging our response variable changes our coefficient interpretations. For example, if $\beta_1$ is the typical change in the _logged_ brain weight for every additional day of gestation, then $e^{\beta_1}$ is the _multiplicative change_ in (unlogged) brain weight. Similarly, $e^{30\beta_1}$ is the _multiplicative change_ in brain weight for every additional 30 days (1 month) of gestation time. For example, if $e^{30\beta_1}$ were 2, we'd say that for every extra month of gestation, brain weights tend to _double_ (multiply by 2). With this in mind, interpret the $\beta_1$ coefficient from your model of `log_brw`. 
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+# Display estimated coefficients
+tidy(new_model)
+
+# Exponentiate estimated coefficients
+tidy(new_model) |> 
+    select(term, estimate) |> 
+    mutate(exp(estimate))
+```
+
+Interpretation of the $\beta_1$ coefficient on `gt`: For every extra day of gestation, brain weights tend to multiply by 1.01.
+:::
+:::
+
+
+          
+ 
+   
+\
+
+## Exercise 5
+
+**Resource reflection**       
+
+List the resources you used to complete this assignment (e.g. office hours, textbook, Gen AI, etc.)   
+
+- 
+-
+-
+
+Write 3-5 sentences about which resources were the most useful in helping you complete the assignment.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+Answers will vary, but students should list the resources they used to complete this assignment (e.g. office hours, textbook, Gen AI, etc.)  and write 3-5 sentences about which resources were the most useful in helping them complete the assignment.
+:::
+:::
+
+
+
+
+
+
+\
+
+## Exercise 6
+
+**Ethics reading and reflection**       
+
+Read the article [Amazon scraps secret AI recruiting tool that showed bias against women](https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G). Write a short (roughly 250-500 words) reaction to the article. What ideas piqued your interest? How did the article make you feel? What ideas from class did it make you think about?
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+Instructors will grade this exercise.
+:::
+:::
+
+
+
+
+\
+

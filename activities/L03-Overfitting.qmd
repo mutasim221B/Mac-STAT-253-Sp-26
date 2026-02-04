@@ -364,7 +364,10 @@ ___ %>%
     In summary, which model seems best? 
     What's the central theme here?
     
->
+
+> In general, models tend to perform worse on new data than on the data on which they were built/trained.
+In this particular dataset, Model 2 looks best on new data, and Model 3 performs horribly.
+Model 3 is overfit to the training data. This is more likely to happen with an overly complicated model.
 
 
 
