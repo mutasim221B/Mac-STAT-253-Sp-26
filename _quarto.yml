@@ -44,6 +44,7 @@ website:
           - "activities/L02-evaluating-regression-models.qmd"
           - "activities/L03-Overfitting.qmd"
           - "activities/L04-cross-validation.qmd"
+          - "activities/L05-model-selection.qmd"
 
     - id: appendices
       title: "Appendices"
