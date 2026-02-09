@@ -1,0 +1,931 @@
+---
+title: "Homework 2: Regression Model Building"
+subtitle: "STAT 253"
+format:
+  html:
+    toc: true
+    embed-resources: true
+---
+
+<!-- create student template based on this QMD -->
+{{< include _create_student_template.qmd >}}
+
+```{r create-template}
+#| echo: false
+#| eval: true
+#| cache: false
+make_student_template('Homework 2', 'hw2.qmd')
+```
+
+
+
+<!-- code chunk setup -->
+
+```{r setup}
+#| echo: false
+#| warning: false
+knitr::opts_chunk$set(collapse = TRUE, 
+                      warning = FALSE,
+                      message = FALSE,
+                      fig.height = 2.75, 
+                      fig.width = 4.25,
+                      fig.env='figure',
+                      fig.pos = 'h',
+                      fig.align = 'center')
+```
+
+::: {.content-hidden when-profile="solutions"}
+
+# Learning Goals
+
+- Implement our new model building technique, LASSO, and compare it to least squares.
+- Keep practicing foundational skills such as data wrangling and model evaluation.
+- Reflect on how the semester is going so far.
+
+\
+
+# Directions & Policies
+
+## Tips 
+
+To make HW go more smoothly, deepen your learning, & maximize happiness:
+
+- *Before* starting HW, **review** the last couple weeks of material.  
+- Start early! HW isn't designed to be completed in a single sitting.  
+- Use Slack to invite others to join you. (Just make sure that the work you submit, including code, is written in your own words.)  
+- WHEN you have questions:
+    - Ask questions in the `#help-homework` channel on Slack.
+    - Stop by office hours. (Please remember that OH are for *group* discussion and exploring concepts / specific questions, **not** doing HW step by step or checking your answers.)
+
+
+
+## Content     
+
+HW includes exercises that apply course concepts to novel settings, and open-ended questions that challenge you to **synthesize** and **build upon** course concepts. This is just like a language class! You learn the grammar, vocabulary, and structure needed to express your own ideas (as opposed to memorizing every sentence you might ever want to say).
+This is challenging *by design* -- it encourages you to practice taking academic risks, be comfortable making mistakes, gain confidence outside the classroom setting, and discover more depth in the material.
+
+
+
+## Timing & Flexibility 
+
+- Deadlines:
+  - are posted on Moodle and the course calendar
+  - provide common checkpoints such that we can build upon the new knowledge in class (the concepts in this course build on each other!)
+  - allow the instructor and preceptors to get feedback to you in a timely manner
+  - help us all manage and plan our workloads
+- Grace period: 
+  - late work will be accepted, without any penalty to your grade, if it is submitted within **1 hour** of the deadline
+  
+- Extensions: 
+  - if you are unable to submit your work by the deadline (or within the grace period), please contact your instructor to request an extension; you do not need to provide a reason for your request
+  - all STAT 253 students will automatically be granted three 3-day homework extensions to use throughout the semester
+  - extensions should be requested **before** the assignment so that instructors and preceptors can plan their grading accordingly
+  - except in rare circumstances, we will not be able to accommodate homework being submitted more than 3 days past the deadline (because the concepts in this course build on each other quickly); plan accordingly
+
+- Why are the course policies designed in this way?
+  - to provide flexibility and grace to students while ensuring that they stay on track to succeed in this course
+  - to provide structure to allow the instructor and preceptors to efficiently give feedback
+
+
+
+
+## Academic Integrity 
+
+Review and stick to the academic integrity expectations in the syllabus. 
+
+You **may _not_:**
+
+- use any materials from past iterations of STAT 253
+- use any online solutions manuals or forums where you post HW related questions
+- pass off another person's work as your own. (You're encouraged to discuss HW with classmates but all submitted work must be your own, from the words to the code.)
+
+You **_may_** use ChatGPT or other online resources to help get unstuck. However...
+
+- you **may _not_** copy-and-paste content and pass it off as your own (this doesn't help you learn!)
+- your use of AI should be **cited**; there is space for you at the end of the assignment to do so
+- note that AI uses a lot of resources; if you can do something in a more energy-efficient way (eg using pre-existing course materials) please do so!
+
+
+
+
+
+
+In general:
+
+- You must be able to defend / explain any content in your homework, if asked. In other words, **all of the work that you submit must be an accurate reflection of YOUR understanding.**
+- You must **use the tools, code, techniques, etc. from this course**. (Be particularly careful here if using ChatGPT or other online resources that were not provided by your instructor.)
+
+
+## Grading & Feedback
+
+Within one week of the assignment deadline, preceptors and your instructor will provide qualitative feedback on most exercises and an overall score of PASS, ATTEMPT, or UNABLE TO ASSESS.
+
+You will make mistakes and your HW won't be perfect. That’s ok! This is an opportunity to *practice* and *synthesize* material and that will involve making mistakes. 
+To align with our learning goals, we're looking for students to "pass" the HW. 
+
+To **PASS**, you must meet the following goals:    
+
+1. Your HW is handed in on time, or within the grace period.
+
+2. Your work is reproducible and presented professionally. Specifically:
+    - Use the provided QMD template.       
+        - Update the author (your name).
+        - You can make necessary modifications to this template (eg: add answers, R chunks), but cannot make any deletions or changes to the structure.
+    - Include all RStudio code and output that's relevant to the HW exercises.        
+    - Omit any RStudio code that's *not* relevant to the HW exercises.
+    - Submit your *rendered HTML* (not QMD) file to the correct HW link on Moodle.
+    
+3. Your submission demonstrates a good faith effort to complete all, or almost all, exercises. 
+
+4. Your answers to *most* (but not necessarily all!) exercises are either "correct" or "almost correct". 
+    - The following are required to earn a "correct" score:    
+        - Answer is correct and complete.
+        - Answer is supported with appropriate evidence (e.g. R code and output).
+        - Discussions are based in the context of the exercise, not general definitions.
+        - R code is well-formatted and organized.
+    - The following are required to earn a "almost correct" score:
+        - There are some mistakes, but you got more than ~75% correct.
+        - You demonstrated an earnest attempt at each part of the exercise.
+        
+\
+\
+
+:::
+
+
+
+# Exercises
+
+## 1: prepare & acquaint yourself with the data 
+
+What makes a song popular? Can we predict popularity using only acoustic properties (eg: how fast and loud a song is)? To this end, we'll analyze 247 songs that play on Spotify. Along with the `popularity` of each song, the data contains lots of acoustic variables. To learn more about the acoustic variables, and check out the original source on Tidy Tuesday, click [here](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-01-21/readme.md).
+
+```{r data-setup}
+#| eval: false
+#| echo: false
+
+library(tidyverse)
+
+spotify_songs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-21/spotify_songs.csv')
+
+spotify_sub <- spotify_songs %>% 
+  rename(genre = playlist_genre, title = track_name, artist = track_artist, popularity = track_popularity, album_name = track_album_name, album_release = track_album_release_date) %>% 
+  distinct(track_id, title, popularity, album_name, album_release, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, duration_ms,.keep_all = TRUE) %>%
+  select(title,artist, popularity, album_name, album_release, genre, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, duration_ms) %>%
+  arrange(desc(popularity)) %>%
+  filter(popularity > 20, liveness < .5, mode == 1) %>%
+  group_by(artist) %>%
+  mutate(artist_n = n()) %>%
+  filter(artist_n > 15)  %>% 
+  ungroup()
+ 
+set.seed(254)
+spotify_new <- spotify_sub %>% 
+  distinct(artist) %>% 
+  sample_n(30) %>% 
+  semi_join(x = spotify_sub,y = .) %>% 
+  select(-artist_n)
+
+write_csv(spotify_new,file='../data/spotify_new.csv')
+```
+
+
+```{r load-packages-data}
+#| message: false
+#| warning: false
+#| eval: true
+# Load packages
+# (You might need to install ggridges)
+library(ggridges) # for joy plots
+library(tidymodels)
+library(tidyverse)
+
+# Load data
+music <- read_csv("https://mac-stat.github.io/data/spotify_new.csv")
+```
+
+
+
+\
+
+### Part a
+
+Calculate the range of the observed `popularity` outcomes, calculating the minimum and the maximum.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+There are multiple approaches; here are a few!
+
+```{r update-code-chunk-opts}
+#| eval: true
+#| echo: false
+knitr::opts_chunk$set(eval = TRUE)
+```
+
+```{r soln-1a}
+#| warning: false
+# option 1 (my favorite)
+music %>% 
+  summarize(min(popularity), max(popularity))
+
+# option 2
+min(music$popularity)
+max(music$popularity)
+
+# option 3
+music %>%
+  summarize(range(popularity))
+```
+
+Note: some people define range to be the difference between the maximum and minimum values. 
+I personally prefer to present the actual min/max values, and then someone could easily calculate the difference between them if they wanted. However, it's not so easy to go the other direction!
+:::
+:::
+
+
+\
+
+### Part b
+
+Print out only the artist, song title, and popularity score for the 6 most popular songs in the data set.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+There are multiple approaches; here are two!
+
+```{r soln-1b}
+# option 1
+music %>% 
+  select(artist, title, popularity) %>% 
+  arrange(desc(popularity)) %>% 
+  head()
+
+# option 2
+# Note how slice_max deals with ties (provides you all of the rows)
+music %>% 
+  select(artist, title, popularity) %>% 
+  slice_max(popularity, n = 6)
+```
+
+:::
+:::
+
+
+
+\
+
+### Part c
+
+*Joy Division* is perhaps the *only* band to have a data visualization tool named after them. The "Joy plot" is inspired by the band's album cover:    
+
+```{r joy-division}
+#| echo: false
+#| out-height: "250px"
+knitr::include_graphics("joydiv.jpg")
+```
+
+Just for fun, construct a joy plot for the popularity of the artists in our sample. Comment on two artists you find interesting (either because of their data or because you know them).    
+
+```{r joy-plot}
+#| eval: false
+ggplot(music, aes(x = popularity, y = artist)) +
+  geom_density_ridges() + 
+  theme_ridges()
+```    
+    
+    
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+**COMMENTS:** The comments will vary from student to student, but there should be  comment about the data as it relates to the graphic. The discussion should mention _two_ artists, as indicated in the instructions.
+
+
+```{r soln-1c}
+#| fig-height: 7
+#| fig-width: 6
+ggplot(music, aes(x = popularity, y = artist)) +
+  geom_density_ridges() + 
+  theme_ridges()
+```
+
+:::
+:::
+
+
+\
+
+### Part d
+
+Create a new data set `music_sub` which removes the following features which we either can't or won't use as predictors of popularity: `title` (can't use), `album_name` (won't use), `album_release` (won't use), `mode` (won't use), `artist` (won't use).^[Take Bayesian Stat or Correlated Data to learn about incorporating artist and album name!]
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+As above, there are a few different ways to do this. In any case, you should end up with a dataset with 12 variables: 
+
+```{r}
+music_sub <- music %>% 
+  select(-artist, -title, -album_name, -album_release, -mode)
+
+# Note that you should end up with a data set with 12 variables
+dim(music_sub)
+names(music_sub)
+```
+
+```{r}
+# another option
+music %>% 
+  select(-c(artist, title, album_name, album_release, mode))
+```
+
+```{r}
+# the following WON'T give you want you want
+# this includes mode but not genre
+music %>% 
+  select(where(is.numeric)) %>%
+  head()
+```
+    
+
+:::
+:::
+
+
+
+
+
+
+\
+\
+
+## 2: LASSO (part 1)
+
+A small record label executive asks us to build a predictive model of `popularity` using the available set of predictors in `music_sub`. They don't have a data team, hence prefer a simpler model. Let's start by trying a LASSO model. 
+    
+**IMPORTANT:** 
+    
+  - Each time you run a random process, use `set.seed(253)`. 
+  - Support your answer to each part with R output.
+
+
+\
+
+### Part a
+
+Build a reasonable, *final* LASSO model. You should try a range of **100 possible values** between $10^{-5}$ and $10^1$ for the $\lambda$ tuning parameter, and use 10-fold CV MAE to pick only **one** of these for your final model.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+```{r}
+# STEP 1: LASSO algorithm / model specification
+lasso_spec <- linear_reg() %>%             
+  set_mode("regression") %>% 
+  set_engine("glmnet") %>%                 
+  set_args(mixture = 1, penalty = tune())  
+
+# STEP 2: variable recipe
+variable_recipe <- recipe(popularity ~ ., data = music_sub) %>% 
+  step_dummy(all_nominal_predictors())
+
+# STEP 3: workflow specification (model + recipe)
+lasso_workflow <- workflow() %>% 
+  add_recipe(variable_recipe) %>% 
+  add_model(lasso_spec)
+
+# STEP 4: Estimate 100 LASSO models using different lambda values 
+# on a "grid" or range from 10^(-5) to 10^1.
+set.seed(253)
+lasso_models <- lasso_workflow %>% 
+  tune_grid(
+    grid = grid_regular(penalty(range = c(-5, 1)), levels = 100),  
+    resamples = vfold_cv(music_sub, v = 10),   
+    metrics = metric_set(mae)
+  )
+```
+
+**NOTE about STEP 4:** make sure students set a seed (to 253) and used the correct $\lambda$ grid! If not, their answers to all other questions below will not match the solutions.
+
+
+NEXT STEPS: Pick $\lambda$ and fit final model.
+
+If we want a balance between parsimony and prediction accuracy, we might pick the "parsimonious" lambda value: 
+
+```{r}
+# Identify the parsimonious lambda value
+parsimonious_penalty <- lasso_models %>% 
+  select_by_one_std_err(metric = "mae", desc(penalty))
+
+# Finalize the model
+final_lasso <- lasso_workflow %>% 
+  finalize_workflow(parameters = parsimonious_penalty) %>% 
+  fit(data = music_sub)
+```
+
+
+If you chose the "best" CV MAE instead, your code would look like this: 
+
+```{r}
+# identify lambda with lowest CV MAE
+best_penalty <- lasso_models %>% 
+  select_best(metric = "mae")
+
+# fit final model
+final_lasso_best <- lasso_workflow %>% 
+  finalize_workflow(parameters = best_penalty) %>% 
+  fit(data = music_sub)
+```
+
+
+Note: I generally recommend the first approach!
+
+Also note: typically we do one *or* the other, not both! 
+(For preceptors: if students used both `select_by_one_std_err` *and* `select_best` both, please leave them a comment prompting them to pick just one of these!)
+:::
+:::
+
+
+  
+
+\
+
+### Part b
+
+For reproducibility, report the exact value of $\lambda$ used in your final LASSO model.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+**EXACT NUMBER:** $\lambda = 0.93$
+
+```{r}
+parsimonious_penalty
+```
+
+As mentioned above, the "parsimonious" approach is my preferred approach here.
+
+If students instead chose to use the lambda with the "best" CV MAE their penalty will be:
+
+```{r}
+best_penalty
+```
+:::
+:::
+
+
+\
+
+### Part c
+
+How many and which of the 11 original predictors remain in your final LASSO model?
+  
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+**NUMBER OF PREDICTORS:** 6
+
+**WHICH PREDICTORS:** danceability, energy, loudness, speechiness, genre (you might mention specifically pop, rap)
+
+
+```{r}
+final_lasso %>% 
+  tidy() %>% 
+  filter(estimate != 0) %>%  # this is useful to focus on the subset that are kept in
+  mutate(estimate = round(estimate, 3)) # rounding the coefficient estimates for easier viewing
+```
+
+
+For comparison, here are the results from using the "best" lambda instead. Note that we end up with a lot more variables in our model! (*Is this what we'd expect, given that the lambda value is closer to zero?*)
+
+```{r}
+final_lasso_best %>%
+  tidy() %>%
+  filter(estimate != 0) %>%
+  mutate(estimate = round(estimate, 3))
+```
+
+:::
+:::  
+  
+ 
+\
+
+### Part d 
+
+Report *and* interpret the CV MAE for your final LASSO model. Explain whether this is "big" or "small", and support this with some context.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+**INTERPRETATION:** CV MAE ~ 12.5. We estimate that the predictions of popularity for new songs will be off by 12.5 points on average. Considering the scale of popularity (which we showed to range from 21 to 98 in exercise 1), do you think this 12.5 MAE is large or small? (*Opinions may differ here! Just make sure you clearly justify your choice.*)
+
+There are multiple "correct" wordings, but MAE interpretations should include: 
+
+- the outcome variable (popularity)
+- units (points)
+- the "M" part of MAE (eg "on average")
+- clarification that this is an out-of-sample metric (eg "new songs")
+- comparison to the range of possible outcomes when explaining whether the MAE is big or small
+
+```{r}
+# remind ourselves what the lambda is
+# (and note that the value itself is stored in the penalty column)
+parsimonious_penalty
+
+lasso_models %>% 
+  collect_metrics() %>% 
+  filter(penalty == parsimonious_penalty$penalty)
+```
+
+
+Remember that if students chose the "best" approach, above, they will have a slightly lower MAE:
+
+```{r}
+# OR... if students used the "best" approach
+lasso_models %>% 
+  collect_metrics() %>% 
+  filter(penalty == best_penalty$penalty)
+```
+
+
+:::
+:::
+
+
+
+
+
+\
+\
+
+
+## 3: LASSO (part 2)    
+
+You tuned the LASSO algorithm above, picking an appropriate value of $\lambda$ for your final LASSO model. Let's think more about this tuning process.
+
+\
+
+### Part a
+
+Construct a plot that illustrates the impact of $\lambda$ on the 10-fold CV MAE (and possibly 10-fold CV $R^2$). IMPORTANT: Take personal note of where *your* $\lambda$ falls into this plot, and ask yourself whether we tried a reasonable range for $\lambda$.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+```{r}
+#| fig-width: 5
+#| fig-height: 4
+autoplot(lasso_models) + 
+  scale_x_continuous() + # change the x-axis scale to plot lambda on original scale
+  xlab(expression(lambda)) # label the x-axis
+```
+
+```{r}
+#| fig-width: 5
+#| fig-height: 4
+# remember that if you leave off scale_x_continuous,
+# your x-axis will be on the log10 scale
+# (both are fine)
+autoplot(lasso_models) 
+```
+
+
+
+Note that our lambda value, `r round(parsimonious_penalty$penalty,3)` lies pretty far to the left of the range of values for $\lambda$. 
+(In the case of the "best" lambda, `r round(best_penalty$penalty,3)` it's actually the lowest $\lambda$ we tried!)
+
+Perhaps trying more small (closer to zero) and fewer large (e.g., $> 5$) $\lambda$ values might have been helpful? 
+It's hard to see the "Goldilocks" problem from this plot.
+
+
+:::
+:::
+  
+  
+\
+
+### Part b
+
+Summarize the key themes of this plot in your own words.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+Will vary, but should mention that the prediction errors generally worsen as $\lambda$ increases, hence as the model becomes too simple. We lose the "important" predictors that help us with our predictive performance on new data.
+:::
+:::
+
+
+\
+
+### Part c
+
+Construct a plot that illustrates the impact of $\lambda$ on the predictor coefficients. IMPORTANT: Take personal note of where *your* $\lambda$ falls into this plot.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+# Get output for each LASSO model
+all_lassos <- final_lasso %>% 
+  extract_fit_parsnip() %>%
+  pluck("fit")
+
+# Plot coefficient paths as a function of lambda
+plot(all_lassos, xvar = "lambda", label = TRUE, col = rainbow(20))
+
+# Codebook for which variables the numbers correspond to
+rownames(all_lassos$beta)
+```   
+
+
+Note that our chosen $\lambda$ falls near 0 on the x-axis:
+
+```{r}
+log(parsimonious_penalty$penalty)
+```
+
+We see that there are 5 variables left at this point:
+
+- Var 1 = `danceability`
+- Var 12 = `genre_pop`
+- Var 2 = `energy`
+- Var 4 = `speechiness`
+- Var 3 = `loudness`
+- Var 14 = `genre_rap`
+
+*Does this match what we saw in EXERCISE 2d?*
+:::
+:::
+  
+
+\
+
+### Part d
+
+Summarize the key themes of this plot in your own words. IMPORTANT: You don't need to write this out but be sure to convince yourself that you understand what each number and line on this plot represents.
+    
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+Will vary but the answer should:
+
+- address shrinkage of coefficients toward / to 0 as $\lambda$ increases
+- note either some more persistent predictors (eg: genre categories, danceability, energy) or some less persistent predictors.
+:::
+:::    
+
+
+
+
+\
+\
+
+## 4: finalizing our analysis
+
+```{r least-squares}
+#| echo: false
+music_sub <- music %>% 
+  select(-artist, -title, -album_name, -album_release, -mode)
+
+lm_spec <- linear_reg() %>% 
+  set_mode("regression") %>% 
+  set_engine("lm")
+
+ls_model <- lm_spec %>% 
+  fit(popularity ~ ., data = music_sub)
+
+set.seed(253)
+ls_cv <- lm_spec %>% 
+  fit_resamples(
+    popularity ~ .,
+    resamples = vfold_cv(music_sub, v = 10), 
+    metrics = metric_set(mae)
+)
+```
+
+Results for the least squares alternative to the LASSO are included below (you don't have to recreate these):
+
+```{r}
+ls_model %>% 
+  tidy()
+    
+ls_cv %>% 
+   collect_metrics()
+```
+    
+
+
+\
+
+### Part a
+
+Keeping in mind the music executive's goals, which model would you pick: the least squares model or your final LASSO model? *Explain.* Support your explanation with specific context and results.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+I would pick the LASSO. It's simpler and has only a slightly worse predictions (a CV MAE of roughly 12.5 vs roughly 12.1). If you argue for the least squares, you need to also argue that this jump in prediction error is too big.
+
+*It is worth noting that if you pick LASSO, you may need to be prepared to explain to the music executive how LASSO differs from least squares. Although the model we end up with is simpler, the approach itself is somewhat more complicated. This is not necessarily a reason to choose one approach over the other, just something to be aware of!*
+
+:::
+:::
+
+
+\
+
+### Part b
+
+Is your chosen model *wrong*? (It's ok if it is -- we won't fix it now.) Support your answer with appropriate evidence.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+**COMMENT:** The residual plot looks fairly good. There might be a bit of heterogeneity in our residuals, but it isn't a strong pattern. One thing you might note is among songs that we predict popularity to be around 60, we tend to underpredict (positive residuals); that might be worth exploring further. But overall, our model doesn't seem too wrong.
+
+```{r}
+final_lasso %>% 
+  augment(new_data = music_sub) %>% 
+  mutate(.resid = popularity - .pred) %>% # For Lasso, you need to calculate resid
+  ggplot(aes(x = .pred, y = .resid)) + 
+    geom_point() + 
+    geom_hline(yintercept = 0) + 
+    geom_smooth(se = FALSE)
+
+```
+
+
+:::
+:::
+
+
+
+\
+
+### Part c
+
+Based on the results of your chosen model, offer the music executive some advice on how to write the most popular song possible.       
+
+- Use complete sentences. Think of the executive as your client.
+- Don't get into rigorous coefficient interpretations! This wouldn't be useful for the executive. Simply focus on what *increases* popularity and what *decreases* popularity.    
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+My advice: write a pop song with strong danceable properties, low energy, and some speechiness.
+:::
+:::
+
+
+
+
+\
+\
+
+## 5: resource reflection
+
+List the resouces you used to complete this assignment (e.g. office hours, textbook, Gen AI, etc.)   
+
+- 
+-
+-
+
+Write 3-5 sentences about which resources were the most useful in helping you complete the assignment.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+Answers will vary, but students should list the resouces they used to complete this assignment (e.g. office hours, textbook, Gen AI, etc.) and write 3-5 sentences about which resources were the most useful in helping them complete the assignment.
+
+:::
+:::
+
+
+
+
+\
+\
+
+## 6: learning reflection 
+
+We now find ourselves at the end of the our second unit! This is a good moment to 
+pause, organize your notes, and reflect on how things have been going.   
+
+This is the first of four learning reflections that you will complete this term. 
+
+Follow the instructions below: 
+
+1. Create a Google Doc, called *STAT 253 - Learning Reflection Journal - Your Name*.
+
+2. Share this doc, **with editing access**, with your instructor. 
+
+3. Create a section titled *Reflection 1*. 
+
+4. Copy-paste the reflection prompts, below, into that document.
+
+5. Type your answers to those prompts into that reflection journal. (Suggestion: use an [alternate font color]{style="color:blue;"} to clearly distinguish your responses from the prompts!)
+
+
+Your reflection is due at the same time as this homework. 
+Before you submit your final homework HTML, please double-check that your 
+reflection journal has been updated **AND** that your instructor has been added 
+as an editor. 
+
+
+:::{.callout-note title="Reflection 1 Prompts"}
+1. **Scavenger Hunt / Getting Organized**  
+    Locate, open, and organize* the following:
+      
+      - the course website
+      - the course syllabus
+      - the course moodle page
+      - the course textbook (ISLR)
+      - your feedback spreadsheet
+      - the homeworks that you have completed thus far
+      - the quizzes that you have completed thus far 
+      - the group assignments you have completed thus far
+      - your quarto templates/notes from in-class exercises
+      - any other notes that you have taken while preparing for class (eg watching lecture videos, reading the textbook), during class time, or studying  
+      
+    If you don't already have a Stat 253 folder on your computer, make one. Put all of your files from this class there, and create sub-folders for different types of assignments (eg HW, in-class activities, group assignments). Bookmark any webpages that you think you might reference later. In general, think about what resources you might want to be able to access again in the future and make it as easy as possible for your future self to find them.
+    
+    Once you have completed the tasks above, include a screenshot or two to show off your organization system and move on to the next question. 
+
+2. **Engagement**  
+    In **1--2 paragraphs**, write a short reflection about your *engagement* with the course thus far. 
+    Here are some prompts to consider (you don't need to address all of them!): 
+      
+      - Class Time: 
+          - Have you regularly attended class sessions?
+          - Do you arrive on time and stay for the full class? 
+          - Are you actively present during class (eg: not on your phone, not working on other courses, etc)?
+      - Preparation: 
+          - Do you watch the full videos?
+          - Do you take notes while watching the videos?
+          - Do you complete the checkpoint thoughtfully?
+          - Do you stay updated on Slack?
+          - When you have questions, do you ask them on Slack or in OH?
+          - What else do you do to prepare for class each day?
+      - Practice: 
+          - What resources do you review before (or while) working on homework?
+          - Have you submitted all homework assignments on time?
+          - How many times have you used an extension?
+          - When you have homework questions, do you ask them on Slack or in OH?
+          - Have you been actively reviewing your HW feedback when it is posted?
+      - Is there anything you want to try differently with respect to engagement during the next few weeks of the semester?
+
+3. **Collaboration**  
+    In addition to learning new machine learning algorithms, this course is also designed to help you practice and develop "general" skills that are important for future coursework and careers in statistics, data science, and many other fields. These include: computational thinking, data communication, collaboration, ethical thinking, and reflection. 
+    We'll focus on *collaboration* for this question. 
+    
+    Review the learning goals on the course website related to this general skill (see Course Logistics > Learning Goals > General Skills > Collaborative Learning).
+    
+    Then, write **1--2 paragraphs** addressing the following:  
+      - What progress have you made toward the *collaborative learning* learning goals so far this semester? 
+      - What you have found most helpful in facilitating that progress? 
+      - Have you experieced any barriers to making progress on these goals? 
+      - Describe at least one goal related to further practicing and developing this skill in the next portion of the semester.
+
+<!--
+4. **Final Thoughts**  
+    In **a few sentences**, please share any final thoughts on your learning in this class. 
+    
+    - Are there any aspects of this course that you have found to be particularly interesting, exciting, important, relevant, etc.?
+    - Are there aspects of the course you have found particularly challenging?
+    - Is there something that the instructor could change about the course that would reduce or remove barriers to your learning?
+    - What are you most looking forward to during the next portion of the semester? 
+    - Is there anything else you would like me to know about your learning, engagement, or progress toward our course learning objectives at this time?
+-->
+
+4. **Follow-Up**   
+    Would it be helpful to follow up with the instructor to talk more about this reflection? 
+    Select one: **Yes, I’d like the instructor to follow up with me** / **No, I’m fine for now**
+:::
+
+
+
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+Instructors will grade this question
+:::
+:::
+
+
+
+
+
+
+\
+\
+
+## 7: Spotify + R 
+
+**This exercise will not be graded.**
+
+You can directly play around with Spotify's API within R!  If you're curious, follow the instructions [here](https://github.com/charlie86/spotifyr) to import data into R related to any Spotify play list, artist, genre, etc. 
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+NOT GRADED
+:::
+:::
+
+
+
+\
+\
+
+
