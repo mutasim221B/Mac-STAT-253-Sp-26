@@ -45,6 +45,8 @@ website:
           - "activities/L03-Overfitting.qmd"
           - "activities/L04-cross-validation.qmd"
           - "activities/L05-model-selection.qmd"
+          - "activities/L06-lasso.qmd"
+          - "activities/L07-nonparametric.qmd"
 
     - id: appendices
       title: "Appendices"

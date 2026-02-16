@@ -4045,6 +4045,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../activities/L06-lasso.html">
  <span class="dropdown-text">LASSO: Shrinkage / Regularization</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../activities/L07-nonparametric.html">
+ <span class="dropdown-text">Non-Parametric Models</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -4125,6 +4129,12 @@ window.Quarto = {
  <span class="menu-text">LASSO: Shrinkage / Regularization</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../activities/L07-nonparametric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Non-Parametric Models</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -4150,7 +4160,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#notes-discussion-variable-selection" id="toc-notes-discussion-variable-selection" class="nav-link" data-scroll-target="#notes-discussion-variable-selection">Notes &amp; Discussion: Variable Selection</a>
   <ul class="collapse">
-  <li><a href="#algorithm-1-best-subset-selection-.unnumbered-.smaller-tea" id="toc-algorithm-1-best-subset-selection-.unnumbered-.smaller-tea" class="nav-link" data-scroll-target="#algorithm-1-best-subset-selection-.unnumbered-.smaller-tea">Algorithm 1: Best Subset Selection {.unnumbered .smaller} [Tea]</a></li>
+  <li><a href="#algorithm-1-best-subset-selection" id="toc-algorithm-1-best-subset-selection" class="nav-link" data-scroll-target="#algorithm-1-best-subset-selection">Algorithm 1: Best Subset Selection</a></li>
   <li><a href="#algorithm-2-backward-stepwise-selection" id="toc-algorithm-2-backward-stepwise-selection" class="nav-link" data-scroll-target="#algorithm-2-backward-stepwise-selection">Algorithm 2: Backward Stepwise Selection</a></li>
   <li><a href="#algorithm-3-forward-stepwise-selection" id="toc-algorithm-3-forward-stepwise-selection" class="nav-link" data-scroll-target="#algorithm-3-forward-stepwise-selection">Algorithm 3: Forward Stepwise Selection</a></li>
   <li><a href="#machine-learning-vs-human-learning" id="toc-machine-learning-vs-human-learning" class="nav-link" data-scroll-target="#machine-learning-vs-human-learning">Machine Learning vs Human Learning</a></li>
@@ -4159,7 +4169,7 @@ window.Quarto = {
   <li><a href="#exercises-part-2" id="toc-exercises-part-2" class="nav-link" data-scroll-target="#exercises-part-2">Exercises: Part 2</a>
   <ul class="collapse">
   <li><a href="#instructions-1" id="toc-instructions-1" class="nav-link" data-scroll-target="#instructions-1">Instructions</a></li>
-  <li><a href="#questions-.unnumbered-.smaller--in-group-finish-after-class-in-you-cannot-finish-all-in-class" id="toc-questions-.unnumbered-.smaller--in-group-finish-after-class-in-you-cannot-finish-all-in-class" class="nav-link" data-scroll-target="#questions-.unnumbered-.smaller--in-group-finish-after-class-in-you-cannot-finish-all-in-class">Questions {.unnumbered .smaller}- In Group [Finish after class in you cannot finish all in-class!]</a></li>
+  <li><a href="#questions-1" id="toc-questions-1" class="nav-link" data-scroll-target="#questions-1">Questions</a></li>
   </ul></li>
   <li><a href="#reflection" id="toc-reflection" class="nav-link" data-scroll-target="#reflection">Reflection</a>
   <ul class="collapse">
@@ -4366,8 +4376,8 @@ Identify a <em>subset</em> of predictors to use in our model of <span class="mat
 <p>Heads up: these algorithms are important to building intuition for the questions and challenges in model selection, BUT have major drawbacks.</p>
 <p><br>
 </p>
-<section id="algorithm-1-best-subset-selection-.unnumbered-.smaller-tea" class="level2">
-<h2 class="anchored" data-anchor-id="algorithm-1-best-subset-selection-.unnumbered-.smaller-tea">Algorithm 1: Best Subset Selection {.unnumbered .smaller} [Tea]</h2>
+<section id="algorithm-1-best-subset-selection" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="algorithm-1-best-subset-selection">Algorithm 1: Best Subset Selection</h2>
 <div class="incremental">
 <ul class="incremental">
 <li>Build <em>all</em> <span class="math inline">\(2^p\)</span> possible models that use any combination of the available predictors <span class="math inline">\((x_1, x_2,..., x_p)\)</span>.<br>
@@ -4421,7 +4431,7 @@ Identify a <em>subset</em> of predictors to use in our model of <span class="mat
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 11 predictors (tweak the code)</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>lm_spec <span class="sc">%&gt;%</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(height <span class="sc">~</span> age <span class="sc">+</span> weight <span class="sc">+</span> neck <span class="sc">+</span> chest <span class="sc">+</span> abdomen <span class="sc">+</span> hip <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle <span class="sc">+</span> biceps <span class="sc">+</span> forearm <span class="sc">+</span> wrist,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(height <span class="sc">~</span> age <span class="sc">+</span> weight <span class="sc">+</span> neck <span class="sc">+</span> chest <span class="sc">+</span> abdomen <span class="sc">+</span> hip <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle <span class="sc">+</span> forearm <span class="sc">+</span> wrist,</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> humans) <span class="sc">%&gt;%</span> </span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">!=</span> <span class="st">&quot;(Intercept)&quot;</span>) <span class="sc">%&gt;%</span> </span>
@@ -4430,7 +4440,7 @@ Identify a <em>subset</em> of predictors to use in our model of <span class="mat
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 10 predictors (tweak the code)</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>lm_spec <span class="sc">%&gt;%</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(height <span class="sc">~</span> age <span class="sc">+</span> weight <span class="sc">+</span> neck <span class="sc">+</span> chest <span class="sc">+</span> abdomen <span class="sc">+</span> hip <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle <span class="sc">+</span> biceps <span class="sc">+</span> forearm <span class="sc">+</span> wrist,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(height <span class="sc">~</span> age <span class="sc">+</span> weight <span class="sc">+</span> chest <span class="sc">+</span> abdomen <span class="sc">+</span> hip <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle <span class="sc">+</span> forearm <span class="sc">+</span> wrist,</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> humans) <span class="sc">%&gt;%</span> </span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">!=</span> <span class="st">&quot;(Intercept)&quot;</span>) <span class="sc">%&gt;%</span> </span>
@@ -4641,8 +4651,8 @@ Identify a <em>subset</em> of predictors to use in our model of <span class="mat
 <p><br>
 </p>
 </section>
-<section id="questions-.unnumbered-.smaller--in-group-finish-after-class-in-you-cannot-finish-all-in-class" class="level2">
-<h2 class="anchored" data-anchor-id="questions-.unnumbered-.smaller--in-group-finish-after-class-in-you-cannot-finish-all-in-class">Questions {.unnumbered .smaller}- In Group [Finish after class in you cannot finish all in-class!]</h2>
+<section id="questions-1" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="questions-1">Questions</h2>
 <p>The video for today introduced the concepts of <strong>recipes</strong> and <strong>workflows</strong> in the <strong>tidymodels</strong> framework. These concepts will become important to our new modeling algorithms. Though they aren’t <em>necessary</em> to linear regression models, let’s explore them in this familiar setting.</p>
 <p>Run through the following discussion and code one step at a time. Take note of the general process, concepts, and questions you have.</p>
 <p><br>

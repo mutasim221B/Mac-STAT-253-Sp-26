@@ -227,7 +227,7 @@ Heads up: these algorithms are important to building intuition for the questions
 
 \
 
-## Algorithm 1: Best Subset Selection  {.unnumbered .smaller} [Tea]
+## Algorithm 1: Best Subset Selection {.unnumbered .smaller}
 
 ::: incremental
 - Build *all* $2^p$ possible models that use any combination of the available predictors $(x_1, x_2,..., x_p)$.    
@@ -293,7 +293,7 @@ lm_spec %>%
 #| eval: false
 # 11 predictors (tweak the code)
 lm_spec %>% 
-  fit(height ~ age + weight + neck + chest + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist,
+  fit(height ~ age + weight + neck + chest + abdomen + hip + thigh + knee + ankle + forearm + wrist,
       data = humans) %>% 
   tidy() %>% 
   filter(term != "(Intercept)") %>% 
@@ -305,7 +305,7 @@ lm_spec %>%
 #| eval: false
 # 10 predictors (tweak the code)
 lm_spec %>% 
-  fit(height ~ age + weight + neck + chest + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist,
+  fit(height ~ age + weight + chest + abdomen + hip + thigh + knee + ankle + forearm + wrist,
       data = humans) %>% 
   tidy() %>% 
   filter(term != "(Intercept)") %>% 
@@ -495,7 +495,7 @@ Why?
 
 \
 
-## Questions {.unnumbered .smaller}- In Group [Finish after class in you cannot finish all in-class!]
+## Questions {.unnumbered .smaller}
 
 The video for today introduced the concepts of **recipes** and **workflows** in the **tidymodels** framework. These concepts will become important to our new modeling algorithms. Though they aren't *necessary* to linear regression models, let's explore them in this familiar setting. 
 

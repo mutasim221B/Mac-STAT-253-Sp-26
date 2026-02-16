@@ -1,0 +1,1024 @@
+---
+title: "Non-Parametric Models"
+subtitle: "Notes and in-class exercises"
+format: 
+  html:
+    embed-resources: true
+    toc: true
+---
+
+
+
+```{r include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  warning = FALSE,
+  message = FALSE,
+  fig.height = 2.75, 
+  fig.width = 4.25,
+  fig.env='figure',
+  fig.pos = 'h',
+  fig.align = 'center')
+```
+
+You can download the .qmd file for this activity [here](../activity_templates/L07-nonparametric.qmd) and open in R-studio. The rendered version is posted in the [course website](https://mutasim221b.github.io/Mac-STAT-253-Sp-26/) (Activities tab). I often experiment with the class activities (and see it in live!) and make updates, but I always post the final version before class starts. To be sure you have the most up-to-date copy, please download it once you’ve settled in before class begins.
+
+
+
+
+# Learning Goals {.unnumbered .smaller}
+
+- Explore the limitations of *parametric* modeling approaches such as least squares and LASSO
+- Define the concept of *parametric* vs *non-parametric* modeling approaches and understand the relative pros and cons of the two
+- Define two measures of *distance*: Manhattan and Euclidean
+- Explain the impact of *scaling/standardizing* predictors on distance calculations 
+- Implement pre-processing steps like *standardizing* and creating *dummy variables* in `tidymodels`
+
+
+
+\
+
+
+# Notes: Nonparametric v. Parametric {.unnumbered .smaller}
+
+
+## Context {.unnumbered .smaller}
+
+![](../images/MLdiagram.jpg){width=100%}
+
+
+- **world = supervised learning**       
+    We want to model some output variable $y$ using a set of potential predictors ($x_1, x_2, ..., x_p$).
+
+- **task = regression**       
+    $y$ is quantitative
+
+- **model = nonparametric regression???**       
+
+
+
+
+\
+
+## Goal {.unnumbered .smaller}
+
+Just as in Unit 2, Unit 3 will focus on *model building*, but a different aspect:
+
+- Unit 2: how do we handle / select predictors for our predictive model of $y$?
+- Unit 3: how do we handle situations in which *linear* regression models are too "rigid" to capture the relationship of $y$ vs $x$?
+
+
+## **GenAI**
+
+- For _most_ homework assignments, it is okay to use GenAI as a resource. However...
+- I **strongly** prefer that you use existing course materials first! Why? 
+  - This ensures we are all using the same terminology and coding syntax (which I have very intentionally selected).
+  - It saves resources (GenAI has a large environmental impact!). You should be able to answer all HW questions using resources I've already provided. 
+  - Homework is designed to give you opportunities to _practice_ and _synthesize_ key course concepts. Doing the synthesizing yourself (by reviewing course materials, making connections between concepts, etc.) is an important part of **learning** the material!
+- For code, specifically, it is more important to me that you **understand** what code is doing rather than being able to write it yourself. It's easy to use ChatGPT for the latter without ever figuring out the former!
+  - FYI: Quizzes will include questions about code we have seen in class. You'll need to recognize and explain what it is doing (and _why_).
+  
+  
+## **Feedback:** 
+
+- You will receive individual feedback on (almost all) questions and an overall score of **PASS** / **ATTEMPT** / **UNABLE TO ASSESS** 
+- You will access this feedback via email
+- If your overall score is **PASS** this means: 
+  - you demonstrated effort on all (or almost all) questions
+  - most of your answers were *correct* or *almost* correct
+  - although you have **PASS**ed the assignment, there likely is still room for improvement! make sure you review your feedback for *all* questions (even those marked as *correct*) and stop by office hours with any questions
+- There will be opportunities to *revise* your answers to some homework questions incorporated into the learning reflections at the end of each major topic.
+  - take note **AFTER THE CLASS** of which questions/topics need revision!
+
+\
+
+## Motivating Example {.unnumbered .smaller}
+
+Let's build a **predictive model** of blood `glucose` level in mg/dl by `time` in hours ($x$) since eating a high carbohydrate meal. 
+
+Consider 3 **linear regression models** of $y$, none of which appear to be very good:
+
+$$\begin{array}{ll}
+\text{linear:} &  y = f(x) + \varepsilon = \beta_0 + \beta_1 x + \varepsilon \\
+\text{quadratic:} & y = f(x) + \varepsilon = \beta_0 + \beta_1 x + \beta_2 x^2 + \varepsilon \\
+\text{6th order polynomial:} & y = f(x) + \varepsilon = \beta_0 + \beta_1 x + \beta_2 x^2 + \beta_3 x^3 + \beta_4 x^4 + \beta_5 x^5 +  \beta_6 x^6 + \varepsilon \\
+\end{array}$$
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 5.5
+#| eval: true
+#| cache: false
+#| message: false
+#| warning: false
+library(tidyverse)
+library(gridExtra)
+library(nlme)
+
+data(Glucose2)
+
+glu_data <- Glucose2 %>% 
+    group_by(Time) %>% 
+    summarize(glucose = mean(glucose)) %>% 
+    mutate(time = Time*10/60) %>% 
+    select(-Time)
+glu_data
+g <- ggplot(glu_data, aes(y = glucose, x = time)) + 
+    geom_point() +
+    labs(x = "time (hours)", y = "glucose (mg/dl)") + 
+    lims(y = c(3,7))
+
+
+g0 <- g + 
+  labs(title = "raw data")
+
+g1 <- g + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(title = "linear")
+
+g2 <- g + 
+  geom_smooth(method = "lm", formula = y ~ poly(x, 2), se = FALSE) +
+  labs(title = "quadratic")
+
+g3 <- g + 
+  geom_smooth(method = "lm", formula = y ~ poly(x, 6), se = FALSE) +
+  labs(title = "6th order polynomial")
+
+grid.arrange(g0,g1,g2,g3,ncol=2)
+```
+
+
+<br>
+
+
+**Parametric vs Nonparametric**
+
+These **parametric** linear regression models assume (incorrectly) that we can represent glucose over time by the following formula for $f(x)$ that depends upon *parameters* $\beta_i$:
+    
+$$y = f(x) + \varepsilon = \beta_0 + \beta_1x_1 + \cdots + \beta_p x_p + \varepsilon$$
+
+**Nonparametric** models do NOT assume a parametric form for the relationship between $y$ and $x$, $f(x)$. Thus they are more *flexible*.
+  
+  
+
+\
+\
+
+# Exercises {-}
+
+
+Be kind to yourself/each other and work **AS A GROUP**!
+
+
+## Part 1: Intuition {.unnumbered .smaller}
+
+In Part 1, your task is to come up with a nonparametric algorithm to estimate $f(\text{time})$ in the equation $$\text{glucose} = f(\text{time}) + \epsilon$$
+
+\
+
+1.  **Make some nonparametric predictions**    
+    Working as a *group*, thinking nonparametrically, and utilizing the plot and data in the handout, predict glucose level after:
+    - 1.5 hours
+    - 4.25 hours
+    - $x$ hours (i.e. what's your general prediction process at any time point $x$?)
+
+
+\
+
+2. **Build a nonparametric algorithm**    
+    Working as a *group*:
+    - Translate your prediction process into a formal **algorithm**, i.e. step-by-step procedure or recipe, to predict glucose at any time point $x$. THINK:        
+        - Does this depend upon any *tuning parameters*? For example, did your prediction process use any assumed "thresholds" or quantities?
+        - If so, represent this tuning parameter as "t" and write your algorithm using t (not a tuned value for t).
+    - On the separate page provided, one person should summarize this algorithm and report the predictions you got using this algorithm.
+    
+\
+
+3. **Test your algorithm**        
+    Exchange algorithms with another group.
+    - Is the other group's algorithm similar to yours?
+    - Use their algorithm to predict glucose after 1.5 hours and 4.25 hours. Do your calculations match theirs? If not, what was unclear about their algorithm that led to the discrepancy?
+
+\
+
+4. **Building an algorithm as a class**       
+    a. On your sheet, sketch a predictive model of glucose by time that a "good" algorithm would produce.
+    b. In general, how would such an algorithm work? What would be its *tuning parameter*?
+
+
+\
+\
+
+## Part 2: Distance  {.unnumbered .smaller}
+
+Central to nonparametric modeling is the concept of using data points within some local *window* or *neighborhood*.
+
+Defining a local window or neighborhood relies on the concept of *distance*.
+
+With only one predictor, this was straightforward in our glucose example: the closest neighbors at time $x$ are the data points observed at the *closest* time points.
+
+<br>
+
+
+**GOAL**
+
+Explore the idea of *distance* when we have more predictors, and the data-preprocessing steps we have to take in order to implement this idea in practice.
+
+
+
+\
+
+5. **Two measures of distance**       
+    Consider data on 2 predictors for 2 students:
+    
+- student 1: 8 hours sleep Monday ($a_1$),  9 hours sleep Tuesday ($b_1$)
+- student 2: 7 hours sleep Monday ($a_2$), 11 hours sleep Tuesday ($b_2$)
+    
+a. Calculate the Manhattan distance between the 2 students. 
+        
+$$|a_1 - a_2| + |b_1 - b_2|$$
+        
+```{r}
+# a
+abs(8 - 7) + abs(9 - 11)
+```
+        
+```{r}
+#| echo: false
+#| eval: true
+data.frame(a = c(8, 7), b = c(9, 11)) %>% 
+  ggplot(aes(x = a, y = b)) + 
+  geom_point() + 
+  geom_segment(aes(y = c(9, 9), yend = c(11, 9), x = c(7, 7), xend = c(7, 8)), linetype = "dashed") + 
+  lims(x = c(6, 9), y = c(8.5, 11.5))
+```
+        
+
+        
+        
+b. Calculate the Euclidean distance between the 2 students:       
+        
+$$\sqrt{(a_1 - a_2)^2 + (b_1 - b_2)^2}$$        
+        
+```{r}
+# b
+sqrt((8 - 7)^2 + (9 - 11)^2)     
+```
+        
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+data.frame(a = c(8, 7), b = c(9, 11)) %>% 
+  ggplot(aes(x = a, y = b)) + 
+  geom_point() + 
+  geom_segment(aes(y = 11, yend = 9, x = 7, xend = 8), linetype = "dashed") + 
+  lims(x = c(6, 9), y = c(8.5, 11.5))
+```
+        
+        
+      
+
+**NOTE:** We'll typically use Euclidean distance in our algorithms. But for the purposes of this activity, use Manhattan distance (just since it's easier to calculate and gets at the same ideas).
+
+
+\
+
+6. **Who are my neighbors?**        
+    Consider two more possible predictors of some student outcome variable $y$:
+    
+- $x_1$ = number of days old
+- $x_2$ = major division (humanities, fine arts, social science, or natural science)
+    
+Calculate how many days old you are:
+    
+```{r}
+#| eval: false
+# Record dates in year-month-day format
+today <- today()
+bday  <- as.Date("????-??-??")
+    
+# Calculate difference
+difftime(today, bday, units = "days")
+```
+
+```{r}
+
+```
+  
+  
+Then for each scenario, identify which of your group members is your nearest neighbor, as defined by Manhattan distance:
+    
+a. Using only $x_1$.
+b. Using only $x_2$. And how are you measuring the distance between students' major divisions (categories not quantities)?!
+c. Using *both* $x_1$ and $x_2$
+
+
+
+\
+
+7. **Measuring distance: 2 quantitative predictors**  
+    Consider 2 more measures on another 3 students:
+
+
+|           | Days Old  | Distance from Campus | 
+|-----------|----------:|---------------------:|
+| student 1 | 7300 days |    0.1 hour          |
+| student 2 | 7304 days |   0.1 hour           |
+| student 3 | 7300 days | 3.1 hours            |
+
+<br>
+
+  a. Contextually, not mathematically, do you think student 1 is more similar to student 2 or student 3?
+  
+  b. Calculate the mathematical Manhattan distance between: (1) students 1 and 2; and (2) students 1 and 3.
+  
+  c. Do your contextual and mathematical assessments match? If not, what led to this discrepancy?
+    
+
+  
+\
+
+8. **Measuring distance: quantitative & categorical predictors**    
+    Let's repeat for another 3 students:  
+   
+    
+|           | Major |  Days Old | 
+|-----------|:-----:|:---------:|
+| student 1 | STAT  | 7300 days |
+| student 2 | STAT  | 7302 days |
+| student 3 | GEOG  | 7300 days |
+    
+<br>
+
+  a. Contextually, do you think student 1 is more similar to student 2 or student 3?
+  
+  b. Mathematically, calculate the Manhattan distance between: (1) students 1 and 2; and (2) students 1 and 3. NOTE: The distance between 2 different majors is 1.
+  
+  c. Do your contextual and mathematical assessments match? If not, what led to this discrepancy?
+    
+
+
+\
+\
+
+## Part 3: Pre-processing predictors  {.unnumbered .smaller}
+
+In nonparametric modeling, we don't want our definitions of "local windows" or "neighbors" to be skewed by the scales and structures of our predictors. 
+
+It's therefore important to create **variable recipes** which **pre-process** our predictors before feeding them into a nonparametric algorithm. 
+
+Let's explore this idea using the `bikes` data to model `rides` by `temp`, `season`, and `breakdowns`:
+
+
+```{r}
+#| eval: true
+#| message: false
+# Load some packages
+library(tidyverse)
+library(tidymodels)
+
+# Load the bikes data and do a little data cleaning
+set.seed(253)
+bikes <- read.csv("https://mac-stat.github.io/data/bike_share.csv") %>% 
+  rename(rides = riders_registered, temp = temp_feel) %>% 
+  mutate(temp = round(temp)) %>% 
+  mutate(breakdowns = sample(c(rep(0, 728), rep(1, 3)), 731, replace = FALSE)) %>% 
+  select(temp, season, breakdowns, rides)
+head(bikes)
+```
+
+
+\
+
+9. **Standardizing quantitative predictors**   
+    Let's **standardize** or **normalize** the 2 *quantitative* predictors, `temp` and `breakdowns`, *to the same scale*: centered at 0 with a standard deviation of 1. Run and reflect upon each chunk below:
+    
+```{r}
+# Recipe with 1 preprocessing step
+recipe_1 <- recipe(rides ~ ., data = bikes) %>% 
+  step_normalize(all_numeric_predictors())
+    
+# Check it out
+recipe_1
+```
+    
+```{r}
+# Check out the first 3 rows of the pre-processed data
+# (Don't worry about the code. Normally we won't do this step.)
+recipe_1 %>% 
+  prep() %>% 
+  bake(new_data = bikes) %>% 
+  head(3)
+```
+    
+```{r}
+# Compare to first 3 rows of original data
+bikes %>% 
+  head(3)
+```
+    
+**Follow-up questions & comments**
+    
+- Take note of how the pre-processed data compares to the original. Confirm this standardized value "by hand" using the mean and standard deviation in `temp`:        
+
+```{r}
+#| eval: false
+bikes %>% 
+    summarize(mean(temp), sd(temp))
+    
+# Standardized temp: (observed - mean) / sd
+(___ - ___) / ___
+```
+
+```{r}
+
+```
+
+- The first day had a `temp` of 65 degrees and a *standardized* `temp` of -0.66, i.e. 65 degrees is 0.66 standard deviations below average. 
+
+\
+
+
+10. **Creating "dummy" variables for categorical predictors**    
+    Consider the *categorical* `season` predictor: fall, winter, spring, summer. Since we can't plug *words* into a mathematical formula, ML algorithms convert categorical predictors into "dummy variables", also known as indicator variables. (This is unfortunately the technical term, not something I'm making up.) Run and reflect upon each chunk below:
+    
+```{r}
+# Recipe with 1 preprocessing step
+recipe_2 <- recipe(rides ~ ., data = bikes) %>% 
+  step_dummy(all_nominal_predictors())
+```
+    
+```{r}
+# Check out 3 specific rows of the pre-processed data
+# (Don't worry about the code.)
+recipe_2 %>% 
+  prep() %>% 
+  bake(new_data = bikes) %>% 
+  filter(rides %in% c(655, 674))
+```
+
+```{r}
+# Compare to the same 3 rows in the original data
+bikes %>% 
+  filter(rides %in% c(655, 674))
+```
+    
+**Follow-up questions & comments**
+    
+- 3 of the 4 seasons show up in the pre-processed data as "dummy variables" with 0/1 outcomes. Which season does *not* appear? This "reference" category is also the one that wouldn't appear in a table of model coefficients.
+- How is a `winter` day represented by the 3 dummy variables?
+- How is a `fall` day represented by the 3 dummy variables?
+
+    
+
+
+
+
+\
+
+11. **Combining pre-processing steps**       
+    We can also do *multiple* pre-processing steps! In some cases, order matters. Compare the results of normalizing before creating dummy variables and vice versa:  
+    
+    
+```{r}
+# step_normalize() before step_dummy()
+recipe(rides ~ ., data = bikes) %>% 
+  step_normalize(all_numeric_predictors()) %>%
+  step_dummy(all_nominal_predictors()) %>% 
+  prep() %>% 
+  bake(new_data = bikes) %>% 
+  filter(rides %in% c(655, 674))
+```
+    
+```{r}
+# step_dummy() before step_normalize()
+recipe(rides ~ ., data = bikes) %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  step_normalize(all_numeric_predictors()) %>% 
+  prep() %>% 
+  bake(new_data = bikes) %>% 
+  filter(rides %in% c(655, 674))
+```
+    
+**Follow-up questions / comments**
+    
+- How did the order of our 2 pre-processing steps impact the outcome?
+- The standardized dummy variables lose some contextual meaning. But, in general, negative values correspond to 0s (not that category), positive values correspond to 1s (in that category), and the further a value is from zero, the less common that category is. We'll observe in the future how this is advantageous when defining "neighbors".
+
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+**PAUSE**
+
+Though our current focus is on nonparametric modeling, the concepts of standardizing and dummy variables are also important in parametric modeling.
+
+
+algorithm      pre-processing step  necessary?    done automatically behind the R code?
+-------------- -------------------- ------------- ----------------------------------------
+least squares  standardizing        no            no (because it's not necessary!)
+               dummy variables      yes           yes
+LASSO          standardizing        yes           yes
+               dummy variables      yes           no (we have to pre-process)
+
+        
+        
+
+
+
+\
+\
+\
+\
+
+
+12. **Less common: Removing variables with "near-zero variance"**    
+    Notice that on *almost* every day in our sample, there were 0 bike station breakdowns. Thus there is *near-zero variability* (nzv) in the `breakdowns` predictor:
+    
+```{r}
+#| eval: true
+bikes %>% 
+  count(breakdowns)
+```
+    
+This extreme predictor could bias our model results -- the rare days with 1 breakdown might seem more important than they are, thus have undue influence. To this end, we can use `step_nzv()`:
+    
+```{r}
+# Recipe with 3 preprocessing steps
+recipe_3 <- recipe(rides ~ ., data = bikes) %>% 
+  step_nzv(all_predictors()) %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  step_normalize(all_numeric_predictors())
+```
+    
+```{r}
+# Check out the first 3 rows of the pre-processed data
+# (Don't worry about the code.)
+recipe_3 %>% 
+  prep() %>% 
+  bake(new_data = bikes) %>% 
+  head(3)
+```
+    
+```{r}
+# Compare to this to the first 3 rows in the original data
+bikes %>% 
+  head(3)
+```
+    
+**Follow-up questions**
+    
+- What did `step_nzv()` do?!
+- We *could* move `step_nzv()` to the last step in our recipe. But what advantage is there to putting it first?
+
+
+
+
+\
+
+13. **There's lots more!**       
+
+The 3 pre-processing steps above are among the most common. Many others exist and can be handy in specific situations. Run the code below to get a list of possibilities:
+    
+```{r}
+ls("package:recipes")[startsWith(ls("package:recipes"), "step_")]
+```
+
+
+
+\
+\
+
+## Part 4: Additional Exercises {.unnumbered .smaller}
+
+If you complete the above exercises in class, you should try the remaining exercises.
+
+Otherwise, you do not need to loop back -- these concepts will be covered in the videos for the next class.
+
+
+\
+
+14. **KNN**    
+
+Now that we have a sense of some themes (defining "local") and details (measuring "distance") in nonparametric modeling, let's explore a common nonparametric algorithm: K Nearest Neighbors (KNN). Let's start with your *intuition* for how the KNN works, simply based on its name. On your paper, sketch what you *anticipate* the following models of the 14 glucose measurements to look like:    
+  
+  - $K = 1$ nearest neighbors model    
+  - $K = 14$ nearest neighbors model   
+
+NOTE: You might start by making predictions at each *observed* time point (eg: 0, 15 min, 30 min,...). Then think about what the predictions would be for times *in between* these observations (eg: 5 min).
+
+
+```{r}
+#| echo: false
+#| eval: true
+g0
+```
+
+
+
+
+\
+
+15. **Thinking like a machine learner**    
+    a. Upon what *tuning parameter* does KNN depend?
+    b. What's the *smallest* value this tuning parameter can take? The *biggest*?
+    c. Selecting a "good" tuning parameter is a goldilocks challenge:
+        - What happens when the tuning parameter is too small?    
+        - Too big?
+
+
+        
+\
+\
+
+\
+
+# Solutions {-}
+
+## Part 1: Intuition {.unnumbered .smaller}
+
+1.  **Make some nonparametric predictions**    
+    
+<details>
+<summary>Solution</summary>
+Will vary by group.
+</details>
+<br>
+
+
+
+2. **Build a nonparametric algorithm**    
+
+<details>
+<summary>Solution</summary>
+Will vary by group.
+</details>
+<br>
+
+
+
+3. **Test your algorithm**        
+
+<details>
+<summary>Solution</summary>
+Will vary by group.
+</details>
+<br>
+
+
+<!-- nudge toward thinking about windows -->
+<!-- how do we pick window size?   what are we doing within each window?     -->
+
+
+4. **Building an algorithm as a class**       
+
+<details>
+<summary>Solution</summary>
+a. smooth curve that follows the general trend
+b. *tuning parameter* = size of the windows or neighborhoods. in general, we'll fit "models" within smaller windows
+</details>
+<br>    
+    
+
+
+
+
+## Part 2: Distance  {.unnumbered .smaller}
+
+
+5. **Two measures of distance**  
+
+<details>
+<summary>Solution</summary>
+```{r eval=TRUE, echo=TRUE}
+# a
+abs(8 - 7) + abs(9 - 11)
+
+# b
+sqrt((8 - 7)^2 + (9 - 11)^2)
+```
+</details>
+<br>
+
+
+6. **Who are my neighbors?**   
+
+<details>
+<summary>Solution</summary>
+Will vary by group.
+</details>
+<br>
+
+
+7. **Measuring distance: 2 quantitative predictors**  
+
+<!--    
+- student 1: 7300 days old, lives 0.1 hour from campus 
+- student 2: 7304 days old, lives 0.1 hour from campus 
+- student 3: 7300 days old, lives 3.1 hours from campus 
+-->
+
+
+<details>
+<summary>Solution</summary>
+a. My opinion: student 2. Being 4 days apart is more "similar" than 2 students that live 3 hours apart.
+b. students 1 and 2: $|7300 - 7304| + |0.1 - 0.1| = 4$, 
+   students 1 and 3: $|7300 - 7300| + |0.1 - 3.1| = 3$
+c. student 3. nope. the variables are on different scales.
+</details>
+<br>
+
+
+
+8. **Measuring distance: quantitative & categorical predictors**    
+
+<!--
+    - student 1: STAT major, 7300 days old
+    - student 2: STAT major, 7302 days old
+    - student 3: GEOG major, 7300 days old
+--> 
+
+<details>
+<summary>Solution</summary>
+a. My opinion: student 2. Being 2 days apart is more "similar" than different majors.
+b. students 1 and 2: $|1 - 1| + |7300 - 7302| = 2$, 
+   students 1 and 3: $|1 - 0| + |7300 - 7300| = 1$
+c. nope. the variables are on different scales.
+</details>
+<br>
+
+
+## Part 3: Pre-processing predictors  {.unnumbered .smaller}
+
+```{r}
+#| eval: true
+#| echo: true
+#| code-fold: true
+# Load some packages
+library(tidyverse)
+library(tidymodels)
+
+# Load the bikes data and do a little data cleaning
+set.seed(253)
+bikes <- read.csv("https://mac-stat.github.io/data/bike_share.csv") %>% 
+  rename(rides = riders_registered, temp = temp_feel) %>% 
+  mutate(temp = round(temp)) %>% 
+  mutate(breakdowns = sample(c(rep(0, 728), rep(1, 3)), 731, replace = FALSE)) %>% 
+  select(temp, season, breakdowns, rides)
+```
+
+\
+
+9. **Standardizing quantitative predictors**
+
+<details>
+<summary>Solution</summary>
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: true
+# Recipe with 1 preprocessing step
+recipe_1 <- recipe(rides ~ ., data = bikes) %>% 
+  step_normalize(all_numeric_predictors())
+
+# Check it out
+recipe_1
+```
+    
+```{r}
+#| eval: true
+#| echo: true
+# Check out the first 3 rows of the pre-processed data
+# (Don't worry about the code. Normally we won't do this step.)
+recipe_1 %>% 
+  prep() %>% 
+  bake(new_data = bikes) %>% 
+  head(3)
+```
+    
+```{r}
+#| eval: true
+#| echo: true
+# Compare to first 3 rows of original data
+bikes %>% 
+  head(3)
+```
+    
+**Follow-up questions**
+    
+- The numeric predictors, but not rides, were standardized.
+-  See below.
+
+```{r}
+#| eval: true
+#| echo: true
+bikes %>% 
+  summarize(mean(temp), sd(temp))
+        
+(65 - 74.69083) / 14.67838
+```
+</details>
+<br>
+
+
+
+10. **Creating "dummy" variables for categorical predictors** 
+
+<details>
+<summary>Solution</summary>
+```{r}
+#| eval: true
+#| echo: true
+#| message: true
+# Recipe with 1 preprocessing step
+recipe_2 <- recipe(rides ~ ., data = bikes) %>% 
+  step_dummy(all_nominal_predictors())
+
+# Check it out
+recipe_2
+```
+
+```{r}
+#| eval: true
+#| echo: true
+# Check out 3 specific rows of the pre-processed data
+# (Don't worry about the code.)
+recipe_2 %>% 
+  prep() %>% 
+  bake(new_data = bikes) %>% 
+  filter(rides %in% c(655, 674))
+```
+    
+```{r}
+#| eval: true
+#| echo: true
+# Compare to the same 3 rows in the original data
+bikes %>% 
+  filter(rides %in% c(655, 674))
+```
+
+**Follow-up questions**
+    
+- fall
+- 0 for spring and summer, 1 for winter
+- 0 for spring, summer, and winter
+</details>
+<br>
+
+
+11. **Combining pre-processing steps**  
+
+<details>
+<summary>Solution</summary>
+```{r}
+#| eval: true
+#| echo: true
+# step_normalize() before step_dummy()
+recipe(rides ~ ., data = bikes) %>% 
+  step_normalize(all_numeric_predictors()) %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  prep() %>% 
+  bake(new_data = bikes) %>% 
+  filter(rides %in% c(655, 674))
+```
+    
+```{r}
+#| eval: true
+#| echo: true
+# step_dummy() before step_normalize()
+recipe(rides ~ ., data = bikes) %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  step_normalize(all_numeric_predictors()) %>% 
+  prep() %>% 
+  bake(new_data = bikes) %>% 
+  filter(rides %in% c(655, 674))
+```
+    
+**Follow-up questions / comments**
+    
+- when dummies are created second, they remain as 0s and 1s. when dummies are created first, these 0s and 1s are standardized
+
+</details>
+<br>
+
+
+
+12. **Less common: Removing variables with "near-zero variance"** 
+
+<details>
+<summary>Solution</summary>
+
+```{r}
+#| eval: true
+#| echo: true
+# notice the near-zero variability in the breakdowns predictor
+bikes %>% 
+  count(breakdowns)
+```
+
+```{r}
+#| eval: true
+#| echo: true
+# Recipe with 3 preprocessing steps
+recipe_3 <- recipe(rides ~ ., data = bikes) %>% 
+  step_nzv(all_predictors()) %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  step_normalize(all_numeric_predictors())
+
+# Check out the first 3 rows of the pre-processed data
+# (Don't worry about the code.)
+recipe_3 %>% 
+  prep() %>% 
+  bake(new_data = bikes) %>% 
+  head(3)
+```
+    
+```{r}
+#| eval: true
+#| echo: true
+# Compare to this to the first 3 rows in the original data
+bikes %>% 
+  head(3)
+```
+    
+**Follow-up questions**
+    
+- it removed `breakdowns` from the data set.
+- more computationally efficient. don't spend extra energy on pre-processing `breakdowns` since we don't even want to keep it.
+</details>
+<br>
+
+
+
+13. **There's lots more!**       
+
+<details>
+<summary>Solution</summary>
+    
+```{r}
+#| eval: true
+#| echo: true
+ls("package:recipes")[startsWith(ls("package:recipes"), "step_")]
+```
+    
+</details>
+
+
+\
+\
+
+## Part 4: Optional  {.unnumbered .smaller}
+
+14. **KNN**    
+
+<details>
+<summary>Solution</summary>
+Will vary by group.
+</details>
+<br>
+
+        
+
+15. **Thinking like a machine learner**    
+
+<details>
+<summary>Solution</summary>
+a. number of neighbors "K"
+b. 1, 2, ...., n (sample size)
+c. When K is too small, our model is too flexible / overfit. When K is too big, our model is too rigid / simple.
+</details>
+<br>
+
+
+
+\
+\
+
+
+# Wrapping Up {-}
+
+## Main Points from Today {.unnumbered .smaller}
+
+- If the relationship between $x$ and $y$ is not a straight line or a polynomial (such as quadratic), we might need nonparametric methods.  
+- One needs to consider the scale of variables when calculating distance between observations with more than one predictor.
+- Pre-processing steps invoke important assumptions that impact your models and predictions.
+
+## After Class {.unnumbered .smaller}
+
+- [ ] Finish the exercises (at least through Part 3), check the solutions, organize your notes, and come to office hours with questions!
+- [ ] Before our next class: 
+  - Complete CP6
+  - Install the `kknn` and `shiny` packages
+
+

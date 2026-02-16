@@ -247,6 +247,7 @@ variable_recipe <- recipe(height ~ ., data = humans) %>%
   step_dummy(all_nominal_predictors())
 ```
 
+
 ```{r}
 #| eval: true
 #| echo: true
@@ -255,6 +256,7 @@ lasso_workflow <- workflow() %>%
   add_recipe(variable_recipe) %>% 
   add_model(lasso_spec)
 ```
+
 
 ```{r}
 #| eval: true
@@ -404,7 +406,7 @@ c. Through shrinkage, the LASSO coefficients lose some contextual meaning, so we
 
 d. The LASSO `tidy()` summary doesn't report p-values for testing the "significance" of our predictors. Why don't we care? (Name two reasons.)
     
-    
+
     
 \
 
@@ -420,11 +422,15 @@ lasso_workflow %>%
 ```
 
 ```{r}
-
+lasso_workflow %>% 
+  finalize_workflow(parameters = best_penalty) %>% 
+  fit(data = humans) %>% 
+  tidy() %>% 
+  filter(estimate != 0) # add this line to print only non-zero coefficients
 ```
     
 b. Based on this example, do you think LASSO is a greedy algorithm? Are you "stuck" with your past locally optimal choices? Compare the predictors in this larger model with those in the smaller, parsimonious model.   
-    
+> ankle is not in this larger model but it is in the more parsimonious model. Therefore, the algorithm can’t be greedy. If it were greedy, then ankle would get removed for all smaller models.
     
 
 \
@@ -467,6 +473,8 @@ ls_workflow %>%
     
 a. Our `final_lasso` has 5 predictors and a CV MAE of 1.9 (calculated above). The `ls_model` has 12 predictors and a CV MAE of 1.8 (confirm). Comment.
 
+> LASSO model is much simpler, and has only slightly worse predictions (on the scale of inches).
+
 b. Use both `final_lasso` and `ls_model` to predict the height of the new patient below. How do these compare? Does this *add to* or *calm* any fears you might have had about shrinking coefficients?!
 
 ```{r}
@@ -481,7 +489,9 @@ predict(new_data = ___)
 ```     
 
 ```{r}
-
+# LS prediction
+ls_model %>% 
+  predict(new_data = new_patient)
 ```
 
 ```{r}
@@ -492,19 +502,23 @@ predict(new_data = ___)
 ```  
 
 ```{r}
-
+# LASSO prediction
+final_lasso %>% 
+  predict(new_data = new_patient)
 ```
+
+> They’re very similar! Shrinking coefficients doesn’t mean our predictions are odd.
 
 c. Which final model would you choose, the LASSO or least squares?
  
-
+> I’d choose LASSO since it seems to yield comparably accurate predictions but is much simpler than the full least squares model.
 
 
 
 
 \
 
-**6. Visualizing LASSO shrinkage** - Group
+**6. Visualizing LASSO shrinkage** 
 
 Finally, let's zoom back out and compare the coefficients for all 50 LASSO models:    
     
@@ -526,7 +540,7 @@ rownames(all_lassos$beta)
     
 There's a *lot* of information in this plot!
     
-  - **lines** = each line represents a different predictor. The small number to the left of each line indicates the predictor by its order in the `rownames()` list. Click "Zoom" to zoom in.
+  - **lines** = each line represents a different predictor. The small number to the right of each line indicates the predictor by its order in the `rownames()` list. Click "Zoom" to zoom in.
   - **x-axis** = our range of $\lambda$ values, on the log scale
   - **y-axis** = coefficient values at the corresponding $\lambda$   
   - **numbers above the plot** = how many predictors remain in the model with the corresponding $\lambda$    
@@ -561,33 +575,46 @@ lasso_coefs %>%
 
 \
 
-7. **plot: examining specific predictors**- Group
+7. **plot: examining specific predictors**
 
 Answer the following questions for predictor 7.
 
 a. Which predictor is this?
 
+> thigh
+
 b. Approximate the coefficient in the LASSO with $log(\lambda) \approx -5$.
+
+> very roughly -0.32
 
 c. At what $log(\lambda)$ does the coefficient start to significantly shrink?  
 
+> roughly -3.5
+
 d. At what $log(\lambda)$ does the predictor get dropped from the model?    
 
+> roughly -1.8
 
 
 \
 
-8. **plot: big picture**- Group
+8. **plot: big picture**
 
-a. How does this plot reflect the LASSO shrinkage phenomenon?    
+a. How does this plot reflect the LASSO shrinkage phenomenon?
 
-b. What is one of the most "important" or "persistent" predictors?    
+> coefficients are shrinking toward or to 0 as $\lambda$ increases (ie $-\log(\lambda)$ decreases)
 
-c. What is one of the least persistent predictors?    
+b. What is one of the most "important" or "persistent" predictors?
+
+> weight (variable 2), knee (variable 8)
+
+c. What is one of the least persistent predictors?
+
+> lots of options here. look for the lines that drop to 0 sooner.
 
 d. Our parsimonious LASSO model had 5 predictors. How many predictors would remain if we had *minimized* the CV MAE using $\lambda \approx 0.0126$ ($log(\lambda) = -4.4$)?    
 
-
+> 11
 
 
 
@@ -619,6 +646,15 @@ final_lasso %>%
 ```
 
 ```{r}
+# Now calculate and plot the residuals
+final_lasso %>% 
+  augment(new_data = humans) %>% 
+  mutate(.resid = height - .pred) %>% # resid = observed - predicted
+  ggplot(aes(x = .pred, y = .resid)) + 
+  geom_point() + 
+  geom_smooth() +
+  geom_hline(yintercept = 0) + 
+  geom_smooth(se = FALSE)
 
 ```
 
@@ -626,7 +662,7 @@ final_lasso %>%
 
 \
 
-10. **OPTIONAL: Practice on another dataset**.   
+10. **Additional Practice on another dataset**.   
 
 The `Hitters` data in the `ISLR` package contains the salaries and performance measures for 322 Major League Baseball players. Use LASSO to determine the "best" predictive model of player `Salary`.  
 
