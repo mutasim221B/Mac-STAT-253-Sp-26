@@ -97,7 +97,7 @@ KNN does *not* produce a nice formula for $\hat{f}(x)$, but rather a set of rule
 
 ![](../images/KNN_ISLR.png)
 
-    
+
 
 \
 \
@@ -264,7 +264,7 @@ b. To explore the properties of *overly rigid* models, repeat part a for K = 100
     - high bias, low variance
     - high bias, high variance
 
-c. To explore the properties of more "balanced" models, repeat part a for K = 25:       
+c. To explore the properties of more *balanced* models, repeat part a for K = 25:       
     - low bias, low variance
     - low bias, high variance
     - moderate bias, low variance
@@ -284,11 +284,15 @@ In general...
 
 a. Why is "high bias" bad?
 
+> On average, our prediction errors are large or high
+
 b. Why is "high variability" bad?
+
+> The model is not stable / trustworthy, changes depending on the sample data
 
 c. What is meant by the **bias-variance tradeoff**?
 
-
+> Ideally, both bias and variance would be low. BUT when we improve one of the features, we hurt the other.
 
 
 
@@ -490,7 +494,7 @@ sqrt((14213 - ___)^2 + (452 - ___)^2 + (1 - ___)^2)
 ```
 
 ```{r}
-
+sqrt((14213 - 8949)^2 + (452 - 587)^2 + (1 - 1)^2)
 ```
   
 
@@ -696,7 +700,7 @@ knn_models %>%
 ```
     
 ```{r}
-        
+ 
 ```
 
 
@@ -782,7 +786,6 @@ e. Consider another "con". Just as with parametric models, we could add more and
    
    
    
-   
     
 \
 
@@ -798,7 +801,6 @@ ggplot(College, aes(x = Outstate, y = Room.Board)) +
     
 b. In general, in what situations would you use least squares instead of KNN? Why?
         
-
 
 
 

@@ -47,6 +47,7 @@ website:
           - "activities/L05-model-selection.qmd"
           - "activities/L06-lasso.qmd"
           - "activities/L07-nonparametric.qmd"
+          - "activities/L08-knn-bias-variance.qmd"
 
     - id: appendices
       title: "Appendices"
