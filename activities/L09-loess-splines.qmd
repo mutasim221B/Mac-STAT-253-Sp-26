@@ -429,7 +429,7 @@ Could we use LASSO with a spline or polynomial recipe? Yes or No? Explain.
 \
 \
 
-# Exercises {-}
+# Examples and Exercises {-}
 
 ## Part 1: Implementing Splines {.unnumbered .smaller}
 
@@ -584,6 +584,7 @@ ls_mod <-  lasso_wf_tune  %>%
 ls_mod %>% 
   tidy()
 ```
+
 
 ```{r}
 #b
@@ -1086,7 +1087,7 @@ c. *moderate bias* and *low variance*:  medium `deg_free`
 
     
     
-## Exercises {.unnumbered .smaller}
+## Examples and Exercises {.unnumbered .smaller}
 
 ```{r}
 #| echo: false
