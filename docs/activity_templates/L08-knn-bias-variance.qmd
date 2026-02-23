@@ -243,6 +243,7 @@ The default "optimal" kernel used in `kknn` was defined in a [2012 Annals of Sta
 - **Bias: ** On average, across different datasets, how close are the estimates of $f(x)$ to the observed $y$ outcomes?
   - We have *high bias* if our estimates are far from the observed $y$ outcomes
   - We have *low bias* if our estimates are close to the observed $y$ outcomes
+  
 - **Variance: **How variable are the estimates of $f(x)$ from dataset to dataset? Are the estimates stable or do they vary a lot? 
   - We have *high variance* if our estimates change a lot from dataset to dataset
   - We have *low* variance if our estimates don't change much from dataset to dataset
@@ -1475,10 +1476,6 @@ d. Answers will vary. Come to office hours to discuss.
 <br>
   
     
-
-
-
-
 
 \
 \

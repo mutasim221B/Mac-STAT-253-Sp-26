@@ -307,7 +307,7 @@ difftime(today, bday, units = "days")
 
 ```
   
-  
+
 Then for each scenario, identify which of your group members is your nearest neighbor, as defined by Manhattan distance:
     
 a. Using only $x_1$.
@@ -332,8 +332,19 @@ c. Using *both* $x_1$ and $x_2$
 
   a. Contextually, not mathematically, do you think student 1 is more similar to student 2 or student 3?
   
+  
+  
+  
+  
+  
+  
   b. Calculate the mathematical Manhattan distance between: (1) students 1 and 2; and (2) students 1 and 3.
   
+  
+students 1 and 2: $|7300 - 7304| + |0.1 - 0.1| = 4$, 
+students 1 and 3: $|7300 - 7300| + |0.1 - 3.1| = 3$
+   
+   
   c. Do your contextual and mathematical assessments match? If not, what led to this discrepancy?
     
 
@@ -354,8 +365,17 @@ c. Using *both* $x_1$ and $x_2$
 
   a. Contextually, do you think student 1 is more similar to student 2 or student 3?
   
-  b. Mathematically, calculate the Manhattan distance between: (1) students 1 and 2; and (2) students 1 and 3. NOTE: The distance between 2 different majors is 1.
   
+  
+  
+  
+  
+  b. Mathematically, calculate the Manhattan distance between: (1) students 1 and 2; and (2) students 1 and 3. NOTE: The distance between 2 different majors is 1.
+
+students 1 and 2: $|1 - 1| + |7300 - 7302| = 2$, 
+   students 1 and 3: $|1 - 0| + |7300 - 7300| = 1$
+   
+
   c. Do your contextual and mathematical assessments match? If not, what led to this discrepancy?
     
 

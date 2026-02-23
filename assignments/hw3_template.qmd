@@ -1,0 +1,185 @@
+---
+title: "Homework 3"
+subtitle: "Stat 253"
+author: "Your Name"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    embed-resources: true
+    fig-width: 5
+    fig-height: 3
+execute:
+  error: false
+  warning: false
+knitr:
+  opts_chunk:
+    collapse: true
+    message: false
+---
+
+
+# Notes 
+
+(@) Please **update the author name** to your name! 
+(@) This document is for your answers only. Do NOT write out the homework questions in this document. Writing out the questions makes it very challenging to grade the homework. (You can create a separate document for your own records if you wish.) 
+(@) Besides adding your answers/code, please DO NOT make any deletions or changes to the structure of this template! 
+
+
+
+# Setup 
+
+Put any code you need to load packages and load/prep data here. 
+
+```{r}
+
+```
+
+
+---
+
+title: 'Homework 3: Regression Review'
+
+subtitle: STAT 253
+
+format:
+
+  html:
+
+    toc: true
+
+    embed-resources: true
+
+---
+
+
+
+# Exercises
+
+
+
+## Exercise 0: Important Notes
+
+
+
+## Exercise 1: Big Picture
+
+
+
+### Part a
+
+
+
+### Part b
+
+
+
+### Part c
+
+
+
+### Part d
+
+
+
+### Part e 
+
+
+
+## Exercise 2: Algorithm Pros & Cons
+
+
+
+### Part a: least squares
+
+
+
+### Part b: LASSO
+
+
+
+### Part c: KNN
+
+
+
+### Part d: LOESS
+
+
+
+### Part e: Splines
+
+
+
+## Exercise 3: ML Lingo
+
+
+
+### Part a: greedy
+
+
+
+### Part b: parsimonious
+
+
+
+### Part c: goldilocks problem
+
+
+
+## Exercise 4: R Code
+
+
+
+### Part a
+
+
+
+### Part b
+
+
+
+### Part c
+
+
+
+### Part d
+
+
+
+## Exercise 5: Connections
+
+
+
+### Part a: KNN vs LOESS
+
+
+
+### Part b: LOESS vs splines
+
+
+
+### Part c: splines vs least squares
+
+
+
+### Part d: least squares vs LASSO
+
+
+
+## Exercise 6: Ethics Reflection
+
+
+
+## Exercise 7: Resource Reflection
+
+
+
+
+# Done!
+
+- Render your QMD to HTML.
+- Check that HTML to make sure there are no errors or formatting issues. 
+- Submit the HTML on Moodle.
+
+

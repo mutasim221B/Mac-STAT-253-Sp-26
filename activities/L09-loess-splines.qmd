@@ -1,0 +1,1362 @@
+---
+title: "Knn-bias-variance"
+subtitle: "Notes and in-class exercises"
+format: 
+  html:
+    embed-resources: true
+    toc: true
+---
+
+
+
+```{r include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  warning = FALSE,
+  message = FALSE,
+  fig.height = 2.75, 
+  fig.width = 4.25,
+  fig.env='figure',
+  fig.pos = 'h',
+  fig.align = 'center')
+```
+
+
+You can download the .qmd file for this activity [here](../activity_templates/L09-loess-splines.qmd) and open in R-studio. The rendered version is posted in the [course website](https://mutasim221b.github.io/Mac-STAT-253-Sp-26/) (Activities tab). I often experiment with the class activities (and see it in live!) and make updates, but I always post the final version before class starts. To be sure you have the most up-to-date copy, please download it once you’ve settled in before class begins.
+
+
+
+
+# Learning Goals {.unnumbered .smaller}
+
+- Clearly describe the local regression algorithm for making a prediction
+- Explain how bandwidth (span) relate to the bias-variance tradeoff
+- Explain the advantages of splines over global transformations and other types of piecewise polynomials
+- Explain how splines are constructed by drawing connections to variable transformations and least squares
+- Explain how the number of knots relates to the bias-variance tradeoff
+
+
+\
+\
+
+# Context {.unnumbered .smaller}
+
+![](../images/MLdiagram.jpg){width=100%}
+
+
+------------------
+
+- **world = supervised learning**       
+    We want to model some output variable $y$ using a set of potential predictors ($x_1, x_2, ..., x_p$) and the relationship could be non-linear.
+
+- **task = regression**       
+    $y$ is quantitative
+
+- **a flexible algorithm**        
+    Our standard *parametric* models (eg: linear regression) may too rigid to represent the relationship between $y$ and our predictors $x$. Thus we need more *flexible* **models**.
+
+
+
+
+
+
+
+
+\
+\
+
+# KNN (Review) {-}
+
+Discuss the following questions with your group to review key concepts from recent activities.
+
+
+\
+
+## Let us review... {-}
+
+
+1. **KNN Review**
+
+In the previous activity, we modeled college `Grad.Rate` versus `Expend`, `Enroll`, and `Private` using data on 775 schools.
+
+a. Which pre-processing steps are necessary for KNN, and why? How do we implement these pre-processing steps in R? 
+
+> We need to standardize quantitative predictor variables (`step_normalize(all_numeric_predictors())`) so that our distance calculations aren't dominated by variables on larger scales than others. We need to create dummy variables for categorical predictors (`step_dummy(all_nominal_predictors())`) so that we have a way of turning words into numbers and then quantify distances between categories. We might also use `step_nzv()` to remove predictors with near-zero variance prior to these steps; this removes variables that don't contain much information and won't be helpful for predicting our outcome. See Exercises 1--4, and their corresponding solutions, from knn-bias-variance activities for more discussion. 
+
+b. We chose the KNN with K = 33 because it *minimized* the CV MAE, i.e. the errors when predicting grad rate for schools *outside* our sample. We don't typically worry about a more *parsimonious* KNN, i.e. a model that has slightly higher prediction errors but is easier to interpret, apply, etc. Why? 
+
+> The output of the model is: one prediction for one observational unit. There is nothing to interpret (no plots, no coefficients, etc.). Also: there is no way to tune the model to use fewer predictors. See Exercises 5--6 from knn-bias-variance activities.
+
+c. What *assumptions* did the KNN model make about the relationship of `Grad.Rate` with `Expend`, `Enroll`, and `Private`? Is this a pro or con?
+
+> The only assumption we made was that the outcome values of $y$ should be similar if the predictor values of $x$ are similar. No other assumptions are made. 
+    - This is a pro if we want flexibility due to non-linear relationships and that assumption is true. 
+    - This is a con if relationships are actually linear or could be modeled with a parametric model.
+    - See Exercises 9--10 from knn-bias-variance activities for more discussion.
+
+d. What did the KNN model tell us about the *relationship* of `Grad.Rate` with `Expend`, `Enroll`, and `Private`? For example, did it give you a sense of whether grad rates are higher at private or public institutions? At institutions with higher or lower enrollments? Is this a pro or con? 
+
+> Nothing. I'd say this is a con. There is nothing to interpret, so the model is more of a black box in terms of knowing why it gives you a particular prediction. See Exercises 7--9 from knn-bias-variance activities. Further details are in solutions for previous activity.
+
+
+
+\
+\
+\
+
+2. **Nonparametric vs Parametric**
+
+Nonparametric KNN vs parametric least squares and LASSO:
+
+- When *should* we use a nonparametric algorithm like KNN?
+
+>  Use nonparametric methods when parametric model assumptions are too rigid.  Forcing a parametric method in this situation can produce misleading conclusions, bad predictions, etc.
+
+- When *shouldn't* we?
+
+> Use parametric methods when the model assumptions hold.  In such cases, parametric models provide more contextual insight (eg: meaningful coefficients) and the ability to detect which predictors are beneficial to the model.
+
+
+\
+\
+
+# LOESS {-}
+
+## Notes {.unnumbered .smaller}
+
+
+LOESS: _Local Regression_ or _**L**ocally **E**stimated **S**catterplot **S**moothing_
+
+
+
+\
+
+**Goal:**    
+Build a **flexible** regression model of $y$ by *one* quantitative predictor $x$,   
+
+$$y = f(x) + \varepsilon$$    
+
+
+
+\
+
+**Idea:**    
+
+Fit regression models in small localized regions, where nearby data have greater influence than far data.
+
+
+
+\
+
+**Algorithm:**    
+
+Define the *span*, aka bandwidth, tuning parameter $h$ where $0 \le h \le 1$. Take the following steps to estimate $f(x)$ at each possible predictor value $x$:    
+
+1. Identify a neighborhood consisting of the $100∗h$% of cases that are closest to $x$.    
+2. Putting more weight on the neighbors closest to $x$ (ie. allowing them to have more influence), fit a linear model in this neighborhood.  
+3. Use the local linear model to estimate f(x).
+
+
+
+\
+
+**In pictures:**    
+
+![](../images/loess.png){width=100%}
+
+
+```{r loess-example}
+#| eval: true
+#| code-fold: true
+library(tidyverse)
+
+# example data
+plot_data <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/glucose_experiment.csv") 
+
+# plot with LOESS predictions
+plot_data %>%
+  ggplot() + 
+  geom_point(aes(x = time, y = glucose)) + 
+  geom_smooth(aes(x = time, y = glucose), se=FALSE) # this step does LOESS
+```
+
+
+
+
+
+
+
+
+\
+\
+
+
+
+3. **LOESS in R**
+
+We can plot LOESS models using `geom_smooth()`. Play around with the `span` parameter below.
+
+- What happens as we increase the span from roughly 0 to roughly 1?
+- What is one "pro" of this nonparametric algorithm, relative to KNN?
+
+
+
+```{r loess-span}
+#| eval: true
+library(tidyverse)
+library(ISLR)
+data(College)
+
+ggplot(College, aes(x = Expend, y = Grad.Rate)) + 
+  geom_point() + 
+  geom_smooth(method = "loess", span = 0.5)
+```
+
+
+Note: you'll find that you can specify `span` greater than 1. Use your resources to figure out what that means in terms of the algorithm.
+
+
+
+
+
+
+\
+
+4. **LOESS & the Bias-Variance Tradeoff**
+
+Run the **shiny app** code, below. Explore the impact of the *span tuning parameter h* on the LOESS performance across different datasets. Continue to click the Go! button to get different datasets. 
+
+For what values of $h$ (near 0, somewhere in the middle, near 1) do you get the following:
+
+a. *low bias* but *high variance*
+b. *moderate bias* and *low variance* 
+c. *high bias* but *low variance*
+
+      
+
+
+```{r loess-shiny}
+#| eval: false
+#| code-fold: true
+# Load packages & data
+library(shiny)
+library(tidyverse)
+
+# Define a LOESS plotting function
+plot_loess <- function(h, plot_data){
+  ggplot(plot_data, aes(x = x, y = y)) + 
+    geom_point() + 
+    geom_smooth(span = h, se = FALSE) + 
+    labs(title = paste("h = ", h)) +
+    lims(y = c(-5,12))
+}
+
+# BUILD THE SERVER
+# These are instructions for building the app - what plot to make, what quantities to calculate, etc
+server_LOESS <- function(input, output) {
+  new_data <- eventReactive(input$do, {
+    x <- c(runif(25, -6, -2.5), runif(50, -3, 3), runif(25, 2.5, 6))
+    y <- 9 - x^2 + rnorm(100, sd = 0.75) 
+    y[c(1:25, 76:100)] <- rnorm(50, sd = 0.75)
+    data.frame(x, y)
+  })
+  output$loesspic <- renderPlot({
+    plot_loess(h = input$hTune, plot_data = new_data())
+  })
+}
+
+
+# BUILD THE USER INTERFACE (UI)
+# The UI controls the layout, appearance, and widgets (eg: slide bars).
+ui_LOESS <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      h4("Sample 100 observations:"), 
+      actionButton("do", "Go!"),
+      h4("Tune the LOESS:"), 
+      sliderInput("hTune", "h", min = 0.05, max = 1, value = 0.05)
+    ),
+    mainPanel(
+      h4("LOESS plot:"), 
+      plotOutput("loesspic")
+    )
+  )
+)
+
+
+# RUN THE SHINY APP!
+shinyApp(ui = ui_LOESS, server = server_LOESS)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+\
+\
+
+# Splines {-}
+
+
+## Notes {.unnumbered .smaller}
+
+**Goal:**    
+Build a **flexible** _parametric_ regression model of $y$ by one quantitative predictor $x$,   
+
+$$y = f(x) + \varepsilon$$    
+
+
+
+\
+
+**Idea:**    
+
+Fit polynomial models in small localized regions and constrain to make it smooth enough.
+
+
+
+
+\
+
+**Definition:**    
+
+A spline is a piecewise polynomial of degree $k$ that is a continuous function and has continuous derivatives (of orders $1,...,k-1$) at its knot points (break points).
+
+
+<center>
+<img src="../images/splines.png" width="300">
+
+[Image source](https://link.springer.com/article/10.1007/s10898-020-00881-4)
+</center>
+<br>
+
+(a): Piecewise linear - corners at knots.
+Not smooth; (b) Smoother - some continuity added; (c) More flexible curve; (d) Very smooth spline - typical cubic spline behavior.
+
+
+
+
+A spline function $f$ with knot points $t_1<...<t_m$,
+
+- is a polynomial of degree $k$ on each of the intervals $(-\infty,t_1],[t_1,t_2],....,[t_m,\infty)$ and
+- the $j$th derivative of the spline function $f$ is continuous at $t_1,...,t_m$ for $j=0,1,...,k-1$.
+
+
+
+\
+
+**More Definitions:** 
+
+Spline functions can be represented using a **basis** and can be used within a linear regression framework. We often call this *regression splines* or *B-splines* and represent the spline function as
+
+$$f(x) = \beta_0 + \beta_1f_1(x) + \cdots + \beta_{p}f_{p}(x)$$
+
+where the functions $f_1(x)$,...,$f_p(x)$ are complex basis functions defined by knots and the degree of the polynomial. 
+
+<center>
+<img src="../images/basis_funcs.png" width="500">
+
+[Image source](http://dx.doi.org/10.1038/s41598-023-49360-2)
+</center>
+
+
+
+Check out Section 7.4 in [ISLR](https://www.statlearning.com/) for more details!
+
+
+
+
+\
+\
+
+## R Code {.unnumbered .smaller}
+
+
+**Piecewise Polynomials in Stat 155**
+
+
+If you had a quadratic model (degree = 2) with 0 knots, how could you fit that model using the tools of STAT 155?
+
+```{r}
+#| eval: false
+lm(y ~ x + x2, data) #if you created x2 = x^2
+
+lm(y ~ poly(x, 2), data)
+```
+
+
+
+
+If you had a piecewise linear model (degree = 1) with 1 knot at $x=5$,  how could you fit that using the tools from Stat 155?
+
+```{r}
+#| eval: false
+lm(y ~ x * I(x > 5), data)
+```
+
+
+
+These implementation methods don't constrain them to be continuous or smooth, so we need additional tools from the `splines` package!
+
+
+
+\
+
+**Splines in tidymodels**
+
+To build models with splines in `tidymodels`, we proceed with the same structure as we use for ordinary linear regression models but we'll add some **pre-processing steps** to our `recipe`.
+
+To work with splines, we'll use tools from the `splines` package in conjunction with `recipes`. 
+
+- The `step_ns()` function based on `ns()` in that package creates the transformations needed to create a natural cubic spline function for a quantitative predictor. 
+- The `step_bs()` function based on `bs()` in that package creates the transformations needed to create a basis spline (typically called B-splines) function for a quantitative predictor. 
+
+```{r splines-tidymodels}
+#| eval: false
+
+# Linear Regression Model Spec
+lm_spec <- 
+  linear_reg() %>%
+  set_mode('regression') %>%
+  set_engine(engine = 'lm') 
+  
+# Original Recipe
+lm_recipe <- recipe(y ~ x, data = sample_data)
+
+# Polynomial Recipe
+poly_recipe <- lm_recipe %>%
+  step_poly(x, degree = __) # polynomial (higher degree means more flexible)
+
+# Natural Spline Recipe
+ns2_recipe <- lm_recipe %>%
+  step_ns(x, deg_free = __) # natural cubic spline (higher deg_free means more knots)
+
+# Basis Spline Recipe
+bs_recipe <- lm_recipe %>%
+  step_bs(x, options = list(knots = c(__,__))) # b-spline (cubic by default, more knots means higher deg_free)
+
+```
+
+
+- The `deg_free` argument in `step_ns()` stands for degrees of freedom:
+    - `deg_free = # of knots + 1`
+    - The degrees of freedom are the number of coefficients in the transformation functions that are free to vary (essentially the number of underlying parameters behind the transformations).
+    - The knots are chosen using percentiles of the observed values.
+
+- The `options` argument in `step_bs()` allows you to specific specific knots:
+    - `options = list(knots = c(2, 4))` sets a knot at 2 and a knot at 4 (the choice of knots should depend on the observed range of the quantitative predictor and where you see a change in the relationship)
+
+
+
+
+\
+
+**What is the difference between natural splines and B-splines?**
+
+- B-spline is a tool to incorporate splines into a linear regression setting. 
+    - You have to choose the knots (which can be tricky sometimes).
+    - These functions can be unstable (high variance) near the boundaries, especially with higher polynomial degrees.
+    
+- Natural spline is a variant of the B-spline with additional constraints on the boundaries to reduce variance (the degree of the polynomial near the boundaries is lower). 
+    - Cubic natural splines are the most common
+    - Typically knots are chosen based on quantiles of the predictor (e.g. 1 knot will be placed at the median, 2 knots will be placed at the 33rd and 66th percentiles, etc.)
+    
+
+
+
+
+
+\
+\
+
+## Small Group Discussion {.unnumbered .smaller}
+
+
+5. **Splines & the Bias-Variance Tradeoff**
+
+
+See the figure below, for either natural splines or cubic splines, what values of `deg_free` (small, medium, large) do you get the following:
+
+a. *high bias* but *low variance*: 
+b. *low bias* but *high variance*:
+c. *moderate bias* and *low variance*:  
+
+    
+![](../images/splines-examples.png)
+
+
+
+
+
+
+
+\
+
+6. **splines & LASSO** 
+
+Could we use LASSO with a spline or polynomial recipe? Yes or No? Explain.
+
+
+
+
+
+
+
+
+
+\
+\
+
+# Exercises {-}
+
+## Part 1: Implementing Splines {.unnumbered .smaller}
+
+**Goals**    
+
+- Implement and explore splines in R.    
+- Explore how this algorithm compares to others, hence how it fits into our broader ML workflow.
+
+
+
+**Context**
+
+Using the `College` data in the `ISLR` package, we'll build a predictive model of `Grad.Rate` by 6 predictors: `Private`, `PhD` (percent of faculty with PhDs), `Room.Board`, `Personal` (estimated personal spending), `Outstate` (out-of-state tuition), `perc.alumni` (percent of alumni who donate)
+
+
+Before proceeding, install the `splines` package by entering `install.packages("splines")` in the Console.
+
+```{r}
+#| echo: true
+#| eval: true
+
+# Load packages
+library(tidymodels)
+library(tidyverse)
+library(ISLR)
+
+# Load data
+data(College)
+
+# Wrangle the data
+college_sub <- College %>% 
+  filter(Grad.Rate <= 100) %>% 
+  filter((Grad.Rate > 50 | Expend < 40000)) %>% 
+  select(Grad.Rate, Private, PhD, Room.Board, Personal, Outstate, perc.alumni)
+```
+
+
+
+\
+\
+
+
+
+1. **Evaluating a fully linear model**
+
+We will model `Grad.Rate` as a function of the 6 predictors in `college_sub`.
+
+a. Make scatterplots of each of the quantitative predictors and the outcome with 2 different smoothing lines to explore potential nonlinearity. Adapt the following code to create a scatterplot with a smooth LOESS blue trend line and a red linear trend line.
+What do you notice about the form of the relationships?
+
+```{r}
+#| eval: false
+ggplot(___, aes(___)) +
+    geom_point() +
+    geom_smooth(color = "blue", se = FALSE) +
+    geom_smooth(method = "lm", color = "red", se = FALSE) +
+    theme_classic()
+```
+
+```{r}
+
+```
+
+b. Use `tidymodels` to fit a linear regression model (no splines yet) with the following specifications:
+    - Use 8-fold CV.
+    - Use CV mean absolute error (MAE) to evaluate models.
+    - Use LASSO engine to do variable selection to select the simplest model for which the metric is within one standard error of the best metric.
+    - Fit your "best" model and look at coefficients of that final model. Which variables are "least" important to predicting `Grad.Rate`?
+
+```{r}
+#| eval: false
+set.seed(253)
+
+# Lasso Model Spec with tune
+lasso_spec <- linear_reg() %>%
+  set_mode('regression')  %>%
+  set_engine(engine = 'glmnet') %>% 
+  set_args(mixture = 1, penalty = tune()) 
+  
+# Recipe
+lasso_recipe <- recipe(__ ~ ___, data = college_sub) %>%
+  step_dummy(all_nominal_predictors())
+
+# Workflow (Recipe + Model)
+lasso_wf_tune <- workflow() %>% 
+  add_recipe(lasso_recipe) %>%
+  add_model(lasso_spec) 
+
+# Tune Model (trying a variety of values of Lambda penalty)
+lasso_models <- tune_grid( 
+  lasso_wf_tune, # workflow
+  resamples = vfold_cv(__, v = __), 
+  metrics = metric_set(___),
+  grid = grid_regular(penalty(range = c(-3, 1)), levels = 30) 
+)
+
+# Select parsimonious model & fit
+parsimonious_penalty <- lasso_models %>% 
+  select_by_one_std_err(metric = 'mae', desc(penalty))
+
+# Finalize Model
+ls_mod <-  lasso_wf_tune  %>% 
+  finalize_workflow(parameters = parsimonious_penalty) %>%
+  fit(data = college_sub) 
+    
+# Note which variable is the "least" important    
+ls_mod %>% 
+  tidy()
+```
+
+```{r}
+
+
+```
+
+c. Make a plot of the residuals vs. fitted values from` ls_mod` and then plots of the residuals v. each of the quantitative predictors to evaluate whether the model is "right".
+
+
+```{r}
+#| eval: false
+ls_mod %>%
+    augment(new_data = college_sub) %>%
+    mutate(.resid = Grad.Rate - .pred) %>%
+    ggplot(aes(__)) +
+    ___ +
+    geom_smooth(se = FALSE) +
+    geom_hline(yintercept = 0, color = "red") + 
+    theme_classic()
+```
+
+```{r}
+
+```
+
+
+
+
+
+\
+
+2. **Evaluating a spline model**
+
+We'll compare our best LASSO model with models with spline functions for some of the quantitative predictors.
+
+
+a. Update your recipe from Exercise 1 to fit a linear model (with the `lm` engine rather than `glmnet`) with the all predictors. Allow the quantitative predictors that had some non-linear relationships to be modeled with natural splines that have 4 degrees of freedom. Fit this model with 8 fold CV, `fit_resamples` (same folds as before) to compare MAE and then fit the model to the whole training data. Call this fit model `ns_mod`.
+
+```{r}
+#| eval: false
+
+# Model Spec
+lm_spec <-
+  linear_reg() %>%
+  set_mode('regression') %>%
+  set_engine(engine = 'lm')
+  
+
+# New Recipe (remove steps needed for LASSO, add splines)
+
+
+
+# Create Workflow (Recipe + Model)
+
+
+
+set.seed(253)
+# CV to Evaluate
+ns_models <- fit_resamples(
+  ___, # workflow
+  resamples = vfold_cv(__, v = 8), # cv folds
+  metrics = metric_set(___)
+)
+
+ns_models %>% collect_metrics()
+
+# Fit with all data
+ns_mod <- fit( ___, #workflow from above
+  data = college_sub
+)
+
+```
+
+```{r}
+
+```
+
+b. Make a plot of the residuals vs. fitted values from` ns_mod` and then plots of the residuals v. each of the quantitative predictors to evaluate whether the model is right.
+
+```{r}
+# Residual plots
+
+
+```
+
+c. Compare the CV MAE between models with and without the splines.
+
+```{r}
+#| error: true
+lasso_models %>% 
+  collect_metrics() %>% 
+  filter(penalty == (parsimonious_penalty %>% pull(penalty)))
+
+ns_models %>% 
+  collect_metrics()
+```
+
+
+
+
+
+\
+
+3. **Pick an algorithm**        
+    Our overall goal is to build a predictive model of `Grad.Rate` ($y$) by 6 predictors:    
+    
+    $$y = f(x_1,x_2,...,x_{6}) + \varepsilon$$
+    
+    The table below summarizes the CV MAE for 3 possible algorithms: least squares, KNN, and splines. After examining the results, explain which model you would choose and *why*. NOTE: There are no typos here! All models had virtually the same CV MAE. Code is provided in the online manual if you're curious.
+    
+    
+    method                type           assumption about $f(x_1,x_2,...,x_{6})$             CV MAE
+    --------------------- -------------- --------------------------------------------------- --------
+    least squares         parametric     $\beta_0 + \beta_1x_1 + \cdots + \beta_{6} x_{6}$   10.2
+    LASSO w/ $\lambda=1.2$   parametric     $\beta_0 + \beta_1x_1 + \cdots + \beta_{6} x_{6}$   10.3
+    KNN w/ $K = 33$       nonparametric  average $y$ among neighbors                         10.2
+    splines               parametric     $\beta_0 + f_1(x_1) + \cdots + f_{6}(x_{6})$        10.2
+
+    
+
+
+<br>
+<br>
+        
+
+
+
+
+ 
+## Part 2: Reflection {.unnumbered .smaller}
+
+In these final exercises, you'll reflect upon some algorithms we've learned thus far. This might feel bumpy if you haven't reviewed the material recently, so be kind to yourself!
+
+
+Some of these exercises are similar to those on Homework 3. Thus solutions are not provided. The following directions are important to deepening your learning and growth.      
+
+- Typing the questions into ChatGPT does not require any reflection: **You may NOT use GenAI or other online resources for these questions or on Homework 3.**
+- Locating is not learning: Challenge yourself to write out concepts in *your own words*. Do not rely on definitions in the activities, videos, or elsewhere.
+
+  
+
+
+    
+\
+\
+
+
+
+
+4. **Interpretability & flexibility**       
+    When picking between different model building algorithms, there are several considerations, including *flexibility* and *interpretability*. Consider the following graphic from ISLR:    
+    
+![](../images/flex_interp_ISLR.png){width=100%}
+
+
+  a. Convince yourself that the placement of Subset Selection (e.g. backward stepwise), LASSO, Least Squares, and Splines (which is highly related to Generalized Additive Models) make sense. (We'll address other algorithms later this semester.)
+
+  b. Where would you place KNN on this graphic?    
+
+
+<br>
+
+5. **Differences and similarities**    
+    For each pair of algorithms below: try to identify a key *similarity*, a key *difference*, and any scenario in which they're "equivalent".
+    a. KNN vs LOESS
+    b. LOESS vs Splines
+    c. Splines vs least squares
+    d. least squares vs LASSO
+
+
+
+<br>
+
+6. **Pros & cons (there's a similar question on HW3)**    
+    Summarize at least 1 pro and 1 con about each model building algorithm. You cannot use the same pro or con more than once!
+    a. least squares
+    b. LASSO
+    c. KNN
+    d. Splines
+    
+
+
+
+
+<br>
+
+7. **Lingo (there's a similar question on HW3)**        
+    In your own words, describe what each of these "everyday" words means in the context of ML algorithms:
+    - greedy
+    - biased
+    - parsimonious
+    - (computationally) expensive
+    - goldilocks problem
+    
+
+
+
+
+
+
+
+\
+\
+
+# Deeper Learning (OPTIONAL) {.unnumbered .smaller}
+
+KNN, regression splines, and LOESS aren't the only flexible regression algorithms! 
+Chapter 7 of ISLR also discusses: 
+
+- piecewise polynomials (parametric)
+- smoothing splines (nonparametric)
+- generative additive models (nonparametric)
+
+Read Chapter 7 of the book, and watch Prof Johnson's video on these topics to learn more:
+
+[https://youtu.be/sYC3PuONUy8](https://youtu.be/sYC3PuONUy8)
+
+\
+
+Chapter 7.7 specifically provides more information about generalized additive models (GAM). These models take the ideas of splines and loess and combine them into one framework and allow each predictor to have a non-linear relationship. They are implemented in `tidymodels` but can be computationally intensive. They allow the relationships to either be estimated with loess or smoothing splines, both of which are non-parameter approaches.
+
+In general, we can think of GAM as
+
+$$y = \beta_0 + f_1(x_1) + \cdots + f_{p}(x_{p}) + \epsilon$$
+
+where the functions $f_j(x)$ are estimated nonparametrically. 
+
+Chapter 7.5 provides more information about smoothing splines. In general, these techniques estimate the $f(x)$ by *penalizing* wiggly behavior where wiggliness is measured by the second derivative of $f(x)$, i.e. the degree to which the slope changes. Specifically, $f(x)$ is estimated to minimize:
+
+$$\sum_{i=1}^n (y_i - f(x_i))^2 + \lambda \int f''(t)^2 dt$$
+
+That is, we want $f(x)$ to produce small squared residuals ($\sum_{i=1}^n (y_i - f(x_i))^2$) and small total change in slope over the range of x ($\int f''(t)^2 dt$).
+
+
+
+# Solutions {.unnumbered .smaller}
+
+
+
+
+
+
+
+3. **LOESS in R**
+
+<details>
+<summary>Solution</summary>
+- as we increase span, the model becomes smoother and more simple
+- compared to KNN, LOESS is smoother, more like the shape of the relationship we're trying to estimate. (can you think of any cons?)
+
+</details>
+<br>
+
+
+
+
+4. **LOESS & the Bias-Variance Tradeoff**
+
+<details>
+<summary>Solution</summary>
+a. h near 0 
+b. h somewhere in the middle 
+c. h near 1
+</details>
+<br>
+
+
+
+5. **Splines & the Bias-Variance Tradeoff**
+
+<details>
+<summary>Solution</summary>
+
+a. *high bias* but *low variance*: small `deg_free`
+b. *low bias* but *high variance*: large `deg_free`
+c. *moderate bias* and *low variance*:  medium `deg_free`     
+
+
+</details>
+<br>
+
+
+
+6. **splines & LASSO**
+
+<details>
+<summary>Solution</summary>
+ Not necessarily or at least we'd want to proceed carefully...
+ 
+- LASSO could remove an intermediate term, so the full complex function would not be specified -- would we be ok with that? 
+- Maybe LASSO help us choose our knots & degrees of freedom for regression splines.    
+  - If we specified the spline differently, this paper suggests [Knot Selection for Regression Splines using LASSO](https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=bd77697a4f3b60bbe72fbb02f77c4f0e8a6fe67e)
+  - Smoothing Splines takes the idea of penalty from LASSO and uses it to tune the degrees of freedom.
+</details>
+<br>
+
+
+
+    
+    
+## Exercises {.unnumbered .smaller}
+
+```{r}
+#| echo: false
+#| eval: true
+# Load packages
+library(tidymodels)
+library(tidyverse)
+library(ISLR)
+
+# Load data
+data(College)
+
+# Wrangle the data
+college_sub <- College %>% 
+  filter(Grad.Rate <= 100) %>% 
+  filter((Grad.Rate > 50 | Expend < 40000)) %>% 
+  select(Grad.Rate, Private, PhD, Room.Board, Personal, Outstate, perc.alumni)
+```
+
+
+
+
+1. **Evaluating a fully linear model**
+
+<details>
+<summary>Solution</summary>
+
+```{r 1a-soln}
+#| eval: true
+#| message: false
+#a
+# There might be a slight non-linear relationship
+p1 <- ggplot(college_sub, aes(y = Grad.Rate, x = PhD)) +
+    geom_point() +
+    geom_smooth(color = "blue", se = FALSE) +
+    geom_smooth(method = "lm", color = "red", se = FALSE) +
+    theme_classic()
+
+# Only deviation in the extremes of Room and Board
+p2 <- ggplot(college_sub, aes(y = Grad.Rate, x = Room.Board)) +
+    geom_point() +
+    geom_smooth(color = "blue", se = FALSE) +
+    geom_smooth(method = "lm", color = "red", se = FALSE) +
+    theme_classic()
+
+# linear relationship doesn't fit well but some extreme values in Personal
+p3 <- ggplot(college_sub, aes(y = Grad.Rate, x = Personal)) +
+    geom_point() +
+    geom_smooth(color = "blue", se = FALSE) +
+    geom_smooth(method = "lm", color = "red", se = FALSE) +
+    theme_classic()
+
+# Close to linear
+p4 <- ggplot(college_sub, aes(y = Grad.Rate, x = Outstate)) +
+    geom_point() +
+    geom_smooth(color = "blue", se = FALSE) +
+    geom_smooth(method = "lm", color = "red", se = FALSE) +
+    theme_classic()
+
+# Close to linear
+p5 <- ggplot(college_sub, aes(y = Grad.Rate, x = perc.alumni)) +
+    geom_point() +
+    geom_smooth(color = "blue", se = FALSE) +
+    geom_smooth(method = "lm", color = "red", se = FALSE) +
+    theme_classic()
+
+library(gridExtra)
+grid.arrange(p1, p2, p3, p4, p5, nrow = 2)
+```
+
+> The relationships between many of these predictors and `Grad.Rate` look reasonably linear. 
+> Perhaps two exceptions to this are `Personal` and `PhD`.
+
+\
+
+
+```{r 1b-soln}
+#| eval: true
+#b
+set.seed(253)
+
+# Lasso Model Spec with tune
+lasso_spec <- linear_reg() %>%
+  set_mode('regression')  %>%
+  set_engine(engine = 'glmnet') %>% 
+  set_args(mixture = 1, penalty = tune()) 
+  
+# Recipe
+lasso_recipe <- recipe(Grad.Rate ~ ., data = college_sub) %>% # use all predictors ( ~ . )
+  step_dummy(all_nominal_predictors())
+
+# Workflow (Recipe + Model)
+lasso_wf_tune <- workflow() %>% 
+  add_recipe(lasso_recipe) %>%
+  add_model(lasso_spec) 
+
+# Tune Model (trying a variety of values of Lambda penalty)
+lasso_models <- tune_grid( 
+  lasso_wf_tune, # workflow
+  resamples = vfold_cv(college_sub, v = 8), # 8-fold CV
+  metrics = metric_set(mae), # calculate MAE
+  grid = grid_regular(penalty(range = c(-5, 2)), levels = 30) 
+)
+
+# Select parsimonious model & fit
+parsimonious_penalty <- lasso_models %>% 
+  select_by_one_std_err(metric = 'mae', desc(penalty))
+
+ls_mod <-  lasso_wf_tune  %>% 
+  finalize_workflow(parameters = parsimonious_penalty) %>%
+  fit(data = college_sub) 
+    
+# Note which variable is the "least" important    
+ls_mod %>% 
+  tidy()
+```
+
+> `Private_Yes` has a coefficient estimate of zero, so is "least" important".
+
+
+\
+
+
+```{r 1c-soln}
+#| eval: true
+#| message: false
+# c
+# Residuals v. Fitted/Predicted
+r1 <- ls_mod %>%
+    augment(new_data = college_sub) %>%
+    mutate(.resid = Grad.Rate - .pred) %>%
+    ggplot(aes(x = .pred, y = .resid)) +
+    geom_point() +
+    geom_smooth(se = FALSE) +
+    geom_hline(yintercept = 0, color = "red") + 
+    theme_classic()
+
+
+# Residuals v. PhD
+r2 <- ls_mod %>%
+    augment(new_data = college_sub) %>%
+    mutate(.resid = Grad.Rate - .pred) %>%
+    ggplot(aes(x = PhD, y = .resid)) +
+    geom_point() +
+    geom_smooth(se = FALSE) +
+    geom_hline(yintercept = 0, color = "red") + 
+    theme_classic()
+
+# Residuals v. Personal
+r3 <- ls_mod %>%
+    augment(new_data = college_sub) %>%
+    mutate(.resid = Grad.Rate - .pred) %>%
+    ggplot(aes(x = Personal, y = .resid)) +
+    geom_point() +
+    geom_smooth(se = FALSE) +
+    geom_hline(yintercept = 0, color = "red") + 
+    theme_classic()
+
+# Residuals v. Room.Board
+r4 <- ls_mod %>%
+    augment(new_data = college_sub) %>%
+    mutate(.resid = Grad.Rate - .pred) %>%
+    ggplot(aes(x = Room.Board, y = .resid)) +
+    geom_point() +
+    geom_smooth(se = FALSE) +
+    geom_hline(yintercept = 0, color = "red") + 
+    theme_classic()
+
+# Residuals v. Outstate
+r5 <- ls_mod %>%
+    augment(new_data = college_sub) %>%
+    mutate(.resid = Grad.Rate - .pred) %>%
+    ggplot(aes(x = Outstate, y = .resid)) +
+    geom_point() +
+    geom_smooth(se = FALSE) +
+    geom_hline(yintercept = 0, color = "red") + 
+    theme_classic()
+
+# Residuals v. perc.alumni
+r6 <- ls_mod %>%
+    augment(new_data = college_sub) %>%
+    mutate(.resid = Grad.Rate - .pred) %>%
+    ggplot(aes(x = perc.alumni, y = .resid)) +
+    geom_point() +
+    geom_smooth(se = FALSE) +
+    geom_hline(yintercept = 0, color = "red") + 
+    theme_classic()
+
+grid.arrange(r1, r2, r3, r4, r5, r6, nrow = 2)
+```
+
+> These residual plots look generally fine to me. 
+> Perhaps there is a bit of heteroskedasticity in the residual vs fitted plot. 
+> We also look to be over-estimating (residuals < 0) graduation rates for schools with low numbers of PhDs and mid-range levels (2000--5000) of personal spending.
+
+</details>
+
+
+
+
+
+\
+
+2. **Evaluating a spline model**
+
+<details>
+<summary>Solution</summary>
+
+a. See below:
+
+```{r 2a-soln}
+#| eval: true
+
+# Model Spec
+lm_spec <-
+  linear_reg() %>%
+  set_mode('regression') %>%
+  set_engine(engine = 'lm')
+  
+
+# New Recipe (remove steps needed for LASSO, add splines)
+spline_recipe <- recipe(Grad.Rate ~ ., data = college_sub) %>%
+  step_ns(Personal, deg_free = 4) %>% # splines with 4 df for Personal
+  step_ns(PhD, deg_free = 4) # splines with 4 df for PhD
+
+
+# Create Workflow (Recipe + Model)
+spline_wf <- workflow() %>% 
+  add_recipe(spline_recipe) %>%
+  add_model(lm_spec) 
+
+
+set.seed(253)
+# CV to Evaluate
+ns_models <- fit_resamples(
+  spline_wf, # workflow
+  resamples = vfold_cv(college_sub, v = 8), # cv folds
+  metrics = metric_set(mae) # calculate MAE
+)
+
+# check out CV metrics
+ns_models %>% 
+  collect_metrics()
+
+# Fit with all data
+ns_mod <- fit( spline_wf, #workflow from above
+  data = college_sub
+)
+
+```
+
+
+\
+
+```{r}
+#| eval: true
+#| message: false
+
+#b. Residual plots
+
+# Residuals v. Fitted/Predicted
+sr1 <- ns_mod %>%
+    augment(new_data = college_sub) %>%
+    mutate(.resid = Grad.Rate - .pred) %>%
+    ggplot(aes(x = .pred, y = .resid)) +
+    geom_point() +
+    geom_smooth(se = FALSE) +
+    geom_hline(yintercept = 0, color = "red") + 
+    theme_classic()
+
+
+# Residuals v. PhD
+sr2 <- ns_mod %>%
+    augment(new_data = college_sub) %>%
+    mutate(.resid = Grad.Rate - .pred) %>%
+    ggplot(aes(x = PhD, y = .resid)) +
+    geom_point() +
+    geom_smooth(se = FALSE) +
+    geom_hline(yintercept = 0, color = "red") + 
+    theme_classic()
+
+# Residuals v. Personal
+sr3 <- ns_mod %>%
+    augment(new_data = college_sub) %>%
+    mutate(.resid = Grad.Rate - .pred) %>%
+    ggplot(aes(x = Personal, y = .resid)) +
+    geom_point() +
+    geom_smooth(se = FALSE) +
+    geom_hline(yintercept = 0, color = "red") + 
+    theme_classic()
+
+# Residuals v. Room.Board
+sr4 <- ns_mod %>%
+    augment(new_data = college_sub) %>%
+    mutate(.resid = Grad.Rate - .pred) %>%
+    ggplot(aes(x = Room.Board, y = .resid)) +
+    geom_point() +
+    geom_smooth(se = FALSE) +
+    geom_hline(yintercept = 0, color = "red") + 
+    theme_classic()
+
+# Residuals v. Outstate
+sr5 <- ns_mod %>%
+    augment(new_data = college_sub) %>%
+    mutate(.resid = Grad.Rate - .pred) %>%
+    ggplot(aes(x = Outstate, y = .resid)) +
+    geom_point() +
+    geom_smooth(se = FALSE) +
+    geom_hline(yintercept = 0, color = "red") + 
+    theme_classic()
+
+# Residuals v. perc.alumni
+sr6 <- ns_mod %>%
+    augment(new_data = college_sub) %>%
+    mutate(.resid = Grad.Rate - .pred) %>%
+    ggplot(aes(x = perc.alumni, y = .resid)) +
+    geom_point() +
+    geom_smooth(se = FALSE) +
+    geom_hline(yintercept = 0, color = "red") + 
+    theme_classic()
+
+grid.arrange(sr1, sr2, sr3, sr4, sr5, sr6, nrow = 2)
+```
+
+> I still notice the same mild heteroskedasticity in the residual vs fitted plot. 
+> However, the systematic over-estimation of graduation rates for schools with low numbers of PhDs and mid-range personal spending now looks better (the "typical" residual is closer to zero over those ranges).
+
+
+\
+
+
+```{r}
+#c. compare CV MAE
+lasso_models %>% 
+  collect_metrics() %>% 
+  filter(penalty == (parsimonious_penalty %>% pull(penalty)))
+
+ns_models %>% 
+  collect_metrics()
+```
+
+> The MAEs are *very* similar. 
+
+</details>
+
+
+
+
+\
+
+3. **Pick an algorithm**        
+   
+<details>
+<summary>Solution</summary>
+
+You can argue a couple of ways.
+    
+- If you noted the non-linear relationships in the plots above: splines is more informative than KNN and less wrong than least squares.
+  
+- If you didn't think above that splines were warranted, you should pick least squares (or LASSO). It's definitely simpler and easier to interpret.
+
+
+
+**Code**
+
+```{r}
+#| eval: true
+#| echo: true
+# least squares
+
+set.seed(253)
+ls_model <- lm_spec %>% # re-use lm specs from above
+  # don't need a recipe since we're not doing any pre-processing
+  fit_resamples(   # get 10-fold CV MAE
+    Grad.Rate ~ .,
+    resamples = vfold_cv(college_sub, v = 10), 
+    metrics = metric_set(mae)
+  )
+
+# look at CV MAE
+ls_model %>% 
+  collect_metrics()
+```
+
+
+
+```{r}
+#| eval: true
+#| echo: true
+# KNN
+# specifications
+knn_spec <- nearest_neighbor() %>%
+  set_mode("regression") %>% 
+  set_engine(engine = "kknn") %>% 
+  set_args(neighbors = tune())
+
+# recipe
+variable_recipe <- recipe(Grad.Rate ~ ., data = college_sub) %>% 
+  step_nzv(all_predictors()) %>% 
+  step_dummy(all_nominal_predictors()) %>%
+  step_normalize(all_numeric_predictors())
+
+# workflow
+knn_workflow <- workflow() %>% 
+  add_model(knn_spec) %>% 
+  add_recipe(variable_recipe)
+
+# tune K using 10-fold CV
+set.seed(253)
+knn_models <- knn_workflow %>% 
+  tune_grid(
+    grid = grid_regular(neighbors(range = c(1, 200)), levels = 50),
+    resamples = vfold_cv(college_sub, v = 10),
+    metrics = metric_set(mae)
+  )
+
+# select best K 
+best_K <- select_best(knn_models, metric = "mae")
+best_K
+
+# fit final model
+knn_models %>% 
+  collect_metrics() %>% 
+  filter(neighbors == best_K$neighbors)
+
+```
+
+</details>
+<br>
+        
+
+**Part 2** (4--7): Solutions are not provided since these questions are part of HW3. 
+
+
+
