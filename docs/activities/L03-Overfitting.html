@@ -4057,6 +4057,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../activities/L09-loess-splines.html">
  <span class="dropdown-text">LOESS-SPLINES</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../activities/L10-review.html">
+ <span class="dropdown-text">Regression Review</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -4153,6 +4157,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../activities/L09-loess-splines.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">LOESS-SPLINES</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../activities/L10-review.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regression Review</span></a>
   </div>
 </li>
     </ul>
@@ -4648,9 +4658,9 @@ Note
 <p>Run the two chunks below <em>multiple</em> times each. Afterward, summarize what <code>set.seed()</code> does and why it’s important to being able to <em>reproduce</em> a random sample.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample_n</span>(cars, <span class="dv">2</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="do">##      mpg horsepower year</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 135 16.0        110   74</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 363 24.2        120   81</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="do">##     mpg horsepower year</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 375  36         74   82</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 155  15         72   75</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>

@@ -1,0 +1,216 @@
+---
+title: "Regression Review"
+subtitle: "Notes"
+format: 
+  html:
+    embed-resources: true
+    toc: true
+---
+
+
+
+
+
+
+```{r 10_setup}
+#| include: false
+#| cache: false
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+library(conflicted)
+conflicts_prefer(tidyr::expand)
+conflicts_prefer(dplyr::filter)
+```
+
+
+
+
+# Preparing for Quiz 1 {-}
+
+## Logistics {.unnumbered .smaller}
+
+
+**When**: March 4 
+
+
+**Topics**: 
+
+  - ML Overview (Unit 0) + Regression (Units 1--3)
+  - concepts **and** code
+
+
+**Format**: 
+
+  - On paper (no computers!)
+  - Closed notes, except for an instructor-provided R notesheet
+  - Questions will range in style: multiple choice, fill in the blank, short response, matching, etc.
+
+
+
+***Questions?***
+
+
+\
+
+## Context {.unnumbered .smaller}
+
+![](../images/MLdiagram.jpg){width=100%}
+
+**What have we covered so far?**
+
+For the Regression task: 
+
+- Unit 0: What is Regression? (And how does it differ from other types of Machine Learning tasks?)
+- Unit 1: Evaluating regression models
+- Unit 2: Building regression models / selecting predictors
+- Unit 3: Building flexible (nonparametric, nonlinear) regression models
+
+General concepts that translate to other ML tasks:
+
+- Overfitting
+- Cross validation
+- Bias-variance tradeoff
+- Algorithms and tuning parameters
+- Preprocessing steps
+- Parametric vs nonparametric models
+
+
+
+
+\
+
+## Review & Reflection {.unnumbered .smaller}
+
+
+
+STAT 253 is a survey course of statistical machine learning techniques and concepts. 
+It's important to continuously reflect on these and how they fit together. 
+The materials linked below are designed to help you reflect upon:
+
+- ML concepts
+    - enduring, big picture concepts
+    - technical concepts
+    - `tidymodels` code
+- Your progress toward...        
+    - engagement
+    - collaboration
+    - preparation (checkpoints)
+    - exploration (homework)
+
+Find and make a copy of the following 2 resources. You'll be given some relevant prompts below, but you should use these materials in *whatever way suits you*! Take notes, add more content, rearrange, etc. 
+
+- [STAT 253 concept maps](https://docs.google.com/presentation/d/1GIfPNfwnt7SwOTprYSLupunlrajCW7pJKQ9Q9rhHwZk/edit?usp=sharing)
+- [tidymodels code comparison](https://docs.google.com/document/d/1jyANFeAycznojZPEhUCl1O0VNljvuAQ4ZQQGuBm_WQo/edit?usp=sharing)
+
+
+
+\
+
+### Concept Maps {.unnumbered .smaller}
+
+Mark up __slides 1--5__ of the concept map with respect to the prompts below.
+Much of this overlaps with HW3.
+
+
+**Enduring, big picture concepts**
+
+IMPORTANT to your learning: Respond in your own words. 
+
+- When do we perform a supervised vs unsupervised learning algorithm?
+- Within supervised learning, when do we use a regression vs a classification algorithm?
+- What is the importance of "model evaluation" and what questions does it address?
+- What is "overfitting" and why is it bad?
+- What is "cross-validation" and what problem is it trying to address?
+- What is the "bias-variance tradeoff"?
+
+
+
+
+**Technical concepts**
+
+On slide 2, identify some general themes for each model algorithm listed in the lefthand table:
+
+- What's the goal?
+- Is the algorithm parametric or nonparametric?
+- Does the algorithm have any tuning parameters? What are they, how do we tune them, and how is this a **goldilocks problem**?
+- What are the key pros & cons of the algorithm?
+
+For each algorithm, you should also reflect upon these **important technical concepts**:
+
+- Can you summarize the steps of this algorithm?
+- Is the algorithm parametric or nonparametric? (addressed above)
+- What is the bias-variance tradeoff when working with or tuning this algorithm?
+- Is it important to scale / pre-process our predictors before feeding them into this algorithm?
+- Is this algorithm "computationally expensive"? What factors affect the computation time/cost? 
+- Can you interpret the technical (RStudio) output for this algorithm? (eg: CV plots, etc)?
+
+
+
+
+
+**Model evaluation**
+
+On slide 2, do the following for each model evaluation question in the righthand table:
+
+- Identify what to check or measure in order to address the question, and how to interpret it.
+- Explain the steps of the CV algorithm.
+
+
+**Algorithm comparisons**
+
+- Use slide 3 to make other observations about the Unit 1-3 modeling algorithms and their connections.
+- Use slide 4 to address and compare the interpretability & flexibility of the Subset Selection (e.g. backward stepwise), LASSO, and Least Squares algorithms. Where would you place Splines and KNN on this graphic?    
+
+
+
+\
+
+### `tidymodels` Code Comparison {.unnumbered .smaller}
+
+Check out and reflect upon the [tidymodels code comparisons here](https://docs.google.com/document/d/1jyANFeAycznojZPEhUCl1O0VNljvuAQ4ZQQGuBm_WQo/edit?usp=sharing). 
+Copy, use, tweak, and add to this in whatever way suits you!
+
+\
+\
+
+
+## Other Study Tips {.unnumbered .smaller}
+
+- Create a study guide using the course [learning goals](https://mutasim221b.github.io/Mac-STAT-253-Sp-26/learning.html)
+- Review past checkpoints, in-class exercises and notes (including R code), and homework problems
+    - quiz yourself! (eg try the checkpoints/exercises again, without notes)
+    - review homework feedback and implement any of the suggestions you received
+- Complete the provided review activities: 
+    - Concept maps
+    - `tidymodels` code comparison
+    - HW3
+    - Group Assignment 1    
+- Come to office hours (mine and preceptors)!
+
+
+
+
+GA1 Submission reminders: 
+
+- Each *group* will submit one (HTML) report
+  - Use the Quarto **template** provided on Moodle
+  - Carefully review the **instructions** (on Moodle) and [**rubric**](https://docs.google.com/spreadsheets/d/1menRHubJB3nxscsjI3Lvc5hWgEjJXCNs7WE5nRzWQ0Q/edit?usp=sharing) to ensure that you've included all requested information in the appropriate section  
+- Each *individual* will submit the **Group Assignment Feedback Survey** (link on Moodle)
+- Deadline for both components: end-of-day **Friday, Mar 6**
+
+
+
+\
+\
+
+# Wrapping Up {.unnumbered .smaller}
+
+After class today: 
+
+- [ ] Study for Quiz 1 (in class March 4)
+- [ ] Plan which MSCS Capstone Days talks you will attend (March 5--6)
+- [ ] Finish Group Assignment 1 (due March 6 @ 11:59 pm)
+
+
+
+\
+\

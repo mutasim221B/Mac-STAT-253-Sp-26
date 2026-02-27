@@ -49,6 +49,9 @@ website:
           - "activities/L07-nonparametric.qmd"
           - "activities/L08-knn-bias-variance.qmd"
           - "activities/L09-loess-splines.qmd"
+          - "activities/L10-review.qmd"
+
+
 
     - id: appendices
       title: "Appendices"
