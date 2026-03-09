@@ -660,6 +660,29 @@ bike_model_1 %>%
     geom_point() + 
     geom_hline(yintercept = 0) + 
     geom_smooth() # add trend line
+
+bike_model_1 %>% 
+  augment(new_data = bikes) %>% 
+  ggplot(aes(x = windspeed, y = .resid)) +
+    geom_point() +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_smooth(color = "blue", se = FALSE) +
+    labs(
+      x = "Windspeed",
+      y = "Residuals",
+      title = "Residuals vs Windspeed"
+    )
+bike_model_1 %>% 
+  augment(new_data = bikes) %>% 
+  ggplot(aes(x = temp, y = .resid)) +
+    geom_point() +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_smooth(color = "blue", se = FALSE) +
+    labs(
+      x = "Temp",
+      y = "Residuals",
+      title = "Residuals vs Temp"
+    )
 ```
 
 ```{r}

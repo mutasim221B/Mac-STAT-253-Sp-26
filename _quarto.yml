@@ -50,6 +50,9 @@ website:
           - "activities/L08-knn-bias-variance.qmd"
           - "activities/L09-loess-splines.qmd"
           - "activities/L10-review.qmd"
+          - "activities/L11-logistic-regression.qmd"
+
+
 
 
 

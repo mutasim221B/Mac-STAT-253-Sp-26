@@ -4061,6 +4061,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../activities/L10-review.html">
  <span class="dropdown-text">Regression Review</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../activities/L11-logistic-regression.html">
+ <span class="dropdown-text">Cross-Validation</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -4163,6 +4167,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../activities/L10-review.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Regression Review</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../activities/L11-logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cross-Validation</span></a>
   </div>
 </li>
     </ul>
@@ -4978,12 +4988,52 @@ Solution
 <summary>
 Solution
 </summary>
+<p>The table below summarizes the in-sample and 10-fold CV MAE for both models.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">IN-SAMPLE MAE</th>
+<th style="text-align: right;">10-fold CV MAE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>model_1</code></td>
+<td style="text-align: right;">1.55</td>
+<td style="text-align: right;">1.87</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>model_2</code></td>
+<td style="text-align: right;">0.64</td>
+<td style="text-align: right;">2.47</td>
+</tr>
+</tbody>
+</table>
 <ol type="a">
-<li><code>model_2</code></li>
-<li><code>model_1</code></li>
-<li><code>model_1</code> – <code>model_2</code> produces bad predictions for new adults</li>
-<li><code>model_1</code> is <em>NOT</em> overfit – its predictions of height for new adults seem roughly as accurate as the predictions for the adults in our sample. <code>model_2</code> <em>IS</em> overfit – its predictions of height for new adults are worse than the predictions for the adults in our sample.</li>
+<li>Based on the in-sample MAE alone, which model appears better?</li>
 </ol>
+<blockquote class="blockquote">
+<p>model_2</p>
+</blockquote>
+<ol start="2" type="a">
+<li>Based on the CV MAE alone, which model appears better?</li>
+</ol>
+<blockquote class="blockquote">
+<p>model_1</p>
+</blockquote>
+<ol start="3" type="a">
+<li>Based on all of these results, which model would you pick?</li>
+</ol>
+<blockquote class="blockquote">
+<p>model_1 – model_2 produces bad predictions for new adults</p>
+</blockquote>
+<ol start="4" type="a">
+<li>Do the in-sample and CV MAE suggest that <code>model_1</code> is overfit to our <code>humans</code> sample data? What about <code>model_2</code>? Why/why not?</li>
+</ol>
+<blockquote class="blockquote">
+<p>model_1 is NOT overfit – its predictions of height for new adults seem roughly as accurate as the predictions for the adults in our sample. model_2 IS overfit – its predictions of height for new adults are worse than the predictions for the adults in our sample.</p>
+</blockquote>
 </details>
 <p><br></p>
 <ol start="8" type="1">

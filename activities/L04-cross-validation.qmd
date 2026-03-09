@@ -898,10 +898,32 @@ model_1_cv %>%
 <details>
 <summary>Solution</summary>
 
-a. `model_2`
-b. `model_1`
-c. `model_1` -- `model_2` produces bad predictions for new adults
-d. `model_1` is *NOT* overfit -- its predictions of height for new adults seem roughly as accurate as the predictions for the adults in our sample. `model_2` *IS* overfit -- its predictions of height for new adults are worse than the predictions for the adults in our sample.
+The table below summarizes the in-sample and 10-fold CV MAE for both models.    
+    
+    
+  Model        IN-SAMPLE MAE  10-fold CV MAE
+  ----------- -------------- ---------------
+  `model_1`             1.55            1.87
+  `model_2`             0.64            2.47
+
+
+    
+a. Based on the in-sample MAE alone, which model appears better?    
+
+> model_2
+
+b. Based on the CV MAE alone, which model appears better?    
+
+> model_1
+
+c. Based on all of these results, which model would you pick?
+
+> model_1 – model_2 produces bad predictions for new adults
+
+d. Do the in-sample and CV MAE suggest that `model_1` is overfit to our `humans` sample data? What about `model_2`? Why/why not? 
+
+> model_1 is NOT overfit – its predictions of height for new adults seem roughly as accurate as the predictions for the adults in our sample. model_2 IS overfit – its predictions of height for new adults are worse than the predictions for the adults in our sample.
+
 </details><br>
 
 
