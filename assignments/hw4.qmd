@@ -1,0 +1,1421 @@
+---
+title: "Homework 4: Classification with Logistic Regression & LASSO"
+subtitle: "STAT 253"
+format:
+  html:
+    toc: true
+    embed-resources: true
+---
+
+
+<!-- create student template based on this QMD -->
+{{< include _create_student_template.qmd >}}
+
+```{r create-template}
+#| echo: false
+#| eval: true
+#| cache: false
+make_student_template('Homework 4', 'hw4.qmd')
+```
+
+
+
+
+::: {.content-hidden when-profile="solutions"}
+# Getting Started 
+
+## Directions & Policies
+
+The academic integrity, grading, and extension policies are the same as for HW1 and HW2.
+
+::: {.callout-warning}
+Before you submit your HTML, please ensure that the all of your code and responses are showing up as intended in your HTML.
+We will only be able to provide feedback on what we see in your submitted HTML.
+It is your responsibility to fix any error messages, formatting issues, etc. before submitting. 
+:::
+
+
+\
+
+## Learning Goals    
+
+In HW4 you will:    
+
+- Build competing models for whether or not it will rain in Sydney tomorrow based on today's weather         
+- Use LASSO in the classification setting to help pick predictors for the logistic regression model
+- Use CV & ROC curves to evaluate and choose among the competing models
+- Reflect on what you've learned so far this semester and areas for continued growth
+
+
+\
+\
+\
+\
+
+:::
+
+
+# Data Context
+
+Load the packages and data you'll need for your analysis:
+
+```{r}
+#| eval: true
+#| message: false
+# Load packages
+library(tidyverse)
+library(tidymodels)
+```
+
+
+
+\
+
+Next, load & process weather data for Sydney. 
+For simplicity, we'll keep only days with complete information (i.e., no missing values). 
+
+:::{.content-hidden when-profile="solutions"}
+
+::: {.callout-note}
+Rather than removing cases with missing values, we could *impute* these missing data points. We won't do this today, but you may encounter imputation in the future (STAT/COMP 212)!
+:::
+
+```{r}
+#| eval: true
+#| message: false
+library(rattle)
+data("weatherAUS")
+sydney <- weatherAUS %>% 
+  filter(Location == "Sydney", !is.na(RainTomorrow)) %>%  
+  select(-Location, -Date, -RISK_MM, -WindGustDir, -WindGustSpeed) %>% 
+  na.omit() # removes all rows with any missing values
+```
+
+:::
+
+:::{.content-visible when-profile="solutions"}
+
+```{r}
+#| eval: true
+#| message: false
+library(rattle) # load package that weather data come from
+
+data("weatherAUS") # load weather data
+
+# create new sydney data
+sydney <- weatherAUS %>%  
+  filter(Location == "Sydney", !is.na(RainTomorrow)) %>%  # keeps only observations in Sydney that are not missing info about whether it rained the next day
+  select(-Location, -Date, -RISK_MM, -WindGustDir, -WindGustSpeed) %>% # removes variables we won't use for prediction
+  na.omit() # removes all rows with any missing values for remaining predictors
+```
+
+:::
+
+Although we won't provide feedback on this part of the assignment, you should pause and make sure you understand what each line of code is doing above. Add comments to the end of each line to denote what is happening.
+
+
+\
+
+Take a look at the data:
+
+```{r}
+#| eval: true
+# There are 18 possible predictors of RainTomorrow!
+head(sydney, 3)
+dim(sydney)
+```
+
+
+
+
+\
+\
+\
+\
+
+# Exercises
+
+## Exercise 1: Model building
+
+In this first exercise, you will build and run CV evaluation for 3 different models of `RainTomorrow`.
+We will apply and interpret the results in later exercises, just focusing on R code here.
+
+### Part a
+
+Build 3 separate logistic regression models of `RainTomorrow`.
+
+::: {.content-hidden when-profile="solutions"}
+
+```{r}
+# STEP 0: Organize the RainTomorrow categories 
+# (Ensure that "Yes" is treated as the category of interest, and "No" is not)
+sydney <- ___
+```
+
+```{r}
+# STEP 1: Specify the logistic regression algorithm
+# You will use this for all 3 models!
+logistic_spec <- ___
+```
+
+```{r}
+# STEP 2: Build the 3 models (take note of the predictors in each)
+# Since we don't have any pre-processing steps, we can skip the recipe and workflow steps!
+model_1 <- ___ %>% 
+  ___(RainTomorrow ~ RainToday, data = ___)
+
+model_2 <- ___ %>% 
+  ___(RainTomorrow ~ Humidity9am, data = ___)
+
+model_4 <- ___ %>%  # "model_4" is not a typo
+  ___(RainTomorrow ~ ., data = ___)
+```
+
+:::
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+It is important to have the reference level be the Y = 0, or the category that is NOT of interest. 
+
+```{r}
+#| eval: true
+# STEP 0: Organize the RainTomorrow categories 
+# (Ensure that "Yes" is treated as the category of interest, and "No" is not)
+sydney <- sydney %>%
+  mutate(RainTomorrow = relevel(RainTomorrow, ref = "No"))
+```
+
+```{r}
+#| eval: true
+# STEP 1: Specify the logistic regression algorithm
+# You will use this for all 3 models!
+logistic_spec <- logistic_reg() %>%
+  set_mode("classification") %>% 
+  set_engine("glm")
+```
+
+```{r}
+#| eval: true
+# STEP 2: Build the 3 models (take note of the predictors in each)
+# Since we don't have any pre-processing steps, we can skip the recipe and workflow steps!
+model_1 <- logistic_spec %>% 
+  fit(RainTomorrow ~ RainToday, data = sydney)
+
+model_2 <- logistic_spec %>% 
+  fit(RainTomorrow ~ Humidity9am, data = sydney)
+
+model_4 <- logistic_spec %>%  
+  fit(RainTomorrow ~ ., data = sydney)
+```
+
+
+:::
+:::
+
+
+
+
+\
+\
+
+### Part b
+
+Calculate the 10-fold CV estimates of overall accuracy, sensitivity, and specificity for each of `model_1`, `model_2`, and `model_4`.
+
+::: {.content-hidden when-profile="solutions"}
+
+```{r}
+# CV for model_1
+set.seed(253)
+model_1_cv <- ___ %>% 
+  ___(
+    ___,
+    ___, 
+    control = control_resamples(save_pred = TRUE, event_level = 'second'),
+    ___
+)
+```
+
+```{r}
+# CV for model_2
+# Store as model_2_cv
+set.seed(253)
+
+
+```
+
+```{r}
+# CV for model_4
+# Store as model_4_cv
+set.seed(253)
+
+
+```
+:::
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+
+```{r}
+#| eval: true
+# CV for model_1
+set.seed(253)
+model_1_cv <- logistic_spec %>% 
+  fit_resamples(
+    RainTomorrow ~ RainToday,
+    resamples = vfold_cv(sydney, v = 10), 
+    control = control_resamples(save_pred = TRUE, event_level = 'second'),
+    metrics = metric_set(accuracy, sensitivity, specificity)
+)
+```
+
+```{r}
+#| eval: true
+# CV for model_2
+# Store as model_2_cv
+set.seed(253)
+model_2_cv <- logistic_spec %>% 
+  fit_resamples(
+    RainTomorrow ~ Humidity9am,
+    resamples = vfold_cv(sydney, v = 10), 
+    control = control_resamples(save_pred = TRUE, event_level = 'second'),
+    metrics = metric_set(accuracy, sensitivity, specificity)
+)
+```
+
+```{r}
+#| eval: true
+# CV for model_4
+# Store as model_4_cv
+set.seed(253)
+model_4_cv <- logistic_spec %>% 
+  fit_resamples(
+    RainTomorrow ~ .,
+    resamples = vfold_cv(sydney, v = 10), 
+    control = control_resamples(save_pred = TRUE, event_level = 'second'),
+    metrics = metric_set(accuracy, sensitivity, specificity)
+)
+```
+
+:::
+:::
+
+
+
+\
+\
+\
+\
+
+## Exercise 2: `model_1` interpretation & prediction       
+
+`model_1` models whether or not it will rain *tomorrow* by whether or not it rained *today*, a *categorical* predictor.
+Let's explore.
+
+```{r}
+#| eval: true
+# Plot the relationship
+ggplot(sydney, aes(x = RainToday, fill = RainTomorrow)) + 
+  geom_bar()
+```
+    
+    
+    
+### Part a
+
+You built `model_1` in Exercise 1. Print the coefficients table here.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+#| eval: true
+# model_1 coefficients
+model_1 %>% 
+  tidy()
+```
+
+:::
+:::
+
+
+\
+\
+
+
+### Part b
+
+Interpret the `RainTodayYes` coefficient on the LOG(ODDS) scale.     
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+The log(odds of rain tomorrow) increase by **1.63** if it rains today, versus if it doesn't rain today.
+
+OR
+
+Comparing days when it rains to days when it doesn't rain, the log odds of rain on the following day differ by 1.63, with higher log odds of rain tomorrow when it does rain today. 
+
+\
+
+In a "correct" interpretation, it should be clear: 
+
+- what the event is ("log odds of rain tomorrow", not just "log odds") 
+- which groups of days you are comparing (rain today versus no rain today)
+- that this is an *additive* (not multiplicative) change in log odds
+:::
+:::
+
+
+
+\
+\
+
+
+### Part c
+
+Interpret the `RainTodayYes` coefficient on the ODDS scale.
+    
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+The odds of rain tomorrow are **roughly 5** times higher if it rains today than if it doesn't rain today.
+
+```{r}
+#| eval: true
+exp(1.63)
+```
+
+
+OR
+
+The odds of rain tomorrow increase **by a factor of 5** when it rains today compared to when it doesn't.
+
+
+\
+
+In a "correct" interpretation, it should be clear: 
+
+- what the event is ("odds of rain tomorrow", not just "odds") 
+- which groups of days you are comparing (rain today versus no rain today)
+- that this is an *multiplicative* change in odds
+
+:::
+:::  
+  
+\
+\
+
+    
+### Part d
+
+Consider two new data points:        
+
+```{r}
+#| eval: true
+new_days <- data.frame(Day = c(1, 2), RainToday = c("No", "Yes"))
+new_days
+```
+
+Use `model_1` to calculate the probability of rain tomorrow for these new data points.
+*Do this from scratch first (using the model coefficients), and then confirm your calculations using a built-in R function.*
+
+```{r}
+# Probability of rain on Day 1 (calculate from scratch)
+
+# Probability of rain on Day 2 (calculate from scratch)
+
+# Confirm calculations using a built-in R function
+
+```
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+#| eval: true
+# Probability of rain on Day 1 (calculate from scratch)
+log_odds <- -1.62 + 1.63*0
+odds <- exp(log_odds)
+probability <- odds / (odds + 1)
+probability
+```
+
+```{r}
+#| eval: true
+# Probability of rain on Day 2 (calculate from scratch)
+log_odds <- -1.62 + 1.63*1
+odds <- exp(log_odds)
+probability <- odds / (odds + 1)
+probability
+```
+
+```{r}
+#| eval: true
+# Confirm calculations using a built-in R function
+# THE PROBABILITY CALCULATIONS ARE IN THE .pred_Yes COLUMN
+model_1 %>% 
+  augment(new_data = new_days)
+```
+
+:::
+:::
+
+
+
+\
+\
+
+
+
+### Part e
+
+Suppose we used `model_1` with a 0.5 probability threshold to classify whether it rains tomorrow:
+
+- If the probability of rain tomorrow is at least 0.5, predict rain tomorrow.    
+- Otherwise, predict no rain.  
+
+
+        
+**Fill in the blank below** to translate this rule into a statement about `RainToday`. (Remember that this predictor can only be Yes or No!) 
+
+- If ___, predict rain tomorrow.    
+- Otherwise, predict no rain.  
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+This follows from part d. 
+If it rains today, the probability of rain tomorrow is 0.503, which is greater than 0.5 so we predict rain tomorrow.
+If it doesn't rain today, the probability of rain tomorrow is 0.165, which is less than 0.5 so we predict no rain tomorrow.
+Thus...
+
+- If **it rains today**, predict rain tomorrow.    
+- Otherwise, predict no rain.  
+
+:::
+:::
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+## Exercise 3: `model_1` in-sample evaluation 
+
+How good is the *in-sample* performance of our above `model_1` classification rule?
+Let's explore.
+
+
+
+### Part a
+
+Obtain the in-sample confusion matrix.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+#| eval: true
+model_1_confusion <- model_1 %>% 
+  augment(new_data = sydney) %>% 
+  conf_mat(truth = RainTomorrow, estimate = .pred_class)
+
+model_1_confusion
+```
+
+
+:::
+:::
+
+
+\
+\
+
+
+### Part b
+
+Use the confusion matrix (from scratch) to calculate the in-sample overall accuracy, sensitivity, and specificity.
+
+```{r}
+# Overall accuracy
+
+# Sensitivity
+
+# Specificity
+
+```
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+#| eval: true
+# Overall accuracy
+(2408 + 475) / (2408 + 475 + 475 + 470)
+
+# Sensitivity
+475 / (475 + 475)
+
+
+# Specificity
+2408 / (2408 + 470)
+```
+
+:::
+:::
+
+
+\
+\
+
+### Part c
+
+Confirm your calculations from Part b using the `summary()` function.
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+See rows 1, 3, and 4 in the output below.
+
+```{r}
+#| eval: true
+summary(model_1_confusion, event_level = "second")
+```
+
+:::
+:::
+
+
+\
+\
+
+### Part d
+
+*Interpret* the overall accuracy, sensitivity, and specificity.
+    
+- overall accuracy:
+
+- sensitivity:
+
+- specificity:
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+- **overall accuracy**: our model correctly predicts the rain / no rain outcome 75.3% of the time / our model correctly predicts whether or not it rains tomorrow 73.3% of the time
+
+- **sensitivity**: our model correctly anticipates rain 50% of the time / among days that it rained, our model correctly predicted that half of the time
+
+- **specificity**: our model correctly anticipates when it won't rain 83.7% of the time / among days that it did not rain, our model correctly predicted that 83.7% of the time
+
+:::
+:::
+
+
+
+
+
+
+
+\
+\
+\
+\
+
+
+## Exercise 4: Going big 
+
+Whereas `model_1` only uses 1 predictor of `RainTomorrow`, `model_4` uses all 18 possible predictors!
+Let's explore the quality of the `model_4` classifications.
+
+
+
+### Part a
+
+Calculate the *in-sample* *overall accuracy* of using `model_4` with a 0.5 probability cut-off (the default) to predict `RainTomorrow`. You can use built-in R functions!
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+#| eval: true
+# NOTE: You can split this into multiple steps!!!
+# also NOTE: I'm filtering to just focus on the metric we want (accuracy) but this isn't strictly necessary
+
+model_4 %>% 
+  augment(new_data = sydney) %>% # get predictions
+  conf_mat(truth = RainTomorrow, estimate = .pred_class) %>% # get the confusion matrix
+  summary(event_level = "second") %>% # get metrics (accuracy, sensitivity, specificity, and others)
+  filter(.metric == "accuracy") # filter to just print out accuracy
+```
+
+:::
+:::
+
+
+
+\
+\
+
+### Part b
+
+You ran the CV process for `model_4` in Exercise 1. Report the *CV* *overall accuracy* of `model_4` here. Pause to convince yourself that you remember how CV metrics are obtained.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+#| eval: true
+model_4_cv %>% 
+  collect_metrics()
+```
+
+:::
+:::
+
+
+
+\
+\
+
+### Part c
+
+Do these metrics provide evidence that `model_4` is overfit to our sample data? Explain.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+No. Our model does similarly well at predicting rain for new days than the days in our sample.
+:::
+:::
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+## Exercise 5: `model_4` in-sample evaluation continued
+
+For every day in the data set, `model_4_predictions` stores the observed `RainTomorrow` outcome and the predicted *probability* of rain calculated by `model_4`:
+
+```{r}
+#| eval: true
+model_4_predictions <- model_4 %>%
+  augment(new_data = sydney) %>% 
+  select(RainTomorrow, .pred_Yes)
+
+head(model_4_predictions)
+```
+
+
+In the previous exercise, we turned these probabilities into binary Yes / No predictions of rain using a 0.5 probability threshold.
+
+But we don't *have* to use 0.5!
+Let's explore this idea.
+
+
+
+### Part a
+
+Using the `model_4_predictions` info:
+
+- construct a boxplot of the probability predictions vs the actual `RainTomorrow` outcomes for all days in our dataset; AND
+- draw a horizontal line at the approximate probability cut-off that would *maximize* sensitivity *while* maintaining a specificity of at least 75%. HINT: `geom_hline(yintercept = ___)`
+
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+To maximize the sensitivity, we want the lowest threshold while still being above the top of the box for No Rain. A threshold of about 0.185 seems to do this.
+
+```{r}
+#| eval: true
+model_4_predictions %>%
+  ggplot(aes(y = .pred_Yes, x = RainTomorrow)) + 
+  geom_boxplot() + 
+  geom_hline(yintercept = 0.185) 
+```
+
+NOTE: The placement of the horizontal threshold may vary a little, but should be close to the top of the "No" box
+:::
+:::
+
+
+
+\
+\
+
+
+### Part b
+
+We don't have to guess at probability thresholds, or test them out one by one!
+`roc_curve()` calculates sensitivity and specificity for a *range* of thresholds between 0 and 1.
+Adapt the code below to identify a probability threshold that would *maximize* sensitivity *while* maintaining a specificity of at least 75%.
+
+(This should be consistent with your visual approximation in Part b.)
+**Only print ONE appropriate threshold row** (eg using `head(1)`), **NOT all rows.**
+
+
+```{r}
+# NOTE the information needed to run this function!
+model_4_predictions %>% 
+  roc_curve(truth = RainTomorrow, .pred_Yes, event_level = "second")
+```
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+#| eval: true
+# NOTE the information needed to run this function!
+model_4_predictions %>% 
+  roc_curve(truth = RainTomorrow, .pred_Yes, event_level = "second") %>% 
+  filter(specificity >= 0.75) %>% # keep only those thresholds leading to specificity at or above 0.75
+  arrange(desc(sensitivity)) %>% # then sort by *sensitivity*
+  head(1) # take the top entry (will have highest sensitivity)
+```
+
+```{r}
+#| eval: true
+# another way to do this:
+# NOTE that slice_max keeps ties
+model_4_predictions %>% 
+  roc_curve(truth = RainTomorrow, .pred_Yes, event_level = "second") %>% 
+  filter(specificity >= 0.75) %>% 
+  slice_max(sensitivity, n = 1)
+```
+
+:::
+:::
+
+
+
+
+\
+\
+
+
+### Part c
+
+Construct the ROC curve and calculate its AUC. Simply take note of the code here. It's new!
+
+```{r}
+# ROC curve
+model_4_predictions %>% 
+  roc_curve(truth = RainTomorrow, .pred_Yes, event_level = "second") %>% 
+  autoplot()
+
+# AUC
+model_4_predictions %>% 
+  roc_auc(truth = RainTomorrow, .pred_Yes, event_level = "second")
+```
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+```{r}
+#| eval: true
+#| code-fold: true
+# ROC curve
+model_4_predictions %>% 
+  roc_curve(truth = RainTomorrow, .pred_Yes, event_level = "second") %>% 
+  autoplot()
+
+# AUC
+model_4_predictions %>% 
+  roc_auc(truth = RainTomorrow, .pred_Yes, event_level = "second")
+```
+:::
+:::
+
+
+
+
+
+\
+\
+
+### Part d
+
+Interpret the AUC in the context of this analysis.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+Our model can correctly distinguish a rain and no rain day 88% of the time.
+:::
+:::
+
+
+
+
+\
+\
+\
+\
+\
+\
+
+
+
+## Exercise 6: LASSO!
+    
+`model_1` and `model_2` both use only *1* possible predictor of `RainTomorrow`.
+And `model_4` uses all *18* possible predictors.
+Something in between these 2 extremes might be better.
+Luckily, the LASSO algorithm can be used in the classification setting!
+Just as in the regression setting, LASSO shrinks the $\beta$ coefficients in the logistic regression model toward / to 0 (thus can kick out predictors):
+
+log(odds of rain tomorrow) = $\beta_0$ + $\beta_1 x_1$ + $\beta_2 x_2$ + $\cdots$
+
+
+
+### Part a
+
+Build 50 LASSO models of `RainTomorrow` using all possible predictors.
+Try a range of $\lambda$ penalty parameters from $10^{-2}$ to $10^{-0.75}$ (i.e. from 0.01 to ~0.18). 
+Use 10-fold CV to evaluate each model with respect to its overall accuracy.
+
+NOTE: You'll need to adapt our LASSO code from the regression setting using some of our new classification code. You can do it!
+
+```{r}
+# STEP 1: Specify the LASSO algorithm 
+
+```
+
+```{r}
+# STEP 2: Variable recipe
+# Remember that LASSO requires us to pre-process categorical predictors
+# And that glmnet will *automatically* pre-process quantitative predictors
+
+```
+
+```{r}
+# STEP 3: Workflow (algorithm + recipe)
+
+```
+
+```{r}
+# STEP 4: Estimate 50 LASSO models
+
+```
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+#| eval: true
+# STEP 1: Specify the LASSO algorithm 
+# NOTE the new model type (logistic_reg) and mode ("classification")
+lasso_spec <- logistic_reg() %>% 
+  set_mode("classification") %>% 
+  set_engine("glmnet") %>% 
+  set_args(mixture = 1, penalty = tune())
+```
+
+```{r}
+#| eval: true
+# STEP 2: Variable recipe
+# Remember that LASSO requires us to pre-process categorical predictors
+# And that glmnet will *automatically* pre-process quantitative predictors (ie don't need step_normalize)
+variable_recipe <- recipe(RainTomorrow ~ ., data = sydney) %>% 
+  step_dummy(all_nominal_predictors())
+```
+
+```{r}
+#| eval: true
+# STEP 3: Workflow (algorithm + recipe)
+lasso_workflow <- workflow() %>% 
+  add_recipe(variable_recipe) %>% 
+  add_model(lasso_spec)
+```
+
+```{r}
+#| eval: true
+# STEP 4: Estimate 50 LASSO models
+set.seed(253)
+lasso_models <- lasso_workflow %>% 
+  tune_grid(
+    grid = grid_regular(penalty(range = c(-2, -0.75)), levels = 50),
+    resamples = vfold_cv(sydney, v = 10),
+    # You can use, but don't need, the control line since we're not calculating sensitivity or specificity
+    #control = control_resamples(save_pred = TRUE, event_level = 'second'),
+    metrics = metric_set(accuracy)
+  )
+```
+
+:::
+:::
+
+
+
+
+
+\
+\
+
+
+### Part b
+
+Plot the CV accuracy rate versus $\lambda$ for the 50 LASSO models.
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+#| eval: true
+lasso_models %>% 
+  autoplot() + 
+  scale_x_continuous() +
+  labs(x = expression(lambda))
+```
+
+:::
+:::
+
+
+
+
+\
+\
+
+
+### Part c
+
+Use the plot from Part b to address the impact of increasing $\lambda$.
+Be sure to connect what's happening to the model itself as $\lambda$ increases (is it getting more or less simple?) with the corresponding impact on the overall accuracy on the model's rain classifications.
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+As $\lambda$ increases, the model becomes more and more simple (with fewer predictors).
+When it becomes too simple, the overall classification accuracy decreases.
+:::
+:::
+
+
+
+
+\
+\
+
+### Part d
+
+Finalize your LASSO model, prioritizing parsimony.
+Save this as `model_3`.
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+#| eval: true
+parsimonious_penalty <- lasso_models %>% 
+  select_by_one_std_err(metric = "accuracy", desc(penalty))
+parsimonious_penalty
+
+model_3 <- lasso_workflow %>% 
+  finalize_workflow(parameters = parsimonious_penalty) %>% 
+  fit(data = sydney)
+```
+
+Remember: the `desc()` step in `select_by_one_std_err` implies that larger values of the penalty correspond to a simpler model. That's still true here (b/c LASSO) even though we're using a different evaluation metric. 
+
+:::
+:::
+
+
+
+
+\
+\
+
+
+### Part e
+
+Print out the final LASSO coefficients.
+Only include coefficients for the predictors that *remain* in the model, i.e. those that have non-zero coefficients.
+HINT: != is "not equal to" in R.
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+#| eval: true
+model_3 %>% 
+  tidy() %>% 
+  filter(estimate != 0)
+```
+
+:::
+:::
+
+
+
+\
+\
+\
+\
+
+
+
+## Exercise 7: Pick a model!
+
+We now have 4 different models of `RainTomorrow`:    
+
+
+Model       Predictors
+----------- --------------------------------------------------
+`model_1`   `RainTomorrow`
+`model_2`   `Humidity3pm`
+`model_3`   a subset of predictors identified by LASSO
+`model_4`   all 20 predictors in the data set    
+
+
+### Part a
+
+Report the CV overall accuracy rates for all 4 models.
+List the rates here, and include your corresponding code in the chunk below.
+NOTE: You already performed the CV processes above. Don't redo that work. Just pull out the relevant metrics.
+
+
+```{r}
+# model_1 CV accuracy
+
+
+# model_2 CV accuracy
+
+
+# model_3 CV accuracy
+
+
+# model_4 CV accuracy
+
+```
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+- `model_1` CV accuracy = 0.744        
+- `model_2` CV accuracy = 0.761
+- `model_3` CV accuracy = 0.826
+- `model_4` CV accuracy = 0.837
+
+
+```{r}
+#| eval: true
+# model_1 CV metrics
+# NOTE: the filter step pulls out the relevant metric (accuracy)
+model_1_cv %>% 
+  collect_metrics() %>% 
+  filter(.metric == "accuracy") 
+
+# model_2 CV metrics
+model_2_cv %>% 
+  collect_metrics() %>% 
+  filter(.metric == "accuracy")
+
+# model_3 CV metrics
+# NOTE: this filter pulls out the results for just our chosen lambda
+lasso_models %>%
+  collect_metrics() %>%
+  filter(penalty == parsimonious_penalty$penalty)
+
+# model_4 CV metrics
+model_4_cv %>% 
+  collect_metrics() %>% 
+  filter(.metric == "accuracy")
+```
+
+:::
+:::
+
+
+
+
+\
+\
+
+
+
+### Part b
+
+Complete the code below to obtain the ROC curve and corresponding AUC for each model.
+NOTE: Don't get too distracted by the code. It allows us to plot the ROC curves all on 1 plot for easier comparison. We'll typically plot ROC curves for one model at a time. 
+
+```{r}
+#| eval: true
+# FIRST: Put all 4 sets of model predictions into one data set
+# Label these in the "model" column
+all_model_predictions <- rbind(
+  augment(model_1, new_data = sydney),
+  augment(model_2, new_data = sydney),
+  augment(model_3, new_data = sydney),
+  augment(model_4, new_data = sydney)
+) %>% 
+  mutate(model = rep(c("model 1", "model 2", "model 3", "model 4"), each = nrow(sydney))) %>% 
+  select(model, RainTomorrow, .pred_Yes)
+```
+
+
+::: {.content-hidden when-profile="solutions"}
+
+```{r}
+# Plot the ROC curves on one plot
+all_model_predictions %>% 
+  group_by(model) %>% 
+  ___ %>% 
+  ___
+```
+
+```{r}
+# Calculate AUC for all 4 models
+all_model_predictions %>% 
+  group_by(model) %>% 
+  ___
+```
+
+:::
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+#| eval: true
+# Plot the ROC curves on one plot
+all_model_predictions %>% 
+  group_by(model) %>% 
+  roc_curve(truth = RainTomorrow, .pred_Yes, event_level = "second") %>% 
+  autoplot()
+```
+
+```{r}
+#| eval: true
+# Calculate AUC for all 4 models
+all_model_predictions %>% 
+  group_by(model) %>% 
+  roc_auc(truth = RainTomorrow, .pred_Yes, event_level = "second")
+```
+
+:::
+:::
+
+
+
+
+
+\
+\
+
+
+### Part c
+
+In general, what happens to AUC as we add predictors to the model? For example, compare `model_2`, `model_3`, and `model_4`. Pick one option and delete the rest.
+
+- AUC increases
+- AUC decreases
+- AUC doesn't change   
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+AUC increases
+:::
+:::
+
+
+
+\
+\
+
+
+### Part d
+
+If you had to pick 1 of these 5 models, which would it be and why? Use information from both parts a and b in your answer.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+`model_3`. It's notably more accurate than `model_1` and `model_2`. It's slightly less accurate than `model_4` but it's much simpler (4 predictors vs 20).
+:::
+:::
+
+
+
+\
+\
+
+
+### Part e
+
+You should think about the following:
+
+- Explain why the `model_1` ROC curve is so rigid.
+- If you could use only 1 predictor of `RainTomorrow`, `RainToday` or `Humidity9am`, which would it be and why?
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+The ROC is rigid since the only `model_1` predictor, `RainToday`, has only 2 possible outcomes. 
+
+`Humidity9am`. The AUC and CV accuracy are slightly better for `model_2`.
+:::
+:::
+
+
+
+
+\
+\
+\
+\
+
+## Exercise 8: Learning Reflection
+
+We now find ourselves at the end of our fourth unit! 
+This is a good moment to pause, organize your notes, and reflect on how things have been going.  
+
+This is the second of four learning reflections that you will complete this term. 
+
+Follow the instructions below: 
+
+1. Open the Google Doc called *STAT 253 - Learning Reflection Journal - Your Name* that you created earlier in the semester. 
+
+2. Create a new section (or tab) titled *Reflection 2*. 
+
+3. Copy-paste the reflection prompts, below, into that document.
+
+4. Type your answers to those prompts into that reflection journal. (Suggestion: use an [alternate font color]{style="color:blue;"} to clearly distinguish your responses from the prompts!)
+
+
+Your reflection is due at the same time as this homework.
+Before you submit your final homework HTML, please double-check that your reflection journal has been updated **AND** that your instructor has been added as an editor. 
+
+
+:::{.callout-important}
+You may not use AI tools to assist with this question. All words should be your 
+own. Don't worry about grammar/spelling -- write freely, from the heart!
+::: 
+
+:::{.callout-note title="Reflection 2 Prompts"}
+
+(@) **Core ML Concepts**  
+    Review the *Overarching Themes* and *Course Topic Learning Goals* on the
+    course website: Course Logistics > Learning Goals. 
+    (Ignore the "General Skills" section for now! We'll focus on that next.)
+    
+    Write a reflection (~200–300 words) on the progress you have made toward 
+    these learning goals and the learning activities/strategies that have been 
+    most helpful in making that progress. In your response, please address 
+    **both** your strengths/accomplishments and at least two areas for 
+    improvement. Describe the steps you plan to take to further develop your 
+    understanding of those concepts in the second half of the semester. 
+    
+
+
+(@) **General Skills**  
+    In addition to learning new machine learning algorithms, this course is 
+    designed to help you practice and develop "general skills" that are 
+    important for future coursework and careers in statistics, data science, 
+    and many other fields. These include: *computational thinking*, 
+    *data communication*, *collaboration*, *ethical thinking*, and
+    *reflection*. 
+    Review the learning goals on the course website related to 
+    these skills: Course Logistics > Learning Goals > General Skills. 
+    
+    Write a reflection (~200–300 words) on the progress you have made on these 
+    skills. In your response, please address **both** the area(s) where you 
+    have made the most progress and the area(s) where you still have room for 
+    improvement. In addressing the latter, describe at least one *specific* 
+    goal you have to further pratice and develop these skills in the next 
+    portion of the semester. 
+
+
+
+(@) **Final Thoughts**  
+    Please share any other thoughts you have related to your learning in this 
+    class. For example: 
+    
+    - Are there any aspects of this course that you have found to be particularly interesting, exciting, important, relevant, etc.? 
+    - Are there aspects of the course that you have found particularly challenging?
+    - Is there something that the instructor could change about the course that would reduce or remove barriers to your learning? 
+    - What are you most looking forward to during the next portion of the semester? 
+    - Is there anything else you would like me to know about your learning, engagement, or progress toward our course learning objectives at this time?
+
+
+(@) **Follow-Up**   
+    Would it be helpful to follow up with the instructor to talk more about this reflection? 
+    Select one: **Yes, I’d like the instructor to follow up with me** / **No, I’m fine for now**
+:::
+
+
+\
+\
+\
+\
+
+## Exercise 9: Resource Reflection
+
+List the resources you used to complete this assignment (e.g. office hours, textbook, Gen AI, etc.)   
+
+- 
+-
+-
+
+Write **3-5 sentences** about which resources were the most useful in helping you complete the assignment.
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+Answers will vary, but students should list the resouces they used to complete this assignment (e.g. office hours, textbook, NOT Gen AI, etc.) and write 3-5 sentences about which resources were the most useful in helping them complete the assignment.
+:::
+:::
+
+
+
+
+
+
+\
+\
+\
+\
+
+::: {.content-hidden when-profile="solutions"}
+::: {.callout-important}
+When you are done, remember to check your rendered HTML for errors/formatting issues before submitting!
+:::
+
+
+
+\
+\
+\
+\
+
+:::

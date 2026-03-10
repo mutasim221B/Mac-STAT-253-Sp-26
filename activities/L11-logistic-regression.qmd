@@ -1,5 +1,5 @@
 ---
-title: "Cross-Validation"
+title: "Logistic Regression"
 subtitle: "Notes and in-class exercises"
 format: 
   html:

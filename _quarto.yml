@@ -51,6 +51,7 @@ website:
           - "activities/L09-loess-splines.qmd"
           - "activities/L10-review.qmd"
           - "activities/L11-logistic-regression.qmd"
+          - "activities/L12-evaluating-classification-models.qmd"
 
 
 
