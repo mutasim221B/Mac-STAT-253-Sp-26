@@ -1,3 +1,12 @@
+---
+title: "Evaluating Classification Model"
+subtitle: "Notes and in-class exercises"
+format: 
+  html:
+    embed-resources: true
+    toc: true
+---
+
 
 ```{r include = FALSE}
 knitr::opts_chunk$set(
@@ -10,6 +19,10 @@ knitr::opts_chunk$set(
   fig.pos = 'h',
   fig.align = 'center')
 ```
+
+
+You can download the .qmd file for this activity [here](../activity_templates/L12-evaluating-classification-models.qmd) and open in R-studio. The rendered version is posted in the [course website](https://mutasim221b.github.io/Mac-STAT-253-Sp-26/) (Activities tab). I often experiment with the class activities (and see it in live!) and make updates, but I always post the final version before class starts. To be sure you have the most up-to-date copy, please download it once you’ve settled in before class begins.
+
 
 
 # Learning Goals {-}
@@ -29,7 +42,7 @@ knitr::opts_chunk$set(
 ## Where are we? {.unnumbered .smaller}
 
 
-![](../images/MLdiagram4.jpg){width=90%}
+![](../images/MLdiagram.jpg){width=90%}
 
 
 
@@ -97,7 +110,7 @@ Discuss at your table.
   = true negative rate  
   = probability of correctly classifying $y=0$ as $y=0$
 
-- **1 - specificity**  
+- **1-specificity**  
   = false positive rate  
   = probability of classifying $y=0$ as $y=1$
 
@@ -175,7 +188,7 @@ Why we care:
 - Along with context, ROC curves can help us identify an appropriate probability threshold c.
 - ROC curves can help us compare the quality of different models.
 - The **area under an ROC curve** (AUC) estimates the probability that our algorithm is *more* likely to classify y = 1 as 1 than to classify y = 0 as 1, hence distinguish between the 2 classes. 
-  - Put another way: if we give our model 2 data points, one with y = 0 and the other with y = 1, AUC is the probability that we correctly identify which is which.
+- Put another way: if we give our model 2 data points, one with y = 0 and the other with y = 1, AUC is the probability that we correctly identify which is which.
 
 
 
@@ -243,6 +256,13 @@ Prediction   No  Yes
 ```
 
 ```{r}
+# Overall accuracy
+
+
+# Sensitivity
+
+
+# Specificity
 
 ```
 
