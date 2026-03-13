@@ -52,6 +52,7 @@ website:
           - "activities/L10-review.qmd"
           - "activities/L11-logistic-regression.qmd"
           - "activities/L12-evaluating-classification-models.qmd"
+          - "activities/L13-knn-trees.qmd"
 
 
 
