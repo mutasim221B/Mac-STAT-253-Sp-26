@@ -523,11 +523,6 @@ b.  `NDVI` = -0.02 and `SD_NIR` = 7
 
 
 
-
-
-
-
-
 \
 
 ## Exercise 8: Understand the tree {.unnumbered .smaller}

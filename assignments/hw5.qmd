@@ -1,0 +1,1011 @@
+---
+title: "Homework 5: Peoples & Trees"
+subtitle: "STAT 253"
+format:
+  html:
+    toc: true
+    embed-resources: true
+---
+
+
+<!-- create student template based on this QMD -->
+{{< include _create_student_template.qmd >}}
+
+```{r create-template}
+#| echo: false
+#| eval: true
+#| cache: false
+make_student_template('Homework 5', 'hw5.qmd')
+```
+
+
+
+
+::: {.content-hidden when-profile="solutions"}
+# Getting Started 
+
+## Directions & Policies
+
+The academic integrity, grading, and extension policies are the same as for Homeworks 1, 2, and 4. Please review those assignments if you need a refresher.
+
+::: {.callout-warning}
+Before you submit your HTML, please ensure that the all of your code and responses are showing up as intended in your HTML.
+We will only be able to provide feedback on what we see in your submitted HTML.
+It is your responsibility to fix any error messages, formatting issues, etc. before submitting. 
+:::
+
+
+\
+
+## Learning Goals    
+
+In HW5 you will:    
+
+- Practice tree-based classification *and* regression techniques!
+- Explore concepts of OOB metrics in contrast to CV.
+- Practice your ethical thinking skills.
+
+
+\
+\
+\
+\
+
+:::
+
+
+# Data Context
+
+Cards Against Humanity's [**"Pulse of the Nation" project (click)**](https://thepulseofthenation.com/) conducted monthly polls into people's social views, political views, and other nonsense.
+We'll use the survey responses from one of these polls to predict: 
+
+- **Does a person believe climate change is real?** (Exercises 1--4), and
+- **How old is that person?** (Exercises 5--7).
+
+First load the packages we'll need for this assignment:
+
+```{r}
+#| code-fold: true
+#| eval: true
+#| warning: false
+#| message: false
+# Load packages
+library(tidymodels)
+library(tidyverse)
+library(rpart)
+library(rpart.plot)
+library(vip)
+```
+
+Then import the survey data:
+
+```{r}
+#| code-fold: true
+#| eval: true
+#| collapse: true
+# Load data
+survey_data <- read.csv("https://mac-stat.github.io/data/pulse_of_the_nation_processed.csv") %>% 
+  mutate_if(is.character, as.factor) %>% 
+  mutate(trump_approval = case_when(
+    trump_approval == "Strongly disapprove" ~ "1",
+    trump_approval == "Somewhat disapprove" ~ "2",
+    trump_approval == "Neither approve nor disapprove" ~ "3",
+    trump_approval == "Somewhat Approve" ~ "4",
+    trump_approval == "Strongly Approve" ~ "5",
+    .default = as.factor(trump_approval)
+  ))
+
+# Check it out
+head(survey_data)
+```
+
+This dataset contains answers to the following survey questions:
+
+
+variable            survey questions
+------------------- ------------------------------
+`income`            What is your income (in $1000s per year)?
+`gender`            What gender do you identify with (female, male, other)? NOTE: I believe there were other options in the survey, but they were "collapsed" or combined.
+`age`               What is your age? (years)
+`party`             In politics today, do you consider yourself a Democrat, a Republican, or Independent? 
+`trump_approval`    Do you approve, disapprove, or neither approve nor disapprove of how Donald Trump is handling his job as president? 
+`education`         What is your highest level of education?
+`marital`           What is your marital status?
+`robots`            What would you say is the likelihood that your current job will be entirely performed by robots or computers within the next decade?
+`climate_change`    Do you believe that climate change is real and caused by people, real but not caused by people, or not real at all?
+`transformers`      How many Transformers movies have you seen? 
+`science_is_honest` Do you agree or disagree with the following statement: scientists are generally honest and are serving the public good. 
+`vaccines_are_safe` Do you agree or disagree with the following statement: vaccines are safe and protect children from disease.
+`books`             How many books, if any, have you read in the past year?
+`ghosts`            Do you believe in ghosts?
+`fed_sci_budget`    Is federal funding of scientific research too high, too low, or about right?
+`earth_sun`         True or false: In the northern hemisphere, the earth is always farther away from the sun in the winter than in the summer.
+`wise_unwise`       If you had to choose: would you rather be wise and unhappy, or unwise and happy?
+
+
+
+\
+\
+\
+\
+
+# Exercises
+
+## Exercise 1: Build a tree
+
+In the first part of this assignment, we'll explore and model people's opinions about climate change: 
+    
+```{r}
+#| eval: true
+survey_data %>% 
+  count(climate_change)
+```
+    
+We'll use all **15 possible predictors** gathered from the **1000** survey respondents:
+
+```{r}
+#| eval: true
+# Note: 1 of the columns is climate_change (y)
+dim(survey_data)
+```
+    
+
+\
+
+### Part a
+
+Run the tree algorithm to model `climate_change` by all 15 predictors. 
+Use the following characteristics:    
+
+- Set the seed to 253.  
+- Build 10 trees, each using different `cost_complexity` values from 10^(-5) to 10^(0.1).  
+- For each tree, let the leaf nodes have a minimum sample size of 2 and restrict the tree to have at most 30 splits from top to bottom.  
+- Calculate the 10-fold CV accuracy rate for each tree.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r update-code-chunk-opts}
+#| eval: true
+#| echo: false
+knitr::opts_chunk$set(eval = TRUE)
+```
+
+```{r}
+# STEP 1: tree specification
+tree_spec <- decision_tree() %>%
+  set_mode("classification") %>% 
+  set_engine(engine = "rpart") %>% 
+  set_args(cost_complexity = tune(),  
+           min_n = 2, 
+           tree_depth = 30)
+
+# STEP 2: variable recipe
+variable_recipe <- recipe(climate_change ~ ., data = survey_data)
+
+# STEP 3: tree workflow
+tree_workflow <- workflow() %>% 
+  add_recipe(variable_recipe) %>% 
+  add_model(tree_spec)
+
+# STEP 4: Estimate multiple trees using a range of possible cost complexity values
+set.seed(253) #if you don't have set.seed(), or have a different seed, you'll get different results
+tree_models <- tree_workflow %>% 
+  tune_grid(
+    grid = grid_regular(cost_complexity(range = c(-5, 0.1)), levels = 10),
+    resamples = vfold_cv(survey_data, v = 10),
+    metrics = metric_set(accuracy)
+  )
+```
+
+
+For graders, please make sure the following were used in STEP 4:
+
+- seed: 253 (`set.seed(253)`)
+- cost complexity grid: 10 values between 10^{-5} to 10^{0.1} (`cost_complexity(range = c(-5, 0.1)), levels = 10)`)
+- k-fold CV: k = 10 (`vfold_cv(survey_data, v = 10)`)
+
+and the following should be specified in STEP 1: 
+
+- min n: 2 (`set_args(..., min_n = 2, ...))`)
+- tree depth: 30 (`set_args(..., tree_depth = 30))`)
+
+If any of these characteristics were not specified correctly, answers to remaining questions below could differ from the answer key.
+
+
+:::
+:::
+
+
+
+
+\
+\
+
+### Part b
+
+Pick & finalize the tree that has the *best* accuracy rate. Store this as `climate_tree`.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+best_cost <- tree_models %>% 
+  select_best(metric = "accuracy")
+
+climate_tree <- tree_workflow %>% 
+  finalize_workflow(parameters = best_cost) %>% 
+  fit(data = survey_data)
+```
+
+FYI: my selected cost complexity was
+
+```{r}
+best_cost
+```
+
+
+
+:::
+:::
+
+
+\
+\
+
+
+### Part c
+
+Use `rpart.plot()` to plot the tree for your final tree model.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+#| warning: false
+climate_tree %>% 
+  extract_fit_engine() %>% 
+  rpart.plot(type = 0, cex = 0.8)
+```
+
+:::
+:::
+
+
+\
+\
+
+
+### Part d
+
+Give a couple of takeaways about survey respondents that do NOT believe climate change is real.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+These respondents tend to strongly approve of Trump and think science is dishonest.  
+
+:::
+:::
+
+\
+\
+\
+\
+
+## Exercise 2: Follow-up
+    
+    
+### Part a
+
+Plot the CV accuracy metrics vs the `cost_complexity` values for your 10 trees. No need to write anything here, but convince yourself that we selected a reasonable range of tuning parameters and that you *could* interpret this plot if asked.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+#| message: false
+tree_models %>% 
+  autoplot() +
+  scale_x_continuous() # optional, but helpful IMO
+```
+
+
+NOTE: the `scale_x_continuous` converts cost complexity back from the log scale on which it was specified. For example, instead of the x-axis showing  $\log_{10}(\alpha)$ from -5 to 0.1 it will show $\alpha$ from $10^{-5}$ = 0.00001 to $10^{0.1}$ = 1.26. I usually find it helpful to do this conversion, but if you forget this step your plot will look as follows:
+
+```{r}
+tree_models %>% 
+  autoplot() 
+```
+
+These plots are equivalent in terms of the data they are presenting, but the different scales on the x-axis clearly have a big impact on how those data appear visually (particularly with respect to the spacing along the x-axis). 
+
+:::
+:::
+
+
+\
+\
+
+
+### Part b
+
+Just for fun: How would the tree classify *your* belief in climate change?
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+Answers will vary. 
+
+Consider each of the yes/no questions asked at each split. 
+Move to the left if your answer is "yes" and move to the right if your answer is "no". 
+
+We won't grade this one. 
+
+:::
+:::
+
+
+
+
+
+
+\
+\
+\
+\
+
+## Exercise 3: Evaluate the tree
+    
+    
+### Part a
+
+Report and interpret the overall CV accuracy rate of our tree.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+**Interpretation:** We believe our model can accurately predict the climate change belief of roughly 66% of *new* subjects (assuming they answered these same survey questions). 
+
+
+```{r}
+# Obtain the CV accuracy
+tree_models %>% 
+  collect_metrics() %>% 
+  filter(cost_complexity == best_cost$cost_complexity)
+
+```
+
+
+Remember, since this is **CV** accuracy, our interpretation should signal in some way that this is an **out-of-sample** measure of accuracy. 
+In the solution above, I included the phrase "new subjects" for this reason, but there could be alternate phrasings that accomplish the same goal. 
+Ultimately, it needs to be clear from the interpretation that this is how accurate we think this model will be when we use it to predict climate change beliefs for  **new people it hasn't seen before**, as opposed to data on which it was trained. 
+
+
+:::
+:::
+
+
+\
+\
+
+
+### Part b
+
+To better understand the classification accuracy for each belief group, construct an in-sample confusion matrix.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+# In-sample confusion matrix
+climate_tree %>% 
+  augment(new_data = survey_data) %>% 
+  conf_mat(truth = climate_change, estimate = .pred_class)
+
+```
+
+:::
+:::
+
+
+\
+\
+
+
+### Part c
+
+Identify which group is *most* accurately predicted by our tree **and** explain why does this make sense.
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+**Most accurately classified group:** Real and caused by people. We correctly predicted this belief for 574 of the 574 + 50 + 26 = `r 574 + 50 + 26` people in this dataset with that belief. 
+(Our predictions were correct for approximately `r round(574/(574 + 50 + 26)*100,1)` percent of the people in this group, as opposed to only `r round(58/(58 + 59 + 38)*100,1)` and `r round(51/(33 + 111 + 51)*100,1)` percent of the people in the other two groups.)
+
+**Why this makes sense:** "Real and caused by people" is the most common category in our training data, thus it makes sense that it will dominate our tree results. Another reason might be that the other groups are similar to one another in their responses, thus tough to distinguish.
+
+
+
+:::
+:::
+
+\
+\
+\
+\
+
+
+## Exercise 4: Digging deeper
+
+The story: Mac prof Christie Manning researches "people's cognitive and emotional response to information about climate change". Suppose she'd like us to help identify possible research subjects that either don't believe in climate change, or do, but don't believe it's caused by humans. To improve our classifications of these two groups, we can address the imbalanced categories in `climate_change`. There are multiple options (all with pros & cons):
+    
+  - upsample or downsample the categories ([**this article provides a nice overview**](https://medium.com/@rithpansanga/choosing-the-right-size-a-look-at-the-differences-between-upsampling-and-downsampling-methods-daae83915c19))
+  - put **prior weights** on the categories
+        
+We'll take the prior weights approach here. Check out the resulting confusion matrix below (no need to run the code yourself), then answer some follow-up questions:
+    
+```{r}
+#| eval: true
+#| code-fold: true
+# Fit a new tree using the prior weights
+# For simplicity, we'll use specific tuning parameters!
+weighted_tree_specs <- decision_tree() %>%
+  set_mode("classification") %>% 
+  set_engine(engine = "rpart") %>% 
+  set_args(cost_complexity = 0.01,  
+           min_n = 2, 
+           tree_depth = 30,
+           parms = list(prior = c(0.45, 0.10, 0.45))) # here are the weights!
+
+weighted_tree <- weighted_tree_specs %>% 
+  fit(climate_change ~ ., data = survey_data)
+
+# In-sample confusion matrix
+weighted_tree %>% 
+  augment(new_data = survey_data) %>% 
+  conf_mat(truth = climate_change, estimate = .pred_class)
+```    
+
+
+\
+    
+### Part a
+
+
+What do you think these prior weights *do* / how do they change our tree algorithm? (You can do some online research.)
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+This puts greater weight on the two more uncommon groups (45%) and smaller weight on the most common group that believes in climate change (10%). 
+The idea is that, *prior* to observing the survey responses, we'd guess there's a 45% chance that a person doesn't believe in climate change, a 10% chance that a person *does* believe in climate change, and a 45% chance that a person does believe in climate change but thinks it's not caused by people.
+
+To be clear: this is not necessarily what I think is true in this setting. We're just trying this out for illustrative purposes! If you were going to use this approach, you'd want to think carefully about your choice of prior weights and make sure that choice was well-justified (eg based on prior literature).
+
+:::
+:::
+
+
+\
+\
+
+
+### Part b
+
+For what group(s) did these weights *improve* our classification?
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+This improves classifications for the groups that don't believe in climate change, or do, but think it's not caused by people.
+
+Not Real At All: within-class accuracy improved from 37.4% to `r round(125/(125 + 0 + 30)*100,1)`%.
+
+Real but not Caused by People: within-class accuracy improved from 26.2% to `r round(162/(25 + 8 + 162)*100,1)`%.
+
+:::
+:::
+
+
+\
+\
+
+
+### Part c
+
+What is the trade-off? What gets *worse*? NOTE: For this reason, we'd typically only take this approach if our priority is to understand the rarer groups.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+It makes the predictions of people that *do* believe in climate change *worse*.
+(Within-class accuracy dropped from 88.3% to `r round(253/(102 + 253 + 295)*100,1)`%.)
+
+
+FWIW: The overall accuracy also decreased to `r (125 + 253 + 162)/(125 + 0 + 30 + 102 + 253 + 295 + 25 + 8 + 162)` from `r (58 + 574 + 51)/(58 + 59 + 38 + 26 + 574 + 50 + 33 + 111 + 51)`.
+
+
+:::
+:::
+
+
+\
+\
+\
+\
+
+## Exercise 5: Another tree
+
+For the next part of this assignment, we'll use the same `survey_data` to predict a respondent's **age** from their survey responses.
+
+<!--
+Note that `age` is a quantitative variable, so this is a **regression** problem rather than a **classification** problem. 
+It turns out we can also use trees in the regression setting!
+-->
+
+This exercise provides more tree practice, but with `age` as our y outcome variable.
+
+\
+
+### Part a
+
+REVIEW: What type of machine learning task is this, now that we are predicting respondents' `age` rather than their beliefs about `climate_change`? 
+
+
+
+
+    
+
+\
+
+
+### Part b
+
+Build a *single* tree to model `age` by all 15 predictors. Use the following characteristics: Set `cost_complexity` to 0.01, let the leaf nodes have a minimum sample size of 2, and restrict the tree to have at most 30 splits from top to bottom. Store this as `age_tree`.
+
+**REMINDER:** Consider what type of machine learning task we are performing here and be sure to update your code accordingly.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+# setup: tree specs
+reg_tree_spec <- decision_tree() %>%
+  set_mode("regression") %>% 
+  set_engine(engine = "rpart") %>% 
+  set_args(cost_complexity = 0.01,  
+           min_n = 2, 
+           tree_depth = 30)
+
+# fit/build tree
+age_tree <- reg_tree_spec %>% 
+  fit(age ~ ., data = survey_data)
+```
+
+For graders: make sure students correctly specified the mode as **regression** rather than classification! Our outcome is quantitative so this is a regression problem, not a classification problem.  
+
+:::
+:::
+
+
+\
+\
+
+
+### Part c
+
+Use `rpart.plot()` to plot `age_tree`. 
+
+::: {.content-hidden when-profile="solutions"}
+**HINT:** It should look like this...
+
+```{r}
+#| fig-width: 6
+#| fig-height: 3.5
+#| echo: false
+#| eval: true
+#| warning: false
+reg_tree_spec <- decision_tree() %>%
+  set_mode("regression") %>% 
+  set_engine(engine = "rpart") %>% 
+  set_args(cost_complexity = 0.01,  
+           min_n = 2, 
+           tree_depth = 30)
+
+age_tree <- reg_tree_spec %>% 
+  fit(age ~ ., data = survey_data)
+
+age_tree %>% 
+  extract_fit_engine() %>% 
+  rpart.plot(cex = 0.8)
+```
+
+:::
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+#| warning: false
+#| fig-width: 6
+#| fig-height: 3.5
+# plot tree
+age_tree %>% 
+  extract_fit_engine() %>% 
+  rpart.plot(cex = 0.8)
+```
+
+Notice that we now have quantitative predictions (28 years, 44 years, etc.) in the leaf nodes rather than classes (eg "real and caused by people"). 
+
+:::
+:::
+
+
+\
+
+### Part d
+
+Check out the tree of age that you made in the previous part. Provide a couple of takeaways.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+Will vary. For example, 
+
+- the respondents with the smallest predicted age are those that self report to have seen at least one Transformers movie
+- the respondents with the largest predict age are those who have not seen any Transformers movies and have annual incomes below 60k (perhaps because they are retired?)
+- respondents who strongly approve of Trump tend to have higher predicted ages than those who do not
+
+:::
+:::
+
+
+\
+\
+\
+\
+
+## Exercise 6: Build and evaluate a forest
+    
+We'll continue to predict a person's `age` from their survey responses.
+
+\
+    
+
+### Part a
+
+Let's build lots of trees! Build a forest of `age` by all predictors with the following characteristics: 
+
+- Set the seed to 253.
+- Use 500 trees, the default number of predictors to use in each node, and let the leaf nodes have a minimum sample size of 2.
+- Store your forest model as `age_forest`.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+set.seed(253)
+
+# STEP 1: Model Specification
+rf_spec <- rand_forest()  %>%
+  set_mode("regression") %>%
+  set_engine(engine = "ranger") %>% 
+  set_args(
+    mtry = NULL,
+    trees = 500,
+    min_n = 2,
+    #probability = FALSE, # give classifications, not probability calculations (don't need this for regression)
+    importance = "impurity" # if this were classification it'd be using the Gini index to measure variable importance; for regression it uses the variance of the responses (see ?ranger)
+)
+
+# STEP 2: Build the forest
+age_forest <- rf_spec %>% 
+  fit(age ~ ., data = survey_data)
+
+```
+
+:::
+:::
+
+
+\
+\
+
+
+### Part b
+
+In your own words, explain *why* we might want to build a forest instead of a single tree.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+Combining information across lots of trees helps us reduce the variance of our predictions. 
+
+
+:::
+:::
+
+\
+\
+
+
+### Part c
+
+Report and **interpret** the OOB MSE (mean squared error). Mean squared error is the average squared prediction error. Its square root is roughly the "typical prediction error" (thus is similar to MAE). Your interpretation should make clear: 
+
+- what's being measured and its units
+- whether this metric tells us about our model's performance for *our* survey subjects or people *outside* the survey
+
+**HINT:** Don't remember how to interpret MSE (or RMSE)? 
+Review your notes from Unit 1!
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+**Interpretation:** On average, our age predictions for **new** people **outside** the survey tend to be off by ~15 *years*.  What do you think: is this good, bad, or somewhere in between?
+
+A "correct" interpretation should include:
+
+  - the square root of OOB MSE rounded to a reasonable number of digits (~15)
+  - info about the context: 
+      - what is the variable we are predicting? (age)
+      - what are the units for that variable/predictions (years)
+  - clarification that this is the "typical" prediction error (the M in MSE stands for "mean"/"average" squared error; the square root is not equivalent to the "average"/"mean" error but will be close, so "typical" is a hand-wavey way of saying that) 
+  - clarification that this metric tells us about our model's performance *outside* the survey (eg prediction accuracy for "_new_ people _outside_ the initial survey")
+  
+
+```{r}
+# print info about forest
+age_forest
+
+# get the square root of OOB MSE
+sqrt(240.1226)
+```
+
+Or, to do this in a more reproducible way: 
+
+```{r}
+age_forest %>%
+  extract_fit_engine() %>%
+  pluck("prediction.error") %>%
+  sqrt()
+```
+  
+
+:::
+:::
+
+
+
+\
+\
+\
+\
+
+## Exercise 7: Inspecting the predictors
+    
+    
+### Part a
+
+Using variable importance metrics, identify the 1 most and 1 least important predictor in the forest age prediction.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+**most important**: income
+
+**least important**: whether or not somebody believes robots will take over their job <!--(OR your least important predictor might be belief in ghosts)-->
+
+```{r}
+# Variable importance metrics
+age_forest %>%
+  extract_fit_engine() %>%
+  pluck("variable.importance") %>% 
+  sort(decreasing = TRUE)
+```
+
+
+
+:::
+:::
+
+
+\
+\
+
+
+### Part b
+
+Construct a visualization of `age` vs the 1 most important forest predictor. You should reflect upon, but don't need to write about, this plot.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+Notice that importance doesn't mean a strong linear relationship!
+
+```{r}
+ggplot(survey_data, aes(x = income, y = age)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm')
+```
+
+
+:::
+:::
+
+
+\
+\
+
+
+### Part c
+
+Construct a visualization of `age` vs `transformers`, the 3rd most important but the predictor upon which the above *tree* split. You should reflect upon, but don't need to write about, this plot.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+There are multiple options here! Here are a few.
+
+```{r}
+# Scatterplot
+ggplot(survey_data, aes(x = transformers, y = age)) + 
+  geom_jitter()
+
+# Boxplots
+ggplot(survey_data, aes(x = as.factor(transformers), y = age)) + 
+  geom_boxplot()
+
+# Density plots
+ggplot(survey_data, aes(fill = as.factor(transformers), x = age)) + 
+  geom_density(alpha = 0.5)
+
+```
+
+:::
+:::
+
+\
+\
+
+
+### Part d
+
+Use the forest to predict your age (or the age of a person you make up if you wish your responses to remain anonymous).  
+
+::: {.content-hidden when-profile="solutions"}
+
+```{r}
+#| eval: false
+person <- data.frame(income = ___, 
+                     gender = "___", 
+                     party = "___",
+                     trump_approval = "___", 
+                     education = "___", 
+                     robots = "___",
+                     climate_change = "___", 
+                     transformers = ___, 
+                     science_is_honest = "___",
+                     vaccines_are_safe = "___",
+                     books = ___, 
+                     ghosts = "___", 
+                     fed_sci_budget = "___", 
+                     earth_sun = "___", 
+                     wise_unwise = "___")
+```
+
+:::
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+Here's one example: 
+
+```{r}
+person <- data.frame(income = 50,
+                     gender = "Other", 
+                     party = "Republican", 
+                     trump_approval = "4", 
+                     education = "College degree", 
+                     robots = "Unlikely", 
+                     climate_change = "Not Real At All",
+                     transformers = 5, 
+                     science_is_honest = "Somewhat Disagree", 
+                     vaccines_are_safe = "Strongly Agree", 
+                     books = 10, 
+                     ghosts = "No", 
+                     fed_sci_budget = "Too Low", 
+                     earth_sun = TRUE, 
+                     wise_unwise = "Unwise and happy")
+
+age_forest %>% 
+  predict(new_data = person)
+
+```
+
+:::
+:::
+
+\
+\
+\
+\
+
+## Exercise 8: Ethics Reflection
+
+:::{.callout-warning title='Heads Up'}
+This question will take about one hour to complete. 
+Plan accordingly!
+:::
+
+In 2023, MIT professor Catherine D'Ignazio and Emory professor Lauren Klein published the seminal book *Data Feminism* (freely available online [here](https://data-feminism.mitpress.mit.edu/)). 
+In this book they presented a framework for using data to move towards a more just and equitable world. 
+
+Watch [this presentation](https://youtu.be/8R1nayOsWmA?si=HpEVXz5aZjER4dnw) that shares the main ideas from the book. 
+(Fun fact: multiple Stat 253 instructors were in the audience for this presentation 😃.)
+Note that the presentation itself is about 45 minutes long, and then there are about 15 minutes of Q&A. Please watch the entire presentation, and then watch the Q&A session as time allows.
+
+Write a short (roughly 250-500 words) reaction to the video. What ideas piqued your interest? How did the ideas make you feel? What ideas from class did it make you think about?
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+Instructors will grade this exercise.
+:::
+:::
+
+
+
+
+\
+\
+\
+\
+
+## Exercise 9: Resource Reflection
+
+List the resources you used to complete this assignment (e.g. office hours, textbook, Gen AI, etc.)   
+
+- 
+-
+-
+
+Write **3-5 sentences** about which resources were the most useful in helping you complete the assignment.
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+Answers will vary, but students should list the resouces they used to complete this assignment (e.g. office hours, textbook, NOT Gen AI, etc.) and write 3-5 sentences about which resources were the most useful in helping them complete the assignment.
+:::
+:::
+
+
+
+
+
+
+\
+\
+\
+\
+
+::: {.content-hidden when-profile="solutions"}
+::: {.callout-important}
+When you are done, remember to check your rendered HTML for errors/formatting issues before submitting!
+:::
+
+
+
+\
+\
+\
+\
+
+:::
