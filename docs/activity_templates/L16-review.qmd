@@ -26,40 +26,6 @@ knitr::opts_chunk$set(
 
 You can download the .qmd file for this activity [here](../activity_templates/L16-review.qmd) and open in R-studio. The rendered version is posted in the [course website](https://mutasim221b.github.io/Mac-STAT-253-Sp-26/) (Activities tab). I often experiment with the class activities (and see it in live!) and make updates, but I always post the final version before class starts. To be sure you have the most up-to-date copy, please download it once you’ve settled in before class begins.
 
-\
-\
-
-# Small Group Discussion {-}
-
-Discuss Questions 1--3 with your group. 
-Then, prepare to share answers, questions, etc. with the rest of the class. 
-
-## Question 1 {.unnumbered .smaller}
-
-Trees vs Forests: 
-
-- What is the difference between a tree and a forest? (in ML, not nature)
-- How do I predict the outcome of a new observation using a tree? What about a forest?
-- What is a potential advantage of using a forest compared to a tree? What is a potential drawback?
-
-
-## Question 2 {.unnumbered .smaller}
-
-Bagging vs Random Forests:
-
-- How are these techniques similar? 
-- How do they differ? 
-
-## Question 3 {.unnumbered .smaller}
-
-CV vs OOB:
-
-- What does OOB stand for? 
-- Why do we typically use OOB metrics instead of CV metrics when evaluating forests? 
-- Are these in-sample or out-of-sample metrics? Why does it matter? 
-
-
-
 
 \
 \
@@ -187,6 +153,27 @@ On *page 6*, the righthand table lists some model evaluation metrics for *binary
 Use *page 7* to make other observations about the Unit 4-5 modeling algorithms and their connections.
 
 
+**Further Thinking**
+
+Trees vs Forests: 
+
+- What is the difference between a tree and a forest? (in ML, not nature)
+- How do I predict the outcome of a new observation using a tree? What about a forest?
+- What is a potential advantage of using a forest compared to a tree? What is a potential drawback?
+
+
+
+Bagging vs Random Forests:
+
+- How are these techniques similar? 
+- How do they differ? 
+
+
+CV vs OOB:
+
+- What does OOB stand for? 
+- Why do we typically use OOB metrics instead of CV metrics when evaluating forests? 
+- Are these in-sample or out-of-sample metrics? Why does it matter? 
 
 
 \
