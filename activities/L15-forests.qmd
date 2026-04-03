@@ -35,10 +35,10 @@ You can download the .qmd file for this activity [here](../activity_templates/L1
 
 
 # Quiz 02 
-- Wednesday, April 8, in class (first hour)
+- Wednesday, April 8, in class 
 - Focus on **classification** (Units 4--5), including both concepts and code
 - On paper (no computers!) 
-- Closed notes (except for an instructor-provided R notesheet)
+- Closed notes (except for an instructor-provided R notesheet and notecard)
 
 ## Study Tips {-}
 
@@ -185,6 +185,8 @@ candy <- candy_rankings %>%
   select(-winpercent) %>% 
   rename("price" = pricepercent, "sugar" = sugarpercent, "nutty" = peanutyalmondy, "wafer" = crispedricewafer) %>% 
   column_to_rownames("competitorname")
+head(candy)
+dim(candy)
 ```
 
 
@@ -513,10 +515,14 @@ Check your intuition.
     
 a. Does increasing the number of `trees` make the forest algorithm *more* or *less* variable from dataset to dataset?
 
+> Less variable (less impacted by "unlucky treees)
+
 b. We have 11 possible predictors, and sqrt(11) is roughly 3. Recall: Would considering just 3 randomly chosen predictors in each split (instead of all 11) make the forest algorithm *more* or *less* variable from dataset to dataset?
 
-c. Recall that using *unpruned* trees in our forest is important to maintaining low bias. Thus should `min_n` be small or big?
+> less variable
 
+c. Recall that using *unpruned* trees in our forest is important to maintaining low bias. Thus should `min_n` be small or big?
+> small
 
 
 
@@ -556,6 +562,27 @@ candy_forest <- ___ %>%
 ```
     
 
+```{r}
+# There's randomness behind the splits!
+set.seed(253)
+    
+# STEP 1: Model Specification
+rf_spec <- rand_forest()  %>%
+  set_mode("classification") %>%
+  set_engine(engine = "ranger") %>% 
+  set_args(
+    mtry = NULL,
+    trees = 500,
+    min_n = 2,
+    probability = FALSE, # give classifications, not probability calculations
+    importance = "impurity" # use Gini index to measure variable importance
+  )
+    
+# STEP 2: Build the forest
+# There are no preprocessing steps or tuning, hence no need for a workflow!
+candy_forest <- rf_spec %>% 
+  fit(popularity ~ ., data = candy)
+```
 
 
 
@@ -613,6 +640,20 @@ candy_forest %>%
   extract_fit_engine() %>% 
   pluck("confusion.matrix") %>% 
   t()
+```
+
+```{r}
+# APPROACH 1: # of MISclassifications / total # of classifications
+(6 + 1 + 15 + 6 + 2 + 4) / (8 + 29 + 14 + 6 + 1 + 15 + 6 + 2 + 4) 
+## [1] 0.4
+
+# APPROACH 2: overall MISclassification rate = 1 - overall accuracy rate
+# overall accuracy rate
+(8 + 29 + 14) / (8 + 29 + 14 + 6 + 1 + 15 + 6 + 2 + 4) 
+## [1] 0.6
+# overall misclassification rate
+1 - 0.6
+## [1] 0.4
 ```
 
 c. Which level of candy popularity was least accurately classified by our forest?
@@ -742,6 +783,156 @@ e. Reflect on what you've observed here!
 
 
 <br>
+
+
+# Notes: OOB (Out-of-Bag) Error in Random Forests {-}
+
+## What is OOB? {.unnumbered .smaller}
+
+::: {.incremental}
+
+🌳 **OOB (Out-of-Bag)** = data points **NOT used** to build a particular tree
+
+:::
+
+---
+
+## Step 1: How a random forest builds trees {.unnumbered .smaller}
+
+::: {.incremental}
+
+For each tree:
+
+- Take a **bootstrap sample** (sample *with replacement*)  
+- From the original dataset (say 100 candies)
+
+👉 Result:
+
+- ~63 candies are used to build the tree  
+- ~37 candies are left out  
+
+👉 Those 37 candies = **OOB data** for that tree
+
+🧠 **Key idea:**  
+Each tree has its own **training data + leftover (OOB) test data**
+
+:::
+
+---
+
+## Step 2: What happens to ONE observation? {.unnumbered .smaller}
+
+::: {.incremental}
+
+Take 1 candy 🍬
+
+- It might be used in some trees  
+- It will be left out in others  
+
+👉 On average:
+
+- It is OOB for about **1/3 of the trees**
+
+So if we have:
+
+👉 **500 trees**
+
+- That candy is OOB for ~**150 trees**
+
+:::
+
+---
+
+## Step 3: How OOB prediction is made {.unnumbered .smaller}
+
+::: {.incremental}
+
+For that one candy:
+
+- Look at only the trees where it was **NOT used**
+- Each of those trees predicts its class
+- Take a **majority vote**
+
+👉 This is the **OOB prediction** for that candy
+
+:::
+
+---
+
+## Step 4: OOB error {.unnumbered .smaller}
+
+::: {.incremental}
+
+- Compare OOB prediction vs true label  
+- Repeat for all candies  
+- Compute overall **error rate**
+
+:::
+
+---
+
+## Why not just 1 tree? {.unnumbered .smaller}
+
+::: {.incremental}
+
+❌ **One tree is NOT enough**
+
+- Each candy would be OOB only once  
+- Predictions would be **very unstable (high variance)**  
+
+✅ **With 500 trees**
+
+- Each candy gets predicted by ~**150 trees**  
+- This gives:
+
+    - more stable predictions  
+    - more reliable error estimate  
+
+:::
+
+---
+
+## Intuition (Analogy) {.unnumbered .smaller}
+
+::: {.incremental}
+
+Imagine:
+
+- 500 teachers grading a student  
+- Each teacher did NOT see that student’s homework  
+
+👉 Average their opinions → fair evaluation  
+
+Now compare:
+
+- ❌ 1 teacher → unreliable  
+- ✅ 150 teachers → much more reliable  
+
+:::
+
+---
+
+## Key Takeaway {.unnumbered .smaller}
+
+::: {.incremental}
+
+OOB is like **built-in cross-validation** using many trees, not just one.
+
+:::
+
+---
+
+## Final Explanation {.unnumbered .smaller}
+
+::: {.incremental}
+
+OOB means “out-of-bag,” referring to observations not used to build a particular tree. Since each tree is built using a bootstrap sample, about one-third of the data is left out and can be used as test data for that tree. Each observation is out-of-bag for many trees (around 150 if there are 500 trees), and its prediction is based on those trees. This is why we need all 500 trees—not just one—to obtain a stable and reliable OOB error estimate.
+
+:::
+
+
+
+
 
 
 **If you finish early**        

@@ -1,0 +1,246 @@
+---
+title: "Classification Review"
+subtitle: "Notes and in-class exercises"
+format: 
+  html:
+    embed-resources: true
+    toc: true
+---
+
+
+
+
+```{r include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  warning = FALSE,
+  message = FALSE, 
+  error = TRUE,
+  fig.height = 2.75, 
+  fig.width = 4.25,
+  fig.env='figure',
+  fig.pos = 'h',
+  fig.align = 'center')
+```
+
+
+You can download the .qmd file for this activity [here](../activity_templates/L16-review.qmd) and open in R-studio. The rendered version is posted in the [course website](https://mutasim221b.github.io/Mac-STAT-253-Sp-26/) (Activities tab). I often experiment with the class activities (and see it in live!) and make updates, but I always post the final version before class starts. To be sure you have the most up-to-date copy, please download it once you’ve settled in before class begins.
+
+\
+\
+
+# Small Group Discussion {-}
+
+Discuss Questions 1--3 with your group. 
+Then, prepare to share answers, questions, etc. with the rest of the class. 
+
+## Question 1 {.unnumbered .smaller}
+
+Trees vs Forests: 
+
+- What is the difference between a tree and a forest? (in ML, not nature)
+- How do I predict the outcome of a new observation using a tree? What about a forest?
+- What is a potential advantage of using a forest compared to a tree? What is a potential drawback?
+
+
+## Question 2 {.unnumbered .smaller}
+
+Bagging vs Random Forests:
+
+- How are these techniques similar? 
+- How do they differ? 
+
+## Question 3 {.unnumbered .smaller}
+
+CV vs OOB:
+
+- What does OOB stand for? 
+- Why do we typically use OOB metrics instead of CV metrics when evaluating forests? 
+- Are these in-sample or out-of-sample metrics? Why does it matter? 
+
+
+
+
+\
+\
+
+# Notes: Preparing for Quiz 2 {-}
+
+## Logistics {.unnumbered .smaller}
+
+- Cumulative, but with a focus on classification (Units 4--5)
+- Will cover both concepts and code
+- Closed notes (one notecard) except for an instructor-provided R notesheet
+- On paper (no computers)
+- Questions will range in style: multiple choice, fill in the blank, short response, matching, etc.
+- Can use the whole 60-minute class period (but may not need to!)
+
+\
+
+## Study Tips {.unnumbered .smaller}
+
+- Complete the provided review activities: 
+    - Group Assignment 2 (starting in class today!)
+    - Concept Maps (see below)
+    - `tidymodels` Code Comparison (see below)
+- For concepts: 
+    - Create a study guide using course Learning Goals
+- For code: 
+    - Focus on **patterns** in code, functions we've seen many times, etc.
+    - Resources: `tidymodels` code comparison, R Notes in course manual, HW3 Exercise 4 (try replicating this with the new classification tools), ...
+- Review past checkpoints, in-class exercises, and homework problems (and try quizzing yourself!)
+- Come to office hours with questions!
+
+\
+
+## Study Resources (Review After Class) {.unnumbered .smaller}
+
+STAT 253 is a survey course of statistical machine learning techniques and concepts. It's important to continuously reflect on these and how they fit together. 
+
+Though you won't hand anything in, **you're strongly encouraged to complete this activity**. This material is designed to help you reflect upon:
+
+- ML concepts
+    - enduring, big picture concepts
+    - technical concepts
+    - `tidymodels` code
+
+Follow the links below and make a copy of the STAT 253 concept maps (or find and modify the copy you made while reviewing the regression unit). 
+
+You'll be given some relevant prompts below, but you should use these materials in *whatever way suits you*! Take notes, add more content, rearrange, etc. 
+
+- [STAT 253 concept maps](https://docs.google.com/presentation/d/1GIfPNfwnt7SwOTprYSLupunlrajCW7pJKQ9Q9rhHwZk/edit?usp=sharing)
+- [tidymodels code comparison](https://docs.google.com/document/d/1jyANFeAycznojZPEhUCl1O0VNljvuAQ4ZQQGuBm_WQo/edit?usp=sharing)
+
+\
+
+### STAT 253 concept maps {-}
+
+Review __slides 6--7__ (classification) of the concept map, and mark up **slides 1, 6, and 7** with respect to the prompts below.
+
+
+**Enduring, big picture concepts**
+
+IMPORTANT to your learning: Respond in your own words. 
+
+- When do we perform a supervised vs unsupervised learning algorithm?
+- Within supervised learning, when do we use a regression vs a classification algorithm?
+- What is the importance of "model evaluation" and what questions does it address?
+- What is "overfitting" and why is it bad?
+- What is "cross-validation" and what problem is it trying to address?
+- What is the "bias-variance tradeoff"?
+
+
+
+
+**Technical concepts**
+
+On *page 6*, identify some general themes for each model algorithm listed in the lefthand table:
+
+- What's the goal?
+- Is the algorithm parametric or nonparametric?
+- Does the algorithm have any tuning parameters? What are they, how do we tune them, and how is this a **goldilocks problem**?
+- What are the key pros & cons of the algorithm?
+
+For each algorithm, you should also reflect upon these **important technical concepts**:
+
+- Can you summarize the steps of this algorithm?
+- Is the algorithm parametric or nonparametric? (addressed above)
+- What is the bias-variance tradeoff when working with or tuning this algorithm?
+- Is it important to scale / pre-process our predictors before feeding them into this algorithm?
+- Is this algorithm "computationally expensive"?
+- Can you interpret the technical (RStudio) output for this algorithm? (eg: CV plots, etc)?
+
+
+And some **details**:
+
+- If this algorithm is parametric, could you:        
+    - interpret its coefficients?
+    - calculate / predict the probability of different y outcomes from these coefficients?
+    - come up with a classification rule for a given probability cut-off?
+- If this algorithm is non-parametric:        
+    - Could you implement the alghorithm "by hand" for a small sample of data points?
+- If this algorithm is a tree-based method:       
+    - Could you explain the difference between in-sample, OOB, and CV metrics?
+
+And what about narrowing down to **important predictors**?
+
+- What tools do we have to give us a sense of important predictors?
+    - binary outcome?
+    - multiclass outcome?
+
+
+
+**Model evaluation**
+
+On *page 6*, the righthand table lists some model evaluation metrics for *binary* classification algorithms. Do the following:
+
+- Define each metric. THINK: Could you calculate these metrics if given a confusion matrix?
+- Explain the steps of the CV algorithm.
+
+
+
+
+
+
+**Algorithm comparisons**
+
+Use *page 7* to make other observations about the Unit 4-5 modeling algorithms and their connections.
+
+
+
+
+\
+\
+
+
+
+
+# Exercises {-}
+
+Use the rest of class time to work on Group Assignment 2!
+
+## Suggestions from GA1 {-}
+
+- Collaboration: 
+    - Make sure each group member is involved in both model building/code and writing
+    - All group members should be involved in choosing the final model (discussing pros/cons of each option, all together, will be useful review for quiz!) 
+    - If someone takes the *lead* on a particular model, visualization, or section of the report, have at least one other person *review* that work. (Review the overall report for flow / cohesion, too!) 
+    - Please **be specific** when you write your *Collaborations* summary!
+- Communication: 
+    - **Consider your target audience!**
+    - Data visualizations are a form of communication -- use them effectively. Update axis labels. Describe in text. Only include if relevant to narrative. Etc.
+    - Be concise. 
+- Content: 
+    - Clearly describe and justify **all** choices! (state / explain / interpret; why did you do what you did *and* why didn't you do what you didn't do)
+    - Provide **evidence** to back up your claims.
+    - Interpret results in context
+- Code: 
+    - Use Appendix for extra code/viz
+    - Write comments so that someone with less familiarity with the data/ML can follow (if you open this document again in one year, will you be able to read your own code?)
+    - Check HTML for formatting issues, unnecessary code/output, etc. **before** submitting
+    - Use code, syntax we covered in class
+    
+<mark> In general: review the rubric and instructions (on Moodle) carefully. </mark>
+    
+
+\
+
+
+## GA2 Work Time {-}
+
+1. Pick a dataset
+2. Get data on your local computers
+3. Start exploring the data
+    - Visualizations of outcome vs predictors (take notes as you go!)
+    - Any data cleaning needed? (remove variables, modify variables, create variables, remove observations, missing observation)
+4. Before you leave class: 
+    - Make a plan: how to decide which predictors to use, how many and which models to try, how to evaluate each model
+    - Set up communication avenues for asynchronous discussions
+    - Divide / delegate leadership on tasks 
+    
+
+
+\
+\
+
+
