@@ -56,6 +56,7 @@ website:
           - "activities/L14-knn-trees-2.qmd"
           - "activities/L15-forests.qmd"
           - "activities/L16-review.qmd"
+          - "activities/L17-hclust.qmd"
 
 
 

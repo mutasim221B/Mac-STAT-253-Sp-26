@@ -1,0 +1,728 @@
+---
+title: "Homework 6: Clustering"
+subtitle: "STAT 253"
+format:
+  html:
+    toc: true
+    embed-resources: true
+---
+
+
+<!-- create student template based on this QMD -->
+{{< include _create_student_template.qmd >}}
+
+```{r create-template}
+#| echo: false
+#| eval: true
+#| cache: false
+make_student_template('Homework 6', 'hw6.qmd')
+```
+
+
+
+
+::: {.content-hidden when-profile="solutions"}
+# Getting Started 
+
+## Directions
+
+The academic integrity, grading, and extension policies are the same as for Homeworks 1, 2, 4, and 5. Please review those assignments if you need a refresher.
+
+
+## Goals
+
+- In this assignment, you will explore *unsupervised* clustering techniques using the candy data.
+
+## Context
+
+Our first goal will be to understand the similarities among different candies (i.e. the *rows* of our `candy_rankings` dataset) with respect to their ingredients, popularity, and other properties.
+
+
+Load the packages and data you'll need for your analysis:
+
+```{r}
+#| eval: true
+#| message: false
+# Load some packages & data
+library(tidyverse)
+library(fivethirtyeight)
+data("candy_rankings")
+``` 
+
+Find more info about these data on the course website (Topic 15) and [here](https://fivethirtyeight.com/videos/the-ultimate-halloween-candy-power-ranking/).
+
+\
+\
+\
+\
+
+:::
+
+
+
+# Exercises
+
+## Exercise 1: Visualizing structure
+
+### Part a
+
+One variable in the dataset merely *identifies* or *labels* the candies, hence is not a candy *feature*. Convert this to a *row name*, instead of a column.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r soln-code-chunk-opts}
+#| eval: true
+#| echo: false
+knitr::opts_chunk$set(eval = TRUE)
+```
+
+
+```{r}
+candy_rankings <- candy_rankings %>% 
+  column_to_rownames("competitorname") #this add rownames and removes the variable as a column in the dataset (both are important to do)
+```
+
+:::
+:::
+
+
+\
+\
+
+### Part b
+
+Construct a heat map of your *standardized* candy features, with rows ordered by hierarchical clustering results (`Colv = NA` but *not* `Rowv = NA`).
+
+Use Quarto code chunk options to set your figure width and height to 8. 
+**Check the rendered HTML** to make sure the visualization is readable and adjust dimensions further if needed. 
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r fig.width = 8, fig.height = 8}
+heatmap(data.matrix(scale(candy_rankings)), Colv = NA)
+```
+
+:::
+:::
+
+
+\
+\
+
+
+### Part c
+
+Construct a dendrogram of your standardized candy features using the **complete** linkage method. 
+
+Use Quarto code chunk options to set your figure width and height to 8. 
+**Check the rendered HTML** to make sure the visualization is readable and adjust dimensions further if needed. 
+
+NOTE: Since all features are quantitative or logical here, do *not* use the `daisy()` function.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r fig.width = 8, fig.height = 8}
+#| message: false
+#| warning: false
+library(cluster)
+library(factoextra)
+hier_model <- hclust(dist(scale(candy_rankings)), method = "complete")
+fviz_dend(hier_model, horiz = TRUE, cex = 0.5)
+```
+
+:::
+:::
+
+
+\
+\
+
+
+### Part d
+
+How many natural clusters do there appear to be among the candies? There are multiple reasonable answers, and you can give more than 1.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+Answers will vary, but 3-4 seems reasonable given the difference in the distance between when clusters are fused around the 6-7 range ("Height" axis).
+
+:::
+:::
+
+
+
+\
+\
+
+
+### Part e
+
+To what other candy are Nik L Nips most similar?
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+Boston Baked Beans (they are fused together before joining any other cluster)
+
+:::
+:::
+
+
+\
+\
+\
+\
+
+## Exercise 2: Defining & making meaning from clusters
+
+For the purposes of consistency from student to student, let's explore the possibility of there being **4** candy clusters.
+
+\
+
+### Part a
+
+Re-plot your dendrogram, coloring the different leaves and branches according to their cluster assignment. 
+NOTE: There's built-in code to do this!
+
+Use Quarto code chunk options to set your figure width and height to 8.
+**Check the rendered HTML** to make sure the visualization is readable and adjust dimensions further if needed. 
+
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r fig.width = 8, fig.height = 8}
+fviz_dend(hier_model, k = 4, horiz = TRUE, cex = 0.5)
+```
+
+:::
+:::
+
+\
+\
+
+### Part b
+
+To get a sense for what makes the candies in each cluster "similar", calculate the mean of each feature within each cluster. 
+
+NOTES:        
+
+- HINT: First add a column to your dataset which indicates the cluster assignment for each candy. Then `group_by()` and `summarize_all()` (which is like `summarize()` but performs a calculation on *all* columns).
+- For TRUE/FALSE features, the mean indicates the proportion of candies that are TRUE.
+- LOOKING AHEAD: In a future activity, you'll be asked to identify appropriate cluster labels and to describe each cluster. Do not write about that yet (your thoughts will evolve throughout the analysis), but start keeping it in mind!
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+candy_rankings %>% 
+  mutate(hier_cluster = as.factor(cutree(hier_model, k = 4))) %>% 
+  group_by(hier_cluster) %>% 
+  summarize_all(mean)
+```
+
+:::
+:::
+
+\
+\
+
+### Part c
+
+There's no "right" number of clusters here! Repeat parts a and b using 3 clusters. How, if at all, does this change your candy insights?
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r fig.width = 8, fig.height = 8}
+fviz_dend(hier_model, k = 3, horiz = TRUE, cex = 0.5)
+```
+
+```{r}
+candy_rankings %>% 
+  mutate(hier_cluster = as.factor(cutree(hier_model, k = 3))) %>% 
+  group_by(hier_cluster) %>% 
+  summarize_all(mean)
+```
+
+The two clusters of non-chocolately candy are now combined into one, so we have two chocolate clusters and one non-chocolate cluster.
+
+:::
+:::
+
+
+
+\
+\
+\
+\
+
+## Exercise 3: Sensitivity analysis
+
+Our hierarchical cluster analysis above utilized **complete linkage**.
+
+That is, we measured the distance between two clusters by the *maximum* distance between any pair of candies in those clusters.
+
+This is merely one strategy.
+
+To determine how *sensitive* the clustering algorithm is to our choice of linkage, let's consider 2 other strategies.
+
+\
+
+### Part a
+
+Construct a dendrogram using the **centroid linkage** approach (don't try coloring clusters).
+
+NOTES: 
+
+- Be sure to not use your cluster assignments from previous exercises as features in this exercise!      
+- Use Quarto code chunk options to set your figure width and height to 8.
+- **Check the rendered HTML** to make sure the visualization is readable and adjust dimensions further if needed. 
+
+Describe how the pattern differs from that of our original complete linkage dendrogram **and** explain why centroid linkage will often produce dendrograms that look like this.
+
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r fig.width = 8, fig.height = 8}
+hier_model_centroid <- hclust(dist(scale(candy_rankings)), method = "centroid")
+fviz_dend(hier_model_centroid, horiz = TRUE, cex = 0.5)
+```
+
+**DESCRIPTION:** Some clusters are inverted -- later-merged clusters merged at a lower height.
+
+**EXPLANATION OF WHY THIS HAPPENED:** This happens when the centroids of the later clusters are closer together than the centroids of the earlier centroids.
+
+:::
+:::
+
+\
+\
+
+### Part b
+
+Construct a dendrogram using the **single linkage** approach, *colored by 4 clusters*.
+
+NOTES: 
+
+- Be sure to not use your cluster assignments from the previous exercise as features in this exercise!      
+- Use Quarto code chunk options to set your figure width and height to 8.
+- **Check the rendered HTML** to make sure the visualization is readable and adjust dimensions further if needed. 
+
+Describe how the pattern differs from that of our original complete linkage dendrogram **and** explain why single linkage will often produce dendrograms that look like this.
+   
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r fig.width = 8, fig.height = 8}
+hier_model_single <- hclust(dist(scale(candy_rankings)), method = "single")
+fviz_dend(hier_model_single, horiz = TRUE, cex = 0.5, k = 4)
+```
+
+**DESCRIPTION:** There's a long, trailing cluster. 
+
+**EXPLANATION OF WHY THIS HAPPENED:** This make sense since candies / clusters can get tacked onto a cluster if they're close to even *one* candy in that cluster. 
+
+:::
+:::
+
+\
+\
+
+### Part c
+
+The appropriate linkage choice depends upon our clustering goals. Suppose we want to identify 4 candy clusters, and want the candies in each cluster to be quite similar. What linkage better suits this goal: complete or single? **Explain.**
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+
+**LINKAGE:** complete
+
+**EXPLANATION:** The 2 most different candies in any cluster have to be similar enough. (optional additional detail: in single linkage, a candy might pop into a cluster even if it's just similar to 1 other candy in that cluster)
+
+:::
+:::
+
+
+\
+\
+
+### Part d
+
+Suppose we were to cluster Mac students based on their interest in a variety of activities (eg: data, basketball, piano, cooking, etc), and then threw a party for each cluster.
+
+If you were to attend such a party, how would you prefer the clustering do be done, using *complete* or *single* linkage?
+Justify your choice.
+
+NOTE: There is no wrong answer, but there is wrong justification.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+Answers will vary, but the justification should back up the preference. 
+
+In general, parties defined using complete linkage would end up with people that have pretty similar interests (the 2 most "different" people at any party would still be similar).  
+Parties defined using single linkage would end up with a wider variety of interests -- a person needs only be similar to 1 other student to be "invited".
+
+:::
+:::
+
+
+\
+\
+\
+\
+
+## Exercise 4: Choosing K
+
+You've already run the hierarchical clustering algorithm for the candy data.
+
+Let's try K-means!
+
+The first step is to **pick K**.
+So how do we choose?   
+
+\
+
+### Part a
+
+Run and store a K-means algorithm using K = 2. Set the seed to 253 first.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+set.seed(253)
+kmeans_model <- kmeans(scale(candy_rankings), centers = 2)
+```
+
+:::
+:::
+
+\
+\
+
+### Part b
+
+One strategy for evaluating our choice of K is to calculate the total squared distance of each candy from its assigned centroid: the `total within- cluster sum of squares`.
+
+Report this value for your algorithm from part a.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+kmeans_model$tot.withinss
+```
+
+:::
+:::
+
+\
+\
+
+### Part c
+
+Next, calculate the total sum of squared distances for each K in 1, 2, ..., n where *you* pick a reasonable n. Don't print them, rather, construct a plot of these distances by K.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+tibble(K = 1:40) %>% 
+  mutate(SS = map(K, ~ kmeans(scale(candy_rankings), centers = .x)$tot.withinss)) %>% 
+  unnest(cols = c(SS)) %>% 
+  ggplot(aes(x = K, y = SS)) + 
+    geom_point()
+```
+
+Notes for graders: 
+
+- I picked n = 40. It's ok if students have something different (they probably will), as long as they tried enough values to see the pattern we're seeing here (decreasing SS that is starting to level off).
+- We've seen the first three lines of this code in class. Students just needed to figure out how to translate the output from that code into a plot (ie adding the `ggplot()` commands).
+
+:::
+:::
+
+
+\
+\
+
+### Part d
+
+Based on this plot, which values of K seem reasonable? **Explain.**
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+K beween 2 and 15 might all be reasonable answers since this is where we see the steepest decreases in SS and is also not large relative to the number of cases (85 candies) which we're clustering. 
+
+BONUS INFO: If we use silhouette to choose our clusters, we would choose K = 2, which optimizes within cluster variability and the distance between clusters. See below: 
+
+
+```{r}
+fviz_nbclust(scale(candy_rankings), kmeans, method='silhouette')
+```
+
+:::
+:::
+
+
+\
+\
+\
+\
+
+## Exercise 5: A final K-means model
+
+### Part a
+
+Another strategy for identifying a reasonable number of clusters K for K-means is to do hierarchical clustering, and use the dendrogram to suggest K. Given our earlier choice of using 4 clusters from the dendrogram, run the K-means algorithm using K = 4. Set the seed to 253 first.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+set.seed(253)
+final_kmeans <- kmeans(scale(candy_rankings), centers = 4)
+```
+
+:::
+:::
+
+\
+\
+
+### Part b
+
+To get a sense for what makes the candies in each cluster "similar", calculate the mean of each feature within each cluster.
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+candy_rankings %>% 
+  mutate(cluster_4 = as.factor(final_kmeans$cluster)) %>% 
+  group_by(cluster_4) %>% 
+  summarize_all(mean)
+```
+
+:::
+:::
+
+
+\
+\
+\
+\
+
+## Exercise 6: Final clustering reflection
+
+### Part a
+
+Do your K-means and hierarchical approaches lead to similar conclusions? (What's the same? What's different?)    
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+Answers will vary. All are fine as long as the justification is correct!
+
+:::
+:::
+
+\
+\
+
+### Part b
+
+Though K-means is more computationally efficient and less greedy, what's one pro of hierarchical clustering? 
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+Dendrograms! they're a nice visual summary. K-means doesn't have a comparable summary.
+
+:::
+:::
+
+\
+\
+
+### Part c
+
+Bringing it all together across your various hierarchical and K-means clustering outcomes, offer a set of final conclusions. Specifically, write out a label for each final cluster that communicates its unique properties (eg: "big penguins", "really big penguins", and "small penguins with long bills"). 
+
+NOTE: Focus on the K-means results.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+NOTE: The numbers I used below (1,2,3,4) are arbitrary. Students might have these in a different order. 
+
+**CLUSTER 1 label:** popular chocolate bars, typically nutty
+
+**CLUSTER 2 label:** miscellaneous / non-descript / pluribus
+
+**CLUSTER 3 label:** hard, fruity candy
+
+**CLUSTER 4 label:** sugary, fruity candy that comes in multiples
+
+:::
+:::
+
+
+
+\
+\
+\
+\
+
+## Exercise 7: Learning Reflection 
+
+As we near the end of this course, this is a good moment to pause, organize your notes, and reflect on how things have been going.  
+
+Follow the instructions below: 
+
+1. Open the Google Doc called *STAT 253 - Learning Reflection Journal - Your Name* that you created earlier in the semester. 
+
+2. Create a new section (or tab) titled *Reflection 3*. 
+
+3. Copy-paste the reflection prompts, below, into that document.
+
+4. Type your answers to those prompts into that reflection journal. (Suggestion: use an [alternate font color]{style="color:blue;"} to clearly distinguish your responses from the prompts!)
+
+Your reflection is due at the same time as this homework.
+Before you submit your final homework HTML, please double-check that your reflection journal has been updated **AND** that your instructor has been added as an editor. 
+
+::: {.content-hidden when-profile="solutions"}
+:::{.callout-important}
+You may not use AI tools to assist with this question. All words should be your 
+own. Don't worry about grammar/spelling -- write freely, from the heart!
+::: 
+
+:::{.callout-note title="Reflection 3 Prompts"}
+
+(@) **Looking Forward**  
+    Machine learning is an active area of research and new/improved 
+    algorithms are being developed as we speak. In a paragraph or two, reflect
+    on what you have learned so far this semester about *how to learn* a new 
+    algorithm. In answering this question, you might first reflect on what 
+    resources, strategies, etc. you have found most helpful for learning the 
+    algorithms we've discussed in class. Then, think about what you will try
+    if/when you come across a new algorithm in the future. In particular, I 
+    challenge you to think about how you might approach this task if you are 
+    trying to learn and use a new algorithm outside of the structure of a formal 
+    class.
+    
+
+
+(@) **Looking Forward (continued)**  
+    In the previous question, you reflected on strategies you have found useful 
+    for learning a new algorithm. On the last day of class, we will complete 
+    an activity that will ask you to put those strategies into action! You 
+    will pick an algorithm that we did not cover during class time, and then 
+    share a high-level summary of that algorithm (what type of ML task it is 
+    designed for, how it works, how it relates to other algorithms we discussed 
+    in class, etc.) with a small group of classmates. 
+    
+    In preparation for that activity, please pick an algorithm from the list 
+    below. Note that all of these algorithms are covered in the textbook, 
+    *Introduction to Statistical Learning in R*. If you don't have a physical 
+    copy of the book, remember there is a link to a free PDF version on our 
+    course website! You can skim those sections of the textbook and/or do a 
+    quick Google search to help you pick which algorithm you want to focus on.
+    
+    - Ridge Regression + Elastic Net
+    - Smoothing Splines
+    - Generalized Additive Models
+    - Boosting (xgboost)
+    - Neural Networks
+    - Partial Least Squares (pls)
+    - Support Vector Machines
+    - Multinomial Logistic Regression
+    - Linear Discriminant Analysis
+
+    In this reflection, you just need to **tell us which algorithm you've picked 
+    and why**. No need to say more about that algorithm yet, but feel free to 
+    use this reflection as a space to take notes on anything you learned about 
+    the algorithm in this initial search. 
+
+
+(@) **Other Thoughts**  
+    Please share any other thoughts you have related to your learning in this 
+    class. For example: 
+    
+    - Are there any aspects of this course that you have found to be particularly interesting, exciting, important, relevant, etc.? 
+    - Are there aspects of the course that you have found particularly challenging?
+    - Is there something that the instructor could change about the course that would reduce or remove barriers to your learning? 
+    - What are you most looking forward to during the next portion of the semester? 
+    - Is there anything else you would like me to know about your learning, engagement, or progress toward our course learning objectives at this time?
+
+
+(@) **Follow-Up**   
+    Would it be helpful to follow up with the instructor to talk more about this reflection? 
+    Select one: **Yes, I’d like the instructor to follow up with me** / **No, I’m fine for now**
+:::
+:::
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+Instructors will grade this question
+:::
+:::
+
+\
+\
+\
+\
+
+## Exercise 8: Resource Reflection
+
+List the resources you used to complete this assignment (e.g. office hours, textbook, Gen AI, etc.)   
+
+- 
+-
+-
+
+Write **3-5 sentences** about which resources were the most useful in helping you complete the assignment.
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+Answers will vary, but students should list the resouces they used to complete this assignment (e.g. office hours, textbook, NOT Gen AI, etc.) and write 3-5 sentences about which resources were the most useful in helping them complete the assignment.
+:::
+:::
+
+
+
+
+
+
+\
+\
+\
+\
+
+::: {.content-hidden when-profile="solutions"}
+::: {.callout-important}
+When you are done, remember to check your rendered HTML for errors/formatting issues before submitting!
+:::
+
+
+
+\
+\
+\
+\
+
+:::

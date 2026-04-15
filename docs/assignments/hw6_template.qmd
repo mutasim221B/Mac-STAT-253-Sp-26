@@ -1,0 +1,185 @@
+---
+title: "Homework 6"
+subtitle: "Stat 253"
+author: "Your Name"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    embed-resources: true
+    fig-width: 5
+    fig-height: 3
+execute:
+  error: false
+  warning: false
+knitr:
+  opts_chunk:
+    collapse: true
+    message: false
+---
+
+
+# Notes 
+
+(@) Please **update the author name** to your name! 
+(@) This document is for your answers only. Do NOT write out the homework questions in this document. Writing out the questions makes it very challenging to grade the homework. (You can create a separate document for your own records if you wish.) 
+(@) Besides adding your answers/code, please DO NOT make any deletions or changes to the structure of this template! 
+
+
+
+# Setup 
+
+Put any code you need to load packages and load/prep data here. 
+
+```{r}
+
+```
+
+
+---
+
+title: 'Homework 6: Clustering'
+
+subtitle: STAT 253
+
+format:
+
+  html:
+
+    toc: true
+
+    embed-resources: true
+
+---
+
+
+
+# Exercises
+
+
+
+## Exercise 1: Visualizing structure
+
+
+
+### Part a
+
+
+
+### Part b
+
+
+
+### Part c
+
+
+
+### Part d
+
+
+
+### Part e
+
+
+
+## Exercise 2: Defining & making meaning from clusters
+
+
+
+### Part a
+
+
+
+### Part b
+
+
+
+### Part c
+
+
+
+## Exercise 3: Sensitivity analysis
+
+
+
+### Part a
+
+
+
+### Part b
+
+
+
+### Part c
+
+
+
+### Part d
+
+
+
+## Exercise 4: Choosing K
+
+
+
+### Part a
+
+
+
+### Part b
+
+
+
+### Part c
+
+
+
+### Part d
+
+
+
+## Exercise 5: A final K-means model
+
+
+
+### Part a
+
+
+
+### Part b
+
+
+
+## Exercise 6: Final clustering reflection
+
+
+
+### Part a
+
+
+
+### Part b
+
+
+
+### Part c
+
+
+
+## Exercise 7: Learning Reflection 
+
+
+
+## Exercise 8: Resource Reflection
+
+
+
+
+# Done!
+
+- Render your QMD to HTML.
+- Check that HTML to make sure there are no errors or formatting issues. 
+- Submit the HTML on Moodle.
+
+

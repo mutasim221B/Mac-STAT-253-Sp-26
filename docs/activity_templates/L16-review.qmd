@@ -1,6 +1,6 @@
 ---
 title: "Classification Review"
-subtitle: "Notes and in-class exercises"
+subtitle: "Quiz 2 and GA2"
 format: 
   html:
     embed-resources: true
