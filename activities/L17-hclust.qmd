@@ -72,21 +72,6 @@ Dimension Reduction (Unit 7):
 
 
 
-\
-
-## Examples {.unnumbered .smaller}
-
-Remember this from the first day of class? 
-
-
-![](../images/class_cluster_Spring2026_Section1.png){width=90%}
-
-
-For more examples, check out the Unit 6 Motivating Question page [here](U06-motivation.html).
-
-
-
-
 
 
 <br>
@@ -538,62 +523,6 @@ library(tree)
 penguin_cluster <- hclust(dist(penguins_small), method = "complete")
 plot(penguin_cluster)
 ```
-
-__Step 1__
-
-The closest pair are 4 and 5 with a distance of 0.54
-
-              1       2       3            4       5
-------- ------- ------- ------- ------------ -------
-   1          0
-   2       0.94       0
-   3       2.19    2.60       0
-   4       2.25    2.26    1.00       0
-   5       2.64    2.77    0.85    __0.54__       0
-   
-
-
-__Step 2__  
-
-The distance matrix below gives the current distance between clusters 1, 2, 3, and (4 & 5) using complete linkage (the distance between 2 clusters is the maximum distance btwn any pair of penguins in the 2 clusters). By this, clusters or penguins 1 & 2 are the closest, with a distance of 0.94:
-
-              1       2       3   4 & 5
-------- ------- ------- ------- -------
-   1          0
-   2       0.94       0
-   3       2.19    2.60       0
- 4 & 5     2.64    2.77    1.00       0
-
-
-
-__Step 3__  
-
-The distance matrix below gives the current distance between clusters (1 & 2), 3, and (4 & 5) using complete linkage. By this, clusters 3 and (4 & 5) are the closest, with a distance of 1:
-
-         1 & 2       3   4 & 5
-------- ------- ------- -------
- 1 & 2        0
-   3       2.60       0
- 4 & 5     2.77    1.00       0
-
-
-
-
-__Step 4__  
-
-The distance matrix below gives the current distance between our 2 clusters, (1 & 2) and (3 & 4 & 5) using complete linkage. The distance between them is 2.77 (hence the height of the final merge in our dendrogram):
-
-         1 & 2   3,4,5
-------- ------- -------
- 1 & 2        0
- 3,4,5     2.77       0
-
-
-\
-
-
-
-
 
 
 **SINGLE LINKAGE**
