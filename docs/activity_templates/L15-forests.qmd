@@ -785,6 +785,7 @@ e. Reflect on what you've observed here!
 <br>
 
 
+
 # Notes: OOB (Out-of-Bag) Error in Random Forests {-}
 
 ## What is OOB? {.unnumbered .smaller}
@@ -857,19 +858,6 @@ For that one candy:
 
 :::
 
----
-
-## Step 4: OOB error {.unnumbered .smaller}
-
-::: {.incremental}
-
-- Compare OOB prediction vs true label  
-- Repeat for all candies  
-- Compute overall **error rate**
-
-:::
-
----
 
 ## Why not just 1 tree? {.unnumbered .smaller}
 
@@ -910,25 +898,11 @@ Now compare:
 
 :::
 
----
 
-## Key Takeaway {.unnumbered .smaller}
 
-::: {.incremental}
-
-OOB is like **built-in cross-validation** using many trees, not just one.
-
-:::
-
----
-
-## Final Explanation {.unnumbered .smaller}
-
-::: {.incremental}
-
-OOB means “out-of-bag,” referring to observations not used to build a particular tree. Since each tree is built using a bootstrap sample, about one-third of the data is left out and can be used as test data for that tree. Each observation is out-of-bag for many trees (around 150 if there are 500 trees), and its prediction is based on those trees. This is why we need all 500 trees—not just one—to obtain a stable and reliable OOB error estimate.
-
-:::
+\
+\
+\
 
 
 

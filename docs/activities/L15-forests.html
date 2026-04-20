@@ -4093,6 +4093,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../activities/L18-kmeans.html">
  <span class="dropdown-text">K-Means clustering</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../activities/L19-pca.html">
+ <span class="dropdown-text">PCA</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -4245,6 +4249,12 @@ window.Quarto = {
  <span class="menu-text">K-Means clustering</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../activities/L19-pca.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">PCA</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -4288,11 +4298,8 @@ window.Quarto = {
   <li><a href="#step-1-how-a-random-forest-builds-trees" id="toc-step-1-how-a-random-forest-builds-trees" class="nav-link" data-scroll-target="#step-1-how-a-random-forest-builds-trees">Step 1: How a random forest builds trees</a></li>
   <li><a href="#step-2-what-happens-to-one-observation" id="toc-step-2-what-happens-to-one-observation" class="nav-link" data-scroll-target="#step-2-what-happens-to-one-observation">Step 2: What happens to ONE observation?</a></li>
   <li><a href="#step-3-how-oob-prediction-is-made" id="toc-step-3-how-oob-prediction-is-made" class="nav-link" data-scroll-target="#step-3-how-oob-prediction-is-made">Step 3: How OOB prediction is made</a></li>
-  <li><a href="#step-4-oob-error" id="toc-step-4-oob-error" class="nav-link" data-scroll-target="#step-4-oob-error">Step 4: OOB error</a></li>
   <li><a href="#why-not-just-1-tree" id="toc-why-not-just-1-tree" class="nav-link" data-scroll-target="#why-not-just-1-tree">Why not just 1 tree?</a></li>
   <li><a href="#intuition-analogy" id="toc-intuition-analogy" class="nav-link" data-scroll-target="#intuition-analogy">Intuition (Analogy)</a></li>
-  <li><a href="#key-takeaway" id="toc-key-takeaway" class="nav-link" data-scroll-target="#key-takeaway">Key Takeaway</a></li>
-  <li><a href="#final-explanation" id="toc-final-explanation" class="nav-link" data-scroll-target="#final-explanation">Final Explanation</a></li>
   </ul></li>
   <li><a href="#deeper-learning" id="toc-deeper-learning" class="nav-link" data-scroll-target="#deeper-learning">Deeper learning</a>
   <ul class="collapse">
@@ -5125,20 +5132,6 @@ Each tree has its own <strong>training data + leftover (OOB) test data</strong><
 </ul>
 <p>👉 This is the <strong>OOB prediction</strong> for that candy</p>
 </div>
-<hr>
-</section>
-<section id="step-4-oob-error" class="level2 unnumbered smaller">
-<h2 class="unnumbered smaller anchored" data-anchor-id="step-4-oob-error">Step 4: OOB error</h2>
-<div class="incremental">
-<ul class="incremental">
-<li>Compare OOB prediction vs true label<br>
-</li>
-<li>Repeat for all candies<br>
-</li>
-<li>Compute overall <strong>error rate</strong></li>
-</ul>
-</div>
-<hr>
 </section>
 <section id="why-not-just-1-tree" class="level2 unnumbered smaller">
 <h2 class="unnumbered smaller anchored" data-anchor-id="why-not-just-1-tree">Why not just 1 tree?</h2>
@@ -5180,20 +5173,10 @@ Each tree has its own <strong>training data + leftover (OOB) test data</strong><
 <li>✅ 150 teachers → much more reliable</li>
 </ul>
 </div>
-<hr>
-</section>
-<section id="key-takeaway" class="level2 unnumbered smaller">
-<h2 class="unnumbered smaller anchored" data-anchor-id="key-takeaway">Key Takeaway</h2>
-<div class="incremental">
-<p>OOB is like <strong>built-in cross-validation</strong> using many trees, not just one.</p>
-</div>
-<hr>
-</section>
-<section id="final-explanation" class="level2 unnumbered smaller">
-<h2 class="unnumbered smaller anchored" data-anchor-id="final-explanation">Final Explanation</h2>
-<div class="incremental">
-<p>OOB means “out-of-bag,” referring to observations not used to build a particular tree. Since each tree is built using a bootstrap sample, about one-third of the data is left out and can be used as test data for that tree. Each observation is out-of-bag for many trees (around 150 if there are 500 trees), and its prediction is based on those trees. This is why we need all 500 trees—not just one—to obtain a stable and reliable OOB error estimate.</p>
-</div>
+<p><br>
+<br>
+<br>
+</p>
 <p><strong>If you finish early</strong></p>
 <p>Do one of the following:</p>
 <ul>

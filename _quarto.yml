@@ -58,6 +58,7 @@ website:
           - "activities/L16-review.qmd"
           - "activities/L17-hclust.qmd"
           - "activities/L18-kmeans.qmd"
+          - "activities/L19-pca.qmd"
 
 
 
