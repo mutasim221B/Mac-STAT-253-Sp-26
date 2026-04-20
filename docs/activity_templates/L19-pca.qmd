@@ -173,7 +173,7 @@ Keep only the subset of PCs which retain "enough" of the variability / informati
 \
 
 
-# Small Group Discussion {-}
+# Team Discussion {-}
 
 ## Data Details {.unnumbered .smaller}
 
@@ -380,7 +380,7 @@ a. Use the loadings below to specify the formula for the first PC.
 ```{r}
 #| eval: true
 pca_small %>% 
-  pluck("rotation")
+  pluck("rotation") # loadings
 ```
 
 
@@ -390,11 +390,11 @@ b. For just the first city, confirm that its PC1 coordinate or **score** can be 
 #| eval: true
 # Original (standardized) coordinates
 scale(small_example) %>% 
-  head(1)
+  head(1) # standardized x values
     
 # PC coordinates
 pca_small %>%   
-  pluck("x") %>% 
+  pluck("x") %>% # principal component scores
   head(1)
 ```
     

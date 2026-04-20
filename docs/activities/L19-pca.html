@@ -4274,7 +4274,7 @@ window.Quarto = {
   <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a></li>
   <li><a href="#pca-details" id="toc-pca-details" class="nav-link" data-scroll-target="#pca-details">PCA Details</a></li>
   </ul></li>
-  <li><a href="#small-group-discussion" id="toc-small-group-discussion" class="nav-link" data-scroll-target="#small-group-discussion">Small Group Discussion</a>
+  <li><a href="#team-discussion" id="toc-team-discussion" class="nav-link" data-scroll-target="#team-discussion">Team Discussion</a>
   <ul class="collapse">
   <li><a href="#data-details" id="toc-data-details" class="nav-link" data-scroll-target="#data-details">Data Details</a></li>
   <li><a href="#example-1-research-goals" id="toc-example-1-research-goals" class="nav-link" data-scroll-target="#example-1-research-goals">Example 1: Research goals</a></li>
@@ -4410,8 +4410,8 @@ PC_p &amp; = a_{p1} x_1 + a_{p2} x_2 + \cdots + a_{pp} x_p \\
 </p>
 </section>
 </section>
-<section id="small-group-discussion" class="level1 unnumbered">
-<h1 class="unnumbered">Small Group Discussion</h1>
+<section id="team-discussion" class="level1 unnumbered">
+<h1 class="unnumbered">Team Discussion</h1>
 <section id="data-details" class="level2 unnumbered smaller">
 <h2 class="unnumbered smaller anchored" data-anchor-id="data-details">Data Details</h2>
 <p>Recall the Australian weather data from earlier this semester:</p>
@@ -4674,7 +4674,7 @@ PC_p &amp; = a_{p1} x_1 + a_{p2} x_2 + \cdots + a_{pp} x_p \\
 </ol>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pca_small <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;rotation&quot;</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;rotation&quot;</span>) <span class="co"># loadings</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                     PC1       PC2         PC3</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Temp9am       0.6312659 0.2967160  0.71656333</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="do">## MinTemp       0.6230387 0.3562101 -0.69637431</span></span>
@@ -4686,13 +4686,13 @@ PC_p &amp; = a_{p1} x_1 + a_{p2} x_2 + \cdots + a_{pp} x_p \\
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Original (standardized) coordinates</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scale</span>(small_example) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">1</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">1</span>) <span class="co"># standardized x values</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="do">##           Temp9am    MinTemp WindSpeed9am</span></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Albury -0.4916488 -0.1001678    0.5179183</span></span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># PC coordinates</span></span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>pca_small <span class="sc">%&gt;%</span>   </span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;x&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;x&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># principal component scores</span></span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">1</span>)</span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="do">##               PC1       PC2        PC3</span></span>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Albury -0.6119817 0.2773376 -0.2618276</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
