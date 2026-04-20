@@ -615,8 +615,16 @@ Looking back to the map, and recalling the key information captured by PC1 and P
 # Score plot: plot PC1 scores (x-axis) vs PC2 scores (y-axis) of all data points
 fviz_pca_ind(pca_small, repel = TRUE)
 ```
+The dashed vertical and horizontal lines mark 0 on PC1 and PC2.
+
+- points to the right have positive PC1 scores
+- points to the left have negative PC1 scores
+- points above have positive PC2 scores
+- points below have negative PC2 scores
 
 
+
+**Check Albury-Penrith and their PCs!**
     
     
 > It’s not obvious to me personally! Some may have shared that more northern (warmer) cities tend to be “clustered”. Ditto southern (cooler) cities.
@@ -653,6 +661,16 @@ pca_weather %>%
     
 ```{r}
 #| eval: true
+
+# SCREE PLOT: % of variance explained by each PC
+pca_weather %>% 
+  tidy(matrix = "eigenvalues") %>% 
+  ggplot(aes(y = percent, x = PC)) + 
+    geom_point(size = 2) + 
+    geom_line() + 
+    labs(y = "% of variance explained")
+
+
 # Cumulative % of variance explained (plot)
 pca_weather %>% 
   tidy(matrix = "eigenvalues") %>% 
@@ -663,7 +681,7 @@ pca_weather %>%
 ```
     
 
-> 5
+
 
 b. Check out some plots of the loadings in the more important PCs. Describe the general properties of the first 2 PCs. What original features do they most capture?        
 
@@ -704,6 +722,9 @@ fviz_pca_ind(pca_weather, repel = TRUE)
 
 > a. 5
 > b. first PC is driven by air related features such as windspeed, air pressure, and temperature. second PC is driven by water related features such as humidity and rain.
+For PC1, the two features with the strongest influence appear to be MinTemp and WindSpeed9am. MinTemp has a strong positive loading, while WindSpeed9am has a strong negative loading.
+For PC2, the two features with the strongest influence appear to be Humidity9am and RainTodayNo. Humidity9am loads strongly positively, while RainTodayNo loads strongly negatively.
+
 > c. again, not obvious to me!
 
 
