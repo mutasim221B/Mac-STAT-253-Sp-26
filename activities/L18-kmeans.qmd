@@ -257,6 +257,7 @@ penguins %>%
   theme_minimal()
 ```
 
+
 > The initial centroids are randomly selected. K-means algorithm assigns data point to clusters using distances (we don’t want these assignments to be skewed by the scales of features x).
 
 

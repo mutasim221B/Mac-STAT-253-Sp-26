@@ -1,0 +1,699 @@
+---
+title: "Homework 7"
+subtitle: "STAT 253"
+format:
+  html:
+    toc: true
+    embed-resources: true
+---
+
+
+<!-- create student template based on this QMD -->
+{{< include _create_student_template.qmd >}}
+
+```{r create-template}
+#| echo: false
+#| eval: true
+#| cache: false
+make_student_template('Homework 7', 'hw7.qmd')
+```
+
+
+
+
+::: {.content-hidden when-profile="solutions"}
+# Getting Started 
+
+## Directions
+
+The academic integrity, grading, and extension policies are the same as for Homeworks 1, 2, 4, 5, and 6. Please review those assignments if you need a refresher.
+
+\
+
+## Goals
+
+- In this assignment, you will build on HW6 and explore *unsupervised* dimension reduction techniques using the same candy data.
+- You will also compare Principal Component Regression to LASSO.
+
+
+\
+
+## Context
+
+Load the packages and data you'll need for your analysis:
+
+```{r}
+#| eval: true
+#| message: false
+# Load some packages & data
+library(tidyverse)
+library(fivethirtyeight)
+data("candy_rankings")
+
+candy_rankings <- candy_rankings %>% 
+  column_to_rownames("competitorname") # this adds rownames and removes the variable as a column in the dataset (both are important to do -- why?)
+``` 
+
+
+
+
+\
+\
+\
+\
+
+:::
+
+
+
+# Exercises
+
+## Exercise 1: PCA Part 1
+
+There are quite a few features in the `candy_rankings` data.
+
+Let's do some dimension reduction.
+
+One of the challenges of continuing to analyze the dataset using different techniques is that these techniques work differently, thus can require differently structured data.
+With this in mind, take care at the beginning this exercise to **ensure that you're working with the original data** (without any of the clustering info in it from HW6!).
+
+
+\
+
+### Part a
+
+Construct PCA for the *original features* in `candy_rankings` with the following in mind:       
+
+- Do not include `winpercent` in your PCA
+- Do not include any new features from HW6 (eg: cluster assignments) in your PCA      
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r soln-code-chunk-opts}
+#| eval: true
+#| echo: false
+knitr::opts_chunk$set(eval = TRUE)
+```
+
+```{r}
+data("candy_rankings")
+pca_data <- candy_rankings %>% 
+  column_to_rownames("competitorname") %>% 
+  select(-winpercent)
+    
+candy_pca <- prcomp(pca_data, scale = TRUE, center = TRUE)
+```
+
+:::
+:::
+
+
+\
+\
+
+### Part b
+
+Construct a **score plot**. 
+
+Use Quarto code chunk options to set the figure width and height to 7.
+**Check the rendered HTML** to make sure the visualization is readable and adjust dimensions further if needed. 
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r fig.width = 7, fig.height = 7}
+#| message: false
+library(factoextra)
+fviz_pca_ind(candy_pca, repel = TRUE)
+```
+
+:::
+:::
+
+
+\
+\
+
+
+### Part c
+
+Provide two takeaways, or things you learned, from the score plot. 
+NOTE: If you're unfamiliar with the candies, you might look back at their data.
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+So many reasonable things to put here! Here are a few examples:
+
+- I notice a lot of chocolate bars with caramel in the top left, with negative values of PC1 and positive values of PC2. The bottom right mostly contains chewy fruity candy. 
+ 
+- It seems like chocolate and bar characteristics contribute strongly to PC1, in a negative direction. It's mostly chocolate bars on the left side of the score plot. 
+
+- It seems like fruit flavors contribute strongly to PC1 in a positive direction. It's mostly fruity candy on the right. 
+- Similarly, it seems like caramel contributes strongly to PC2, in a positive direction. Almost all of the candies with caramel are on the upper half of the plot (PC2 > 0). 
+
+:::
+:::
+
+
+\
+\
+
+
+### Part d
+
+Are your observations about candies in part c consistent with your clustering conclusions from HW6? Explain what similarities or differences you notice.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+In general yes. For example, the chocolate bars seem clustered together with respect to PC1 and PC2. (You might also argue "no" if you get really specific.)
+
+:::
+:::
+
+
+
+
+\
+\
+\
+\
+
+## Exercise 2: PCA Part 2
+
+
+### Part a
+
+Construct a plot of the cumulative percent of the original information captured by the PCs.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+#| message: false
+library(tidymodels)
+candy_pca %>% 
+  tidy(matrix = "eigenvalues") %>% 
+  ggplot(aes(y = cumulative, x = PC)) + 
+    geom_point(size = 2) + 
+    geom_line() + 
+    labs(y = "CUMULATIVE % of variance explained")
+```
+
+:::
+:::
+
+\
+\
+
+### Part b
+
+How many principal components do we need to keep in order to retain at least 60% of the information in the 11 original candy features?
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+4 components. (We're close to, but not yet *exceeding* 60% with 3 PCs.)
+
+We can see this from the plot above, or from this table: 
+
+```{r}
+candy_pca %>% 
+  tidy(matrix = "eigenvalues")
+```
+
+:::
+:::
+
+\
+\
+
+### Part c
+
+Construct a **loadings plot** AND a bar plot of the loadings for the first 2 PCs. 
+
+I recommend a figure width and height of 7 for the loadings plot, and a width of 8 and height of 5 for the bar plot. 
+**Check the rendered HTML** to make sure the visualization is readable and adjust dimensions further if needed. 
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r fig.width = 7, fig.height = 7}
+# Loadings plot
+fviz_pca_var(candy_pca, repel = TRUE)
+```
+
+```{r fig.width = 8, fig.height = 5}
+#| message: false
+# Bar plot
+library(reshape2)
+melt(candy_pca$rotation[, 1:2]) %>% 
+  ggplot(aes(x = Var1, y = value, fill = Var1)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ Var2) + 
+  labs(y = "loadings", x = "original features", fill = "original features") + 
+  scale_fill_manual(values = rainbow(11)) + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+```
+
+:::
+:::
+
+
+\
+\
+
+### Part d
+
+Highlight *one* pair of the original features that are positively correlated **AND** one pair that are negatively correlated. 
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+There are many possible answers here!
+
+- **positively correlated:** any pair pointing in similar directions in the loadings plot (eg: chocolate and peanutyalmondy, caramel and nougat)
+
+- **negatively correlated:** any pair pointing in different directions in the loadings plot (eg: chocolate and fruity, pluribus and bar)
+
+:::
+:::
+
+
+\
+\
+
+### Part e
+
+Point out at least 2 original features that contribute most strongly (positively or negatively) to the first principal component. If you notice any theme to these features, say so.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+fruity (positively) and chocolate, bar, price (negatively). 
+
+NOTE: One possible theme here is that these might all indicate whether a candy is a chocolate bar or a fruity candy.
+
+:::
+:::
+
+
+\
+\
+\
+\
+
+## Exercise 3: Principal components regression (PCR)
+
+Returning to the original `candy_rankings` data, our final goal will be to build a regression model of `winpercent`, the popularity of a candy.
+
+Let's start with fresh data `candy_final`, in case anything has been overwritten in the previous exercises :):
+
+```{r}
+#| eval: true
+data("candy_rankings")
+candy_final <- candy_rankings %>% 
+  select(-competitorname) %>% 
+  mutate_if(is.logical, as.factor)
+```       
+
+
+\
+
+### Part a
+
+Build a PCR model of `winpercent`. In doing so:    
+
+- Set the seed to 253.    
+- Try utilizing 1 PC, 2 PCs, ..., up to 11 PCs (the number of original predictors)
+- Calculate the 10-fold CV MAE for each model
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+# STEP 1: specify a linear regression model
+lm_spec <- linear_reg() %>% 
+  set_mode("regression") %>% 
+  set_engine("lm")
+
+# STEP 2: variable recipe
+# Add a pre-processing step that does PCA on the predictors
+# num_comp is the number of PCs to keep (we need to tune it!)
+pcr_recipe <- recipe(winpercent ~ ., data = candy_final) %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  step_normalize(all_predictors()) %>%
+  step_pca(all_predictors(), num_comp = tune())
+
+# STEP 3: workflow
+pcr_workflow <- workflow() %>% 
+  add_recipe(pcr_recipe) %>% 
+  add_model(lm_spec)
+  
+# STEP 4: Estimate multiple PCR models trying out different numbers of PCs to keep
+# For the range, the biggest number you can try is the number of predictors you started with
+# Put the same number in levels
+set.seed(253)
+pcr_models <- pcr_workflow %>% 
+  tune_grid(
+    grid = grid_regular(num_comp(range = c(1, 11)), levels = 11),
+    resamples = vfold_cv(candy_final, v = 10),
+    metrics = metric_set(mae)
+  )
+```
+
+:::
+:::
+
+\
+\
+
+### Part b
+
+Plot the CV MAE vs the number of PCs in each model.
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+pcr_models %>% 
+  autoplot()
+```
+
+:::
+:::
+
+\
+\
+
+### Part c
+
+Using the plot, argue for keeping only one PC in our final model.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+Although we obtain the "best" MAE with all 11 PCs (approx 9.3), the MAE is *very* similar if we use a single PC (approx 9.8), especially when you consider the scale of our outcome variable, `winpercent`, which ranges from 0 to 100. 
+The model with only one PC has the advantage of being much simpler, while performing similarly well. 
+
+Note that the MAE of the model with only one PC is also within one standard error of the "best" MAE: 
+
+```{r}
+pcr_models %>% 
+  collect_metrics()
+```
+
+If we add error bars to our MAE plot, we can see this visually: 
+
+```{r}
+pcr_models %>% 
+  autoplot() + 
+  geom_errorbar(data = collect_metrics(pcr_models), 
+                aes(x = num_comp, 
+                    ymin = mean - std_err, 
+                    ymax = mean + std_err), 
+                alpha = 0.5)
+```
+
+**NOTE for graders:** The standard error argument is optional here. As long as students note the similarity between the MAEs of the 1- and 11-PC models given the scale of our outcome, that is sufficient. 
+But this is a nice review of the idea of parsimony and the "one standard error" approach so I've included this extra info in the solutions!
+
+```{r}
+# "best" num_comp
+pcr_models %>%
+  select_best(metric = "mae")
+
+# "parsimonious" approach
+# note the use of num_comp instead of desc(num_comp)
+# we do't want to use desc here since smaller num_comp = simpler (as opposed to LASSO where larger lambda = simpler)
+pcr_models %>%
+  select_by_one_std_err(metric = "mae", num_comp) 
+```
+
+:::
+:::
+
+
+\
+\
+
+### Part d
+
+Finalize the PCR model of `winpercent` using only one PC 
+**AND** print its `tidy()` table of coefficients.
+
+HINT: `finalize_workflow(parameters = list(num_comp = 1))`
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+# Final model
+final_pcr_model <- pcr_workflow %>% 
+  finalize_workflow(parameters = list(num_comp = 1)) %>% 
+  fit(data = candy_final)
+
+# Table of coefficients
+final_pcr_model %>% 
+  tidy()
+```
+
+:::
+:::
+
+\
+\
+
+### Part e
+
+Report **AND** interpret the 10-fold CV MAE for this model. 
+
+HINT: `collect_metrics()`.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+pcr_models %>% 
+  collect_metrics() %>% 
+  filter(num_comp == 1)
+```
+
+**INTERPRETATION:** This model's prediction of popularity for *new* candies is off by 9.82 percentage points, on average.
+
+Remember, a "correct" interpretation of MAE should include: 
+
+- the correct number (9.82)
+- a correct explanation of what "MAE" is: mean/average absolute prediction error
+- sufficient data context (what is the outcome we are predicting, what are the units) 
+- clarification that this is an out-of-sample measure of prediction accuracy (eg "new candies", "unseen data", ...)
+
+:::
+:::
+
+
+\
+\
+\
+\
+
+## Exercise 4: Comparison to LASSO regression
+
+Next, consider 50 possible LASSO regression models of `winpercent`, starting from the 11 *original* predictors:       
+
+```{r}
+library(tidymodels)
+
+# STEP 1: LASSO model specification
+lasso_spec <- linear_reg() %>% 
+  set_mode("regression") %>% 
+  set_engine("glmnet") %>% 
+  set_args(mixture = 1, penalty = tune())
+
+# STEP 2: variable recipe
+lasso_recipe <- recipe(winpercent ~ ., data = candy_final) %>% 
+  step_dummy(all_nominal_predictors())
+
+# STEP 3: workflow
+lasso_workflow <- workflow() %>% 
+  add_recipe(lasso_recipe) %>% 
+  add_model(lasso_spec)
+  
+# STEP 4: Estimate multiple LASSO models using a range of possible lambda values
+set.seed(253)
+lasso_models <- lasso_workflow %>% 
+  tune_grid(
+    grid = grid_regular(penalty(range = c(-5, 1)), levels = 50),
+    resamples = vfold_cv(candy_final, v = 10),
+    metrics = metric_set(mae)
+  )
+```
+    
+
+
+\
+
+### Part a
+
+Finalize the LASSO: build a *parsimonious* LASSO model of `winpercent`.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+# get lambda
+parsimonious_penalty <- lasso_models %>% 
+  select_by_one_std_err(metric = "mae", desc(penalty))
+
+# fit model with final choice of lambda
+final_lasso_model <- lasso_workflow %>% 
+  finalize_workflow(parameters = parsimonious_penalty) %>% 
+  fit(data = candy_final)
+```
+
+My selected $\lambda$ was `r parsimonious_penalty$penalty`.
+
+:::
+:::
+
+\
+\
+
+### Part b
+
+Print a `tidy()` table of the LASSO coefficients **AND** report the number of the 11 original predictors that are utilized in this model.
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+final_lasso_model %>% 
+  tidy() %>% 
+  filter(estimate != 0) # optional, but often helpful
+```
+
+**NUMBER OF PREDICTORS IN THE LASSO MODEL**: 4
+
+:::
+:::
+
+\
+\
+
+### Part c
+
+Calculate **AND** interpret the 10-fold CV MAE for this LASSO model.
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+```{r}
+# Calculate the MAE
+lasso_models %>%
+  collect_metrics() %>%
+  filter(penalty == parsimonious_penalty$penalty)
+```
+
+**INTERPRETATION:** This model's prediction of popularity for *new* candies is off by 9.84 percentage points, on average.
+
+Remember, a "correct" interpretation of MAE should include: 
+
+- the correct number (9.82)
+- a correct explanation of what "MAE" is: mean/average absolute prediction error
+- sufficient data context (what is the outcome we are predicting, what are the units) 
+- clarification that this is an out-of-sample measure of prediction accuracy (eg "new candies", "unseen data", ...)
+
+:::
+:::
+
+
+\
+\
+
+### Part d
+
+Which model of `winpercent` would you use: the LASSO model or the PCR model? Provide an explanation that would apply to choosing between a LASSO and principal components model in general.     
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+
+Answers might vary. The CV MAEs are *very* similar. The PC model utilizes only 1 predictor (vs the LASSO which utilizes 4). However, the PC predictors aren't interpretable. If all we care about is predictions, then the PC model would be fine. If we're interested in knowing which factors influence candy popularity, and to what extent, then we'd want the LASSO model.
+
+:::
+:::
+
+
+
+\
+\
+\
+\
+
+## Exercise 5: Ethics Reflection
+
+Read the article [Instacart's AI-Enabled Pricing Experiments May Be Inflating Your Grocery Bill, CR and Groundwork Collaborative Investigation Finds](https://www.consumerreports.org/money/questionable-business-practices/instacart-ai-pricing-experiment-inflating-grocery-bills-a1142182490/). Write a short (roughly 250-500 words) reaction to the article. What ideas piqued your interest? How did the article make you feel? What ideas from class did it make you think about?
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+Instructors will grade this exercise.
+:::
+:::
+
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+## Exercise 6: Resource Reflection
+
+List the resources you used to complete this assignment (e.g. office hours, textbook, Gen AI, etc.)   
+
+- 
+-
+-
+
+Write **3-5 sentences** about which resources were the most useful in helping you complete the assignment.
+
+
+::: {.content-visible when-profile="solutions"}
+:::{.callout-note icon=false title="Answer"}
+Answers will vary, but students should list the resouces they used to complete this assignment (e.g. office hours, textbook, Gen AI, etc.) and write 3-5 sentences about which resources were the most useful in helping them complete the assignment.
+:::
+:::
+
+
+
+
+
+
+\
+\
+\
+\
+
+::: {.content-hidden when-profile="solutions"}
+::: {.callout-important}
+When you are done, remember to check your rendered HTML for errors/formatting issues before submitting!
+:::
+
+
+
+\
+\
+\
+\
+
+:::
