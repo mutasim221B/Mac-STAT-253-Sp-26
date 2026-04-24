@@ -250,7 +250,6 @@ Chapter 6.3.2 in ISLR provides an optional overview.
 \
 
 
-# Small Group Discussion {-}
 
 ## Example 3 {.unnumbered .smaller}
 
@@ -277,12 +276,7 @@ c. The x are NOT very correlated.
 \
 
 
-# Exercises {-}
-
-Use the rest of class time to work on HW7 and Group Assignment 3 (Decide **as a group** how you will split your time!)
-
-
-## HW7 {-} 
+# HW7 {-} 
 
 Exercises 3 focuses on PC Regression. 
 In Exercise 4, you will compare your PC Regression model to LASSO.
@@ -291,16 +285,43 @@ Use the R Code Notes below to help with this!
 Remember to `set.seed(253)` on any exercises that involve randomness.
 
 
-## Group Assignment 3 {.unnumbered .smaller} 
+
+# Group Assignment 3 {.unnumbered .smaller} 
+
+```{r}
+assign_groups <- function(students, n_groups = 2, seed = NULL) {
+  if (!is.null(seed)) set.seed(seed)
+  
+  students <- sample(students)  # shuffle names
+  
+  groups <- split(
+    students,
+    rep(1:n_groups, length.out = length(students))
+  )
+  
+  names(groups) <- paste("Group", seq_len(n_groups))
+  return(groups)
+}
+
+# Example:
+students <- c("Tara", "Beckett", "Henry", "Carmen", 
+              "Catriona", "Sylvie", "Baituan", "Su")
+
+assign_groups(students, n_groups = 2, seed = 253)
+```
+
+
+# Exercise {.unnumbered .smaller} 
 
 Before you leave class today: 
 
-1. Get data on your local computers 
-2. Start exploring the data: 
+1. Participate in Course Survey
+2. Get data on your local computers 
+3. Start exploring the data: 
      - Familiarize yourself with the variables 
      - Create initial visualizations 
      - Determine if any data cleaning is needed (remove, modify, or create variables; remove or fill in missing values; remove observations) 
- 3. Make a plan: 
+ 4. Make a plan: 
      - How to decide which features to use, how many and which algorithms to try, how to evaluate each algorithm 
      - Set up communication avenues for out-of-class discussions (slack channel? in-person meetings? etc.) 
      - Divide / delegate leadership on tasks 
