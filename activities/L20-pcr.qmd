@@ -304,8 +304,7 @@ assign_groups <- function(students, n_groups = 2, seed = NULL) {
 }
 
 # Example:
-students <- c("Tara", "Beckett", "Henry", "Carmen", 
-              "Catriona", "Sylvie", "Baituan", "Su")
+students <- c("Baituan", "Beckett", "Carmen", "Catriona", "Henry", "Su", "Sylvie", "Tara")
 
 assign_groups(students, n_groups = 2, seed = 253)
 ```
